@@ -66,12 +66,14 @@ export default function FilmPage() {
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
-            <div className="relative w-full" style={{ height: '450px' }}>
+            <div className="w-full rounded-lg shadow-md overflow-hidden">
               <SafeImage
                 src={film.poster_url}
                 alt={film.title || 'Poster du film'}
-                fill
-                className="rounded-lg shadow-md object-cover"
+                width={500}
+                height={750}
+                className="w-full h-auto rounded-lg"
+                priority
               />
             </div>
           </div>
