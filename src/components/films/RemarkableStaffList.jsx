@@ -112,7 +112,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
   if (!groupedStaff || groupedStaff.length === 0) {
     return (
       <div className="text-center py-4">
-        <p className="text-gray-500">Aucun membre du staff remarquable.</p>
+        <p className="text-gray-500">Aucun.</p>
       </div>
     );
   }
