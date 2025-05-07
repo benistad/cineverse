@@ -130,6 +130,46 @@ export async function getFilmBySlug(slug) {
 }
 
 /**
+ * Récupère un film par son ID TMDB avec son staff remarquable
+ */
+export async function getFilmByTmdbId(tmdbId) {
+  try {
+    const supabase = getSupabaseClient();
+    // Récupérer le film
+    const { data: film, error } = await supabase
+      .from('films')
+      .select('*')
+      .eq('tmdb_id', tmdbId)
+      .single();
+
+    if (error) {
+      // Si l'erreur est que le film n'existe pas, ce n'est pas une erreur critique
+      if (error.code === 'PGRST116') {
+        return null;
+      }
+      throw error;
+    }
+    if (!film) return null;
+
+    // Récupérer le staff remarquable du film
+    const { data: staff, error: staffError } = await supabase
+      .from('remarkable_staff')
+      .select('*')
+      .eq('film_id', film.id);
+
+    if (staffError) throw staffError;
+
+    return {
+      ...film,
+      remarkable_staff: staff || [],
+    };
+  } catch (error) {
+    console.error(`Erreur lors de la récupération du film avec l'ID TMDB ${tmdbId}:`, error);
+    return null;
+  }
+}
+
+/**
  * Ajoute ou met à jour un film
  */
 export async function saveFilm(film) {
