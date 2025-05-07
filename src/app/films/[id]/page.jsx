@@ -1,31 +1,65 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import { getFilmById } from '@/lib/supabase/films';
-import { FiArrowLeft } from 'react-icons/fi';
-import DeleteFilmButton from '@/components/films/DeleteFilmButton';
-import RemarkableStaffList from '@/components/films/RemarkableStaffList';
-import YouTube from 'react-youtube';
+'use client';
 
-export default async function EditRatedPage({ params }) {
-  // Récupérer les détails du film depuis Supabase
-  const film = await getFilmById(params.id);
-  
-  if (!film) {
-    notFound();
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useParams, useRouter } from 'next/navigation';
+import RemarkableStaffList from '@/components/films/RemarkableStaffList';
+import { FiStar } from 'react-icons/fi';
+import YouTube from 'react-youtube';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
+export default function FilmPage() {
+  const params = useParams();
+  const router = useRouter();
+  const [film, setFilm] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClientComponentClient();
+
+  useEffect(() => {
+    async function fetchFilm() {
+      try {
+        const { data, error } = await supabase
+          .from('films')
+          .select('*')
+          .eq('id', params.id)
+          .single();
+
+        if (error) {
+          console.error('Erreur lors de la récupération du film:', error);
+          router.push('/not-found');
+          return;
+        }
+
+        setFilm(data);
+      } catch (error) {
+        console.error('Erreur:', error);
+        router.push('/not-found');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFilm();
+  }, [params.id, router, supabase]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>Chargement...</p>
+      </div>
+    );
   }
 
-  // Les métadonnées doivent être générées dynamiquement
+  if (!film) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>Film non trouvé</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center mb-6">
-        <Link href="/admin/dashboard" className="flex items-center text-blue-500 hover:text-blue-700">
-          <FiArrowLeft className="mr-2" />
-          Retour au tableau de bord
-        </Link>
-      </div>
-
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div className="flex flex-col md:flex-row">
           {film.poster_path && (
@@ -50,9 +84,13 @@ export default async function EditRatedPage({ params }) {
             )}
             
             {film.note && (
-              <p className="text-gray-600 mb-2">
-                <span className="font-semibold">Note:</span> {film.note}/10
-              </p>
+              <div className="flex items-center mb-2">
+                <span className="font-semibold mr-2">Note:</span>
+                <span className="flex items-center">
+                  <FiStar className="text-yellow-500 mr-1" />
+                  {film.note}/10
+                </span>
+              </div>
             )}
             
             {film.genres && (
@@ -76,16 +114,6 @@ export default async function EditRatedPage({ params }) {
                 </div>
               </div>
             )}
-            
-            <div className="flex justify-end">
-              <Link 
-                href={`/admin/edit/${film.tmdb_id}`}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-              >
-                Modifier
-              </Link>
-              <DeleteFilmButton filmId={film.id} filmTitle={film.titre} />
-            </div>
           </div>
         </div>
       </div>
