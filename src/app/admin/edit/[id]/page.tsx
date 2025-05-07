@@ -1,20 +1,14 @@
 import { notFound } from 'next/navigation';
 import { getMovieDetails } from '@/lib/tmdb/api';
 import FilmEditor from '@/components/films/FilmEditor';
+import { PageProps } from 'next';
 
 export const metadata = {
   title: 'Éditer un film - CineVerse',
   description: 'Ajouter ou modifier un film dans votre collection',
 };
 
-type EditPageProps = {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export default async function EditPage({ params }: EditPageProps) {
+export default async function EditPage({ params }: PageProps) {
   // Récupérer les détails du film depuis TMDB
   const movieId = parseInt(params.id, 10);
   

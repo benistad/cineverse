@@ -6,15 +6,9 @@ import { FiArrowLeft } from 'react-icons/fi';
 import DeleteFilmButton from '@/components/films/DeleteFilmButton';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import YouTube from 'react-youtube';
+import { PageProps } from 'next';
 
-type EditRatedPageProps = {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export default async function EditRatedPage({ params }: EditRatedPageProps) {
+export default async function EditRatedPage({ params }: PageProps) {
   // Récupérer les détails du film depuis Supabase
   const film = await getFilmById(params.id);
   
