@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { searchMovies } from '@/lib/tmdb/api';
 import { TMDBMovie } from '@/types/tmdb';
 import SearchForm from '@/components/films/SearchForm';
@@ -15,8 +14,6 @@ export default function SearchPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentQuery, setCurrentQuery] = useState('');
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleSearch = async (query: string, page: number = 1) => {
     setIsSearching(true);

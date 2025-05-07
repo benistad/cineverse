@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TMDBMovie, TMDBMovieDetails, TMDBSearchResponse } from '@/types/tmdb';
+import { TMDBMovie, TMDBMovieDetails, TMDBSearchResponse, TMDBVideos, TMDBVideo } from '@/types/tmdb';
 
 // Configuration de l'API TMDB
 // Utilisation du token d'authentification pour les requêtes
@@ -86,33 +86,31 @@ export const getImageUrl = (path: string | null, size: string = 'w500'): string 
 /**
  * Récupération de la bande-annonce d'un film
  */
-export const getTrailerKey = (videos: { results: Array<{ site: string; type: string; official: boolean; iso_639_1: string; key: string }> }): string | null => {
+export const getTrailerKey = (videos: TMDBVideos): string | null => {
   if (!videos || !videos.results || videos.results.length === 0) {
     return null;
   }
 
   // Recherche d'abord une bande-annonce officielle en français
   let trailer = videos.results.find(
-    (video) => 
+    (video: TMDBVideo) => 
       video.site === 'YouTube' && 
       video.type === 'Trailer' && 
-      video.official === true &&
-      video.iso_639_1 === 'fr'
+      video.official === true
   );
 
-  // Si pas de bande-annonce en français, cherche une bande-annonce officielle en anglais
+  // Si pas de trailer, cherche une autre vidéo officielle
   if (!trailer) {
     trailer = videos.results.find(
-      (video) => 
+      (video: TMDBVideo) => 
         video.site === 'YouTube' && 
-        video.type === 'Trailer' && 
         video.official === true
     );
   }
 
   // Si toujours rien, prend n'importe quelle vidéo YouTube
   if (!trailer) {
-    trailer = videos.results.find((video) => video.site === 'YouTube');
+    trailer = videos.results.find((video: TMDBVideo) => video.site === 'YouTube');
   }
 
   return trailer ? trailer.key : null;
