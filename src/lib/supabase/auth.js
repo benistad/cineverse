@@ -2,18 +2,41 @@
 
 import { createBrowserClient } from '@supabase/ssr';
 
-// Création du client Supabase côté client
+// Création du client Supabase côté client - singleton pour éviter les instances multiples
+let supabaseInstance = null;
+
 const getSupabase = () => {
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  if (supabaseInstance) return supabaseInstance;
+  
+  supabaseInstance = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
+  
+  return supabaseInstance;
 };
+
+/**
+ * Récupère la session courante
+ */
+export async function getSession() {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.auth.getSession();
+    
+    if (error) throw error;
+    
+    return data.session;
+  } catch (error) {
+    console.error('Erreur lors de la récupération de la session:', error);
+    return null;
+  }
+}
 
 /**
  * Connexion avec email et mot de passe
  */
-export async function signInWithEmail(email: string, password: string) {
+export async function signInWithEmail(email, password) {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -53,13 +76,16 @@ export async function signOut() {
 export async function getCurrentUser() {
   try {
     const supabase = getSupabase();
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
     
     if (error) throw error;
     
-    return user;
+    return data.user;
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'utilisateur:', error);
     return null;
   }
 }
+
+// Exporte le client Supabase pour une utilisation directe
+export { getSupabase };

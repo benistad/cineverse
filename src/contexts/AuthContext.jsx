@@ -11,44 +11,32 @@ export function AuthProvider({ children }) {
   const [supabase, setSupabase] = useState(null);
 
   useEffect(() => {
-    const initSupabase = () => {
-      const supabaseClient = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-      );
-      setSupabase(supabaseClient);
-      return supabaseClient;
-    };
+    // Initialiser le client Supabase une seule fois
+    const supabaseClient = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+    setSupabase(supabaseClient);
 
-    const client = supabase || initSupabase();
-
-    const fetchUser = async () => {
+    // Vérifier si l'utilisateur est déjà connecté
+    const checkUser = async () => {
       try {
-        const { data: { user: currentUser }, error } = await client.auth.getUser();
-        if (error) {
-          console.error('Erreur lors de la récupération de l\'utilisateur:', error);
-          setUser(null);
-        } else {
-          setUser(currentUser);
-        }
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        setUser(session?.user || null);
       } catch (error) {
-        console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+        console.error('Erreur lors de la vérification de la session:', error);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUser();
+    checkUser();
 
     // Configurer l'écouteur d'événements d'authentification
-    const { data: { subscription } } = client.auth.onAuthStateChange(
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
       async (event, session) => {
-        if (session?.user) {
-          setUser(session.user);
-        } else {
-          setUser(null);
-        }
+        setUser(session?.user || null);
         setLoading(false);
       }
     );
@@ -56,17 +44,16 @@ export function AuthProvider({ children }) {
     return () => {
       subscription?.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   const value = {
     user,
     loading,
-    supabase: supabase || createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-    ),
+    supabase,
     signIn: async (email, password) => {
       try {
+        if (!supabase) throw new Error('Client Supabase non initialisé');
+        
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -81,6 +68,8 @@ export function AuthProvider({ children }) {
     },
     signOut: async () => {
       try {
+        if (!supabase) throw new Error('Client Supabase non initialisé');
+        
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
         return { success: true };
