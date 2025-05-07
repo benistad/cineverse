@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  // Vérifie si le cookie de session existe
-  const hasSessionCookie = request.cookies.has('sb-access-token') || 
-                          request.cookies.has('sb-refresh-token');
+  // Vérifie si un cookie de session Supabase existe (vérification plus générique)
+  const hasSessionCookie = Array.from(request.cookies.getAll())
+    .some(cookie => cookie.name.startsWith('sb-') && cookie.value);
 
   // Si l'utilisateur tente d'accéder à une route admin sans être connecté
   if (request.nextUrl.pathname.startsWith('/admin') && 

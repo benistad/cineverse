@@ -1,10 +1,21 @@
-import { supabase } from './config';
+'use client';
+
+import { createBrowserClient } from '@supabase/ssr';
+
+// Création du client Supabase côté client
+const getSupabase = () => {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  );
+};
 
 /**
  * Connexion avec email et mot de passe
  */
 export async function signInWithEmail(email: string, password: string) {
   try {
+    const supabase = getSupabase();
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -24,6 +35,7 @@ export async function signInWithEmail(email: string, password: string) {
  */
 export async function signOut() {
   try {
+    const supabase = getSupabase();
     const { error } = await supabase.auth.signOut();
     
     if (error) throw error;
@@ -40,6 +52,7 @@ export async function signOut() {
  */
 export async function getCurrentUser() {
   try {
+    const supabase = getSupabase();
     const { data: { user }, error } = await supabase.auth.getUser();
     
     if (error) throw error;
