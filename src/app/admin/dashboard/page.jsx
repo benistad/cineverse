@@ -1,16 +1,37 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
 import { FiPlus, FiSearch } from 'react-icons/fi';
 
-export const metadata = {
-  title: 'Dashboard - CineVerse',
-  description: 'Gérez votre collection de films',
-};
+export default function DashboardPage() {
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function DashboardPage() {
-  // Récupérer tous les films notés
-  const films = await getAllFilms();
+  useEffect(() => {
+    async function fetchFilms() {
+      try {
+        const filmsData = await getAllFilms();
+        setFilms(filmsData);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des films:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFilms();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
