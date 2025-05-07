@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/ui/SafeImage';
 import { useParams, useRouter } from 'next/navigation';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import { FiStar } from 'react-icons/fi';
@@ -65,55 +65,44 @@ export default function FilmPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div className="flex flex-col md:flex-row">
-          {film.poster_path && (
-            <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${film.poster_path}`}
-                alt={film.titre}
-                width={300}
-                height={450}
-                className="rounded-lg shadow-md"
+          <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
+            <div className="relative w-full" style={{ height: '450px' }}>
+              <SafeImage
+                src={film.poster_url}
+                alt={film.title || 'Poster du film'}
+                fill
+                className="rounded-lg shadow-md object-cover"
               />
             </div>
-          )}
+          </div>
           
           <div className="md:w-2/3">
-            <h1 className="text-3xl font-bold mb-4">{film.titre}</h1>
+            <h1 className="text-3xl font-bold mb-4">{film.title}</h1>
             
-            {film.date_sortie && (
-              <p className="text-gray-600 mb-2">
-                <span className="font-semibold">Date de sortie:</span> {new Date(film.date_sortie).toLocaleDateString('fr-FR')}
-              </p>
-            )}
+            <p className="text-gray-600 mb-2">
+              <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
+            </p>
             
-            {film.note && (
-              <div className="flex items-center mb-2">
-                <span className="font-semibold mr-2">Note:</span>
-                <span className="flex items-center">
-                  <FiStar className="text-yellow-500 mr-1" />
-                  {film.note}/10
-                </span>
-              </div>
-            )}
+            <div className="flex items-center mb-2">
+              <span className="font-semibold mr-2">Note:</span>
+              <span className="flex items-center">
+                <FiStar className="text-yellow-500 mr-1" />
+                {film.note_sur_10}/10
+              </span>
+            </div>
             
-            {film.genres && (
-              <p className="text-gray-600 mb-4">
-                <span className="font-semibold">Genres:</span> {film.genres}
-              </p>
-            )}
+
             
-            {film.synopsis && (
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
-                <p className="text-gray-700">{film.synopsis}</p>
-              </div>
-            )}
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
+              <p className="text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
+            </div>
             
-            {film.trailer_key && (
+            {film.youtube_trailer_key && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Bande-annonce</h2>
                 <div className="aspect-w-16 aspect-h-9">
-                  <YouTube videoId={film.trailer_key} className="w-full" />
+                  <YouTube videoId={film.youtube_trailer_key} className="w-full" />
                 </div>
               </div>
             )}
