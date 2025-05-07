@@ -7,12 +7,36 @@ import { getSupabaseClient } from '@/lib/supabase/config';
 
 export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
   const [staff, setStaff] = useState(initialStaff || []);
+  const [groupedStaff, setGroupedStaff] = useState([]);
   const [loading, setLoading] = useState(!initialStaff);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Si le staff est déjà fourni ou s'il n'y a pas d'ID de film, ne pas charger les données
-    if (initialStaff || !filmId) {
+    // Si le staff est déjà fourni, le regrouper par nom
+    if (initialStaff) {
+      const grouped = initialStaff.reduce((acc, person) => {
+        const existingPerson = acc.find(p => p.nom === person.nom);
+        
+        if (existingPerson) {
+          existingPerson.roles.push(person.role);
+        } else {
+          acc.push({
+            id: person.id,
+            nom: person.nom,
+            photo_url: person.photo_url,
+            roles: [person.role]
+          });
+        }
+        
+        return acc;
+      }, []);
+      
+      setGroupedStaff(grouped);
+      return;
+    }
+    
+    // S'il n'y a pas d'ID de film, ne pas charger les données
+    if (!filmId) {
       return;
     }
 
@@ -34,7 +58,30 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
           throw error;
         }
 
-        setStaff(data || []);
+        const staffData = data || [];
+        setStaff(staffData);
+        
+        // Regrouper le staff par nom
+        const grouped = staffData.reduce((acc, person) => {
+          const existingPerson = acc.find(p => p.nom === person.nom);
+          
+          if (existingPerson) {
+            // Si cette personne existe déjà, ajouter ce rôle à ses rôles
+            existingPerson.roles.push(person.role);
+          } else {
+            // Sinon, créer une nouvelle entrée avec ce rôle
+            acc.push({
+              id: person.id,
+              nom: person.nom,
+              photo_url: person.photo_url,
+              roles: [person.role]
+            });
+          }
+          
+          return acc;
+        }, []);
+        
+        setGroupedStaff(grouped);
       } catch (err) {
         console.error('Erreur lors de la récupération du staff:', err);
         setError(err);
@@ -62,7 +109,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
     );
   }
 
-  if (!staff || staff.length === 0) {
+  if (!groupedStaff || groupedStaff.length === 0) {
     return (
       <div className="text-center py-4">
         <p className="text-gray-500">Aucun membre du staff remarquable.</p>
@@ -72,7 +119,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-      {staff.map((person) => (
+      {groupedStaff.map((person) => (
         <div key={person.id || Math.random().toString(36).substring(7)} className="flex flex-col items-center">
           <div className="relative h-32 w-32 rounded-full overflow-hidden mb-2">
             <SafeImage
@@ -84,7 +131,11 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
             />
           </div>
           <h4 className="text-center font-medium">{person.nom || 'Inconnu'}</h4>
-          <p className="text-center text-sm text-gray-600">{person.role || 'Rôle non spécifié'}</p>
+          <div className="text-center text-sm text-gray-600">
+            {person.roles.map((role, index) => (
+              <p key={index}>{role}</p>
+            ))}
+          </div>
         </div>
       ))}
     </div>

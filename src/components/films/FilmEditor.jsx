@@ -18,12 +18,50 @@ export default function FilmEditor({ movieDetails }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
+  const [multiRolePersons, setMultiRolePersons] = useState({});
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
     if (movieDetails?.videos?.results) {
       const key = getTrailerKey(movieDetails.videos);
       setTrailerKey(key);
+    }
+    
+    // Identifier les personnes qui ont plusieurs rôles
+    if (movieDetails?.credits) {
+      const personRoles = {};
+      
+      // Parcourir le casting
+      if (movieDetails.credits.cast) {
+        movieDetails.credits.cast.forEach(person => {
+          if (!personRoles[person.id]) {
+            personRoles[person.id] = [];
+          }
+          personRoles[person.id].push('cast');
+        });
+      }
+      
+      // Parcourir l'équipe technique
+      if (movieDetails.credits.crew) {
+        movieDetails.credits.crew.forEach(person => {
+          if (!personRoles[person.id]) {
+            personRoles[person.id] = [];
+          }
+          if (!personRoles[person.id].includes(person.job)) {
+            personRoles[person.id].push(person.job);
+          }
+        });
+      }
+      
+      // Identifier les personnes qui ont plusieurs rôles
+      const multiRoles = {};
+      Object.entries(personRoles).forEach(([personId, roles]) => {
+        if (roles.length > 1) {
+          multiRoles[personId] = true;
+        }
+      });
+      
+      setMultiRolePersons(multiRoles);
     }
   }, [movieDetails]);
 
@@ -284,18 +322,30 @@ export default function FilmEditor({ movieDetails }) {
                     <p className="text-sm text-gray-600 text-center">{person.character}</p>
                   )}
                   
-                  {/* Case à cocher pour le rôle d'acteur */}
-                  <div className="mt-2 flex items-center justify-center">
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isRoleSelected(person.id, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
-                        onChange={() => toggleRoleSelection(person, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
-                        className="form-checkbox h-4 w-4 text-blue-600"
-                      />
-                      <span className="ml-2 text-sm">Sélectionner comme acteur</span>
-                    </label>
-                  </div>
+                  {/* Case à cocher pour le rôle d'acteur (seulement si la personne a plusieurs rôles) */}
+                  {multiRolePersons[person.id] ? (
+                    <div className="mt-2 flex items-center justify-center">
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isRoleSelected(person.id, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
+                          onChange={() => toggleRoleSelection(person, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
+                          className="form-checkbox h-4 w-4 text-blue-600"
+                        />
+                        <span className="ml-2 text-sm">Sélectionner comme acteur</span>
+                      </label>
+                    </div>
+                  ) : (
+                    // Si la personne n'a qu'un seul rôle, la sélectionner automatiquement
+                    <div className="mt-2 text-center">
+                      <button 
+                        className={`px-3 py-1 rounded-full text-sm ${isRoleSelected(person.id, `Acteur${person.character ? ` (${person.character})` : ''}`) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                        onClick={() => toggleRoleSelection(person, `Acteur${person.character ? ` (${person.character})` : ''}`)}
+                      >
+                        {isRoleSelected(person.id, `Acteur${person.character ? ` (${person.character})` : ''}`) ? 'Sélectionné' : 'Sélectionner'}
+                      </button>
+                    </div>
+                  )}
                   
                   {getSelectedRolesCount(person.id) > 0 && (
                     <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
@@ -339,18 +389,30 @@ export default function FilmEditor({ movieDetails }) {
                       <p className="text-sm text-gray-600 text-center">{person.job}</p>
                     )}
                     
-                    {/* Case à cocher pour le rôle spécifique */}
-                    <div className="mt-2 flex items-center justify-center">
-                      <label className="flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={isRoleSelected(person.id, person.job)} 
-                          onChange={() => toggleRoleSelection(person, person.job)} 
-                          className="form-checkbox h-4 w-4 text-blue-600"
-                        />
-                        <span className="ml-2 text-sm">Sélectionner comme {person.job}</span>
-                      </label>
-                    </div>
+                    {/* Case à cocher pour le rôle spécifique (seulement si la personne a plusieurs rôles) */}
+                    {multiRolePersons[person.id] ? (
+                      <div className="mt-2 flex items-center justify-center">
+                        <label className="flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={isRoleSelected(person.id, person.job)} 
+                            onChange={() => toggleRoleSelection(person, person.job)} 
+                            className="form-checkbox h-4 w-4 text-blue-600"
+                          />
+                          <span className="ml-2 text-sm">Sélectionner comme {person.job}</span>
+                        </label>
+                      </div>
+                    ) : (
+                      // Si la personne n'a qu'un seul rôle, la sélectionner automatiquement
+                      <div className="mt-2 text-center">
+                        <button 
+                          className={`px-3 py-1 rounded-full text-sm ${isRoleSelected(person.id, person.job) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                          onClick={() => toggleRoleSelection(person, person.job)}
+                        >
+                          {isRoleSelected(person.id, person.job) ? 'Sélectionné' : 'Sélectionner'}
+                        </button>
+                      </div>
+                    )}
                     
                     {getSelectedRolesCount(person.id) > 0 && (
                       <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
