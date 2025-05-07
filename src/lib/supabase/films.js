@@ -189,12 +189,13 @@ export async function saveFilm(film) {
 export async function saveRemarkableStaff(staffMember) {
   try {
     const supabase = getSupabaseClient();
-    // Vérifier si ce membre du staff existe déjà pour ce film
+    // Vérifier si ce membre du staff avec ce rôle spécifique existe déjà pour ce film
     const { data: existingStaff, error: checkError } = await supabase
       .from('remarkable_staff')
       .select('id')
       .eq('film_id', staffMember.film_id)
       .eq('nom', staffMember.nom)
+      .eq('role', staffMember.role) // Ajouter la vérification du rôle
       .maybeSingle();
 
     if (checkError) throw checkError;
@@ -202,7 +203,7 @@ export async function saveRemarkableStaff(staffMember) {
     let result;
 
     if (existingStaff) {
-      // Mettre à jour le membre du staff existant
+      // Mettre à jour le membre du staff existant avec ce rôle spécifique
       const { data, error } = await supabase
         .from('remarkable_staff')
         .update(staffMember)
@@ -213,7 +214,7 @@ export async function saveRemarkableStaff(staffMember) {
       if (error) throw error;
       result = data;
     } else {
-      // Insérer un nouveau membre du staff
+      // Insérer un nouveau membre du staff avec ce rôle
       const { data, error } = await supabase
         .from('remarkable_staff')
         .insert(staffMember)
