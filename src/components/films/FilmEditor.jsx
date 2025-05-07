@@ -13,7 +13,7 @@ export default function FilmEditor({ movieDetails }) {
   const router = useRouter();
   const { user, supabase } = useAuth();
   const [rating, setRating] = useState(5);
-  const [selectedStaff, setSelectedStaff] = useState([]);
+  const [selectedRoles, setSelectedRoles] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -37,20 +37,47 @@ export default function FilmEditor({ movieDetails }) {
     }
   }, [user, router]);
 
-  const toggleStaffSelection = (person) => {
-    setSelectedStaff((prev) => {
-      const isSelected = prev.some((p) => p.id === person.id);
+  const toggleRoleSelection = (person, role) => {
+    setSelectedRoles(prev => {
+      const newRoles = { ...prev };
       
-      if (isSelected) {
-        return prev.filter((p) => p.id !== person.id);
-      } else {
-        return [...prev, person];
+      // Si cette personne n'a pas encore de rôles sélectionnés, créer un tableau vide
+      if (!newRoles[person.id]) {
+        newRoles[person.id] = [];
       }
+      
+      // Vérifier si ce rôle est déjà sélectionné
+      const roleIndex = newRoles[person.id].findIndex(r => r.role === role);
+      
+      if (roleIndex >= 0) {
+        // Si le rôle est déjà sélectionné, le supprimer
+        newRoles[person.id].splice(roleIndex, 1);
+        
+        // Si plus aucun rôle n'est sélectionné pour cette personne, supprimer l'entrée
+        if (newRoles[person.id].length === 0) {
+          delete newRoles[person.id];
+        }
+      } else {
+        // Sinon, ajouter ce rôle
+        newRoles[person.id].push({
+          role,
+          name: person.name || 'Inconnu',
+          profile_path: person.profile_path
+        });
+      }
+      
+      return newRoles;
     });
   };
 
-  const isStaffSelected = (personId) => {
-    return selectedStaff.some((p) => p.id === personId);
+  const isRoleSelected = (personId, role) => {
+    if (!selectedRoles[personId]) return false;
+    return selectedRoles[personId].some(r => r.role === role);
+  };
+  
+  const getSelectedRolesCount = (personId) => {
+    if (!selectedRoles[personId]) return 0;
+    return selectedRoles[personId].length;
   };
 
   const handleSave = async () => {
@@ -91,22 +118,26 @@ export default function FilmEditor({ movieDetails }) {
         throw new Error('Erreur lors de la sauvegarde du film');
       }
 
-      // Sauvegarder le staff remarquable
-      if (selectedStaff.length > 0) {
-        const staffPromises = selectedStaff.map((person) => {
-          const isCast = movieDetails.credits?.cast?.some((p) => p.id === person.id);
-          const role = isCast 
-            ? `Acteur${person.character ? ` (${person.character})` : ''}`
-            : person.job || 'Équipe technique';
-
-          return saveRemarkableStaff({
-            film_id: savedFilm.id,
-            nom: person.name || 'Inconnu',
-            role,
-            photo_url: person.profile_path ? getImageUrl(person.profile_path, 'w185') : null,
-          });
+      // Sauvegarder le staff remarquable avec leurs rôles individuels
+      const staffPromises = [];
+      
+      // Parcourir toutes les personnes qui ont au moins un rôle sélectionné
+      Object.keys(selectedRoles).forEach(personId => {
+        // Pour chaque personne, parcourir tous ses rôles sélectionnés
+        selectedRoles[personId].forEach(roleInfo => {
+          // Créer une entrée dans la base de données pour chaque rôle
+          staffPromises.push(
+            saveRemarkableStaff({
+              film_id: savedFilm.id,
+              nom: roleInfo.name,
+              role: roleInfo.role,
+              photo_url: roleInfo.profile_path ? getImageUrl(roleInfo.profile_path, 'w185') : null,
+            })
+          );
         });
-
+      });
+      
+      if (staffPromises.length > 0) {
         await Promise.all(staffPromises);
       }
 
@@ -233,12 +264,11 @@ export default function FilmEditor({ movieDetails }) {
               {movieDetails.credits.cast.slice(0, 10).map((person) => (
                 <div 
                   key={person.id} 
-                  className={`relative cursor-pointer rounded-lg p-2 transition-all ${
-                    isStaffSelected(person.id) 
+                  className={`relative rounded-lg p-2 transition-all ${
+                    getSelectedRolesCount(person.id) > 0
                       ? 'bg-blue-100 border-2 border-blue-500' 
-                      : 'bg-white border border-gray-200 hover:border-blue-300'
+                      : 'bg-white border border-gray-200'
                   }`}
-                  onClick={() => toggleStaffSelection(person)}
                 >
                   <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
                     <SafeImage
@@ -254,9 +284,22 @@ export default function FilmEditor({ movieDetails }) {
                     <p className="text-sm text-gray-600 text-center">{person.character}</p>
                   )}
                   
-                  {isStaffSelected(person.id) && (
-                    <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1">
-                      <FiCheck size={16} />
+                  {/* Case à cocher pour le rôle d'acteur */}
+                  <div className="mt-2 flex items-center justify-center">
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={isRoleSelected(person.id, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
+                        onChange={() => toggleRoleSelection(person, `Acteur${person.character ? ` (${person.character})` : ''}`)} 
+                        className="form-checkbox h-4 w-4 text-blue-600"
+                      />
+                      <span className="ml-2 text-sm">Sélectionner comme acteur</span>
+                    </label>
+                  </div>
+                  
+                  {getSelectedRolesCount(person.id) > 0 && (
+                    <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
+                      {getSelectedRolesCount(person.id)}
                     </div>
                   )}
                 </div>
@@ -276,12 +319,11 @@ export default function FilmEditor({ movieDetails }) {
                 .map((person) => (
                   <div 
                     key={`${person.id}-${person.job}`} 
-                    className={`relative cursor-pointer rounded-lg p-2 transition-all ${
-                      isStaffSelected(person.id) 
+                    className={`relative rounded-lg p-2 transition-all ${
+                      getSelectedRolesCount(person.id) > 0
                         ? 'bg-blue-100 border-2 border-blue-500' 
-                        : 'bg-white border border-gray-200 hover:border-blue-300'
+                        : 'bg-white border border-gray-200'
                     }`}
-                    onClick={() => toggleStaffSelection(person)}
                   >
                     <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
                       <SafeImage
@@ -297,9 +339,22 @@ export default function FilmEditor({ movieDetails }) {
                       <p className="text-sm text-gray-600 text-center">{person.job}</p>
                     )}
                     
-                    {isStaffSelected(person.id) && (
-                      <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-1">
-                        <FiCheck size={16} />
+                    {/* Case à cocher pour le rôle spécifique */}
+                    <div className="mt-2 flex items-center justify-center">
+                      <label className="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isRoleSelected(person.id, person.job)} 
+                          onChange={() => toggleRoleSelection(person, person.job)} 
+                          className="form-checkbox h-4 w-4 text-blue-600"
+                        />
+                        <span className="ml-2 text-sm">Sélectionner comme {person.job}</span>
+                      </label>
+                    </div>
+                    
+                    {getSelectedRolesCount(person.id) > 0 && (
+                      <div className="absolute top-2 right-2 bg-blue-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
+                        {getSelectedRolesCount(person.id)}
                       </div>
                     )}
                   </div>
