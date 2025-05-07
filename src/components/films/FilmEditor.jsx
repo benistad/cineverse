@@ -3,35 +3,41 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { TMDBMovieDetails, TMDBPerson } from '@/types/tmdb';
 import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff } from '@/lib/supabase/films';
-import { Film } from '@/types/supabase';
+import { useAuth } from '@/contexts/AuthContext';
 import { FiCheck, FiX, FiSave } from 'react-icons/fi';
 import YouTube from 'react-youtube';
 
-interface FilmEditorProps {
-  movieDetails: TMDBMovieDetails;
-}
-
-export default function FilmEditor({ movieDetails }: FilmEditorProps) {
+export default function FilmEditor({ movieDetails }) {
   const router = useRouter();
-  const [rating, setRating] = useState<number>(5);
-  const [selectedStaff, setSelectedStaff] = useState<TMDBPerson[]>([]);
+  const { user, supabase } = useAuth();
+  const [rating, setRating] = useState(5);
+  const [selectedStaff, setSelectedStaff] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
-  const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
-    if (movieDetails.videos && movieDetails.videos.results) {
+    if (movieDetails?.videos?.results) {
       const key = getTrailerKey(movieDetails.videos);
       setTrailerKey(key);
     }
   }, [movieDetails]);
 
-  const toggleStaffSelection = (person: TMDBPerson) => {
+  // Vérifier si l'utilisateur est connecté
+  useEffect(() => {
+    if (!user) {
+      setError("Vous devez être connecté pour noter un film. Redirection vers la page de connexion...");
+      setTimeout(() => {
+        router.push('/admin');
+      }, 2000);
+    }
+  }, [user, router]);
+
+  const toggleStaffSelection = (person) => {
     setSelectedStaff((prev) => {
       const isSelected = prev.some((p) => p.id === person.id);
       
@@ -43,22 +49,34 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
     });
   };
 
-  const isStaffSelected = (personId: number) => {
+  const isStaffSelected = (personId) => {
     return selectedStaff.some((p) => p.id === personId);
   };
 
   const handleSave = async () => {
+    if (!user) {
+      setError("Vous devez être connecté pour noter un film.");
+      return;
+    }
+
     setIsSaving(true);
     setError(null);
     setSuccess(false);
 
     try {
-      // Préparer les données du film
-      const filmData: Omit<Film, 'id' | 'created_at'> = {
+      // S'assurer que movieDetails existe et a les propriétés nécessaires
+      if (!movieDetails) {
+        throw new Error('Détails du film non disponibles');
+      }
+
+      // Préparer les données du film avec vérification des valeurs nulles
+      const filmData = {
         tmdb_id: movieDetails.id,
-        title: movieDetails.title,
-        slug: movieDetails.title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-'),
-        synopsis: movieDetails.overview,
+        title: movieDetails.title || 'Sans titre',
+        slug: movieDetails.title 
+          ? movieDetails.title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-') 
+          : 'film-sans-titre',
+        synopsis: movieDetails.overview || '',
         poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         note_sur_10: rating,
@@ -74,21 +92,23 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
       }
 
       // Sauvegarder le staff remarquable
-      const staffPromises = selectedStaff.map((person) => {
-        const isCast = movieDetails.credits?.cast.some((p) => p.id === person.id);
-        const role = isCast 
-          ? `Acteur${person.character ? ` (${person.character})` : ''}`
-          : person.job || 'Équipe technique';
+      if (selectedStaff.length > 0) {
+        const staffPromises = selectedStaff.map((person) => {
+          const isCast = movieDetails.credits?.cast?.some((p) => p.id === person.id);
+          const role = isCast 
+            ? `Acteur${person.character ? ` (${person.character})` : ''}`
+            : person.job || 'Équipe technique';
 
-        return saveRemarkableStaff({
-          film_id: savedFilm.id,
-          nom: person.name,
-          role,
-          photo_url: person.profile_path ? getImageUrl(person.profile_path, 'w185') : null,
+          return saveRemarkableStaff({
+            film_id: savedFilm.id,
+            nom: person.name || 'Inconnu',
+            role,
+            photo_url: person.profile_path ? getImageUrl(person.profile_path, 'w185') : null,
+          });
         });
-      });
 
-      await Promise.all(staffPromises);
+        await Promise.all(staffPromises);
+      }
 
       setSuccess(true);
       
@@ -103,6 +123,17 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
       setIsSaving(false);
     }
   };
+
+  // Si les détails du film ne sont pas disponibles, afficher un message de chargement
+  if (!movieDetails) {
+    return (
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -121,68 +152,61 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Poster */}
         <div className="md:col-span-1">
-          <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-md">
-            <Image
-              src={getImageUrl(movieDetails.poster_path)}
-              alt={movieDetails.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover"
-              priority
-            />
+          <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-md mb-4">
+            {movieDetails.poster_path ? (
+              <Image
+                src={getImageUrl(movieDetails.poster_path)}
+                alt={movieDetails.title || 'Poster du film'}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover"
+                priority
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                <span className="text-gray-500">Aucune image disponible</span>
+              </div>
+            )}
           </div>
-        </div>
-
-        {/* Informations du film */}
-        <div className="md:col-span-2">
-          <h1 className="text-3xl font-bold mb-2">{movieDetails.title}</h1>
           
-          <div className="flex items-center mb-4">
-            <span className="text-gray-600 mr-2">Date de sortie:</span>
-            <span>{movieDetails.release_date || 'Inconnue'}</span>
-          </div>
-
-          <div className="mb-4">
-            <span className="text-gray-600 mr-2">Genres:</span>
-            <div className="flex flex-wrap gap-2 mt-1">
-              {movieDetails.genres?.map((genre) => (
-                <span key={genre.id} className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm">
-                  {genre.name}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-2">Synopsis</h3>
-            <p className="text-gray-700">
-              {movieDetails.overview || 'Aucun synopsis disponible.'}
-            </p>
-          </div>
-
-          {/* Note */}
-          <div className="mb-6">
+          {/* Notation */}
+          <div className="bg-gray-100 p-4 rounded-lg">
             <h3 className="text-lg font-semibold mb-2">Votre note</h3>
             <div className="flex items-center">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-                <button
-                  key={value}
-                  onClick={() => setRating(value)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-full mr-1 ${
-                    value <= rating ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray-600'
-                  }`}
-                >
-                  {value}
-                </button>
-              ))}
+              <input
+                type="range"
+                min="0"
+                max="10"
+                step="0.5"
+                value={rating}
+                onChange={(e) => setRating(parseFloat(e.target.value))}
+                className="w-full mr-2"
+              />
+              <span className="font-bold text-xl">{rating}/10</span>
             </div>
           </div>
-
+        </div>
+        
+        {/* Informations */}
+        <div className="md:col-span-2">
+          <h2 className="text-2xl font-bold mb-2">{movieDetails.title || 'Sans titre'}</h2>
+          
+          {movieDetails.release_date && (
+            <p className="text-gray-600 mb-4">
+              Sortie le {new Date(movieDetails.release_date).toLocaleDateString('fr-FR')}
+            </p>
+          )}
+          
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">Synopsis</h3>
+            <p className="text-gray-700">{movieDetails.overview || 'Aucun synopsis disponible.'}</p>
+          </div>
+          
           {/* Bande-annonce */}
           {trailerKey && (
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">Bande-annonce</h3>
-              <div className="aspect-w-16 aspect-h-9">
+              <div className="relative pt-[56.25%]">
                 <YouTube
                   videoId={trailerKey}
                   opts={{
@@ -192,21 +216,25 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
                       autoplay: 0,
                     },
                   }}
+                  className="absolute top-0 left-0 w-full h-full"
                 />
               </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Staff Remarquable */}
+      
+      {/* Staff remarquable */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Sélectionner le Staff Remarquable</h2>
+        <h3 className="text-xl font-semibold mb-4">Sélectionnez le staff remarquable</h3>
+        <p className="text-gray-600 mb-4">
+          Cliquez sur les personnes que vous souhaitez mettre en avant pour ce film.
+        </p>
         
         {/* Cast */}
         {movieDetails.credits?.cast && movieDetails.credits.cast.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-3">Acteurs</h3>
+            <h3 className="text-xl font-semibold mb-3">Casting</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {movieDetails.credits.cast.slice(0, 10).map((person) => (
                 <div 
@@ -219,15 +247,21 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
                   onClick={() => toggleStaffSelection(person)}
                 >
                   <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
-                    <Image
-                      src={getImageUrl(person.profile_path, 'w185')}
-                      alt={person.name}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 20vw"
-                      className="object-cover"
-                    />
+                    {person.profile_path ? (
+                      <Image
+                        src={getImageUrl(person.profile_path, 'w185')}
+                        alt={person.name || 'Photo de l\'acteur'}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 20vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                        <span className="text-gray-500 text-sm">Aucune photo</span>
+                      </div>
+                    )}
                   </div>
-                  <h4 className="font-medium text-center">{person.name}</h4>
+                  <h4 className="font-medium text-center">{person.name || 'Inconnu'}</h4>
                   {person.character && (
                     <p className="text-sm text-gray-600 text-center">{person.character}</p>
                   )}
@@ -262,15 +296,21 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
                     onClick={() => toggleStaffSelection(person)}
                   >
                     <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
-                      <Image
-                        src={getImageUrl(person.profile_path, 'w185')}
-                        alt={person.name}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 20vw"
-                        className="object-cover"
-                      />
+                      {person.profile_path ? (
+                        <Image
+                          src={getImageUrl(person.profile_path, 'w185')}
+                          alt={person.name || 'Photo du technicien'}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 20vw"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                          <span className="text-gray-500 text-sm">Aucune photo</span>
+                        </div>
+                      )}
                     </div>
-                    <h4 className="font-medium text-center">{person.name}</h4>
+                    <h4 className="font-medium text-center">{person.name || 'Inconnu'}</h4>
                     {person.job && (
                       <p className="text-sm text-gray-600 text-center">{person.job}</p>
                     )}
@@ -299,7 +339,7 @@ export default function FilmEditor({ movieDetails }: FilmEditorProps) {
         <button
           onClick={handleSave}
           className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={isSaving}
+          disabled={isSaving || !user}
         >
           {isSaving ? (
             <>
