@@ -4,11 +4,10 @@ import { getFilmById } from '@/lib/supabase/films';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import { FiStar } from 'react-icons/fi';
 import YouTube from 'react-youtube';
-import { PageProps } from 'next';
 
 export const revalidate = 3600; // Revalider la page toutes les heures
 
-export default async function FilmPage({ params }: PageProps) {
+export default async function FilmPage({ params }: { params: { id: string } }) {
   const film = await getFilmById(params.id);
 
   if (!film) {
