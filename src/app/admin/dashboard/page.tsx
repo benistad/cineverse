@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
-import { requireAuth } from '@/lib/supabase/auth';
 import { FiPlus, FiSearch } from 'react-icons/fi';
 
 export const metadata = {
@@ -10,9 +9,6 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  // Vérifier l'authentification
-  await requireAuth();
-  
   // Récupérer tous les films notés
   const films = await getAllFilms();
 
@@ -37,7 +33,7 @@ export default async function DashboardPage() {
       </div>
 
       {films.length > 0 ? (
-        <FilmGrid films={films as any} showAdminControls={true} />
+        <FilmGrid films={films} showAdminControls={true} />
       ) : (
         <div className="text-center py-16 bg-white rounded-lg shadow">
           <h2 className="text-2xl font-bold mb-4">Aucun film noté</h2>

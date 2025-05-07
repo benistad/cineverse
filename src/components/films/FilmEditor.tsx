@@ -7,7 +7,7 @@ import { TMDBMovieDetails, TMDBPerson } from '@/types/tmdb';
 import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff } from '@/lib/supabase/films';
 import { Film } from '@/types/supabase';
-import { FiStar, FiCheck, FiX, FiSave } from 'react-icons/fi';
+import { FiCheck, FiX, FiSave } from 'react-icons/fi';
 import YouTube from 'react-youtube';
 
 interface FilmEditorProps {

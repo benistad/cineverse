@@ -53,7 +53,7 @@ export default function DeleteFilmButton({ filmId, filmTitle }: DeleteFilmButton
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
             <h3 className="text-xl font-bold mb-4">Confirmer la suppression</h3>
             <p className="mb-6">
-              Êtes-vous sûr de vouloir supprimer le film <strong>"{filmTitle}"</strong> ? Cette action est irréversible.
+              Êtes-vous sûr de vouloir supprimer le film <strong>&quot;{filmTitle}&quot;</strong> ? Cette action est irréversible.
             </p>
             <div className="flex justify-end gap-4">
               <button

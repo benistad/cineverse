@@ -17,7 +17,7 @@ export default function LoginForm() {
     setError(null);
 
     try {
-      const { success, error } = await signInWithEmail(email, password);
+      const { success } = await signInWithEmail(email, password);
 
       if (!success) {
         setError('Identifiants incorrects. Veuillez réessayer.');

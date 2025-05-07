@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getFilmById } from '@/lib/supabase/films';
-import { requireAuth } from '@/lib/supabase/auth';
 import { FiArrowLeft } from 'react-icons/fi';
 import DeleteFilmButton from '@/components/films/DeleteFilmButton';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
@@ -15,9 +14,6 @@ interface EditRatedPageProps {
 }
 
 export default async function EditRatedPage({ params }: EditRatedPageProps) {
-  // Vérifier l'authentification
-  await requireAuth();
-  
   // Récupérer les détails du film depuis Supabase
   const film = await getFilmById(params.id);
   

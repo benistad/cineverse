@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { searchMovies } from '@/lib/tmdb/api';
 import { TMDBMovie } from '@/types/tmdb';
 import SearchForm from '@/components/films/SearchForm';
@@ -16,6 +16,7 @@ export default function SearchPage() {
   const [totalPages, setTotalPages] = useState(0);
   const [currentQuery, setCurrentQuery] = useState('');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleSearch = async (query: string, page: number = 1) => {
     setIsSearching(true);
@@ -47,7 +48,7 @@ export default function SearchPage() {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold mb-2">Rechercher un film</h1>
         <p className="text-gray-600">
-          Recherchez un film par titre pour l'ajouter à votre collection
+          Recherchez un film par titre pour l&apos;ajouter à votre collection
         </p>
       </div>
 
@@ -55,16 +56,22 @@ export default function SearchPage() {
 
       {hasSearched && (
         <div>
-          <h2 className="text-2xl font-bold mb-4">Résultats de recherche</h2>
-          <MovieSearchResults movies={searchResults} isLoading={isSearching} />
-          
-          {/* Pagination */}
-          {totalPages > 0 && (
-            <Pagination 
-              currentPage={currentPage} 
-              totalPages={totalPages} 
-              onPageChange={handlePageChange} 
-            />
+          {searchResults.length === 0 ? (
+            <p className="text-center text-gray-500 my-8">Aucun résultat n&apos;a été trouvé. Essayez d&apos;autres termes de recherche.</p>
+          ) : (
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Résultats de recherche</h2>
+              <MovieSearchResults movies={searchResults} isLoading={isSearching} />
+              
+              {/* Pagination */}
+              {totalPages > 0 && (
+                <Pagination 
+                  currentPage={currentPage} 
+                  totalPages={totalPages} 
+                  onPageChange={handlePageChange} 
+                />
+              )}
+            </div>
           )}
         </div>
       )}

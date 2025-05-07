@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TMDBMovie, TMDBMovieDetails, TMDBSearchResponse } from '@/types/tmdb';
 
 // Configuration de l'API TMDB
-const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY || '4d8c7fb7bb45955c22ccf1cf1c6823da';
+// Utilisation du token d'authentification pour les requêtes
 const TMDB_API_TOKEN = process.env.TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsIm5iZiI6MS43NDY1MTUwNTQyODE5OTk4ZSs5LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.mI9mPVyASt5bsbRwtVN5eUs6uyz28Tvy-FRJTT6vdg8';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
@@ -86,14 +86,14 @@ export const getImageUrl = (path: string | null, size: string = 'w500'): string 
 /**
  * Récupération de la bande-annonce d'un film
  */
-export const getTrailerKey = (videos: any): string | null => {
+export const getTrailerKey = (videos: { results: Array<{ site: string; type: string; official: boolean; iso_639_1: string; key: string }> }): string | null => {
   if (!videos || !videos.results || videos.results.length === 0) {
     return null;
   }
 
   // Recherche d'abord une bande-annonce officielle en français
   let trailer = videos.results.find(
-    (video: any) => 
+    (video) => 
       video.site === 'YouTube' && 
       video.type === 'Trailer' && 
       video.official === true &&
@@ -103,7 +103,7 @@ export const getTrailerKey = (videos: any): string | null => {
   // Si pas de bande-annonce en français, cherche une bande-annonce officielle en anglais
   if (!trailer) {
     trailer = videos.results.find(
-      (video: any) => 
+      (video) => 
         video.site === 'YouTube' && 
         video.type === 'Trailer' && 
         video.official === true
@@ -112,7 +112,7 @@ export const getTrailerKey = (videos: any): string | null => {
 
   // Si toujours rien, prend n'importe quelle vidéo YouTube
   if (!trailer) {
-    trailer = videos.results.find((video: any) => video.site === 'YouTube');
+    trailer = videos.results.find((video) => video.site === 'YouTube');
   }
 
   return trailer ? trailer.key : null;
