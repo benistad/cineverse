@@ -364,8 +364,23 @@ export default function FilmEditor({ movieDetails }) {
             <h3 className="text-xl font-semibold mb-3">Équipe technique</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {movieDetails.credits.crew
-                .filter((person) => ['Director', 'Writer', 'Producer', 'Screenplay'].includes(person.job || ''))
-                .slice(0, 10)
+                .filter((person) => [
+                  'Director',            // Réalisateur
+                  'Writer',              // Scénariste
+                  'Producer',            // Producteur
+                  'Screenplay',          // Scénariste
+                  'Director of Photography', // Directeur de la photographie
+                  'Cinematography',      // Cinématographie
+                  'Original Music Composer', // Compositeur de musique
+                  'Music',               // Musique
+                  'Production Design',   // Directeur artistique
+                  'Costume Design',      // Costumes
+                  'Editor',              // Monteur
+                  'Sound',               // Son
+                  'Visual Effects',      // Effets visuels
+                  'Executive Producer'   // Producteur exécutif
+                ].includes(person.job || ''))
+                .slice(0, 20) // Augmenter le nombre maximum de membres d'équipe affichés
                 .map((person) => (
                   <div 
                     key={`${person.id}-${person.job}`} 
