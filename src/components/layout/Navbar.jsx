@@ -3,23 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { getCurrentUser, signOut } from '@/lib/supabase/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm } from 'react-icons/fi';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith('/admin');
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const user = await getCurrentUser();
-      setIsLoggedIn(!!user);
-    };
-
-    checkAuth();
-  }, []);
+  const isAdmin = pathname?.startsWith('/admin');
+  const { user, loading, signOut } = useAuth();
 
   const handleLogout = async () => {
     await signOut();
@@ -51,7 +42,7 @@ export default function Navbar() {
               Accueil
             </Link>
             
-            {isLoggedIn && (
+            {!loading && user && (
               <>
                 <Link 
                   href="/admin/dashboard" 
@@ -78,7 +69,7 @@ export default function Navbar() {
               </>
             )}
             
-            {!isLoggedIn && isAdmin && (
+            {!loading && !user && isAdmin && (
               <Link 
                 href="/admin" 
                 className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
@@ -114,7 +105,7 @@ export default function Navbar() {
               <FiHome className="mr-2" /> Accueil
             </Link>
             
-            {isLoggedIn && (
+            {!loading && user && (
               <>
                 <Link 
                   href="/admin/dashboard" 
@@ -146,7 +137,7 @@ export default function Navbar() {
               </>
             )}
             
-            {!isLoggedIn && isAdmin && (
+            {!loading && !user && isAdmin && (
               <Link 
                 href="/admin" 
                 className="flex items-center px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"

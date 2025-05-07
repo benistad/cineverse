@@ -1,13 +1,27 @@
 'use client';
 
-import { Film, RemarkableStaff, FilmWithStaff } from '@/types/supabase';
-import { getSupabaseClient } from './config';
-import { createSlug } from '../utils/string';
+import { createBrowserClient } from '@supabase/ssr';
+
+// Création du client Supabase côté client
+const getSupabaseClient = () => {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  );
+};
+
+// Fonction utilitaire pour créer un slug à partir d'un titre
+const createSlug = (title) => {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, '')
+    .replace(/\s+/g, '-');
+};
 
 /**
  * Récupère tous les films avec leur staff remarquable
  */
-export async function getAllFilms(): Promise<FilmWithStaff[]> {
+export async function getAllFilms() {
   try {
     const supabase = getSupabaseClient();
     // Récupérer tous les films, triés par date d'ajout (du plus récent au plus ancien)
@@ -50,7 +64,7 @@ export async function getAllFilms(): Promise<FilmWithStaff[]> {
 /**
  * Récupère un film par son ID avec son staff remarquable
  */
-export async function getFilmById(id: string): Promise<FilmWithStaff | null> {
+export async function getFilmById(id) {
   try {
     const supabase = getSupabaseClient();
     // Récupérer le film
@@ -84,7 +98,7 @@ export async function getFilmById(id: string): Promise<FilmWithStaff | null> {
 /**
  * Récupère un film par son slug avec son staff remarquable
  */
-export async function getFilmBySlug(slug: string): Promise<FilmWithStaff | null> {
+export async function getFilmBySlug(slug) {
   try {
     const supabase = getSupabaseClient();
     // Récupérer le film
@@ -118,7 +132,7 @@ export async function getFilmBySlug(slug: string): Promise<FilmWithStaff | null>
 /**
  * Ajoute ou met à jour un film
  */
-export async function saveFilm(film: Omit<Film, 'id' | 'created_at'>): Promise<Film | null> {
+export async function saveFilm(film) {
   try {
     const supabase = getSupabaseClient();
     // Vérifier si le film existe déjà (par tmdb_id)
@@ -172,9 +186,7 @@ export async function saveFilm(film: Omit<Film, 'id' | 'created_at'>): Promise<F
 /**
  * Ajoute ou met à jour un membre du staff remarquable
  */
-export async function saveRemarkableStaff(
-  staffMember: Omit<RemarkableStaff, 'id' | 'created_at'>
-): Promise<RemarkableStaff | null> {
+export async function saveRemarkableStaff(staffMember) {
   try {
     const supabase = getSupabaseClient();
     // Vérifier si ce membre du staff existe déjà pour ce film
@@ -222,7 +234,7 @@ export async function saveRemarkableStaff(
 /**
  * Supprime un film et son staff remarquable
  */
-export async function deleteFilm(id: string): Promise<boolean> {
+export async function deleteFilm(id) {
   try {
     const supabase = getSupabaseClient();
     // Supprimer d'abord le staff remarquable associé au film
@@ -251,7 +263,7 @@ export async function deleteFilm(id: string): Promise<boolean> {
 /**
  * Supprime un membre du staff remarquable
  */
-export async function deleteRemarkableStaff(id: string): Promise<boolean> {
+export async function deleteRemarkableStaff(id) {
   try {
     const supabase = getSupabaseClient();
     const { error } = await supabase

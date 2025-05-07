@@ -1,26 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithEmail } from '@/lib/supabase/auth';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const router = useRouter();
+  const { signIn } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const { success } = await signInWithEmail(email, password);
+      const { success, error } = await signIn(email, password);
 
       if (!success) {
         setError('Identifiants incorrects. Veuillez réessayer.');
+        console.error('Erreur de connexion:', error);
         return;
       }
 
