@@ -58,7 +58,7 @@ export default function EditPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <FilmEditor movie={movie} />
+      <FilmEditor movieDetails={movie} />
     </div>
   );
 }
