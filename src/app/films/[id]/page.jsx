@@ -6,14 +6,17 @@ import { useParams, useRouter } from 'next/navigation';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import { FiStar } from 'react-icons/fi';
 import YouTube from 'react-youtube';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function FilmPage() {
   const params = useParams();
   const router = useRouter();
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createClientComponentClient();
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
 
   useEffect(() => {
     async function fetchFilm() {

@@ -8,14 +8,17 @@ import { FiArrowLeft } from 'react-icons/fi';
 import DeleteFilmButton from '@/components/films/DeleteFilmButton';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import YouTube from 'react-youtube';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function EditRatedPage() {
   const params = useParams();
   const router = useRouter();
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createClientComponentClient();
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
 
   useEffect(() => {
     async function fetchFilm() {
