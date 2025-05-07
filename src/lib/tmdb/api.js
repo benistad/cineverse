@@ -1,5 +1,6 @@
+'use client';
+
 import axios from 'axios';
-import { TMDBMovie, TMDBMovieDetails, TMDBSearchResponse, TMDBVideos, TMDBVideo } from '@/types/tmdb';
 
 // Configuration de l'API TMDB
 // Utilisation du token d'authentification pour les requêtes
@@ -19,9 +20,9 @@ const tmdbApi = axios.create({
 /**
  * Recherche de films par titre
  */
-export const searchMovies = async (query: string, page: number = 1): Promise<TMDBSearchResponse> => {
+export const searchMovies = async (query, page = 1) => {
   try {
-    const response = await tmdbApi.get<TMDBSearchResponse>('/search/movie', {
+    const response = await tmdbApi.get('/search/movie', {
       params: {
         query,
         language: 'fr-FR',
@@ -39,9 +40,9 @@ export const searchMovies = async (query: string, page: number = 1): Promise<TMD
 /**
  * Récupération des détails d'un film par son ID
  */
-export const getMovieDetails = async (movieId: number): Promise<TMDBMovieDetails | null> => {
+export const getMovieDetails = async (movieId) => {
   try {
-    const response = await tmdbApi.get<TMDBMovieDetails>(`/movie/${movieId}`, {
+    const response = await tmdbApi.get(`/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
         append_to_response: 'credits,videos',
@@ -57,9 +58,9 @@ export const getMovieDetails = async (movieId: number): Promise<TMDBMovieDetails
 /**
  * Récupération des films populaires
  */
-export const getPopularMovies = async (page: number = 1): Promise<TMDBMovie[]> => {
+export const getPopularMovies = async (page = 1) => {
   try {
-    const response = await tmdbApi.get<TMDBSearchResponse>('/movie/popular', {
+    const response = await tmdbApi.get('/movie/popular', {
       params: {
         language: 'fr-FR',
         page,
@@ -74,11 +75,13 @@ export const getPopularMovies = async (page: number = 1): Promise<TMDBMovie[]> =
 
 /**
  * Construction de l'URL d'une image
+ * Retourne null si le chemin est null, ce qui permettra à SafeImage de gérer le fallback
  */
-export const getImageUrl = (path: string | null, size: string = 'w500'): string => {
+export const getImageUrl = (path, size = 'w500') => {
   if (!path) {
-    // Retourne une image placeholder si le chemin est null
-    return 'https://via.placeholder.com/500x750?text=Image+non+disponible';
+    // Retourne null au lieu d'une URL de placeholder
+    // SafeImage se chargera d'afficher un fallback
+    return null;
   }
   return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
 };
@@ -86,14 +89,14 @@ export const getImageUrl = (path: string | null, size: string = 'w500'): string 
 /**
  * Récupération de la bande-annonce d'un film
  */
-export const getTrailerKey = (videos: TMDBVideos): string | null => {
+export const getTrailerKey = (videos) => {
   if (!videos || !videos.results || videos.results.length === 0) {
     return null;
   }
 
   // Recherche d'abord une bande-annonce officielle en français
   let trailer = videos.results.find(
-    (video: TMDBVideo) => 
+    (video) => 
       video.site === 'YouTube' && 
       video.type === 'Trailer' && 
       video.official === true
@@ -102,7 +105,7 @@ export const getTrailerKey = (videos: TMDBVideos): string | null => {
   // Si pas de trailer, cherche une autre vidéo officielle
   if (!trailer) {
     trailer = videos.results.find(
-      (video: TMDBVideo) => 
+      (video) => 
         video.site === 'YouTube' && 
         video.official === true
     );
@@ -110,7 +113,7 @@ export const getTrailerKey = (videos: TMDBVideos): string | null => {
 
   // Si toujours rien, prend n'importe quelle vidéo YouTube
   if (!trailer) {
-    trailer = videos.results.find((video: TMDBVideo) => video.site === 'YouTube');
+    trailer = videos.results.find((video) => video.site === 'YouTube');
   }
 
   return trailer ? trailer.key : null;
