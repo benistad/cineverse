@@ -1,9 +1,6 @@
-import LoginForm from '@/components/auth/LoginForm';
+'use client';
 
-export const metadata = {
-  title: 'Connexion - CineVerse',
-  description: 'Connectez-vous pour gérer votre collection de films',
-};
+import LoginForm from '@/components/auth/LoginForm';
 
 export default function LoginPage() {
   return (
