@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/ui/SafeImage';
 import { useRouter } from 'next/navigation';
 import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff } from '@/lib/supabase/films';
@@ -153,20 +153,14 @@ export default function FilmEditor({ movieDetails }) {
         {/* Poster */}
         <div className="md:col-span-1">
           <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-md mb-4">
-            {movieDetails.poster_path ? (
-              <Image
-                src={getImageUrl(movieDetails.poster_path)}
-                alt={movieDetails.title || 'Poster du film'}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover"
-                priority
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                <span className="text-gray-500">Aucune image disponible</span>
-              </div>
-            )}
+            <SafeImage
+              src={movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null}
+              alt={movieDetails.title || 'Poster du film'}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              className="object-cover"
+              priority
+            />
           </div>
           
           {/* Notation */}
@@ -247,19 +241,13 @@ export default function FilmEditor({ movieDetails }) {
                   onClick={() => toggleStaffSelection(person)}
                 >
                   <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
-                    {person.profile_path ? (
-                      <Image
-                        src={getImageUrl(person.profile_path, 'w185')}
-                        alt={person.name || 'Photo de l\'acteur'}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 20vw"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                        <span className="text-gray-500 text-sm">Aucune photo</span>
-                      </div>
-                    )}
+                    <SafeImage
+                      src={person.profile_path ? getImageUrl(person.profile_path, 'w185') : null}
+                      alt={person.name || 'Photo de l\'acteur'}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 20vw"
+                      className="object-cover"
+                    />
                   </div>
                   <h4 className="font-medium text-center">{person.name || 'Inconnu'}</h4>
                   {person.character && (
@@ -296,19 +284,13 @@ export default function FilmEditor({ movieDetails }) {
                     onClick={() => toggleStaffSelection(person)}
                   >
                     <div className="relative h-40 w-full mb-2 rounded overflow-hidden">
-                      {person.profile_path ? (
-                        <Image
-                          src={getImageUrl(person.profile_path, 'w185')}
-                          alt={person.name || 'Photo du technicien'}
-                          fill
-                          sizes="(max-width: 768px) 50vw, 20vw"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                          <span className="text-gray-500 text-sm">Aucune photo</span>
-                        </div>
-                      )}
+                      <SafeImage
+                        src={person.profile_path ? getImageUrl(person.profile_path, 'w185') : null}
+                        alt={person.name || 'Photo du technicien'}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 20vw"
+                        className="object-cover"
+                      />
                     </div>
                     <h4 className="font-medium text-center">{person.name || 'Inconnu'}</h4>
                     {person.job && (

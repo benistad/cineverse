@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import SafeImage from '@/components/ui/SafeImage';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiStar, FiEdit, FiImage } from 'react-icons/fi';
@@ -42,20 +42,14 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.id}`}>
         <div className="relative h-64 w-full">
-          {film.poster_url ? (
-            <Image
-              src={film.poster_url}
-              alt={film.title || 'Poster du film'}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-200">
-              <FiImage className="text-gray-400" size={48} />
-            </div>
-          )}
+          <SafeImage
+            src={film.poster_url}
+            alt={film.title || 'Poster du film'}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+            priority
+          />
           
           {showRating && film.note_sur_10 !== undefined && (
             <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-2 flex items-center justify-center">
