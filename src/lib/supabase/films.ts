@@ -1,5 +1,7 @@
+'use client';
+
 import { Film, RemarkableStaff, FilmWithStaff } from '@/types/supabase';
-import { supabase } from './config';
+import { getSupabaseClient } from './config';
 import { createSlug } from '../utils/string';
 
 /**
@@ -7,6 +9,7 @@ import { createSlug } from '../utils/string';
  */
 export async function getAllFilms(): Promise<FilmWithStaff[]> {
   try {
+    const supabase = getSupabaseClient();
     // Récupérer tous les films, triés par date d'ajout (du plus récent au plus ancien)
     const { data: films, error } = await supabase
       .from('films')
@@ -19,6 +22,7 @@ export async function getAllFilms(): Promise<FilmWithStaff[]> {
     // Pour chaque film, récupérer son staff remarquable
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
+        const supabase = getSupabaseClient();
         const { data: staff, error: staffError } = await supabase
           .from('remarkable_staff')
           .select('*')
@@ -48,6 +52,7 @@ export async function getAllFilms(): Promise<FilmWithStaff[]> {
  */
 export async function getFilmById(id: string): Promise<FilmWithStaff | null> {
   try {
+    const supabase = getSupabaseClient();
     // Récupérer le film
     const { data: film, error } = await supabase
       .from('films')
@@ -81,6 +86,7 @@ export async function getFilmById(id: string): Promise<FilmWithStaff | null> {
  */
 export async function getFilmBySlug(slug: string): Promise<FilmWithStaff | null> {
   try {
+    const supabase = getSupabaseClient();
     // Récupérer le film
     const { data: film, error } = await supabase
       .from('films')
@@ -114,6 +120,7 @@ export async function getFilmBySlug(slug: string): Promise<FilmWithStaff | null>
  */
 export async function saveFilm(film: Omit<Film, 'id' | 'created_at'>): Promise<Film | null> {
   try {
+    const supabase = getSupabaseClient();
     // Vérifier si le film existe déjà (par tmdb_id)
     const { data: existingFilm, error: checkError } = await supabase
       .from('films')
@@ -169,6 +176,7 @@ export async function saveRemarkableStaff(
   staffMember: Omit<RemarkableStaff, 'id' | 'created_at'>
 ): Promise<RemarkableStaff | null> {
   try {
+    const supabase = getSupabaseClient();
     // Vérifier si ce membre du staff existe déjà pour ce film
     const { data: existingStaff, error: checkError } = await supabase
       .from('remarkable_staff')
@@ -216,6 +224,7 @@ export async function saveRemarkableStaff(
  */
 export async function deleteFilm(id: string): Promise<boolean> {
   try {
+    const supabase = getSupabaseClient();
     // Supprimer d'abord le staff remarquable associé au film
     const { error: staffError } = await supabase
       .from('remarkable_staff')
@@ -244,6 +253,7 @@ export async function deleteFilm(id: string): Promise<boolean> {
  */
 export async function deleteRemarkableStaff(id: string): Promise<boolean> {
   try {
+    const supabase = getSupabaseClient();
     const { error } = await supabase
       .from('remarkable_staff')
       .delete()

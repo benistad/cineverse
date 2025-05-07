@@ -1,16 +1,19 @@
-import { createClient } from '@supabase/supabase-js';
+'use client';
 
-// Récupération des variables d'environnement
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+import { createBrowserClient } from '@supabase/ssr';
 
-// Vérification de la présence des variables d'environnement
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Les variables d\'environnement Supabase ne sont pas définies');
+// Fonction pour créer un client Supabase côté client
+// Cette approche évite de créer plusieurs instances du client
+export function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Les variables d\'environnement Supabase ne sont pas définies');
+  }
+  
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
-
-// Création du client Supabase
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Types pour les tables Supabase
 export type Tables = {
