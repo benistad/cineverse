@@ -7,22 +7,6 @@ import YouTube from 'react-youtube';
 
 export const revalidate = 3600; // Revalider la page toutes les heures
 
-// Génération des métadonnées pour la page
-export async function generateMetadata({ params }) {
-  const film = await getFilmById(params.id);
-  if (!film) {
-    return {
-      title: 'Film non trouvé - CineVerse',
-      description: 'Le film demandé n\'a pas été trouvé',
-    };
-  }
-  
-  return {
-    title: `${film.titre} - CineVerse`,
-    description: film.synopsis || `Détails du film ${film.titre}`,
-  };
-}
-
 export default async function FilmPage({ params }) {
   const film = await getFilmById(params.id);
 

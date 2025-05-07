@@ -7,22 +7,6 @@ import DeleteFilmButton from '@/components/films/DeleteFilmButton';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import YouTube from 'react-youtube';
 
-// Génération des métadonnées pour la page
-export async function generateMetadata({ params }) {
-  const film = await getFilmById(params.id);
-  if (!film) {
-    return {
-      title: 'Film non trouvé - CineVerse',
-      description: 'Le film demandé n\'a pas été trouvé',
-    };
-  }
-  
-  return {
-    title: `Éditer ${film.titre} - CineVerse`,
-    description: `Éditer les détails du film ${film.titre}`,
-  };
-}
-
 export default async function EditRatedPage({ params }) {
   // Récupérer les détails du film depuis Supabase
   const film = await getFilmById(params.id);
