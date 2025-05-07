@@ -7,19 +7,29 @@ import { FiImage } from 'react-icons/fi';
 export default function SafeImage({ src, alt, fill = false, sizes, className = '', priority = false, ...props }) {
   const [error, setError] = useState(false);
 
-  // Si l'URL de l'image est vide ou undefined, afficher un placeholder
+  // Si l'URL de l'image est vide ou undefined, ou s'il y a eu une erreur de chargement
   if (!src || error) {
-    if (fill) {
-      return (
-        <div className={`relative w-full h-full flex items-center justify-center bg-gray-200 ${className}`}>
-          <FiImage className="text-gray-400" size={48} />
-        </div>
-      );
-    }
-    
+    // Créer un placeholder basé sur un div avec un arrière-plan coloré
+    const placeholderStyle = {
+      backgroundColor: '#e2e8f0', // Couleur de fond gris clair
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#94a3b8', // Couleur de texte gris
+      position: fill ? 'absolute' : 'relative',
+      inset: fill ? 0 : 'auto',
+      width: fill ? '100%' : props.width || '100%',
+      height: fill ? '100%' : props.height || '100%',
+    };
+
     return (
-      <div className={`flex items-center justify-center bg-gray-200 ${className}`} {...props}>
-        <FiImage className="text-gray-400" size={48} />
+      <div style={placeholderStyle} className={className}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <FiImage size={48} />
+          <span style={{ marginTop: '8px', fontSize: '14px' }}>
+            {alt || 'Image non disponible'}
+          </span>
+        </div>
       </div>
     );
   }
