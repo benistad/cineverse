@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+// Déclaration de module pour étendre les types de Next.js
 
 declare module 'next' {
   export interface PageProps {
