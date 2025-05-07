@@ -7,10 +7,11 @@ import YouTube from 'react-youtube';
 
 export const revalidate = 3600; // Revalider la page toutes les heures
 
-interface FilmPageProps {
+type FilmPageProps = {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default async function FilmPage({ params }: FilmPageProps) {

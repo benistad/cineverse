@@ -7,10 +7,11 @@ export const metadata = {
   description: 'Ajouter ou modifier un film dans votre collection',
 };
 
-interface EditPageProps {
+type EditPageProps = {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default async function EditPage({ params }: EditPageProps) {

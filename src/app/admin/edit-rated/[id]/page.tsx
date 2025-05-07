@@ -7,10 +7,11 @@ import DeleteFilmButton from '@/components/films/DeleteFilmButton';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import YouTube from 'react-youtube';
 
-interface EditRatedPageProps {
+type EditRatedPageProps = {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default async function EditRatedPage({ params }: EditRatedPageProps) {
