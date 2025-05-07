@@ -1,47 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import { supabase } from './config';
-
-/**
- * Crée un client Supabase côté serveur avec les cookies
- */
-export function createServerSupabaseClient() {
-  const cookieStore = cookies();
-  
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-        set(name: string, value: string, options: { path: string; maxAge: number; domain?: string }) {
-          cookieStore.set({ name, value, ...options });
-        },
-        remove(name: string, options: { path: string; domain?: string }) {
-          cookieStore.set({ name, value: '', ...options, maxAge: 0 });
-        },
-      },
-    }
-  );
-}
-
-/**
- * Vérifie si l'utilisateur est connecté côté serveur
- * Redirige vers la page de connexion si non connecté
- */
-export async function requireAuth() {
-  const supabase = createServerSupabaseClient();
-  const { data: { session } } = await supabase.auth.getSession();
-  
-  if (!session) {
-    redirect('/admin');
-  }
-  
-  return session;
-}
 
 /**
  * Connexion avec email et mot de passe
