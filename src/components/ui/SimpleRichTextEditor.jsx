@@ -1,60 +1,77 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function SimpleRichTextEditor({ value, onChange, placeholder = 'Commencez à écrire...' }) {
-  const editorRef = useRef(null);
-  const [currentValue, setCurrentValue] = useState(value || '');
+  const [text, setText] = useState(value || '');
+  const [previewMode, setPreviewMode] = useState(false);
   
-  // Synchroniser la valeur externe avec l'état interne
-  useEffect(() => {
-    setCurrentValue(value || '');
-  }, [value]);
-  
-  // Initialiser l'éditeur une fois monté
-  useEffect(() => {
-    if (editorRef.current) {
-      // S'assurer que la direction est de gauche à droite
-      editorRef.current.style.direction = 'ltr';
-      editorRef.current.style.textAlign = 'left';
-    }
-  }, []);
-  
-  // Mettre à jour le contenu HTML et déclencher l'événement onChange
-  const handleInput = () => {
-    if (editorRef.current) {
-      const newValue = editorRef.current.innerHTML;
-      setCurrentValue(newValue);
-      if (onChange) {
-        onChange(newValue);
-      }
+  // Gérer les changements de texte
+  const handleChange = (e) => {
+    const newText = e.target.value;
+    setText(newText);
+    if (onChange) {
+      onChange(newText);
     }
   };
   
-  // Appliquer une commande de formatage
-  const applyFormat = (command, value = null) => {
-    document.execCommand(command, false, value);
-    editorRef.current.focus();
-    handleInput();
+  // Insérer du texte formaté à la position du curseur
+  const insertFormatting = (startTag, endTag) => {
+    const textarea = document.getElementById('rich-text-editor');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+    const beforeText = textarea.value.substring(0, start);
+    const afterText = textarea.value.substring(end);
+    
+    const newText = beforeText + startTag + selectedText + endTag + afterText;
+    setText(newText);
+    if (onChange) {
+      onChange(newText);
+    }
+    
+    // Remettre le focus sur le textarea et positionner le curseur après le texte formaté
+    setTimeout(() => {
+      textarea.focus();
+      const newCursorPos = start + startTag.length + selectedText.length + endTag.length;
+      textarea.setSelectionRange(newCursorPos, newCursorPos);
+    }, 0);
   };
   
-  // Gérer spécifiquement l'ajout de liste à puces
+  // Fonctions de formatage
+  const makeBold = () => insertFormatting('<strong>', '</strong>');
+  const makeItalic = () => insertFormatting('<em>', '</em>');
+  const makeUnderline = () => insertFormatting('<u>', '</u>');
   const addBulletList = () => {
-    // Vérifier si le curseur est dans une liste existante
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const parentElement = range.commonAncestorContainer.parentElement;
+    const textarea = document.getElementById('rich-text-editor');
+    const start = textarea.selectionStart;
+    const selectedText = textarea.value.substring(start, textarea.selectionEnd);
     
-    // Si nous ne sommes pas déjà dans une liste, créer une nouvelle liste
-    if (parentElement.tagName !== 'LI' && parentElement.parentElement?.tagName !== 'UL') {
-      document.execCommand('insertUnorderedList', false, null);
+    // Créer une liste à puces avec le texte sélectionné
+    let formattedText;
+    if (selectedText.trim() === '') {
+      // Si aucun texte n'est sélectionné, ajouter une liste vide
+      formattedText = '<ul>\n  <li>Élément de liste</li>\n</ul>\n';
     } else {
-      // Sinon, basculer la liste existante
-      document.execCommand('insertUnorderedList', false, null);
+      // Sinon, transformer le texte sélectionné en liste
+      const lines = selectedText.split('\n');
+      let listItems = '';
+      lines.forEach(line => {
+        if (line.trim() !== '') {
+          listItems += `  <li>${line.trim()}</li>\n`;
+        }
+      });
+      formattedText = '<ul>\n' + listItems + '</ul>\n';
     }
     
-    editorRef.current.focus();
-    handleInput();
+    insertFormatting('', formattedText);
+  };
+  
+  // Convertir le HTML en texte brut pour l'affichage dans le textarea
+  const getPlainText = (html) => {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    return temp.textContent || temp.innerText || '';
   };
   
   return (
@@ -63,9 +80,10 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
       <div className="flex items-center gap-2 p-2 bg-gray-100 border-b border-gray-300">
         <button
           type="button"
-          onClick={() => applyFormat('bold')}
+          onClick={makeBold}
           className="p-1 rounded hover:bg-gray-200"
           title="Gras"
+          disabled={previewMode}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
@@ -75,9 +93,10 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
         
         <button
           type="button"
-          onClick={() => applyFormat('italic')}
+          onClick={makeItalic}
           className="p-1 rounded hover:bg-gray-200"
           title="Italique"
+          disabled={previewMode}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="19" y1="4" x2="10" y2="4"></line>
@@ -88,9 +107,10 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
         
         <button
           type="button"
-          onClick={() => applyFormat('underline')}
+          onClick={makeUnderline}
           className="p-1 rounded hover:bg-gray-200"
           title="Souligné"
+          disabled={previewMode}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"></path>
@@ -105,6 +125,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
           onClick={addBulletList}
           className="p-1 rounded hover:bg-gray-200"
           title="Liste à puces"
+          disabled={previewMode}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -115,19 +136,34 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
             <line x1="3" y1="18" x2="3.01" y2="18"></line>
           </svg>
         </button>
+        
+        <div className="h-6 border-l border-gray-300 mx-1"></div>
+        
+        <button
+          type="button"
+          onClick={() => setPreviewMode(!previewMode)}
+          className={`px-2 py-1 rounded text-xs ${previewMode ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}`}
+        >
+          {previewMode ? 'Éditer' : 'Aperçu'}
+        </button>
       </div>
       
-      {/* Zone d'édition */}
-      <div
-        ref={editorRef}
-        contentEditable
-        className="p-3 min-h-[200px] focus:outline-none text-left"
-        dangerouslySetInnerHTML={{ __html: currentValue }}
-        onInput={handleInput}
-        placeholder={placeholder}
-        dir="ltr"
-        style={{ direction: 'ltr', textAlign: 'left' }}
-      />
+      {/* Zone d'édition ou aperçu */}
+      {previewMode ? (
+        <div 
+          className="p-3 min-h-[200px] prose prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+      ) : (
+        <textarea
+          id="rich-text-editor"
+          value={text}
+          onChange={handleChange}
+          placeholder={placeholder}
+          className="p-3 min-h-[200px] w-full focus:outline-none resize-y"
+          dir="ltr"
+        />
+      )}
     </div>
   );
 }
