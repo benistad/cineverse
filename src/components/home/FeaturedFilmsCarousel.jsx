@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Slider from 'react-slick';
-import { getTopRatedFilms } from '@/lib/supabase/films';
+import { getFeaturedFilms } from '@/lib/supabase/films';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 
@@ -18,7 +18,7 @@ export default function FeaturedFilmsCarousel() {
   useEffect(() => {
     async function loadTopRatedFilms() {
       try {
-        const topFilms = await getTopRatedFilms(5, 6);
+        const topFilms = await getFeaturedFilms(5, 6);
         console.log('Films chargés:', topFilms);
         console.log('URL du poster du premier film:', topFilms[0]?.poster_url);
         setFilms(topFilms);

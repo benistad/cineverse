@@ -413,8 +413,9 @@ export async function deleteRemarkableStaff(id) {
 
 /**
  * Récupère les derniers films avec une note supérieure à un seuil donné
+ * Utilisé pour le carrousel de la page d'accueil
  */
-export async function getTopRatedFilms(limit = 5, minRating = 6) {
+export async function getFeaturedFilms(limit = 5, minRating = 6) {
   try {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
