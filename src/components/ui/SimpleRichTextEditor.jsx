@@ -11,6 +11,15 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
     setCurrentValue(value || '');
   }, [value]);
   
+  // Initialiser l'éditeur une fois monté
+  useEffect(() => {
+    if (editorRef.current) {
+      // S'assurer que la direction est de gauche à droite
+      editorRef.current.style.direction = 'ltr';
+      editorRef.current.style.textAlign = 'left';
+    }
+  }, []);
+  
   // Mettre à jour le contenu HTML et déclencher l'événement onChange
   const handleInput = () => {
     if (editorRef.current) {
@@ -25,6 +34,25 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
   // Appliquer une commande de formatage
   const applyFormat = (command, value = null) => {
     document.execCommand(command, false, value);
+    editorRef.current.focus();
+    handleInput();
+  };
+  
+  // Gérer spécifiquement l'ajout de liste à puces
+  const addBulletList = () => {
+    // Vérifier si le curseur est dans une liste existante
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const parentElement = range.commonAncestorContainer.parentElement;
+    
+    // Si nous ne sommes pas déjà dans une liste, créer une nouvelle liste
+    if (parentElement.tagName !== 'LI' && parentElement.parentElement?.tagName !== 'UL') {
+      document.execCommand('insertUnorderedList', false, null);
+    } else {
+      // Sinon, basculer la liste existante
+      document.execCommand('insertUnorderedList', false, null);
+    }
+    
     editorRef.current.focus();
     handleInput();
   };
@@ -74,7 +102,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
         
         <button
           type="button"
-          onClick={() => applyFormat('insertUnorderedList')}
+          onClick={addBulletList}
           className="p-1 rounded hover:bg-gray-200"
           title="Liste à puces"
         >
@@ -93,10 +121,12 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
       <div
         ref={editorRef}
         contentEditable
-        className="p-3 min-h-[200px] focus:outline-none"
+        className="p-3 min-h-[200px] focus:outline-none text-left"
         dangerouslySetInnerHTML={{ __html: currentValue }}
         onInput={handleInput}
         placeholder={placeholder}
+        dir="ltr"
+        style={{ direction: 'ltr', textAlign: 'left' }}
       />
     </div>
   );
