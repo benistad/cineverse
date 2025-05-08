@@ -7,12 +7,15 @@ import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import RatingIcon from '@/components/ui/RatingIcon';
 import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
+import { findTrailerWithFallback } from '@/lib/youtube/api';
 
 export default function FilmPage() {
   const params = useParams();
   const router = useRouter();
   const [film, setFilm] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [searchingTrailer, setSearchingTrailer] = useState(false);
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -34,6 +37,26 @@ export default function FilmPage() {
         }
 
         setFilm(data);
+        
+        // Si le film n'a pas de bande-annonce, essayer d'en trouver une automatiquement
+        if (!data.youtube_trailer_key) {
+          setSearchingTrailer(true);
+          try {
+            // Extraire l'année de sortie à partir de la date d'ajout (ou utiliser une année par défaut)
+            const releaseYear = data.release_year || new Date(data.date_ajout).getFullYear();
+            const foundTrailerKey = await findTrailerWithFallback(data.title, releaseYear);
+            
+            if (foundTrailerKey) {
+              setTrailerKey(foundTrailerKey);
+              // Optionnel: mettre à jour la base de données avec la bande-annonce trouvée
+              // Cette étape nécessiterait des droits d'écriture et une API appropriée
+            }
+          } catch (error) {
+            console.error('Erreur lors de la recherche de bande-annonce:', error);
+          } finally {
+            setSearchingTrailer(false);
+          }
+        }
       } catch (error) {
         console.error('Erreur:', error);
         router.push('/not-found');
@@ -130,12 +153,18 @@ export default function FilmPage() {
               </div>
             )}
             
-            {film.youtube_trailer_key && (
+            {(film.youtube_trailer_key || trailerKey) && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Bande-annonce</h2>
                 <div className="aspect-w-16 aspect-h-9">
-                  <YouTube videoId={film.youtube_trailer_key} className="w-full" />
+                  <YouTube videoId={film.youtube_trailer_key || trailerKey} className="w-full" />
                 </div>
+              </div>
+            )}
+            
+            {searchingTrailer && (
+              <div className="mb-6">
+                <p className="text-gray-500 italic">Recherche d'une bande-annonce...</p>
               </div>
             )}
           </div>
