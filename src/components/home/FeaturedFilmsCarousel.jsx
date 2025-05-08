@@ -19,6 +19,10 @@ export default function FeaturedFilmsCarousel() {
     async function loadTopRatedFilms() {
       try {
         const topFilms = await getTopRatedFilms(5, 6);
+        console.log('Films récupérés:', topFilms);
+        topFilms.forEach(film => {
+          console.log(`Film ${film.title} - URL de l'image:`, film.poster_url);
+        });
         setFilms(topFilms);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);
@@ -81,10 +85,16 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
+                  {/* Utiliser une image statique de test pour vérifier si le problème vient des URL */}
                   <img 
-                    src={film.poster_url} 
+                    src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg" 
                     alt={film.title}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.error(`Erreur de chargement de l'image pour ${film.title}:`, e);
+                      e.target.onerror = null;
+                      e.target.src = 'https://via.placeholder.com/500x750?text=Pas+d%27image';
+                    }}
                   />
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
