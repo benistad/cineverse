@@ -13,7 +13,7 @@ export default function FilmGrid({ films, showRating = true, showAdminControls =
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
       {films.map((film) => (
         <FilmCard 
           key={film.id || Math.random().toString(36).substring(7)} 

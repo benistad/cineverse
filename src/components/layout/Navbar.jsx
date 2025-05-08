@@ -23,12 +23,12 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-900 text-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <nav className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-14 sm:h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
-              <div className="relative w-8 h-8">
+              <div className="relative w-6 h-6 sm:w-8 sm:h-8">
                 <Image 
                   src="/images/logo-mh.png" 
                   alt="MovieHunt Logo" 
@@ -38,7 +38,7 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              <span className="text-xl font-bold">MovieHunt</span>
+              <span className="text-lg sm:text-xl font-bold">MovieHunt</span>
             </Link>
           </div>
 
@@ -94,9 +94,9 @@ export default function Navbar() {
           <div className="flex md:hidden items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+              className="inline-flex items-center justify-center p-1.5 sm:p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
             >
-              {isOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
+              {isOpen ? <FiX className="h-5 w-5 sm:h-6 sm:w-6" /> : <FiMenu className="h-5 w-5 sm:h-6 sm:w-6" />}
             </button>
           </div>
         </div>
@@ -104,8 +104,8 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden bg-gray-800 shadow-lg">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
             <Link href="/" className="flex items-center px-3 py-2 mb-2" onClick={() => setIsOpen(false)}>
               <div className="relative w-6 h-6 mr-2">
                 <Image 

@@ -82,7 +82,7 @@ export default function FeaturedFilmsCarousel() {
         {films.map((film, index) => (
           <div key={film.id} className="carousel-item">
             <Link href={`/films/${film.id}`}>
-              <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
+              <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
@@ -97,11 +97,13 @@ export default function FeaturedFilmsCarousel() {
                 </div>
                 
                 {/* Contenu du film avec ombre portée */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h2 className="text-3xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300 text-shadow-lg">{film.title}</h2>
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:p-6 text-white bg-gradient-to-t from-black/70 to-transparent">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 group-hover:text-blue-300 transition-colors duration-300 text-shadow-lg">{film.title}</h2>
                   <div className="flex items-center text-shadow-md">
-                    <RatingIcon rating={film.note_sur_10} size={30} />
-                    <span className="ml-2 text-xl font-semibold">{film.note_sur_10}/10</span>
+                    <RatingIcon rating={film.note_sur_10} size={window.innerWidth < 640 ? 24 : 30} />
+                    <span className="ml-2 text-base sm:text-lg md:text-xl font-semibold">{film.note_sur_10}/10</span>
+                    {film.genres && <span className="ml-3 text-sm sm:text-base opacity-90">• {film.genres.split(',')[0]}</span>}
+                    {film.release_date && <span className="ml-2 text-sm sm:text-base opacity-90">• {new Date(film.release_date).getFullYear()}</span>}
                   </div>
                 </div>
               </div>
@@ -130,8 +132,15 @@ export default function FeaturedFilmsCarousel() {
         .carousel-container .slick-prev, 
         .carousel-container .slick-next {
           z-index: 10;
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
+        }
+        @media (min-width: 640px) {
+          .carousel-container .slick-prev, 
+          .carousel-container .slick-next {
+            width: 40px;
+            height: 40px;
+          }
         }
         .carousel-container .slick-prev {
           left: 15px;
@@ -141,8 +150,14 @@ export default function FeaturedFilmsCarousel() {
         }
         .carousel-container .slick-prev:before, 
         .carousel-container .slick-next:before {
-          font-size: 40px;
+          font-size: 30px;
           opacity: 0.7;
+        }
+        @media (min-width: 640px) {
+          .carousel-container .slick-prev:before, 
+          .carousel-container .slick-next:before {
+            font-size: 40px;
+          }
         }
         .carousel-container .slick-prev:hover:before, 
         .carousel-container .slick-next:hover:before {

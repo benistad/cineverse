@@ -1,11 +1,43 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
 
 export default function FilmCarousel({ films, title, visibleCount = 4 }) {
+  // Ajuster le nombre de films visibles en fonction de la taille de l'écran
+  const [mobileVisibleCount, setMobileVisibleCount] = useState(1);
+  const [tabletVisibleCount, setTabletVisibleCount] = useState(2);
+  
+  // Mettre à jour le nombre de films visibles en fonction de la taille de l'écran
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) { // Mobile
+        setMobileVisibleCount(1);
+      } else if (window.innerWidth < 1024) { // Tablet
+        setTabletVisibleCount(2);
+      }
+    };
+    
+    // Initialiser
+    handleResize();
+    
+    // Ajouter l'écouteur d'événement
+    window.addEventListener('resize', handleResize);
+    
+    // Nettoyer l'écouteur d'événement
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // Déterminer le nombre de films visibles en fonction de la taille de l'écran
+  const responsiveVisibleCount = typeof window !== 'undefined' 
+    ? window.innerWidth < 640 
+      ? mobileVisibleCount 
+      : window.innerWidth < 1024 
+        ? tabletVisibleCount 
+        : visibleCount
+    : visibleCount;
   const [startIndex, setStartIndex] = useState(0);
   const containerRef = useRef(null);
 
@@ -42,27 +74,27 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
         <div className="flex space-x-2">
           <button 
             onClick={scrollLeft}
-            className={`p-2 rounded-full ${showLeftButton 
+            className={`p-1 sm:p-2 rounded-full ${showLeftButton 
               ? 'bg-blue-600 text-white hover:bg-blue-700' 
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
             disabled={!showLeftButton}
             aria-label="Défiler vers la gauche"
           >
-            <FiChevronLeft size={20} />
+            <FiChevronLeft size={16} className="sm:w-5 sm:h-5" />
           </button>
           <button 
             onClick={scrollRight}
-            className={`p-2 rounded-full ${showRightButton 
+            className={`p-1 sm:p-2 rounded-full ${showRightButton 
               ? 'bg-blue-600 text-white hover:bg-blue-700' 
               : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
             disabled={!showRightButton}
             aria-label="Défiler vers la droite"
           >
-            <FiChevronRight size={20} />
+            <FiChevronRight size={16} className="sm:w-5 sm:h-5" />
           </button>
         </div>
       </div>
@@ -71,16 +103,16 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
         <div 
           className="flex transition-transform duration-300 ease-in-out"
           style={{ 
-            transform: `translateX(-${startIndex * (100 / visibleCount)}%)`,
-            width: `${(totalFilms / visibleCount) * 100}%`,
-            gap: '1rem'
+            transform: `translateX(-${startIndex * (100 / responsiveVisibleCount)}%)`,
+            width: `${(totalFilms / responsiveVisibleCount) * 100}%`,
+            gap: '0.5rem sm:1rem'
           }}
         >
           {films.map((film) => (
             <div 
               key={film.id} 
               className="px-2"
-              style={{ width: `${100 / visibleCount}%` }}
+              style={{ width: `${100 / responsiveVisibleCount}%` }}
             >
               <FilmCard film={film} />
             </div>

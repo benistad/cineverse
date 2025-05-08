@@ -31,7 +31,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   if (!film) {
     return (
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="p-4">
+        <div className="p-3 sm:p-4 flex-grow">
           <p className="text-red-500">Données du film non disponibles</p>
         </div>
       </div>
@@ -39,10 +39,10 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.id}`}>
-        <div className="relative h-64 w-full">
+        <div className="relative h-48 sm:h-56 md:h-64 w-full">
           <SafeImage
             src={film.poster_url}
             alt={film.title || 'Poster du film'}
@@ -54,7 +54,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           
           {showRating && film.note_sur_10 !== undefined && (
             <div className="absolute top-2 right-2">
-              <RatingIcon rating={film.note_sur_10} size={40} />
+              <RatingIcon rating={film.note_sur_10} size={window.innerWidth < 640 ? 32 : 40} />
             </div>
           )}
           
@@ -65,14 +65,14 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           )}
         </div>
         
-        <div className="p-4">
-          <h3 className="text-lg font-bold mb-1">{film.title || 'Sans titre'}</h3>
-          <p className="text-sm text-gray-500 mb-2">
+        <div className="p-3 sm:p-4 flex-grow">
+          <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
+          <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
             {extractYear(film.release_date) || extractYear(film.date_ajout)}
-            {film.genres && <span> • {film.genres}</span>}
+            {film.genres && <span> • {truncateText(film.genres, window.innerWidth < 640 ? 15 : 30)}</span>}
           </p>
-          <p className="text-sm text-gray-700">
-            {truncateText(film.synopsis || 'Aucun synopsis disponible.', 100)}
+          <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
+            {truncateText(film.synopsis || 'Aucun synopsis disponible.', window.innerWidth < 640 ? 60 : 100)}
           </p>
         </div>
       </Link>

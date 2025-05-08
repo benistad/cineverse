@@ -70,7 +70,7 @@ export default function FilmPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <p>Chargement...</p>
       </div>
     );
@@ -78,15 +78,15 @@ export default function FilmPage() {
 
   if (!film) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <p>Film non trouvé</p>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
             <div className="w-full rounded-lg shadow-md overflow-hidden">
@@ -102,7 +102,7 @@ export default function FilmPage() {
           </div>
           
           <div className="md:w-2/3">
-            <h1 className="text-3xl font-bold mb-2">{film.title}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{film.title}</h1>
             
             <div className="flex flex-wrap items-center mb-4 text-gray-700">
               {film.release_date && (
@@ -138,13 +138,13 @@ export default function FilmPage() {
 
             
             <div className="mb-4">
-              <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
-              <p className="text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
+              <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
+              <p className="text-sm sm:text-base text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
             </div>
             
             {film.why_watch_enabled && film.why_watch_content && (
-              <div className="mb-4 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                <h2 className="text-xl font-semibold mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
+              <div className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
                 <style jsx>{`
                   .why-watch-content {
                     white-space: pre-wrap;
@@ -153,7 +153,7 @@ export default function FilmPage() {
                     margin-bottom: 0.5rem;
                   }
                 `}</style>
-                <div className="text-gray-700 why-watch-content">
+                <div className="text-sm sm:text-base text-gray-700 why-watch-content">
                   {film.why_watch_content.split('\n').map((line, index) => {
                     if (line.trim() === '') {
                       return <br key={index} />;
@@ -173,8 +173,8 @@ export default function FilmPage() {
             )}
             
             {(film.youtube_trailer_key || trailerKey) && (
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold mb-2">Bande-annonce</h2>
+              <div className="mb-4 sm:mb-6">
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
                 <div className="aspect-w-16 aspect-h-9">
                   <YouTube videoId={film.youtube_trailer_key || trailerKey} className="w-full" />
                 </div>
@@ -190,8 +190,8 @@ export default function FilmPage() {
         </div>
       </div>
       
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">MovieHunt's Picks</h2>
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</h2>
         <RemarkableStaffList filmId={film.id} />
       </div>
     </div>
