@@ -81,14 +81,10 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  <SafeImage
-                    src={film.poster_url}
+                  <img 
+                    src={film.poster_url} 
                     alt={film.title}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority
-                    unoptimized
+                    className="w-full h-full object-cover"
                   />
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
