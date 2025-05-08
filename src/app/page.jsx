@@ -20,15 +20,22 @@ export default function Home() {
 
   // Fonction pour charger les films paginés
   const loadPaginatedFilms = async (page) => {
-    setLoadingPagination(true);
+    // Mettre à jour la page courante immédiatement pour éviter les sauts
+    setCurrentPage(page);
+    
+    // Utiliser un délai court pour éviter le flash de l'état de chargement
+    const loadingTimeout = setTimeout(() => {
+      setLoadingPagination(true);
+    }, 100);
+    
     try {
       const { films, totalCount } = await getPaginatedFilms(page, filmsPerPage);
       setAllFilms(films);
       setTotalFilmsCount(totalCount);
-      setCurrentPage(page);
     } catch (error) {
       console.error('Erreur lors de la récupération des films paginés:', error);
     } finally {
+      clearTimeout(loadingTimeout);
       setLoadingPagination(false);
     }
   };
@@ -63,8 +70,15 @@ export default function Home() {
   // Gérer le changement de page
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      // Ne plus faire défiler la page automatiquement
+      // Empêcher le comportement par défaut du navigateur qui pourrait causer un défilement
+      // Spécifiquement important pour Safari
       loadPaginatedFilms(newPage);
+      
+      // Assurer que la page reste à la même position
+      setTimeout(() => {
+        // Annuler tout défilement qui pourrait se produire
+        window.scrollTo(window.scrollX, window.scrollY);
+      }, 0);
     }
   };
 

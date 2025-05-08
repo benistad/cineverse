@@ -49,7 +49,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
     <div className="flex justify-center items-center space-x-1 sm:space-x-2 my-4 sm:my-6">
       {/* Bouton page précédente */}
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onPageChange(currentPage - 1);
+          return false;
+        }}
         disabled={currentPage === 1}
         className={`p-1 sm:p-2 rounded-full flex items-center justify-center ${
           currentPage === 1
@@ -68,7 +74,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             <span className="px-2 sm:px-3 py-1 sm:py-2 text-gray-500 text-sm sm:text-base">...</span>
           ) : (
             <button
-              onClick={() => onPageChange(page)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onPageChange(page);
+                return false;
+              }}
               className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base ${
                 currentPage === page
                   ? 'bg-blue-600 text-white'
@@ -83,7 +95,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       
       {/* Bouton page suivante */}
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onPageChange(currentPage + 1);
+          return false;
+        }}
         disabled={currentPage === totalPages}
         className={`p-1 sm:p-2 rounded-full flex items-center justify-center ${
           currentPage === totalPages
