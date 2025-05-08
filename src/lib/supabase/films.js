@@ -412,6 +412,67 @@ export async function deleteRemarkableStaff(id) {
 }
 
 /**
+ * Récupère les films paginés avec leur staff remarquable
+ * @param {number} page - Numéro de la page (commence à 1)
+ * @param {number} filmsPerPage - Nombre de films par page
+ * @returns {Object} - Objet contenant les films et le nombre total de films
+ */
+export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
+  try {
+    const supabase = getSupabaseClient();
+    
+    // Calculer l'offset pour la pagination
+    const offset = (page - 1) * filmsPerPage;
+    
+    // Récupérer les films pour la page actuelle
+    const { data: films, error, count } = await supabase
+      .from('films')
+      .select('*', { count: 'exact' })
+      .order('title', { ascending: true })
+      .range(offset, offset + filmsPerPage - 1);
+
+    if (error) throw error;
+    if (!films) return { films: [], totalCount: 0 };
+
+    // Pour chaque film, récupérer son staff remarquable
+    const filmsWithStaff = await Promise.all(
+      films.map(async (film) => {
+        const supabase = getSupabaseClient();
+        const { data: staff, error: staffError } = await supabase
+          .from('remarkable_staff')
+          .select('*')
+          .eq('film_id', film.id);
+
+        if (staffError) {
+          console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
+          return { ...film, remarkable_staff: [] };
+        }
+
+        return {
+          ...film,
+          remarkable_staff: staff || [],
+        };
+      })
+    );
+
+    // Récupérer le nombre total de films pour calculer le nombre de pages
+    const { count: totalCount, error: countError } = await supabase
+      .from('films')
+      .select('*', { count: 'exact', head: true });
+
+    if (countError) throw countError;
+
+    return {
+      films: filmsWithStaff,
+      totalCount: totalCount || 0
+    };
+  } catch (error) {
+    console.error('Erreur lors de la récupération des films paginés:', error);
+    return { films: [], totalCount: 0 };
+  }
+}
+
+/**
  * Récupère les derniers films avec une note supérieure à un seuil donné
  * Utilisé pour le carrousel de la page d'accueil
  */
