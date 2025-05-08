@@ -106,12 +106,23 @@ export default function FilmPage() {
                 <div 
                   className="text-gray-700 prose prose-sm max-w-none"
                   dangerouslySetInnerHTML={{ __html: film.why_watch_content
-                    // Convertir les puces en éléments de liste HTML
-                    .replace(/^• (.+)$/gm, '<li>$1</li>')
+                    // Traitement spécial pour les puces et les retours à la ligne
+                    .split('\n').map(line => {
+                      // Vérifier si la ligne commence par une puce
+                      if (line.startsWith('• ')) {
+                        return `<li>${line.substring(2)}</li>`;
+                      }
+                      // Sinon, c'est une ligne normale
+                      return line;
+                    }).join('\n')
+                    // Regrouper les éléments de liste consécutifs dans des balises <ul>
                     .replace(/(<li>.+<\/li>\n?)+/g, '<ul>$&</ul>')
+                    // Éviter les listes imbriquées
                     .replace(/<\/ul>\n<ul>/g, '\n')
-                    // Préserver les retours à la ligne
-                    .replace(/\n/g, '<br />')
+                    // Convertir les retours à la ligne normaux (pas dans les listes) en <br />
+                    .replace(/^([^<].+)$/gm, '<p>$1</p>')
+                    // Supprimer les sauts de ligne superflus
+                    .replace(/\n/g, '')
                   }}
                 />
               </div>
