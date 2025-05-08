@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm } from 'react-icons/fi';
@@ -26,7 +27,17 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center">
+            <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
+              <div className="relative w-8 h-8">
+                <Image 
+                  src="/images/logo.svg" 
+                  alt="MovieHunt Logo" 
+                  width={32} 
+                  height={32} 
+                  className="object-contain"
+                  priority
+                />
+              </div>
               <span className="text-xl font-bold">MovieHunt</span>
             </Link>
           </div>
@@ -95,6 +106,19 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <Link href="/" className="flex items-center px-3 py-2 mb-2" onClick={() => setIsOpen(false)}>
+              <div className="relative w-6 h-6 mr-2">
+                <Image 
+                  src="/images/logo.svg" 
+                  alt="MovieHunt Logo" 
+                  width={24} 
+                  height={24} 
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <span className="text-lg font-bold">MovieHunt</span>
+            </Link>
             <Link 
               href="/" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
