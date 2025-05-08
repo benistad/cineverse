@@ -63,7 +63,7 @@ export default function Home() {
   // Gérer le changement de page
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      window.scrollTo({ top: document.getElementById('all-films-section').offsetTop - 100, behavior: 'smooth' });
+      // Ne plus faire défiler la page automatiquement
       loadPaginatedFilms(newPage);
     }
   };
