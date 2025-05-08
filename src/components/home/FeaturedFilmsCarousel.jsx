@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getTopRatedFilms } from '@/lib/supabase/films';
+import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 
 export default function FeaturedFilmsCarousel() {
@@ -51,7 +53,22 @@ export default function FeaturedFilmsCarousel() {
   return (
     <div className="featured-banner">
       <Link href={`/films/${featuredFilm.id}`}>
-        <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group bg-gradient-to-r from-blue-600 to-indigo-700">
+        <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
+          {/* Image d'arrière-plan avec SafeImage */}
+          <div className="absolute inset-0">
+            <SafeImage
+              src={featuredFilm.poster_url}
+              alt={featuredFilm.title}
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+              unoptimized={true}
+            />
+            {/* Overlay sombre pour améliorer la lisibilité du texte */}
+            <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
+          </div>
+          
           {/* Contenu textuel */}
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <h2 className="text-white text-3xl font-bold mb-2 group-hover:text-white/90 transition-colors duration-300">
