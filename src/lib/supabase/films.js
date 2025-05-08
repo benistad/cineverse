@@ -320,3 +320,24 @@ export async function deleteRemarkableStaff(id) {
     return false;
   }
 }
+
+/**
+ * Récupère les derniers films avec une note supérieure à un seuil donné
+ */
+export async function getTopRatedFilms(limit = 5, minRating = 6) {
+  try {
+    const supabase = getSupabaseClient();
+    const { data, error } = await supabase
+      .from('films')
+      .select('*')
+      .gte('note_sur_10', minRating)
+      .order('date_ajout', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des films bien notés:', error);
+    return [];
+  }
+}
