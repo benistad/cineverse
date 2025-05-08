@@ -75,7 +75,7 @@ export default function FeaturedFilmsCarousel() {
   return (
     <div className="carousel-container">
       <Slider {...settings}>
-        {films.map(film => (
+        {films.map((film, index) => (
           <div key={film.id} className="carousel-item">
             <Link href={`/films/${film.id}`}>
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
