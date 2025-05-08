@@ -51,30 +51,21 @@ export default function FeaturedFilmsCarousel() {
   return (
     <div className="featured-banner">
       <Link href={`/films/${featuredFilm.id}`}>
-        <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
-          <div className="absolute inset-0">
-            {/* Utiliser une image statique locale */}
-            <div className="w-full h-full">
-              <img 
-                src="/film1.jpg"
-                alt={featuredFilm.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Overlay sombre pour améliorer la lisibilité du texte */}
-            <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
-          </div>
-          
+        <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group bg-gradient-to-r from-blue-600 to-indigo-700">
           {/* Contenu textuel */}
           <div className="absolute bottom-0 left-0 right-0 p-6">
-            <h2 className="text-white text-2xl font-bold mb-2 group-hover:text-white/90 transition-colors duration-300">
+            <h2 className="text-white text-3xl font-bold mb-2 group-hover:text-white/90 transition-colors duration-300">
               {featuredFilm.title}
             </h2>
             
             <div className="flex items-center">
-              <RatingIcon rating={featuredFilm.note_sur_10} size={24} />
-              <span className="text-white ml-2">{featuredFilm.note_sur_10}/10</span>
+              <RatingIcon rating={featuredFilm.note_sur_10} size={30} />
+              <span className="text-white ml-2 text-xl font-semibold">{featuredFilm.note_sur_10}/10</span>
             </div>
+            
+            <p className="text-white/80 mt-4 text-lg max-w-2xl">
+              Découvrez ce film et plus de 100 autres dans notre collection soigneusement notée.
+            </p>
           </div>
         </div>
       </Link>
