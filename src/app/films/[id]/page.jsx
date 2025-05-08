@@ -105,24 +105,58 @@ export default function FilmPage() {
                 <h2 className="text-xl font-semibold mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
                 <div 
                   className="text-gray-700 prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: film.why_watch_content
-                    // Traitement spécial pour les puces et les retours à la ligne
-                    .split('\n').map(line => {
-                      // Vérifier si la ligne commence par une puce
-                      if (line.startsWith('• ')) {
-                        return `<li>${line.substring(2)}</li>`;
+                  dangerouslySetInnerHTML={{ __html: (() => {
+                    // Fonction pour traiter le contenu HTML
+                    const processContent = (content) => {
+                      let result = '';
+                      let inList = false;
+                      
+                      // Diviser le contenu en lignes
+                      const lines = content.split('\n');
+                      
+                      for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        
+                        // Si la ligne est vide, ajouter un espace
+                        if (line === '') {
+                          if (!inList) {
+                            result += '<br />';
+                          }
+                          continue;
+                        }
+                        
+                        // Vérifier si la ligne commence par une puce
+                        if (line.startsWith('• ')) {
+                          // Si nous ne sommes pas déjà dans une liste, commencer une nouvelle liste
+                          if (!inList) {
+                            result += '<ul>';
+                            inList = true;
+                          }
+                          
+                          // Ajouter l'élément de liste
+                          result += `<li>${line.substring(2)}</li>`;
+                        } else {
+                          // Si nous étions dans une liste, la fermer
+                          if (inList) {
+                            result += '</ul>';
+                            inList = false;
+                          }
+                          
+                          // Ajouter la ligne comme paragraphe
+                          result += `<p>${line}</p>`;
+                        }
                       }
-                      // Sinon, c'est une ligne normale
-                      return line;
-                    }).join('\n')
-                    // Regrouper les éléments de liste consécutifs dans des balises <ul>
-                    .replace(/(<li>.+<\/li>\n?)+/g, '<ul>$&</ul>')
-                    // Éviter les listes imbriquées
-                    .replace(/<\/ul>\n<ul>/g, '\n')
-                    // Convertir les retours à la ligne normaux (pas dans les listes) en <br />
-                    .replace(/^([^<].+)$/gm, '<p>$1</p>')
-                    // Supprimer les sauts de ligne superflus
-                    .replace(/\n/g, '')
+                      
+                      // Si nous sommes toujours dans une liste à la fin, la fermer
+                      if (inList) {
+                        result += '</ul>';
+                      }
+                      
+                      return result;
+                    };
+                    
+                    return processContent(film.why_watch_content);
+                  })()
                   }}
                 />
               </div>
