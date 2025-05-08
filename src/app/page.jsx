@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="space-y-8">
       <section className="text-center py-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-lg shadow-lg mb-8">
-        <h1 className="text-4xl font-bold text-white mb-4">Bienvenue sur CineVerse</h1>
+        <h1 className="text-4xl font-bold text-white mb-4">Bienvenue sur MovieHunt</h1>
         <p className="text-xl text-white/90 max-w-2xl mx-auto">
           Découvrez ma collection de films notés et mes recommandations de casting et d&apos;équipe technique.
         </p>

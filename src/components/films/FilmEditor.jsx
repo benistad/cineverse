@@ -68,7 +68,7 @@ export default function FilmEditor({ movieDetails }) {
       setMultiRolePersons(multiRoles);
     }
     
-    // Vérifier si le film existe déjà et récupérer son personnel remarquable
+    // Vérifier si le film existe déjà et récupérer ses MovieHunt's Picks
     async function loadExistingFilm() {
       if (movieDetails?.id) {
         try {
@@ -88,7 +88,7 @@ export default function FilmEditor({ movieDetails }) {
               setWhyWatchContent(existingFilm.why_watch_content);
             }
             
-            // Précharger le personnel remarquable
+            // Précharger les MovieHunt's Picks
             if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
               const preselectedRoles = {};
               

@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
-        <title>CineVerse - Votre collection de films notés</title>
+        <title>MovieHunt - Votre collection de films notés</title>
         <meta name="description" content="Découvrez ma collection de films notés et mes recommandations de casting et d'équipe technique" />
       </head>
       <body

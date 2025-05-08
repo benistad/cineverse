@@ -1,6 +1,6 @@
-# CineVerse - Application de Notation de Films
+# MovieHunt - Application de Notation de Films
 
-CineVerse est une application web qui permet de noter des films, de sélectionner des membres remarquables du casting et de l'équipe technique, et de partager ces informations avec le public. L'application est construite avec Next.js 14, Supabase et l'API TMDB.
+MovieHunt est une application web qui permet de noter des films, de sélectionner des membres remarquables du casting et de l'équipe technique (MovieHunt's Picks), et de partager ces informations avec le public. L'application est construite avec Next.js 14, Supabase et l'API TMDB.
 
 ## Fonctionnalités
 

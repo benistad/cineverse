@@ -137,7 +137,7 @@ export default function EditRatedPage() {
       </div>
       
       <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">Personnel remarquable</h2>
+        <h2 className="text-2xl font-bold mb-4">MovieHunt's Picks</h2>
         <RemarkableStaffList filmId={film.id} />
       </div>
     </div>
