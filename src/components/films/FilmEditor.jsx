@@ -219,6 +219,8 @@ export default function FilmEditor({ movieDetails }) {
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         date_ajout: new Date().toISOString(),
+        // Ajouter la date de sortie du film
+        release_date: movieDetails.release_date || null,
         why_watch_enabled: whyWatchEnabled,
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
         // Ajouter les genres du film

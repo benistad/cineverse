@@ -102,7 +102,20 @@ export default function FilmPage() {
           </div>
           
           <div className="md:w-2/3">
-            <h1 className="text-3xl font-bold mb-4">{film.title}</h1>
+            <h1 className="text-3xl font-bold mb-2">{film.title}</h1>
+            
+            <div className="flex flex-wrap items-center mb-4 text-gray-700">
+              {film.release_date && (
+                <span className="mr-3">
+                  {new Date(film.release_date).getFullYear()}
+                </span>
+              )}
+              {film.genres && (
+                <span>
+                  {film.genres}
+                </span>
+              )}
+            </div>
             
             <p className="text-gray-600 mb-2">
               <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}

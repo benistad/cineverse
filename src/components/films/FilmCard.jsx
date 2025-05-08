@@ -68,7 +68,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         <div className="p-4">
           <h3 className="text-lg font-bold mb-1">{film.title || 'Sans titre'}</h3>
           <p className="text-sm text-gray-500 mb-2">
-            {extractYear(film.date_ajout)}
+            {extractYear(film.release_date) || extractYear(film.date_ajout)}
             {film.genres && <span> • {film.genres}</span>}
           </p>
           <p className="text-sm text-gray-700">
