@@ -82,12 +82,13 @@ export default function FeaturedFilmsCarousel() {
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
                   <SafeImage
-                    src={film.backdrop_url || film.poster_url}
+                    src={film.poster_url}
                     alt={film.title}
                     fill
                     className="object-cover"
                     sizes="100vw"
                     priority
+                    unoptimized
                   />
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
@@ -100,7 +101,6 @@ export default function FeaturedFilmsCarousel() {
                     <RatingIcon rating={film.note_sur_10} size={30} />
                     <span className="ml-2 text-xl font-semibold">{film.note_sur_10}/10</span>
                   </div>
-                  <p className="mt-2 text-gray-200 line-clamp-2">{film.synopsis}</p>
                 </div>
               </div>
             </Link>
