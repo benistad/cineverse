@@ -23,7 +23,7 @@ export async function downloadAndStoreImage(imageUrl, filmId) {
     
     // Stocker l'image dans Supabase Storage
     const supabase = getSupabaseClient();
-    const { data, error } = await supabase
+    const { error } = await supabase
       .storage
       .from(CAROUSEL_BUCKET)
       .upload(fileName, imageBlob, {
