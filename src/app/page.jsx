@@ -1,19 +1,25 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllFilms } from '@/lib/supabase/films';
-import FilmGrid from '@/components/films/FilmGrid';
+import { getRecentlyRatedFilms, getTopRatedFilms } from '@/lib/supabase/films';
+import FilmCarousel from '@/components/films/FilmCarousel';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
 
 export default function Home() {
-  const [films, setFilms] = useState([]);
+  const [recentFilms, setRecentFilms] = useState([]);
+  const [topRatedFilms, setTopRatedFilms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchFilms() {
       try {
-        const filmsData = await getAllFilms();
-        setFilms(filmsData);
+        // Récupérer les films récemment notés
+        const recentFilmsData = await getRecentlyRatedFilms(8);
+        setRecentFilms(recentFilmsData);
+        
+        // Récupérer les films les mieux notés
+        const topRatedFilmsData = await getTopRatedFilms(8);
+        setTopRatedFilms(topRatedFilmsData);
       } catch (error) {
         console.error('Erreur lors de la récupération des films:', error);
       } finally {
@@ -25,23 +31,39 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="space-y-8">
-      <section className="mb-8">
+    <div className="space-y-12">
+      {/* Carrousel des films à la une */}
+      <section>
         <FeaturedFilmsCarousel />
       </section>
 
+      {/* Films récemment notés */}
       <section>
-        <h2 className="text-3xl font-bold mb-6">Films récemment notés</h2>
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
-        ) : films.length > 0 ? (
-          <FilmGrid films={films} />
         ) : (
-          <div className="text-center py-10 bg-white rounded-lg shadow">
-            <p className="text-gray-500">Aucun film noté pour le moment.</p>
+          <FilmCarousel 
+            films={recentFilms} 
+            title="Films récemment notés" 
+            visibleCount={4} 
+          />
+        )}
+      </section>
+
+      {/* Films les mieux notés */}
+      <section>
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
+        ) : (
+          <FilmCarousel 
+            films={topRatedFilms} 
+            title="Films les mieux notés" 
+            visibleCount={4} 
+          />
         )}
       </section>
     </div>

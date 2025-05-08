@@ -19,6 +19,96 @@ const createSlug = (title) => {
 };
 
 /**
+ * Récupère les films récemment notés avec leur staff remarquable
+ * @param {number} limit - Nombre maximum de films à récupérer
+ */
+export async function getRecentlyRatedFilms(limit = 8) {
+  try {
+    const supabase = getSupabaseClient();
+    // Récupérer les films récents, triés par date d'ajout (du plus récent au plus ancien)
+    const { data: films, error } = await supabase
+      .from('films')
+      .select('*')
+      .order('date_ajout', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    if (!films) return [];
+
+    // Pour chaque film, récupérer son staff remarquable
+    const filmsWithStaff = await Promise.all(
+      films.map(async (film) => {
+        const supabase = getSupabaseClient();
+        const { data: staff, error: staffError } = await supabase
+          .from('remarkable_staff')
+          .select('*')
+          .eq('film_id', film.id);
+
+        if (staffError) {
+          console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
+          return { ...film, remarkable_staff: [] };
+        }
+
+        return {
+          ...film,
+          remarkable_staff: staff || [],
+        };
+      })
+    );
+
+    return filmsWithStaff;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des films récents:', error);
+    return [];
+  }
+}
+
+/**
+ * Récupère les films les mieux notés avec leur staff remarquable
+ * @param {number} limit - Nombre maximum de films à récupérer
+ */
+export async function getTopRatedFilms(limit = 8) {
+  try {
+    const supabase = getSupabaseClient();
+    // Récupérer les films les mieux notés, triés par note (de la plus haute à la plus basse)
+    const { data: films, error } = await supabase
+      .from('films')
+      .select('*')
+      .order('note_sur_10', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    if (!films) return [];
+
+    // Pour chaque film, récupérer son staff remarquable
+    const filmsWithStaff = await Promise.all(
+      films.map(async (film) => {
+        const supabase = getSupabaseClient();
+        const { data: staff, error: staffError } = await supabase
+          .from('remarkable_staff')
+          .select('*')
+          .eq('film_id', film.id);
+
+        if (staffError) {
+          console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
+          return { ...film, remarkable_staff: [] };
+        }
+
+        return {
+          ...film,
+          remarkable_staff: staff || [],
+        };
+      })
+    );
+
+    return filmsWithStaff;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des films les mieux notés:', error);
+    return [];
+  }
+}
+
+/**
  * Récupère tous les films avec leur staff remarquable
  */
 export async function getAllFilms() {
