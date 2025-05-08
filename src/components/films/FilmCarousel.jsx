@@ -47,6 +47,9 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
         ? tabletVisibleCount 
         : visibleCount
     : visibleCount;
+    
+  // Nombre de films à faire défiler à la fois (1 sur mobile, visibleCount sur desktop)
+  const scrollStep = isMobile ? 1 : visibleCount;
   const [startIndex, setStartIndex] = useState(0);
   const containerRef = useRef(null);
 
@@ -66,7 +69,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   const scrollLeft = () => {
     if (startIndex > 0) {
       // Sur mobile, défiler un film à la fois
-      setStartIndex(startIndex - 1);
+      const newIndex = Math.max(0, startIndex - 1);
+      setStartIndex(newIndex);
     }
   };
 
@@ -74,7 +78,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   const scrollRight = () => {
     if (startIndex + responsiveVisibleCount < totalFilms) {
       // Sur mobile, défiler un film à la fois
-      setStartIndex(startIndex + 1);
+      const newIndex = Math.min(totalFilms - responsiveVisibleCount, startIndex + 1);
+      setStartIndex(newIndex);
     }
   };
   
@@ -84,11 +89,13 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
     onSwiped: () => setTimeout(() => setIsDragging(false), 50),
     onSwipedLeft: () => {
       if (startIndex + responsiveVisibleCount < totalFilms) {
+        // Assurer que le défilement se fait une carte à la fois sur mobile
         scrollRight();
       }
     },
     onSwipedRight: () => {
       if (startIndex > 0) {
+        // Assurer que le défilement se fait une carte à la fois sur mobile
         scrollLeft();
       }
     },
