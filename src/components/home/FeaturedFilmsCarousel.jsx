@@ -86,7 +86,7 @@ export default function FeaturedFilmsCarousel() {
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
-                    src={film.poster_url}
+                    src={film.backdrop_url || film.poster_url}
                     alt={film.title}
                     fill
                     className="object-cover"
@@ -96,10 +96,10 @@ export default function FeaturedFilmsCarousel() {
                   />
                 </div>
                 
-                {/* Contenu du film */}
+                {/* Contenu du film avec ombre portée */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h2 className="text-3xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300">{film.title}</h2>
-                  <div className="flex items-center">
+                  <h2 className="text-3xl font-bold mb-2 group-hover:text-blue-300 transition-colors duration-300 text-shadow-lg">{film.title}</h2>
+                  <div className="flex items-center text-shadow-md">
                     <RatingIcon rating={film.note_sur_10} size={30} />
                     <span className="ml-2 text-xl font-semibold">{film.note_sur_10}/10</span>
                   </div>
@@ -147,6 +147,13 @@ export default function FeaturedFilmsCarousel() {
         .carousel-container .slick-prev:hover:before, 
         .carousel-container .slick-next:hover:before {
           opacity: 1;
+        }
+        /* Styles pour l'ombre portée du texte */
+        .text-shadow-lg {
+          text-shadow: 0 0 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.7);
+        }
+        .text-shadow-md {
+          text-shadow: 0 0 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.7);
         }
       `}</style>
     </div>
