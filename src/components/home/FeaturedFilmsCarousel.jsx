@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import Link from 'next/link';
-import Image from 'next/image';
 import { getTopRatedFilms } from '@/lib/supabase/films';
+import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 
 // Importer les styles CSS de Slick
@@ -15,30 +15,11 @@ export default function FeaturedFilmsCarousel() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fonction pour obtenir une image statique locale en fonction de l'index
-  const getStaticImagePath = (index) => {
-    const images = [
-      '/film1.jpg',
-      '/film2.jpg',
-      '/film3.jpg',
-      '/film4.jpg',
-      '/film5.jpg'
-    ];
-    return images[index % images.length];
-  };
-
   useEffect(() => {
     async function loadTopRatedFilms() {
       try {
         const topFilms = await getTopRatedFilms(5, 6);
-        
-        // Ajouter une propriété d'image locale à chaque film
-        const filmsWithImages = topFilms.map((film, index) => ({
-          ...film,
-          localImagePath: getStaticImagePath(index)
-        }));
-        
-        setFilms(filmsWithImages);
+        setFilms(topFilms);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);
       } finally {
@@ -100,14 +81,16 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  {/* Utiliser des images statiques locales */}
-                  <div className="w-full h-full">
-                    <img
-                      src={film.localImagePath}
-                      alt={film.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  {/* Utiliser SafeImage comme pour les fiches de films */}
+                  <SafeImage
+                    src={film.poster_url}
+                    alt={film.title}
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                    priority
+                    unoptimized={true}
+                  />
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
                 </div>
