@@ -45,26 +45,54 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
   const addBulletList = () => {
     const textarea = document.getElementById('rich-text-editor');
     const start = textarea.selectionStart;
-    const selectedText = textarea.value.substring(start, textarea.selectionEnd);
+    const end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+    const beforeText = textarea.value.substring(0, start);
+    const afterText = textarea.value.substring(end);
     
-    // Créer une liste à puces avec le texte sélectionné
-    let formattedText;
+    let newText;
+    
     if (selectedText.trim() === '') {
-      // Si aucun texte n'est sélectionné, ajouter une liste vide
-      formattedText = '<ul>\n  <li>Élément de liste</li>\n</ul>\n';
+      // Si aucun texte n'est sélectionné, ajouter une puce simple
+      newText = beforeText + '• ' + afterText;
+      
+      // Mettre à jour le texte
+      setText(newText);
+      if (onChange) {
+        onChange(newText);
+      }
+      
+      // Positionner le curseur après la puce
+      setTimeout(() => {
+        textarea.focus();
+        const newCursorPos = start + 2; // Après '• '
+        textarea.setSelectionRange(newCursorPos, newCursorPos);
+      }, 0);
     } else {
-      // Sinon, transformer le texte sélectionné en liste
+      // Transformer chaque ligne du texte sélectionné en ligne avec puce
       const lines = selectedText.split('\n');
-      let listItems = '';
-      lines.forEach(line => {
+      const bulletedLines = lines.map(line => {
         if (line.trim() !== '') {
-          listItems += `  <li>${line.trim()}</li>\n`;
+          return '• ' + line.trim();
         }
-      });
-      formattedText = '<ul>\n' + listItems + '</ul>\n';
+        return line;
+      }).join('\n');
+      
+      newText = beforeText + bulletedLines + afterText;
+      
+      // Mettre à jour le texte
+      setText(newText);
+      if (onChange) {
+        onChange(newText);
+      }
+      
+      // Positionner le curseur après le texte formaté
+      setTimeout(() => {
+        textarea.focus();
+        const newCursorPos = start + bulletedLines.length;
+        textarea.setSelectionRange(newCursorPos, newCursorPos);
+      }, 0);
     }
-    
-    insertFormatting('', formattedText);
   };
   
   // Convertir le HTML en texte brut pour l'affichage dans le textarea
@@ -152,7 +180,11 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
       {previewMode ? (
         <div 
           className="p-3 min-h-[200px] prose prose-sm max-w-none"
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={{ __html: text
+            .replace(/^• (.+)$/gm, '<li>$1</li>')
+            .replace(/(<li>.+<\/li>\n?)+/g, '<ul>$&</ul>')
+            .replace(/<\/ul>\n<ul>/g, '\n')
+          }}
         />
       ) : (
         <textarea
@@ -160,7 +192,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
           value={text}
           onChange={handleChange}
           placeholder={placeholder}
-          className="p-3 min-h-[200px] w-full focus:outline-none resize-y"
+          className="p-3 min-h-[200px] w-full focus:outline-none resize-y font-mono"
           dir="ltr"
         />
       )}
