@@ -30,7 +30,7 @@ export default function Navbar() {
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
               <div className="relative w-8 h-8">
                 <Image 
-                  src="/images/logo-blue.svg" 
+                  src="/images/logo-mh.png" 
                   alt="MovieHunt Logo" 
                   width={32} 
                   height={32} 
@@ -109,7 +109,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center px-3 py-2 mb-2" onClick={() => setIsOpen(false)}>
               <div className="relative w-6 h-6 mr-2">
                 <Image 
-                  src="/images/logo-blue.svg" 
+                  src="/images/logo-mh.png" 
                   alt="MovieHunt Logo" 
                   width={24} 
                   height={24} 
