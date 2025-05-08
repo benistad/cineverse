@@ -4,8 +4,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
+import { useSwipeable } from 'react-swipeable';
 
 export default function FilmCarousel({ films, title, visibleCount = 4 }) {
+  // État pour suivre si l'utilisateur est en train de faire glisser
+  const [isDragging, setIsDragging] = useState(false);
+  // État pour suivre si on est sur mobile
+  const [isMobile, setIsMobile] = useState(false);
   // Ajuster le nombre de films visibles en fonction de la taille de l'écran
   const [mobileVisibleCount, setMobileVisibleCount] = useState(1);
   const [tabletVisibleCount, setTabletVisibleCount] = useState(2);
@@ -15,8 +20,12 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
     const handleResize = () => {
       if (window.innerWidth < 640) { // Mobile
         setMobileVisibleCount(1);
+        setIsMobile(true);
       } else if (window.innerWidth < 1024) { // Tablet
         setTabletVisibleCount(2);
+        setIsMobile(false);
+      } else {
+        setIsMobile(false);
       }
     };
     
@@ -56,20 +65,43 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   // Fonction pour faire défiler vers la gauche
   const scrollLeft = () => {
     if (startIndex > 0) {
+      // Sur mobile, défiler un film à la fois
       setStartIndex(startIndex - 1);
     }
   };
 
   // Fonction pour faire défiler vers la droite
   const scrollRight = () => {
-    if (startIndex + visibleCount < totalFilms) {
+    if (startIndex + responsiveVisibleCount < totalFilms) {
+      // Sur mobile, défiler un film à la fois
       setStartIndex(startIndex + 1);
     }
   };
+  
+  // Configuration des gestionnaires de swipe
+  const swipeHandlers = useSwipeable({
+    onSwiping: () => setIsDragging(true),
+    onSwiped: () => setTimeout(() => setIsDragging(false), 50),
+    onSwipedLeft: () => {
+      if (startIndex + responsiveVisibleCount < totalFilms) {
+        scrollRight();
+      }
+    },
+    onSwipedRight: () => {
+      if (startIndex > 0) {
+        scrollLeft();
+      }
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: false,
+    trackTouch: true,
+    delta: 10, // Déplacement minimal pour détecter un swipe
+    swipeDuration: 500, // Durée maximale d'un swipe
+  });
 
   // Vérifier si les boutons de navigation doivent être affichés
   const showLeftButton = startIndex > 0;
-  const showRightButton = startIndex + visibleCount < totalFilms;
+  const showRightButton = startIndex + responsiveVisibleCount < totalFilms;
 
   return (
     <div className="space-y-4">
@@ -99,13 +131,23 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
         </div>
       </div>
 
-      <div className="relative overflow-hidden" ref={containerRef}>
+      <div 
+        className={`relative overflow-hidden touch-pan-y ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''} ${isDragging ? 'cursor-grabbing' : ''}`} 
+        ref={containerRef} 
+        {...swipeHandlers}
+      >
+        {isMobile && (
+          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
+        )}
+        {isMobile && (
+          <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
+        )}
         <div 
           className="flex transition-transform duration-300 ease-in-out"
           style={{ 
             transform: `translateX(-${startIndex * (100 / responsiveVisibleCount)}%)`,
             width: `${(totalFilms / responsiveVisibleCount) * 100}%`,
-            gap: '0.5rem sm:1rem'
+            gap: '0.5rem'
           }}
         >
           {films.map((film) => (
