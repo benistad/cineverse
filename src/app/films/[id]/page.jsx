@@ -108,6 +108,12 @@ export default function FilmPage() {
               <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
             </p>
             
+            {film.genres && (
+              <p className="text-gray-600 mb-2">
+                <span className="font-semibold">Genre:</span> {film.genres}
+              </p>
+            )}
+            
             <div className="flex items-center mb-2">
               <span className="font-semibold mr-2">Note:</span>
               <span className="flex items-center">

@@ -221,6 +221,8 @@ export default function FilmEditor({ movieDetails }) {
         date_ajout: new Date().toISOString(),
         why_watch_enabled: whyWatchEnabled,
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
+        // Ajouter les genres du film
+        genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
 
       // Sauvegarder le film
