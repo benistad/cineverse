@@ -47,11 +47,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
     <div className="flex justify-center items-center space-x-2 my-6">
       {/* Bouton page précédente */}
       <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault(); // Empêcher le comportement par défaut
-          onPageChange(currentPage - 1);
-        }}
+        onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`p-2 rounded-full flex items-center justify-center ${
           currentPage === 1
@@ -70,11 +66,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             <span className="px-3 py-2 text-gray-500">...</span>
           ) : (
             <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault(); // Empêcher le comportement par défaut
-                onPageChange(page);
-              }}
+              onClick={() => onPageChange(page)}
               className={`w-10 h-10 rounded-full flex items-center justify-center ${
                 currentPage === page
                   ? 'bg-blue-600 text-white'
@@ -89,11 +81,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       
       {/* Bouton page suivante */}
       <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault(); // Empêcher le comportement par défaut
-          onPageChange(currentPage + 1);
-        }}
+        onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={`p-2 rounded-full flex items-center justify-center ${
           currentPage === totalPages
