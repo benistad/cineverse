@@ -5,7 +5,6 @@ import Slider from 'react-slick';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTopRatedFilms } from '@/lib/supabase/films';
-import { downloadAndStoreImage, cleanupCarouselImages } from '@/lib/supabase/storage';
 import RatingIcon from '@/components/ui/RatingIcon';
 
 // Importer les styles CSS de Slick
@@ -15,41 +14,31 @@ import 'slick-carousel/slick/slick-theme.css';
 export default function FeaturedFilmsCarousel() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [storedImages, setStoredImages] = useState({});
+
+  // Fonction pour obtenir une image statique locale en fonction de l'index
+  const getStaticImagePath = (index) => {
+    const images = [
+      '/film1.jpg',
+      '/film2.jpg',
+      '/film3.jpg',
+      '/film4.jpg',
+      '/film5.jpg'
+    ];
+    return images[index % images.length];
+  };
 
   useEffect(() => {
     async function loadTopRatedFilms() {
       try {
-        // Récupérer les films les mieux notés
         const topFilms = await getTopRatedFilms(5, 6);
         
-        // Stocker temporairement les films pour pouvoir les utiliser dans l'effet suivant
-        setFilms(topFilms);
+        // Ajouter une propriété d'image locale à chaque film
+        const filmsWithImages = topFilms.map((film, index) => ({
+          ...film,
+          localImagePath: getStaticImagePath(index)
+        }));
         
-        // Télécharger et stocker les images dans Supabase Storage
-        const imagePromises = topFilms.map(async (film) => {
-          if (film.poster_url) {
-            const storedImageUrl = await downloadAndStoreImage(film.poster_url, film.id);
-            return { filmId: film.id, imageUrl: storedImageUrl };
-          }
-          return { filmId: film.id, imageUrl: null };
-        });
-        
-        const storedImageResults = await Promise.all(imagePromises);
-        
-        // Créer un objet avec les URLs des images stockées
-        const imageMap = {};
-        storedImageResults.forEach(result => {
-          if (result.imageUrl) {
-            imageMap[result.filmId] = result.imageUrl;
-          }
-        });
-        
-        setStoredImages(imageMap);
-        
-        // Nettoyer les images qui ne sont plus nécessaires
-        const activeFilmIds = topFilms.map(film => film.id.toString());
-        await cleanupCarouselImages(activeFilmIds);
+        setFilms(filmsWithImages);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);
       } finally {
@@ -111,17 +100,12 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  {/* Utiliser l'image stockée dans Supabase Storage */}
+                  {/* Utiliser des images statiques locales */}
                   <div className="w-full h-full">
                     <img
-                      src={storedImages[film.id] || '/images/placeholder.jpg'}
+                      src={film.localImagePath}
                       alt={film.title}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        console.error(`Erreur de chargement de l'image pour ${film.title}`);
-                        e.target.onerror = null;
-                        e.target.src = '/images/placeholder.jpg';
-                      }}
                     />
                   </div>
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
