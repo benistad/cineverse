@@ -85,11 +85,14 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  {/* Utiliser une image statique de test pour vérifier si le problème vient des URL */}
+                  {/* Utiliser directement l'URL de l'image avec crossOrigin="anonymous" */}
                   <img 
-                    src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg" 
+                    src={film.poster_url}
                     alt={film.title}
                     className="w-full h-full object-cover"
+                    crossOrigin="anonymous"
+                    referrerPolicy="no-referrer"
+                    loading="eager"
                     onError={(e) => {
                       console.error(`Erreur de chargement de l'image pour ${film.title}:`, e);
                       e.target.onerror = null;
