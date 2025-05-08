@@ -81,15 +81,19 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  {/* Utiliser SafeImage comme pour les vignettes de films */}
-                  <SafeImage
-                    src={film.poster_url}
-                    alt={film.title}
-                    fill
-                    sizes="100vw"
-                    className="object-cover"
-                    priority
-                  />
+                  {/* Utiliser une balise img standard avec l'URL directe */}
+                  <div className="w-full h-full">
+                    <img
+                      src={film.poster_url}
+                      alt={film.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.error(`Erreur de chargement de l'image pour ${film.title}`);
+                        e.target.onerror = null;
+                        e.target.src = '/images/placeholder.jpg';
+                      }}
+                    />
+                  </div>
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
                 </div>
