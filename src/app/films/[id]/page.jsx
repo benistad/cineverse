@@ -7,7 +7,7 @@ import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import RatingIcon from '@/components/ui/RatingIcon';
 import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
-import { findTrailerWithFallback } from '@/lib/youtube/api';
+import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 
 export default function FilmPage() {
   const params = useParams();
@@ -44,7 +44,7 @@ export default function FilmPage() {
           try {
             // Extraire l'année de sortie à partir de la date d'ajout (ou utiliser une année par défaut)
             const releaseYear = data.release_year || new Date(data.date_ajout).getFullYear();
-            const foundTrailerKey = await findTrailerWithFallback(data.title, releaseYear);
+            const foundTrailerKey = await findTrailerByTitleAndYear(data.title, releaseYear);
             
             if (foundTrailerKey) {
               setTrailerKey(foundTrailerKey);
