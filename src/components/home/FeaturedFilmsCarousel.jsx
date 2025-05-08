@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Slider from 'react-slick';
+import Link from 'next/link';
+import Image from 'next/image';
+import { FaStar } from 'react-icons/fa';
 import { getTopRatedFilms } from '@/lib/supabase/films';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
@@ -15,15 +17,29 @@ export default function FeaturedFilmsCarousel() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Utiliser des images statiques pour éviter les problèmes CORS
+  const getLocalImagePath = (index) => {
+    // Rotation d'images statiques
+    const images = [
+      '/film1.jpg',
+      '/film2.jpg',
+      '/film3.jpg',
+      '/film4.jpg',
+      '/film5.jpg'
+    ];
+    return images[index % images.length];
+  };
+
   useEffect(() => {
     async function loadTopRatedFilms() {
       try {
         const topFilms = await getTopRatedFilms(5, 6);
-        console.log('Films récupérés:', topFilms);
-        topFilms.forEach(film => {
-          console.log(`Film ${film.title} - URL de l'image:`, film.poster_url);
-        });
-        setFilms(topFilms);
+        // Ajouter une propriété d'image locale à chaque film
+        const filmsWithLocalImages = topFilms.map((film, index) => ({
+          ...film,
+          localImagePath: getLocalImagePath(index)
+        }));
+        setFilms(filmsWithLocalImages);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);
       } finally {
@@ -85,20 +101,17 @@ export default function FeaturedFilmsCarousel() {
               <div className="relative h-[400px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan */}
                 <div className="absolute inset-0">
-                  {/* Utiliser directement l'URL de l'image avec crossOrigin="anonymous" */}
-                  <img 
-                    src={film.poster_url}
-                    alt={film.title}
-                    className="w-full h-full object-cover"
-                    crossOrigin="anonymous"
-                    referrerPolicy="no-referrer"
-                    loading="eager"
-                    onError={(e) => {
-                      console.error(`Erreur de chargement de l'image pour ${film.title}:`, e);
-                      e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/500x750?text=Pas+d%27image';
-                    }}
-                  />
+                  {/* Utiliser des images locales statiques */}
+                  <div className="relative w-full h-full">
+                    <Image 
+                      src={film.localImagePath}
+                      alt={film.title}
+                      fill
+                      sizes="100vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                   {/* Overlay sombre pour améliorer la lisibilité du texte */}
                   <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
                 </div>
