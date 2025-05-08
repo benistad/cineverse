@@ -105,7 +105,14 @@ export default function FilmPage() {
                 <h2 className="text-xl font-semibold mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
                 <div 
                   className="text-gray-700 prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
+                  dangerouslySetInnerHTML={{ __html: film.why_watch_content
+                    // Convertir les puces en éléments de liste HTML
+                    .replace(/^• (.+)$/gm, '<li>$1</li>')
+                    .replace(/(<li>.+<\/li>\n?)+/g, '<ul>$&</ul>')
+                    .replace(/<\/ul>\n<ul>/g, '\n')
+                    // Préserver les retours à la ligne
+                    .replace(/\n/g, '<br />')
+                  }}
                 />
               </div>
             )}
