@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import { useParams, useRouter } from 'next/navigation';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
-import { FiStar } from 'react-icons/fi';
+import RatingIcon from '@/components/ui/RatingIcon';
 import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
 
@@ -88,7 +88,7 @@ export default function FilmPage() {
             <div className="flex items-center mb-2">
               <span className="font-semibold mr-2">Note:</span>
               <span className="flex items-center">
-                <FiStar className="text-yellow-500 mr-1" />
+                <RatingIcon rating={film.note_sur_10} className="mr-2" />
                 {film.note_sur_10}/10
               </span>
             </div>

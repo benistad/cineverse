@@ -8,6 +8,7 @@ import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/films';
 import { useAuth } from '@/contexts/AuthContext';
 import SafeImage from '@/components/ui/SafeImage';
+import RatingIcon from '@/components/ui/RatingIcon';
 
 export default function FilmEditor({ movieDetails }) {
   const router = useRouter();
@@ -295,17 +296,22 @@ export default function FilmEditor({ movieDetails }) {
           {/* Notation */}
           <div className="bg-gray-100 p-4 rounded-lg">
             <h3 className="text-lg font-semibold mb-2">Votre note</h3>
-            <div className="flex items-center">
-              <input
-                type="range"
-                min="0"
-                max="10"
-                step="0.5"
-                value={rating}
-                onChange={(e) => setRating(parseFloat(e.target.value))}
-                className="w-full mr-2"
-              />
-              <span className="font-bold text-xl">{rating}/10</span>
+            <div className="flex flex-col space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="range"
+                  min="0"
+                  max="10"
+                  step="0.5"
+                  value={rating}
+                  onChange={(e) => setRating(parseFloat(e.target.value))}
+                  className="w-full mr-2"
+                />
+                <span className="font-bold text-xl ml-2">{rating}/10</span>
+              </div>
+              <div className="flex justify-center">
+                <RatingIcon rating={rating} size={60} />
+              </div>
             </div>
           </div>
         </div>

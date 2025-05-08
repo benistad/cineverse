@@ -1,9 +1,10 @@
 'use client';
 
 import SafeImage from '@/components/ui/SafeImage';
+import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiStar, FiEdit, FiImage } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -52,9 +53,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           />
           
           {showRating && film.note_sur_10 !== undefined && (
-            <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full p-2 flex items-center justify-center">
-              <FiStar className="mr-1" />
-              <span className="font-bold">{film.note_sur_10}</span>
+            <div className="absolute top-2 right-2">
+              <RatingIcon rating={film.note_sur_10} size={40} />
             </div>
           )}
           
