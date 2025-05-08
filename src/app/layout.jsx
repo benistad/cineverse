@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,8 @@ export default function RootLayout({ children }) {
       <head>
         <title>MovieHunt - Votre collection de films notés</title>
         <meta name="description" content="Découvrez ma collection de films notés et mes recommandations de casting et d'équipe technique" />
+        {/* Google Analytics - Sera actif uniquement si l'ID de mesure est défini */}
+        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}
