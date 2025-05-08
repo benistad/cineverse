@@ -9,6 +9,7 @@ import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/f
 import { useAuth } from '@/contexts/AuthContext';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
+import SimpleRichTextEditor from '@/components/ui/SimpleRichTextEditor';
 
 export default function FilmEditor({ movieDetails }) {
   const router = useRouter();
@@ -20,6 +21,8 @@ export default function FilmEditor({ movieDetails }) {
   const [success, setSuccess] = useState(false);
   const [trailerKey, setTrailerKey] = useState(null);
   const [multiRolePersons, setMultiRolePersons] = useState({});
+  const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
+  const [whyWatchContent, setWhyWatchContent] = useState('');
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -75,6 +78,14 @@ export default function FilmEditor({ movieDetails }) {
             // Précharger la note
             if (existingFilm.note_sur_10) {
               setRating(existingFilm.note_sur_10);
+            }
+            
+            // Précharger les données "Pourquoi regarder ce film ?"
+            if (existingFilm.why_watch_enabled !== undefined) {
+              setWhyWatchEnabled(existingFilm.why_watch_enabled);
+            }
+            if (existingFilm.why_watch_content) {
+              setWhyWatchContent(existingFilm.why_watch_content);
             }
             
             // Précharger le personnel remarquable
@@ -208,6 +219,8 @@ export default function FilmEditor({ movieDetails }) {
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         date_ajout: new Date().toISOString(),
+        why_watch_enabled: whyWatchEnabled,
+        why_watch_content: whyWatchEnabled ? whyWatchContent : null,
       };
 
       // Sauvegarder le film
@@ -329,6 +342,32 @@ export default function FilmEditor({ movieDetails }) {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">Synopsis</h3>
             <p className="text-gray-700">{movieDetails.overview || 'Aucun synopsis disponible.'}</p>
+          </div>
+          
+          {/* Section "Pourquoi regarder ce film ?" */}
+          <div className="bg-gray-100 p-4 rounded-lg mb-6">
+            <div className="flex items-center mb-3">
+              <input
+                type="checkbox"
+                id="whyWatchEnabled"
+                checked={whyWatchEnabled}
+                onChange={(e) => setWhyWatchEnabled(e.target.checked)}
+                className="form-checkbox h-5 w-5 text-blue-600"
+              />
+              <label htmlFor="whyWatchEnabled" className="ml-2 text-lg font-semibold">
+                Pourquoi regarder ce film ?
+              </label>
+            </div>
+            
+            {whyWatchEnabled && (
+              <div className="mt-2">
+                <SimpleRichTextEditor
+                  value={whyWatchContent}
+                  onChange={setWhyWatchContent}
+                  placeholder="Expliquez pourquoi ce film mérite d'être vu..."
+                />
+              </div>
+            )}
           </div>
           
           {/* Bande-annonce */}

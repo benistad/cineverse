@@ -100,6 +100,16 @@ export default function FilmPage() {
               <p className="text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
             </div>
             
+            {film.why_watch_enabled && film.why_watch_content && (
+              <div className="mb-4 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                <h2 className="text-xl font-semibold mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
+                <div 
+                  className="text-gray-700 prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
+                />
+              </div>
+            )}
+            
             {film.youtube_trailer_key && (
               <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Bande-annonce</h2>
