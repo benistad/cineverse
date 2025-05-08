@@ -15,6 +15,8 @@ export default function FeaturedFilmsCarousel() {
     async function loadTopRatedFilms() {
       try {
         const topFilms = await getTopRatedFilms(5, 6);
+        console.log('Films chargés:', topFilms);
+        console.log('URL du poster du premier film:', topFilms[0]?.poster_url);
         setFilms(topFilms);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);
@@ -65,8 +67,8 @@ export default function FeaturedFilmsCarousel() {
               priority
               unoptimized={true}
             />
-            {/* Overlay sombre pour améliorer la lisibilité du texte */}
-            <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-40 transition-all duration-300"></div>
+            {/* Overlay très léger pour améliorer la lisibilité du texte */}
+            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
           </div>
           
           {/* Contenu textuel */}
