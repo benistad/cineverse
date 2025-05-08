@@ -425,7 +425,7 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
     const offset = (page - 1) * filmsPerPage;
     
     // Récupérer les films pour la page actuelle
-    const { data: films, error, count } = await supabase
+    const { data: films, error } = await supabase
       .from('films')
       .select('*', { count: 'exact' })
       .order('title', { ascending: true })
