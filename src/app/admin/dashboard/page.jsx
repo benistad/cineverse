@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
-import { FiPlus, FiSearch, FiRefreshCw } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiRefreshCw, FiDatabase } from 'react-icons/fi';
 
 export default function DashboardPage() {
   const [films, setFilms] = useState([]);
@@ -55,6 +55,12 @@ export default function DashboardPage() {
             className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
           >
             <FiRefreshCw /> Mettre à jour les films
+          </Link>
+          <Link
+            href="/admin/database-migration"
+            className="flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors"
+          >
+            <FiDatabase /> Migration BDD
           </Link>
         </div>
       </div>
