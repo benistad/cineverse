@@ -73,7 +73,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
   const [providers, setProviders] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [justWatchLink, setJustWatchLink] = useState(null);
+  // Variable justWatchLink supprimée car plus utilisée
 
   // Récupérer les plateformes de streaming au chargement du composant
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
         if (data) {
           console.log(`Plateformes trouvées:`, data);
           setProviders(data.providers);
-          setJustWatchLink(data.link);
+          // setJustWatchLink supprimé car plus utilisé
         } else {
           console.log(`Aucune plateforme trouvée pour le film avec TMDB ID: ${tmdbId}`);
         }
@@ -140,19 +140,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
         <ProviderSection type={WATCH_TYPES.FREE} providers={providers} />
         <ProviderSection type={WATCH_TYPES.ADS} providers={providers} />
         {/* Sections Location et Achat supprimées */}
-        
-        {justWatchLink && (
-          <div className="mt-3 text-right">
-            <a 
-              href={justWatchLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs text-blue-600 hover:underline"
-            >
-              Plus d'informations sur JustWatch
-            </a>
-          </div>
-        )}
+        {/* Lien vers JustWatch supprimé */}
       </div>
     );
   }
