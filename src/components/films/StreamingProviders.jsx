@@ -8,11 +8,11 @@ import { getStreamingProviders, WATCH_TYPES } from '@/lib/tmdb/streaming';
 function getWatchTypeText(type) {
   switch (type) {
     case WATCH_TYPES.FLATRATE:
-      return 'Abonnement';
+      return ''; // Suppression du mot "Abonnement"
     case WATCH_TYPES.RENT:
-      return 'Location';
+      return 'Location'; // Sera masqué
     case WATCH_TYPES.BUY:
-      return 'Achat';
+      return 'Achat'; // Sera masqué
     case WATCH_TYPES.ADS:
       return 'Gratuit avec pub';
     case WATCH_TYPES.FREE:
@@ -139,8 +139,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
         <ProviderSection type={WATCH_TYPES.FLATRATE} providers={providers} />
         <ProviderSection type={WATCH_TYPES.FREE} providers={providers} />
         <ProviderSection type={WATCH_TYPES.ADS} providers={providers} />
-        <ProviderSection type={WATCH_TYPES.RENT} providers={providers} />
-        <ProviderSection type={WATCH_TYPES.BUY} providers={providers} />
+        {/* Sections Location et Achat supprimées */}
         
         {justWatchLink && (
           <div className="mt-3 text-right">
