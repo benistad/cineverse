@@ -23,6 +23,7 @@ export default function FilmEditor({ movieDetails }) {
   const [multiRolePersons, setMultiRolePersons] = useState({});
   const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
   const [whyWatchContent, setWhyWatchContent] = useState('');
+  const [isHiddenGem, setIsHiddenGem] = useState(false);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -86,6 +87,11 @@ export default function FilmEditor({ movieDetails }) {
             }
             if (existingFilm.why_watch_content) {
               setWhyWatchContent(existingFilm.why_watch_content);
+            }
+            
+            // Précharger l'état "Film méconnu à voir"
+            if (existingFilm.is_hidden_gem !== undefined) {
+              setIsHiddenGem(existingFilm.is_hidden_gem);
             }
             
             // Précharger les MovieHunt's Picks
@@ -223,6 +229,7 @@ export default function FilmEditor({ movieDetails }) {
         release_date: movieDetails.release_date || null,
         why_watch_enabled: whyWatchEnabled,
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
+        is_hidden_gem: isHiddenGem,
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
@@ -349,18 +356,32 @@ export default function FilmEditor({ movieDetails }) {
           </div>
           
           {/* Section "Pourquoi regarder ce film ?" */}
-          <div className="bg-gray-100 p-4 rounded-lg mb-6">
-            <div className="flex items-center mb-3">
-              <input
-                type="checkbox"
-                id="whyWatchEnabled"
-                checked={whyWatchEnabled}
-                onChange={(e) => setWhyWatchEnabled(e.target.checked)}
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-              <label htmlFor="whyWatchEnabled" className="ml-2 text-lg font-semibold">
-                Pourquoi regarder ce film ?
+          <div className="mt-8 p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xl font-semibold mb-4">Pourquoi regarder ce film ?</h3>
+            
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={whyWatchEnabled}
+                  onChange={(e) => setWhyWatchEnabled(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+                <span className="ml-2">Activer la section "Pourquoi regarder ce film ?"</span>
               </label>
+            </div>
+            
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isHiddenGem}
+                  onChange={(e) => setIsHiddenGem(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+                <span className="ml-2">Marquer comme "Film méconnu à voir"</span>
+              </label>
+              <p className="text-sm text-gray-500 mt-1 ml-7">Ce film apparaîtra dans la section "Films méconnus à voir" sur la page d'accueil.</p>
             </div>
             
             {whyWatchEnabled && (

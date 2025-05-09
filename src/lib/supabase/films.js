@@ -475,6 +475,52 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
 }
 
 /**
+ * Récupère les films marqués comme "Films méconnus à voir"
+ * @param {number} limit - Nombre maximum de films à récupérer
+ */
+export async function getHiddenGems(limit = 8) {
+  try {
+    const supabase = getSupabaseClient();
+    // Récupérer les films marqués comme "Films méconnus à voir"
+    const { data: films, error } = await supabase
+      .from('films')
+      .select('*')
+      .eq('is_hidden_gem', true)
+      .order('date_ajout', { ascending: false })
+      .limit(limit);
+
+    if (error) throw error;
+    if (!films) return [];
+
+    // Pour chaque film, récupérer son staff remarquable
+    const filmsWithStaff = await Promise.all(
+      films.map(async (film) => {
+        const supabase = getSupabaseClient();
+        const { data: staff, error: staffError } = await supabase
+          .from('remarkable_staff')
+          .select('*')
+          .eq('film_id', film.id);
+
+        if (staffError) {
+          console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
+          return { ...film, remarkable_staff: [] };
+        }
+
+        return {
+          ...film,
+          remarkable_staff: staff || [],
+        };
+      })
+    );
+
+    return filmsWithStaff;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des films méconnus:', error);
+    return [];
+  }
+}
+
+/**
  * Récupère les derniers films avec une note supérieure à un seuil donné
  * Utilisé pour le carrousel de la page d'accueil
  */

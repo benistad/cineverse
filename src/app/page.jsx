@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getRecentlyRatedFilms, getTopRatedFilms, getPaginatedFilms } from '@/lib/supabase/films';
+import { getRecentlyRatedFilms, getTopRatedFilms, getPaginatedFilms, getHiddenGems } from '@/lib/supabase/films';
 import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
@@ -10,6 +10,7 @@ import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
 export default function Home() {
   const [recentFilms, setRecentFilms] = useState([]);
   const [topRatedFilms, setTopRatedFilms] = useState([]);
+  const [hiddenGems, setHiddenGems] = useState([]);
   const [allFilms, setAllFilms] = useState([]);
   const [totalFilmsCount, setTotalFilmsCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,13 +45,19 @@ export default function Home() {
   useEffect(() => {
     async function fetchFilms() {
       try {
+        setLoading(true);
+        
         // Récupérer les films récemment notés
-        const recentFilmsData = await getRecentlyRatedFilms(8);
-        setRecentFilms(recentFilmsData);
+        const recent = await getRecentlyRatedFilms(8);
+        setRecentFilms(recent);
         
         // Récupérer les films les mieux notés
-        const topRatedFilmsData = await getTopRatedFilms(8);
-        setTopRatedFilms(topRatedFilmsData);
+        const topRated = await getTopRatedFilms(8);
+        setTopRatedFilms(topRated);
+        
+        // Récupérer les films méconnus à voir
+        const gems = await getHiddenGems(8);
+        setHiddenGems(gems);
         
         // Récupérer tous les films (première page)
         await loadPaginatedFilms(1);
@@ -105,9 +112,9 @@ export default function Home() {
       </section>
 
       {/* Films les mieux notés */}
-      <section>
+      <section className="py-8">
         {loading ? (
-          <div className="flex justify-center items-center h-64">
+          <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
@@ -118,7 +125,22 @@ export default function Home() {
           />
         )}
       </section>
-      
+
+      {/* Films Méconnus à voir */}
+      <section className="py-8">
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : hiddenGems.length > 0 ? (
+          <BasicFilmCarousel 
+            films={hiddenGems} 
+            title="Films Méconnus à voir" 
+            visibleCount={4} 
+          />
+        ) : null}
+      </section>
+
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
         <h2 className="text-3xl font-bold mb-6">Tous les films</h2>
