@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -55,6 +55,17 @@ export default function Navbar() {
               }`}
             >
               Accueil
+            </Link>
+            <Link 
+              href="/advanced-search" 
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+            >
+              <span className="flex items-center">
+                <FiFilter className="mr-1" />
+                Recherche avancée
+              </span>
             </Link>
             
             {!loading && user && (
@@ -132,6 +143,15 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <FiHome className="mr-2" /> Accueil
+            </Link>
+            <Link 
+              href="/advanced-search" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiFilter className="mr-2" /> Recherche avancée
             </Link>
             
             {!loading && user && (
