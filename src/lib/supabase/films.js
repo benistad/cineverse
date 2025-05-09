@@ -66,14 +66,16 @@ export async function getRecentlyRatedFilms(limit = 8) {
 /**
  * Récupère les films les mieux notés avec leur staff remarquable
  * @param {number} limit - Nombre maximum de films à récupérer
+ * @param {number} minRating - Note minimale pour inclure un film (défaut: 6)
  */
-export async function getTopRatedFilms(limit = 8) {
+export async function getTopRatedFilms(limit = 8, minRating = 6) {
   try {
     const supabase = getSupabaseClient();
-    // Récupérer les films les mieux notés, triés par note (de la plus haute à la plus basse)
+    // Récupérer les films avec une note supérieure à minRating, triés par note (de la plus haute à la plus basse)
     const { data: films, error } = await supabase
       .from('films')
       .select('*')
+      .gte('note_sur_10', minRating)
       .order('note_sur_10', { ascending: false })
       .limit(limit);
 
