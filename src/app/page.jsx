@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { getRecentlyRatedFilms, getTopRatedFilms, getPaginatedFilms } from '@/lib/supabase/films';
-import SimpleFilmCarousel from '@/components/films/SimpleFilmCarousel';
+import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
@@ -96,7 +96,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <SimpleFilmCarousel 
+          <BasicFilmCarousel 
             films={recentFilms} 
             title="Films récemment notés" 
             visibleCount={4} 
@@ -111,7 +111,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <SimpleFilmCarousel 
+          <BasicFilmCarousel 
             films={topRatedFilms} 
             title="Films les mieux notés" 
             visibleCount={4} 
