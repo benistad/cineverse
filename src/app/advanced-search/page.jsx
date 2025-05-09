@@ -164,12 +164,16 @@ function AdvancedSearch() {
       // Appliquer les filtres d'années
       if (years.length > 0) {
         // Créer une condition OR pour chaque année sélectionnée
-        query = query.or(
-          years.map(year => {
-            // Extraire l'année de la date de sortie et vérifier qu'elle correspond
-            return `release_date.like.${year}-%`;
-          }).join(',')
-        );
+        const yearConditions = [];
+        
+        years.forEach(year => {
+          // Pour chaque année, ajouter une condition qui vérifie si l'année extraite de la date de sortie correspond
+          yearConditions.push(`release_date.gte.${year}-01-01`);
+          yearConditions.push(`release_date.lte.${year}-12-31`);
+        });
+        
+        // Combiner les conditions avec OR
+        query = query.or(yearConditions.join(','));
       }
       
       // Trier par note décroissante
