@@ -11,45 +11,62 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   const [isDragging, setIsDragging] = useState(false);
   // État pour suivre si on est sur mobile
   const [isMobile, setIsMobile] = useState(false);
-  // Ajuster le nombre de films visibles en fonction de la taille de l'écran
-  const [mobileVisibleCount, setMobileVisibleCount] = useState(1);
-  const [tabletVisibleCount, setTabletVisibleCount] = useState(2);
+  // État pour suivre le nombre de films visibles actuellement
+  const [currentVisibleCount, setCurrentVisibleCount] = useState(visibleCount);
+  // Ref pour stocker la largeur de l'écran précédente
+  const prevWidthRef = useRef(0);
   
   // Mettre à jour le nombre de films visibles en fonction de la taille de l'écran
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) { // Mobile
-        setMobileVisibleCount(1);
+      const width = window.innerWidth;
+      const wasMobile = isMobile;
+      
+      // Déterminer si c'est un mobile et combien de films sont visibles
+      if (width < 640) { // Mobile
+        setCurrentVisibleCount(1);
         setIsMobile(true);
-      } else if (window.innerWidth < 1024) { // Tablet
-        setTabletVisibleCount(2);
+      } else if (width < 1024) { // Tablet
+        setCurrentVisibleCount(2);
         setIsMobile(false);
-      } else {
+      } else { // Desktop
+        setCurrentVisibleCount(visibleCount);
         setIsMobile(false);
+      }
+      
+      // Si la taille de l'écran change de façon significative, ajuster l'index de départ
+      // pour éviter les espaces vides
+      if (prevWidthRef.current !== 0 && Math.abs(width - prevWidthRef.current) > 50) {
+        adjustStartIndex();
+      }
+      
+      prevWidthRef.current = width;
+    };
+    
+    // Fonction pour ajuster l'index de départ lors des changements de taille d'écran
+    const adjustStartIndex = () => {
+      if (films && films.length > 0) {
+        // S'assurer que l'index ne dépasse pas la limite maximale
+        const maxIndex = Math.max(0, films.length - currentVisibleCount);
+        setStartIndex(prev => Math.min(prev, maxIndex));
       }
     };
     
     // Initialiser
-    handleResize();
-    
-    // Ajouter l'écouteur d'événement
-    window.addEventListener('resize', handleResize);
+    if (typeof window !== 'undefined') {
+      handleResize();
+      // Ajouter l'écouteur d'événement
+      window.addEventListener('resize', handleResize);
+    }
     
     // Nettoyer l'écouteur d'événement
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize);
+      }
+    };
+  }, [films, visibleCount]);
   
-  // Déterminer le nombre de films visibles en fonction de la taille de l'écran
-  const responsiveVisibleCount = typeof window !== 'undefined' 
-    ? window.innerWidth < 640 
-      ? mobileVisibleCount 
-      : window.innerWidth < 1024 
-        ? tabletVisibleCount 
-        : visibleCount
-    : visibleCount;
-  
-  // Nombre de films à faire défiler à la fois (toujours 1 sur mobile, visibleCount sur desktop)
-  const scrollStep = isMobile ? 1 : visibleCount;
   const [startIndex, setStartIndex] = useState(0);
   const containerRef = useRef(null);
 
@@ -68,29 +85,21 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   // Fonction pour faire défiler vers la gauche
   const scrollLeft = () => {
     if (startIndex > 0) {
-      // Toujours défiler une seule carte à la fois sur mobile
-      if (isMobile) {
-        setStartIndex(startIndex - 1);
-      } else {
-        // Sur desktop, défiler selon visibleCount
-        const newIndex = Math.max(0, startIndex - scrollStep);
-        setStartIndex(newIndex);
-      }
+      // Défiler d'une seule carte à la fois sur mobile, sinon selon le nombre visible
+      const step = isMobile ? 1 : currentVisibleCount;
+      const newIndex = Math.max(0, startIndex - step);
+      setStartIndex(newIndex);
     }
   };
 
   // Fonction pour faire défiler vers la droite
   const scrollRight = () => {
-    const maxIndex = totalFilms - responsiveVisibleCount;
+    const maxIndex = totalFilms - currentVisibleCount;
     if (startIndex < maxIndex) {
-      // Toujours défiler une seule carte à la fois sur mobile
-      if (isMobile) {
-        setStartIndex(Math.min(maxIndex, startIndex + 1));
-      } else {
-        // Sur desktop, défiler selon visibleCount
-        const newIndex = Math.min(maxIndex, startIndex + scrollStep);
-        setStartIndex(newIndex);
-      }
+      // Défiler d'une seule carte à la fois sur mobile, sinon selon le nombre visible
+      const step = isMobile ? 1 : currentVisibleCount;
+      const newIndex = Math.min(maxIndex, startIndex + step);
+      setStartIndex(newIndex);
     }
   };
   
@@ -119,7 +128,7 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
 
   // Vérifier si les boutons de navigation doivent être affichés
   const showLeftButton = startIndex > 0;
-  const showRightButton = startIndex < (totalFilms - responsiveVisibleCount);
+  const showRightButton = startIndex < (totalFilms - currentVisibleCount);
 
   return (
     <div className="space-y-4">
@@ -163,8 +172,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
         <div 
           className="flex transition-transform duration-300 ease-in-out"
           style={{ 
-            transform: `translateX(-${startIndex * (100 / responsiveVisibleCount)}%)`,
-            width: `${(totalFilms / responsiveVisibleCount) * 100}%`,
+            transform: `translateX(-${startIndex * (100 / currentVisibleCount)}%)`,
+            width: `${(totalFilms / currentVisibleCount) * 100}%`,
             gap: '0.5rem'
           }}
         >
@@ -172,7 +181,7 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
             <div 
               key={film.id} 
               className="px-2 pb-4"
-              style={{ width: `${100 / responsiveVisibleCount}%` }}
+              style={{ width: `${100 / currentVisibleCount}%` }}
             >
               <div className="h-full">
                 <FilmCard film={film} />
