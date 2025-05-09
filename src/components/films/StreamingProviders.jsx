@@ -26,7 +26,7 @@ function getWatchTypeText(type) {
 function ProviderItem({ provider }) {
   return (
     <div 
-      className="flex flex-col items-center w-16 mx-2 mb-3"
+      className="flex flex-col items-center w-16 mr-4 mb-3"
       title={provider.provider_name}
     >
       <div className="relative w-10 h-10 rounded-lg overflow-hidden mx-auto">
@@ -39,7 +39,7 @@ function ProviderItem({ provider }) {
           unoptimized
         />
       </div>
-      <span className="text-xs mt-1 text-center break-words">{provider.provider_name}</span>
+      <span className="text-xs mt-1 text-center break-words line-clamp-2 h-10 overflow-hidden">{provider.provider_name}</span>
     </div>
   );
 }
@@ -61,7 +61,7 @@ function ProviderSection({ type, providers }) {
   return (
     <div className="mb-3">
       <h4 className="text-sm font-medium text-gray-600 mb-1">{getWatchTypeText(type)}</h4>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-start">
         {providers[type].map((provider) => (
           <ProviderItem key={provider.provider_id} provider={provider} />
         ))}
