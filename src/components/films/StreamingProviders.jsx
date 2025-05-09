@@ -39,7 +39,7 @@ function ProviderItem({ provider }) {
           unoptimized
         />
       </div>
-      <span className="text-xs mt-1 text-center break-words line-clamp-2 h-10 overflow-hidden">{provider.provider_name}</span>
+      <span className="text-[10px] mt-1 text-center break-words line-clamp-2 h-8 overflow-hidden">{provider.provider_name}</span>
     </div>
   );
 }
