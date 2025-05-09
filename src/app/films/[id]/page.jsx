@@ -8,6 +8,7 @@ import RatingIcon from '@/components/ui/RatingIcon';
 import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
+import StreamingProviders from '@/components/films/StreamingProviders';
 import Script from 'next/script';
 
 export default function FilmPage() {
@@ -194,15 +195,16 @@ export default function FilmPage() {
               </p>
             )}
             
-            <div className="flex items-center mb-2">
-              <span className="font-semibold mr-2">Note:</span>
-              <span className="flex items-center">
-                <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                {film.note_sur_10}/10
-              </span>
+            <div className="flex items-center mb-4">
+              <span className="text-3xl font-bold mr-2">{film.note_sur_10}</span>
+              <span className="text-gray-600">/10</span>
             </div>
             
-
+            <StreamingProviders 
+              tmdbId={film.tmdb_id} 
+              title={film.title} 
+              year={film.release_date ? new Date(film.release_date).getFullYear() : null} 
+            />
             
             <div className="mb-4">
               <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
