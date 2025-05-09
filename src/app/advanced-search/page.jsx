@@ -75,6 +75,9 @@ function AdvancedSearch() {
       ? selectedGenres.filter(g => g !== genre)
       : [...selectedGenres, genre];
     setSelectedGenres(newSelectedGenres);
+    
+    // Mettre à jour l'URL et lancer la recherche automatiquement
+    updateUrlAndSearch(newSelectedGenres, selectedRatings, selectedYears);
   };
 
   // Fonction pour basculer la sélection d'une note
@@ -83,6 +86,9 @@ function AdvancedSearch() {
       ? selectedRatings.filter(r => r !== rating)
       : [...selectedRatings, rating];
     setSelectedRatings(newSelectedRatings);
+    
+    // Mettre à jour l'URL et lancer la recherche automatiquement
+    updateUrlAndSearch(selectedGenres, newSelectedRatings, selectedYears);
   };
 
   // Fonction pour basculer la sélection d'une année
@@ -91,6 +97,9 @@ function AdvancedSearch() {
       ? selectedYears.filter(y => y !== year)
       : [...selectedYears, year];
     setSelectedYears(newSelectedYears);
+    
+    // Mettre à jour l'URL et lancer la recherche automatiquement
+    updateUrlAndSearch(selectedGenres, selectedRatings, newSelectedYears);
   };
 
   // Fonction pour effacer tous les filtres
@@ -99,30 +108,35 @@ function AdvancedSearch() {
     setSelectedRatings([]);
     setSelectedYears([]);
     router.push('/advanced-search');
+    
+    // Réinitialiser les résultats
+    setFilms([]);
+    setTotalCount(0);
   };
 
-  // Fonction pour appliquer les filtres
-  const applyFilters = () => {
+  // Fonction pour mettre à jour l'URL et lancer la recherche
+  const updateUrlAndSearch = (genres, ratings, years) => {
     // Construire l'URL avec les paramètres de recherche
     let params = new URLSearchParams();
     
-    if (selectedGenres.length > 0) {
-      params.set('genres', selectedGenres.join(','));
+    if (genres.length > 0) {
+      params.set('genres', genres.join(','));
     }
     
-    if (selectedRatings.length > 0) {
-      params.set('ratings', selectedRatings.join(','));
+    if (ratings.length > 0) {
+      params.set('ratings', ratings.join(','));
     }
     
-    if (selectedYears.length > 0) {
-      params.set('years', selectedYears.join(','));
+    if (years.length > 0) {
+      params.set('years', years.join(','));
     }
     
-    // Rediriger vers la même page avec les paramètres
-    router.push(`/advanced-search?${params.toString()}`);
+    // Mettre à jour l'URL sans recharger la page
+    const newUrl = `/advanced-search${params.toString() ? `?${params.toString()}` : ''}`;
+    window.history.pushState({}, '', newUrl);
     
     // Lancer la recherche
-    searchFilms(selectedGenres, selectedRatings, selectedYears);
+    searchFilms(genres, ratings, years);
   };
 
   // Fonction pour rechercher les films avec les filtres
@@ -282,13 +296,10 @@ function AdvancedSearch() {
             )}
           </div>
           
-          {/* Bouton pour appliquer les filtres */}
-          <button
-            onClick={applyFilters}
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Appliquer les filtres
-          </button>
+          {/* Indicateur de recherche automatique */}
+          <div className="w-full py-2 text-center text-sm text-gray-600 italic">
+            La recherche s'effectue automatiquement
+          </div>
         </div>
         
         {/* Résultats de recherche */}
