@@ -7,25 +7,24 @@ import FilmCard from './FilmCard';
 import { useSwipeable } from 'react-swipeable';
 
 export default function FilmCarousel({ films, title, visibleCount = 4 }) {
-  // État pour suivre si l'utilisateur est en train de faire glisser
-  const [isDragging, setIsDragging] = useState(false);
-  // Index de la carte actuellement affichée en premier
-  const [startIndex, setStartIndex] = useState(0);
+  // État pour suivre l'index de la carte actuellement affichée
+  const [currentIndex, setCurrentIndex] = useState(0);
   // Référence au conteneur pour les interactions
   const containerRef = useRef(null);
-  // État pour stocker le nombre de cartes visibles selon la taille de l'écran
-  const [visibleItems, setVisibleItems] = useState(visibleCount);
+  // État pour stocker le nombre d'éléments visibles selon la taille d'écran
+  const [itemsPerView, setItemsPerView] = useState(1);
   
-  // Mettre à jour le nombre de cartes visibles en fonction de la taille de l'écran
+  // Détecter la taille de l'écran et ajuster le nombre d'éléments visibles
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 640) { // Mobile
-        setVisibleItems(1);
-      } else if (width < 1024) { // Tablet
-        setVisibleItems(2);
-      } else { // Desktop
-        setVisibleItems(visibleCount);
+      // Toujours défiler une carte à la fois, mais afficher plusieurs cartes selon l'écran
+      if (width < 640) {
+        setItemsPerView(1); // Mobile
+      } else if (width < 1024) {
+        setItemsPerView(2); // Tablet
+      } else {
+        setItemsPerView(visibleCount); // Desktop
       }
     };
     
@@ -55,33 +54,26 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
     );
   }
 
-  // Fonction pour faire défiler vers la gauche (toujours une carte à la fois)
+  // Fonction pour faire défiler vers la gauche (une carte à la fois)
   const scrollLeft = () => {
-    if (startIndex > 0) {
-      setStartIndex(startIndex - 1);
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
-  // Fonction pour faire défiler vers la droite (toujours une carte à la fois)
+  // Fonction pour faire défiler vers la droite (une carte à la fois)
   const scrollRight = () => {
-    const maxIndex = totalFilms - visibleItems;
-    if (startIndex < maxIndex) {
-      setStartIndex(startIndex + 1);
+    // S'assurer de ne pas dépasser la dernière carte
+    const maxIndex = Math.max(0, films.length - itemsPerView);
+    if (currentIndex < maxIndex) {
+      setCurrentIndex(currentIndex + 1);
     }
   };
   
-  // Configuration des gestionnaires de swipe (simplifiée et robuste)
+  // Configuration des gestionnaires de swipe
   const swipeHandlers = useSwipeable({
-    onSwiping: () => setIsDragging(true),
-    onSwiped: () => setTimeout(() => setIsDragging(false), 50),
-    onSwipedLeft: () => {
-      // Défilement vers la droite lors d'un swipe vers la gauche
-      scrollRight();
-    },
-    onSwipedRight: () => {
-      // Défilement vers la gauche lors d'un swipe vers la droite
-      scrollLeft();
-    },
+    onSwipedLeft: () => scrollRight(), // Swipe vers la gauche -> défilement vers la droite
+    onSwipedRight: () => scrollLeft(), // Swipe vers la droite -> défilement vers la gauche
     preventDefaultTouchmoveEvent: true,
     trackMouse: false,
     trackTouch: true,
@@ -90,8 +82,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   });
 
   // Vérifier si les boutons de navigation doivent être affichés
-  const showLeftButton = startIndex > 0;
-  const showRightButton = startIndex < (totalFilms - visibleItems);
+  const showLeftButton = currentIndex > 0;
+  const showRightButton = currentIndex < films.length - itemsPerView;
 
   return (
     <div className="space-y-4">
@@ -128,25 +120,28 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
       >
         <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
-        <div 
-          className="flex transition-transform duration-300 ease-in-out"
-          style={{ 
-            transform: `translateX(-${startIndex * (100 / visibleItems)}%)`,
-            width: `${(totalFilms / visibleItems) * 100}%`,
-            gap: '0.5rem'
-          }}
-        >
-          {films.map((film) => (
-            <div 
-              key={film.id} 
-              className="px-2 pb-4"
-              style={{ width: `${100 / visibleItems}%` }}
-            >
-              <div className="h-full">
-                <FilmCard film={film} />
+        
+        {/* Conteneur des cartes avec défilement fluide */}
+        <div className="relative overflow-hidden">
+          <div 
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ 
+              transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
+              width: `${(films.length / itemsPerView) * 100}%`
+            }}
+          >
+            {films.map((film) => (
+              <div 
+                key={film.id} 
+                className="px-2 pb-4"
+                style={{ width: `${100 / (films.length / itemsPerView)}%` }}
+              >
+                <div className="h-full">
+                  <FilmCard film={film} />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
