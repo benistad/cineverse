@@ -10,6 +10,10 @@ export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   // État pour stocker le nombre de cartes visibles
   const [visibleCards, setVisibleCards] = useState(1);
+  // État pour l'animation
+  const [isAnimating, setIsAnimating] = useState(false);
+  // Référence au conteneur du carrousel
+  const carouselRef = useRef(null);
   
   // Détecter la taille de l'écran et ajuster le nombre de cartes visibles
   useEffect(() => {
@@ -41,16 +45,28 @@ export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
   }
   
   // Calculer le nombre maximum d'index
-  const maxIndex = Math.max(0, films.length - 1);
+  const maxIndex = Math.max(0, films.length - visibleCards);
   
-  // Fonction pour passer à la carte précédente
+  // Fonction pour passer à la carte précédente avec animation
   const prevCard = () => {
+    if (isAnimating || currentIndex <= 0) return;
+    
+    setIsAnimating(true);
     setCurrentIndex(prev => Math.max(0, prev - 1));
+    
+    // Réinitialiser l'état d'animation après la transition
+    setTimeout(() => setIsAnimating(false), 300);
   };
-  
-  // Fonction pour passer à la carte suivante
+
+  // Fonction pour passer à la carte suivante avec animation
   const nextCard = () => {
+    if (isAnimating || currentIndex >= maxIndex) return;
+    
+    setIsAnimating(true);
     setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
+    
+    // Réinitialiser l'état d'animation après la transition
+    setTimeout(() => setIsAnimating(false), 300);
   };
   
   // Vérifier si les boutons de navigation doivent être affichés
@@ -103,15 +119,30 @@ export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
       </div>
 
       {/* Conteneur du carrousel avec gestion du swipe */}
-      <div className="relative" {...swipeHandlers}>
+      <div className="relative overflow-hidden" {...swipeHandlers} ref={carouselRef}>
         <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
         
-        {/* Grille de cartes avec transition */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-300 touch-pan-y">
-          {displayedFilms.map((film) => (
-            <div key={film.id} className="h-full">
-              <FilmCard film={film} />
+        {/* Conteneur des cartes avec animation de défilement */}
+        <div 
+          className="flex transition-all duration-300 ease-out touch-pan-y"
+          style={{
+            transform: `translateX(-${currentIndex * (100 / visibleCards)}%)`,
+            width: `${films.length * (100 / visibleCards)}%`
+          }}
+        >
+          {films.map((film, index) => (
+            <div 
+              key={film.id} 
+              className={`px-2 pb-4 transition-all duration-300 ${isAnimating ? 'scale-98 opacity-90' : 'scale-100 opacity-100'}`}
+              style={{ 
+                width: `${100 / films.length}%`,
+                transform: isAnimating && Math.abs(index - currentIndex) <= 1 ? 'translateY(-5px)' : 'translateY(0)'
+              }}
+            >
+              <div className="h-full">
+                <FilmCard film={film} />
+              </div>
             </div>
           ))}
         </div>
