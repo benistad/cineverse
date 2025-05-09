@@ -161,10 +161,13 @@ function AdvancedSearch() {
       
       // Appliquer les filtres d'années
       if (years.length > 0) {
-        const yearConditions = years.map(year => 
-          `release_date.gte.${year}-01-01,release_date.lte.${year}-12-31`
+        // Créer une condition OR pour chaque année sélectionnée
+        query = query.or(
+          years.map(year => {
+            // Extraire l'année de la date de sortie et vérifier qu'elle correspond
+            return `release_date.like.${year}-%`;
+          }).join(',')
         );
-        query = query.or(yearConditions.join(','));
       }
       
       // Trier par note décroissante
