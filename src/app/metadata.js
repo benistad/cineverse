@@ -52,9 +52,12 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [{ url: '/favicon.ico', sizes: 'any' }],
     shortcut: '/favicon.ico',
-    apple: '/images/apple-touch-icon.png',
+    apple: '/favicon.ico',
+    other: [
+      { rel: 'icon', url: '/images/favicon.ico' },
+    ],
   },
   manifest: '/manifest.json',
   alternates: {
