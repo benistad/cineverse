@@ -137,8 +137,10 @@ export default function Home() {
         ) : hiddenGems.length > 0 ? (
           <BasicFilmCarousel 
             films={hiddenGems} 
-            title="Films Méconnus à voir" 
+            title="Films méconnus à voir" 
             visibleCount={4} 
+            showAllLink="/hidden-gems"
+            showAllText="Voir tous les films"
           />
         ) : null}
       </section>
