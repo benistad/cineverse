@@ -88,33 +88,60 @@ export const getImageUrl = (path, size = 'w500') => {
 
 /**
  * Récupération de la bande-annonce d'un film
+ * Recherche exhaustive pour garantir qu'une bande-annonce soit trouvée si elle existe
  */
 export const getTrailerKey = (videos) => {
   if (!videos || !videos.results || videos.results.length === 0) {
     return null;
   }
-
-  // Recherche d'abord une bande-annonce officielle en français
-  let trailer = videos.results.find(
-    (video) => 
-      video.site === 'YouTube' && 
-      video.type === 'Trailer' && 
-      video.official === true
+  
+  // Filtrer pour ne garder que les vidéos YouTube (les plus fiables)
+  const youtubeVideos = videos.results.filter(video => video.site === 'YouTube');
+  
+  if (youtubeVideos.length === 0) {
+    return null;
+  }
+  
+  // Stratégie de recherche par priorité
+  
+  // 1. Bande-annonce officielle
+  let trailer = youtubeVideos.find(
+    video => video.type === 'Trailer' && video.official === true
   );
-
-  // Si pas de trailer, cherche une autre vidéo officielle
+  
+  // 2. N'importe quelle bande-annonce
   if (!trailer) {
-    trailer = videos.results.find(
-      (video) => 
-        video.site === 'YouTube' && 
-        video.official === true
+    trailer = youtubeVideos.find(video => video.type === 'Trailer');
+  }
+  
+  // 3. Teaser officiel
+  if (!trailer) {
+    trailer = youtubeVideos.find(
+      video => video.type === 'Teaser' && video.official === true
     );
   }
-
-  // Si toujours rien, prend n'importe quelle vidéo YouTube
+  
+  // 4. N'importe quel teaser
   if (!trailer) {
-    trailer = videos.results.find((video) => video.site === 'YouTube');
+    trailer = youtubeVideos.find(video => video.type === 'Teaser');
   }
-
+  
+  // 5. Clip officiel
+  if (!trailer) {
+    trailer = youtubeVideos.find(
+      video => video.type === 'Clip' && video.official === true
+    );
+  }
+  
+  // 6. N'importe quelle vidéo officielle
+  if (!trailer) {
+    trailer = youtubeVideos.find(video => video.official === true);
+  }
+  
+  // 7. N'importe quelle vidéo YouTube
+  if (!trailer) {
+    trailer = youtubeVideos[0]; // Prendre la première vidéo disponible
+  }
+  
   return trailer ? trailer.key : null;
 };
