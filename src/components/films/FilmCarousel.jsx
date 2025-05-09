@@ -171,10 +171,12 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
           {films.map((film) => (
             <div 
               key={film.id} 
-              className="px-2"
+              className="px-2 pb-4"
               style={{ width: `${100 / responsiveVisibleCount}%` }}
             >
-              <FilmCard film={film} />
+              <div className="h-full">
+                <FilmCard film={film} />
+              </div>
             </div>
           ))}
         </div>
