@@ -196,15 +196,21 @@ export default function FilmPage() {
             )}
             
             <div className="flex items-center mb-4">
-              <span className="text-3xl font-bold mr-2">{film.note_sur_10}</span>
-              <span className="text-gray-600">/10</span>
+              <span className="font-semibold mr-2">Note:</span>
+              <span className="flex items-center">
+                <RatingIcon rating={film.note_sur_10} className="mr-2" />
+                {film.note_sur_10}/10
+              </span>
             </div>
             
-            <StreamingProviders 
-              tmdbId={film.tmdb_id} 
-              title={film.title} 
-              year={film.release_date ? new Date(film.release_date).getFullYear() : null} 
-            />
+            {/* Plateformes de streaming */}
+            {film.tmdb_id && (
+              <StreamingProviders 
+                tmdbId={film.tmdb_id} 
+                title={film.title} 
+                year={film.release_date ? new Date(film.release_date).getFullYear() : null} 
+              />
+            )}
             
             <div className="mb-4">
               <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>

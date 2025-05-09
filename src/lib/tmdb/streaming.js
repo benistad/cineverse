@@ -33,22 +33,43 @@ export const WATCH_TYPES = {
  */
 export const getStreamingProviders = async (movieId) => {
   try {
-    if (!movieId) return null;
+    if (!movieId) {
+      console.log('getStreamingProviders: Aucun ID TMDB fourni');
+      return null;
+    }
     
+    console.log(`getStreamingProviders: Récupération des données pour le film ${movieId}`);
     const response = await tmdbApi.get(`/movie/${movieId}/watch/providers`);
+    
+    console.log(`getStreamingProviders: Réponse reçue:`, response.data);
     
     // Vérifier si des informations sont disponibles pour la France
     if (response.data && response.data.results && response.data.results.FR) {
+      console.log(`getStreamingProviders: Données pour la France trouvées:`, response.data.results.FR);
+      
+      // Vérifier si au moins un type de disponibilité est présent
+      const frData = response.data.results.FR;
+      const hasProviders = [
+        frData.flatrate, frData.rent, frData.buy, frData.ads, frData.free
+      ].some(arr => arr && arr.length > 0);
+      
+      if (!hasProviders) {
+        console.log(`getStreamingProviders: Aucune plateforme disponible pour la France`);
+        return null;
+      }
+      
       return {
-        link: response.data.results.FR.link, // Lien vers JustWatch
+        link: frData.link, // Lien vers JustWatch
         providers: {
-          flatrate: response.data.results.FR.flatrate || [], // Abonnement/SVOD
-          rent: response.data.results.FR.rent || [],         // Location
-          buy: response.data.results.FR.buy || [],           // Achat
-          ads: response.data.results.FR.ads || [],           // Gratuit avec publicité
-          free: response.data.results.FR.free || []          // Gratuit sans publicité
+          flatrate: frData.flatrate || [], // Abonnement/SVOD
+          rent: frData.rent || [],         // Location
+          buy: frData.buy || [],           // Achat
+          ads: frData.ads || [],           // Gratuit avec publicité
+          free: frData.free || []          // Gratuit sans publicité
         }
       };
+    } else {
+      console.log(`getStreamingProviders: Aucune donnée pour la France`);
     }
     
     return null; // Aucune information disponible pour la France

@@ -24,11 +24,18 @@ export default function StreamingProviders({ tmdbId, title, year }) {
         setLoading(true);
         
         if (tmdbId) {
+          console.log(`Récupération des plateformes de streaming pour le film avec TMDB ID: ${tmdbId}`);
           const data = await getStreamingProviders(tmdbId);
+          
           if (data) {
+            console.log(`Plateformes trouvées:`, data);
             setProviders(data.providers);
             setJustWatchLink(data.link);
+          } else {
+            console.log(`Aucune plateforme trouvée pour le film avec TMDB ID: ${tmdbId}`);
           }
+        } else {
+          console.log(`Pas d'ID TMDB fourni pour le film: ${title}`);
         }
         
         setLoading(false);
@@ -39,11 +46,17 @@ export default function StreamingProviders({ tmdbId, title, year }) {
       }
     }
     
-    fetchStreamingProviders();
+    if (tmdbId) {
+      fetchStreamingProviders();
+    } else {
+      setLoading(false);
+    }
   }, [tmdbId, title, year]);
   
   // Si aucune donnée n'est disponible, ne rien afficher
-  if (!loading && (!providers || Object.values(providers).every(arr => arr.length === 0))) {
+  if (!loading && (!providers || !Object.values(providers).some(arr => arr && arr.length > 0))) {
+    // Afficher un message de débogage dans la console
+    console.log(`Aucune plateforme de streaming disponible pour ce film, composant non affiché`);
     return null;
   }
   
