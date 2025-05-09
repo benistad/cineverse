@@ -8,6 +8,7 @@ import RatingIcon from '@/components/ui/RatingIcon';
 import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
+import Script from 'next/script';
 
 export default function FilmPage() {
   const params = useParams();
@@ -86,6 +87,42 @@ export default function FilmPage() {
 
   return (
     <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+      {/* Balisage structuré JSON-LD pour les moteurs de recherche */}
+      {film && (
+        <Script
+          id="movie-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Movie',
+              name: film.title,
+              description: film.synopsis || `Film noté ${film.note_sur_10}/10 sur MovieHunt`,
+              image: film.poster_url,
+              datePublished: film.release_date,
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: film.note_sur_10,
+                bestRating: '10',
+                worstRating: '0',
+                ratingCount: '1'
+              },
+              genre: film.genres ? film.genres.split(',').map(genre => genre.trim()) : [],
+              ...(film.youtube_trailer_key && {
+                trailer: {
+                  '@type': 'VideoObject',
+                  name: `Bande-annonce de ${film.title}`,
+                  thumbnailUrl: film.poster_url,
+                  uploadDate: film.date_ajout,
+                  embedUrl: `https://www.youtube.com/embed/${film.youtube_trailer_key}`
+                }
+              })
+            })
+          }}
+          strategy="afterInteractive"
+        />
+      )}
+      
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
