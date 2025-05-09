@@ -147,7 +147,12 @@ export default function Home() {
 
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
-        <h2 className="text-3xl font-bold mb-6">Tous les films</h2>
+        <div className="flex items-center mb-6">
+          <h2 className="text-3xl font-bold">Tous les films</h2>
+          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+            {totalFilmsCount}
+          </span>
+        </div>
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
