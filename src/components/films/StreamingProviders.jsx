@@ -53,11 +53,48 @@ export default function StreamingProviders({ tmdbId, title, year }) {
     }
   }, [tmdbId, title, year]);
   
-  // Si aucune donnée n'est disponible, ne rien afficher
-  if (!loading && (!providers || !Object.values(providers).some(arr => arr && arr.length > 0))) {
-    // Afficher un message de débogage dans la console
-    console.log(`Aucune plateforme de streaming disponible pour ce film, composant non affiché`);
-    return null;
+  // Préparer le contenu à afficher
+  let content;
+  
+  if (loading) {
+    content = (
+      <div className="flex justify-center py-4">
+        <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  } else if (error) {
+    content = (
+      <p className="text-red-500 text-sm">Impossible de récupérer les plateformes de streaming.</p>
+    );
+  } else if (!providers || !Object.values(providers).some(arr => arr && arr.length > 0)) {
+    // Afficher un message informatif lorsqu'aucune plateforme n'est disponible
+    console.log(`Aucune plateforme de streaming disponible pour ce film`);
+    content = (
+      <p className="text-gray-500 text-sm py-2">Ce film n'est actuellement disponible sur aucune plateforme de streaming en France.</p>
+    );
+  } else {
+    content = (
+      <div>
+        {renderProviderSection(WATCH_TYPES.FLATRATE)}
+        {renderProviderSection(WATCH_TYPES.FREE)}
+        {renderProviderSection(WATCH_TYPES.ADS)}
+        {renderProviderSection(WATCH_TYPES.RENT)}
+        {renderProviderSection(WATCH_TYPES.BUY)}
+        
+        {justWatchLink && (
+          <div className="mt-3 text-right">
+            <a 
+              href={justWatchLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-xs text-blue-600 hover:underline"
+            >
+              Plus d'informations sur JustWatch
+            </a>
+          </div>
+        )}
+      </div>
+    );
   }
   
   // Fonction pour obtenir le texte du type de disponibilité
@@ -111,38 +148,11 @@ export default function StreamingProviders({ tmdbId, title, year }) {
     );
   };
   
+  // Toujours afficher le composant, même si aucune plateforme n'est disponible
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded-lg">
       <h3 className="text-lg font-semibold mb-3">Où regarder en France</h3>
-      
-      {loading ? (
-        <div className="flex justify-center py-4">
-          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
-      ) : error ? (
-        <p className="text-red-500 text-sm">Impossible de récupérer les plateformes de streaming.</p>
-      ) : (
-        <div>
-          {renderProviderSection(WATCH_TYPES.FLATRATE)}
-          {renderProviderSection(WATCH_TYPES.FREE)}
-          {renderProviderSection(WATCH_TYPES.ADS)}
-          {renderProviderSection(WATCH_TYPES.RENT)}
-          {renderProviderSection(WATCH_TYPES.BUY)}
-          
-          {justWatchLink && (
-            <div className="mt-3 text-right">
-              <a 
-                href={justWatchLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-xs text-blue-600 hover:underline"
-              >
-                Plus d'informations sur JustWatch
-              </a>
-            </div>
-          )}
-        </div>
-      )}
+      {content}
     </div>
   );
 }
