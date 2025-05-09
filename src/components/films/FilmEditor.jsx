@@ -496,19 +496,14 @@ export default function FilmEditor({ movieDetails }) {
               {movieDetails.credits.crew
                 .filter((person) => [
                   'Director',            // Réalisateur
-                  'Writer',              // Scénariste
-                  'Producer',            // Producteur
+                  'Writer',              // Auteur
                   'Screenplay',          // Scénariste
                   'Director of Photography', // Directeur de la photographie
-                  'Cinematography',      // Cinématographie
+                  'Cinematography',      // Cinématographie (autre terme pour directeur de la photo)
                   'Original Music Composer', // Compositeur de musique
                   'Music',               // Musique
-                  'Production Design',   // Directeur artistique
                   'Costume Design',      // Costumes
-                  'Editor',              // Monteur
-                  'Sound',               // Son
-                  'Visual Effects',      // Effets visuels
-                  'Executive Producer'   // Producteur exécutif
+                  // Producteurs retirés comme demandé
                 ].includes(person.job || ''))
                 .slice(0, 20) // Augmenter le nombre maximum de membres d'équipe affichés
                 .map((person) => (
