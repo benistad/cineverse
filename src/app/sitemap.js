@@ -1,4 +1,4 @@
-import { getAllFilms } from '@/lib/supabase/films';
+import { getAllFilmsForSitemap } from '@/lib/supabase/server';
 
 /**
  * Génère un sitemap dynamique pour le site
@@ -26,7 +26,7 @@ export default async function sitemap() {
   
   try {
     // Récupérer tous les films pour générer leurs URLs
-    const films = await getAllFilms();
+    const films = await getAllFilmsForSitemap();
     
     // Générer les URLs pour chaque film
     const filmPages = films.map((film) => ({

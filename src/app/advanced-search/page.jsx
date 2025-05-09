@@ -1,5 +1,7 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
@@ -20,7 +22,9 @@ const RATINGS = Array.from({ length: 11 }, (_, i) => i);
 const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: CURRENT_YEAR - 1899 }, (_, i) => CURRENT_YEAR - i);
 
-export default function AdvancedSearchPage() {
+function AdvancedSearch() {
+  // Composant interne qui utilise useSearchParams
+
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -330,5 +334,21 @@ export default function AdvancedSearchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Composant principal avec Suspense boundary
+export default function AdvancedSearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">Recherche avancée</h1>
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    }>
+      <AdvancedSearch />
+    </Suspense>
   );
 }
