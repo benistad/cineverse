@@ -51,8 +51,8 @@ export default function Home() {
         const recent = await getRecentlyRatedFilms(8);
         setRecentFilms(recent);
         
-        // Récupérer les films les mieux notés
-        const topRated = await getTopRatedFilms(8);
+        // Récupérer les films les mieux notés (Top 10)
+        const topRated = await getTopRatedFilms(10);
         setTopRatedFilms(topRated);
         
         // Récupérer les films méconnus à voir
@@ -120,8 +120,10 @@ export default function Home() {
         ) : (
           <BasicFilmCarousel 
             films={topRatedFilms} 
-            title="Films les mieux notés" 
+            title="Films les mieux notés (Top 10)" 
             visibleCount={4} 
+            showAllLink="/top-rated"
+            showAllText="Voir tous les films"
           />
         )}
       </section>

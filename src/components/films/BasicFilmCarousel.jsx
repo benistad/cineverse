@@ -5,7 +5,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
 import { useSwipeable } from 'react-swipeable';
 
-export default function BasicFilmCarousel({ films, title, visibleCount = 4 }) {
+export default function BasicFilmCarousel({ films, title, visibleCount = 4, showAllLink, showAllText }) {
   // État pour suivre l'index actuel
   const [currentIndex, setCurrentIndex] = useState(0);
   // État pour stocker le nombre de cartes visibles
@@ -83,7 +83,18 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4 }) {
     <div className="space-y-4">
       {/* Titre et boutons de navigation */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+        <div className="flex items-center">
+          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+          {showAllLink && showAllText && (
+            <a 
+              href={showAllLink} 
+              className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
+              style={{ backgroundColor: '#4A68D9' }}
+            >
+              {showAllText}
+            </a>
+          )}
+        </div>
         <div className="flex space-x-2">
           <button 
             onClick={prevCard}
