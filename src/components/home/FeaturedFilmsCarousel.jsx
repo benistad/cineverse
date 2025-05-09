@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Slider from 'react-slick';
 import { getFeaturedFilms } from '@/lib/supabase/films';
 import SafeImage from '@/components/ui/SafeImage';
+import SmartImage from '@/components/ui/SmartImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 
 // Importer les styles CSS de Slick
@@ -83,16 +84,17 @@ export default function FeaturedFilmsCarousel() {
           <div key={film.id} className="carousel-item">
             <Link href={`/films/${film.id}`}>
               <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-lg overflow-hidden cursor-pointer group">
-                {/* Image d'arrière-plan avec SafeImage */}
+                {/* Image d'arrière-plan avec SmartImage pour éviter de couper les visages */}
                 <div className="absolute inset-0">
-                  <SafeImage
+                  <SmartImage
                     src={film.backdrop_url || film.poster_url}
                     alt={film.title}
                     fill
-                    className="object-cover"
+                    className="transition-opacity duration-500 ease-in-out" 
                     sizes="100vw"
                     priority
                     unoptimized={true}
+                    focusPosition="center 30%"
                   />
                 </div>
                 
