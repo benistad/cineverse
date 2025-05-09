@@ -89,6 +89,7 @@ export const getImageUrl = (path, size = 'w500') => {
 /**
  * Récupération de la bande-annonce d'un film
  * Recherche exhaustive pour garantir qu'une bande-annonce soit trouvée si elle existe
+ * Gère également les cas où les vidéos sont privées ou indisponibles
  */
 export const getTrailerKey = (videos) => {
   if (!videos || !videos.results || videos.results.length === 0) {
@@ -102,45 +103,65 @@ export const getTrailerKey = (videos) => {
     return null;
   }
   
+  // Liste des clés YouTube connues pour être privées ou indisponibles
+  // Cette liste peut être mise à jour au fur et à mesure
+  const knownUnavailableKeys = [
+    'dZw7LR0vNww', // Clé privée pour 1BR
+  ];
+  
+  // Filtrer les vidéos connues pour être indisponibles
+  const availableVideos = youtubeVideos.filter(video => !knownUnavailableKeys.includes(video.key));
+  
+  // Si toutes les vidéos sont connues pour être indisponibles, on utilise quand même les originales
+  // pour ne pas bloquer complètement la fonction
+  const videosToCheck = availableVideos.length > 0 ? availableVideos : youtubeVideos;
+  
   // Stratégie de recherche par priorité
   
   // 1. Bande-annonce officielle
-  let trailer = youtubeVideos.find(
+  let trailer = videosToCheck.find(
     video => video.type === 'Trailer' && video.official === true
   );
   
   // 2. N'importe quelle bande-annonce
   if (!trailer) {
-    trailer = youtubeVideos.find(video => video.type === 'Trailer');
+    trailer = videosToCheck.find(video => video.type === 'Trailer');
   }
   
   // 3. Teaser officiel
   if (!trailer) {
-    trailer = youtubeVideos.find(
+    trailer = videosToCheck.find(
       video => video.type === 'Teaser' && video.official === true
     );
   }
   
   // 4. N'importe quel teaser
   if (!trailer) {
-    trailer = youtubeVideos.find(video => video.type === 'Teaser');
+    trailer = videosToCheck.find(video => video.type === 'Teaser');
   }
   
   // 5. Clip officiel
   if (!trailer) {
-    trailer = youtubeVideos.find(
+    trailer = videosToCheck.find(
       video => video.type === 'Clip' && video.official === true
     );
   }
   
   // 6. N'importe quelle vidéo officielle
   if (!trailer) {
-    trailer = youtubeVideos.find(video => video.official === true);
+    trailer = videosToCheck.find(video => video.official === true);
   }
   
   // 7. N'importe quelle vidéo YouTube
   if (!trailer) {
-    trailer = youtubeVideos[0]; // Prendre la première vidéo disponible
+    trailer = videosToCheck[0]; // Prendre la première vidéo disponible
+  }
+  
+  // Si on n'a toujours pas trouvé de bande-annonce disponible, on essaie avec les vidéos originales
+  // (uniquement si on a filtré des vidéos indisponibles)
+  if (!trailer && availableVideos.length < youtubeVideos.length) {
+    console.log('Aucune bande-annonce disponible trouvée, essai avec les vidéos potentiellement indisponibles');
+    return getTrailerKey({ results: youtubeVideos });
   }
   
   return trailer ? trailer.key : null;

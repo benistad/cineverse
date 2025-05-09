@@ -49,6 +49,7 @@ export const findMovieByTitleAndYear = async (title, year) => {
 /**
  * Récupère les bandes-annonces d'un film par son ID TMDB
  * Recherche exhaustive dans toutes les langues disponibles
+ * Gère les cas où les vidéos sont privées ou indisponibles
  * @param {number} movieId - ID TMDB du film
  * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
  */
@@ -99,6 +100,25 @@ export const getMovieTrailers = async (movieId) => {
         trailerKey = getTrailerKey(allVideos);
         if (trailerKey) {
           console.log(`Bande-annonce trouvée pour le film ${movieId} en utilisant toutes les vidéos disponibles`);
+        }
+      }
+      
+      // Vérifier si la bande-annonce est connue pour être privée ou indisponible
+      // Cas spécifique pour le film 1BR et autres films avec des bandes-annonces privées
+      if (trailerKey === 'dZw7LR0vNww' || (movieId === 627290 && trailerKey)) { // 627290 est l'ID TMDB de 1BR
+        console.log(`La bande-annonce pour le film ${movieId} (${trailerKey}) est potentiellement indisponible, recherche d'une alternative...`);
+        
+        // Chercher une bande-annonce alternative en excluant celle qui est privée
+        const alternativeVideos = {
+          results: allVideos.results.filter(video => video.key !== trailerKey)
+        };
+        
+        if (alternativeVideos.results.length > 0) {
+          const alternativeKey = getTrailerKey(alternativeVideos);
+          if (alternativeKey) {
+            console.log(`Bande-annonce alternative trouvée pour le film ${movieId}: ${alternativeKey}`);
+            return alternativeKey;
+          }
         }
       }
       
