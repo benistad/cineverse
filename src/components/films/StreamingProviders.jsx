@@ -53,6 +53,40 @@ export default function StreamingProviders({ tmdbId, title, year }) {
     }
   }, [tmdbId, title, year]);
   
+  // Fonction pour rendre une section de plateformes
+  const renderProviderSection = (type) => {
+    if (!providers || !providers[type] || providers[type].length === 0) {
+      return null;
+    }
+    
+    return (
+      <div className="mb-3">
+        <h4 className="text-sm font-medium text-gray-600 mb-1">{getWatchTypeText(type)}</h4>
+        <div className="flex flex-wrap gap-2">
+          {providers[type].map((provider) => (
+            <div 
+              key={provider.provider_id} 
+              className="flex flex-col items-center"
+              title={provider.provider_name}
+            >
+              <div className="relative w-10 h-10 rounded-lg overflow-hidden">
+                <Image
+                  src={`/api/image-proxy?url=${encodeURIComponent(`https://image.tmdb.org/t/p/original${provider.logo_path}`)}`}
+                  alt={provider.provider_name}
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                  unoptimized
+                />
+              </div>
+              <span className="text-xs mt-1 text-center">{provider.provider_name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+  
   // Préparer le contenu à afficher
   let content;
   
@@ -113,39 +147,6 @@ export default function StreamingProviders({ tmdbId, title, year }) {
       default:
         return '';
     }
-  };
-  
-  // Fonction pour rendre une section de plateformes
-  const renderProviderSection = (type) => {
-    if (!providers || !providers[type] || providers[type].length === 0) {
-      return null;
-    }
-    
-    return (
-      <div className="mb-3">
-        <h4 className="text-sm font-medium text-gray-600 mb-1">{getWatchTypeText(type)}</h4>
-        <div className="flex flex-wrap gap-2">
-          {providers[type].map((provider) => (
-            <div 
-              key={provider.provider_id} 
-              className="flex flex-col items-center"
-              title={provider.provider_name}
-            >
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden">
-                <Image
-                  src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                  alt={provider.provider_name}
-                  fill
-                  className="object-cover"
-                  sizes="40px"
-                />
-              </div>
-              <span className="text-xs mt-1 text-center">{provider.provider_name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
   };
   
   // Toujours afficher le composant, même si aucune plateforme n'est disponible
