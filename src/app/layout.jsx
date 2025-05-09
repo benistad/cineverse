@@ -44,8 +44,9 @@ export default function RootLayout({ children }) {
         <meta name="twitter:image" content="/images/og-image.jpg" />
         
         {/* Liens vers les ressources importantes */}
-        <link rel="icon" href="/images/logo-mh.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/images/logo-mh.png" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
         <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
         
         {/* Google tag (gtag.js) - Implémentation directe de la balise fournie par Google */}
