@@ -11,6 +11,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   // Nombre de cartes visibles selon la taille d'écran
   const [cardsPerView, setCardsPerView] = useState(1);
+  // Largeur d'une carte individuelle en pourcentage
+  const [cardWidth, setCardWidth] = useState(100);
   // Référence au conteneur pour les interactions de swipe
   const containerRef = useRef(null);
   
@@ -33,6 +35,12 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
     
     return () => window.removeEventListener('resize', handleResize);
   }, [visibleCount]);
+  
+  // Calculer la largeur d'une carte individuelle
+  useEffect(() => {
+    // Chaque carte occupe un pourcentage égal de l'espace visible
+    setCardWidth(100 / cardsPerView);
+  }, [cardsPerView]);
 
   // Calculer le nombre total de films
   const totalFilms = films?.length || 0;
@@ -68,6 +76,7 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
     onSwipedRight: scrollLeft, // Swipe vers la droite -> défilement vers la gauche
     preventDefaultTouchmoveEvent: true,
     trackTouch: true,
+    trackMouse: false,
     delta: 10,
   });
 
@@ -116,15 +125,15 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
           <div 
             className="flex transition-transform duration-300 ease-in-out"
             style={{ 
-              transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
-              width: `${(films.length / cardsPerView) * 100}%`
+              transform: `translateX(-${currentIndex * cardWidth}%)`,
+              width: `${films.length * cardWidth}%`
             }}
           >
             {films.map((film) => (
               <div 
                 key={film.id} 
                 className="px-2 pb-4"
-                style={{ width: `${100 / (films.length / cardsPerView)}%` }}
+                style={{ width: `${cardWidth}%` }}
               >
                 <div className="h-full">
                   <FilmCard film={film} />
