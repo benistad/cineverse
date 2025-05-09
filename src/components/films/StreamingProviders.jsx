@@ -47,6 +47,14 @@ function ProviderItem({ provider }) {
 // Composant pour afficher une section de fournisseurs
 function ProviderSection({ type, providers }) {
   if (!providers || !providers[type] || providers[type].length === 0) {
+    // Si c'est la section FLATRATE (abonnement) qui est vide, on retourne un message spécifique
+    if (type === WATCH_TYPES.FLATRATE) {
+      return (
+        <div className="mb-3">
+          <p className="text-gray-500 text-sm py-2">Ce film n'est actuellement disponible sur aucune plateforme de streaming par abonnement en France.</p>
+        </div>
+      );
+    }
     return null;
   }
   
