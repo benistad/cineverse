@@ -150,8 +150,10 @@ function AdvancedSearch() {
       
       // Appliquer les filtres de genres
       if (genres.length > 0) {
-        const genreConditions = genres.map(genre => `genres.ilike.%${genre}%`);
-        query = query.or(genreConditions.join(','));
+        // Utiliser une logique ET pour les genres (tous les genres sélectionnés doivent être présents)
+        genres.forEach(genre => {
+          query = query.filter('genres', 'ilike', `%${genre}%`);
+        });
       }
       
       // Appliquer les filtres de notes
