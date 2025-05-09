@@ -7,39 +7,31 @@ import FilmCard from './FilmCard';
 import { useSwipeable } from 'react-swipeable';
 
 export default function FilmCarousel({ films, title, visibleCount = 4 }) {
-  // État pour suivre l'index de la carte actuellement affichée
+  // Index de la première carte affichée
   const [currentIndex, setCurrentIndex] = useState(0);
-  // Référence au conteneur pour les interactions
+  // Nombre de cartes visibles selon la taille d'écran
+  const [cardsPerView, setCardsPerView] = useState(1);
+  // Référence au conteneur pour les interactions de swipe
   const containerRef = useRef(null);
-  // État pour stocker le nombre d'éléments visibles selon la taille d'écran
-  const [itemsPerView, setItemsPerView] = useState(1);
   
-  // Détecter la taille de l'écran et ajuster le nombre d'éléments visibles
+  // Détecter la taille de l'écran et ajuster le nombre de cartes visibles
   useEffect(() => {
-    const handleResize = () => {
+    function handleResize() {
       const width = window.innerWidth;
-      // Toujours défiler une carte à la fois, mais afficher plusieurs cartes selon l'écran
-      if (width < 640) {
-        setItemsPerView(1); // Mobile
-      } else if (width < 1024) {
-        setItemsPerView(2); // Tablet
-      } else {
-        setItemsPerView(visibleCount); // Desktop
+      if (width < 640) { // Mobile
+        setCardsPerView(1);
+      } else if (width < 1024) { // Tablet
+        setCardsPerView(2);
+      } else { // Desktop
+        setCardsPerView(visibleCount);
       }
-    };
-    
-    // Initialiser
-    if (typeof window !== 'undefined') {
-      handleResize();
-      window.addEventListener('resize', handleResize);
     }
     
-    // Nettoyer
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
+    // Exécuter au chargement et lors des redimensionnements
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
   }, [visibleCount]);
 
   // Calculer le nombre total de films
@@ -64,7 +56,7 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   // Fonction pour faire défiler vers la droite (une carte à la fois)
   const scrollRight = () => {
     // S'assurer de ne pas dépasser la dernière carte
-    const maxIndex = Math.max(0, films.length - itemsPerView);
+    const maxIndex = Math.max(0, films.length - cardsPerView);
     if (currentIndex < maxIndex) {
       setCurrentIndex(currentIndex + 1);
     }
@@ -72,18 +64,16 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   
   // Configuration des gestionnaires de swipe
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => scrollRight(), // Swipe vers la gauche -> défilement vers la droite
-    onSwipedRight: () => scrollLeft(), // Swipe vers la droite -> défilement vers la gauche
+    onSwipedLeft: scrollRight, // Swipe vers la gauche -> défilement vers la droite
+    onSwipedRight: scrollLeft, // Swipe vers la droite -> défilement vers la gauche
     preventDefaultTouchmoveEvent: true,
-    trackMouse: false,
     trackTouch: true,
-    delta: 10, // Déplacement minimal pour détecter un swipe
-    swipeDuration: 500, // Durée maximale d'un swipe
+    delta: 10,
   });
 
   // Vérifier si les boutons de navigation doivent être affichés
   const showLeftButton = currentIndex > 0;
-  const showRightButton = currentIndex < films.length - itemsPerView;
+  const showRightButton = currentIndex < films.length - cardsPerView;
 
   return (
     <div className="space-y-4">
@@ -126,15 +116,15 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
           <div 
             className="flex transition-transform duration-300 ease-in-out"
             style={{ 
-              transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
-              width: `${(films.length / itemsPerView) * 100}%`
+              transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
+              width: `${(films.length / cardsPerView) * 100}%`
             }}
           >
             {films.map((film) => (
               <div 
                 key={film.id} 
                 className="px-2 pb-4"
-                style={{ width: `${100 / (films.length / itemsPerView)}%` }}
+                style={{ width: `${100 / (films.length / cardsPerView)}%` }}
               >
                 <div className="h-full">
                   <FilmCard film={film} />
