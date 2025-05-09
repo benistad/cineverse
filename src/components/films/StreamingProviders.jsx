@@ -26,10 +26,10 @@ function getWatchTypeText(type) {
 function ProviderItem({ provider }) {
   return (
     <div 
-      className="flex flex-col items-center"
+      className="flex flex-col items-center w-16 mx-2 mb-3"
       title={provider.provider_name}
     >
-      <div className="relative w-10 h-10 rounded-lg overflow-hidden">
+      <div className="relative w-10 h-10 rounded-lg overflow-hidden mx-auto">
         <Image
           src={`/api/image-proxy?url=${encodeURIComponent(`https://image.tmdb.org/t/p/original${provider.logo_path}`)}`}
           alt={provider.provider_name}
@@ -39,7 +39,7 @@ function ProviderItem({ provider }) {
           unoptimized
         />
       </div>
-      <span className="text-xs mt-1 text-center">{provider.provider_name}</span>
+      <span className="text-xs mt-1 text-center break-words">{provider.provider_name}</span>
     </div>
   );
 }
@@ -61,7 +61,7 @@ function ProviderSection({ type, providers }) {
   return (
     <div className="mb-3">
       <h4 className="text-sm font-medium text-gray-600 mb-1">{getWatchTypeText(type)}</h4>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap justify-center">
         {providers[type].map((provider) => (
           <ProviderItem key={provider.provider_id} provider={provider} />
         ))}
