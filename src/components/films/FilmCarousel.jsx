@@ -47,8 +47,8 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
         ? tabletVisibleCount 
         : visibleCount
     : visibleCount;
-    
-  // Nombre de films à faire défiler à la fois (1 sur mobile, visibleCount sur desktop)
+  
+  // Nombre de films à faire défiler à la fois (toujours 1 sur mobile, visibleCount sur desktop)
   const scrollStep = isMobile ? 1 : visibleCount;
   const [startIndex, setStartIndex] = useState(0);
   const containerRef = useRef(null);
@@ -68,18 +68,29 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
   // Fonction pour faire défiler vers la gauche
   const scrollLeft = () => {
     if (startIndex > 0) {
-      // Sur mobile, défiler un film à la fois
-      const newIndex = Math.max(0, startIndex - 1);
-      setStartIndex(newIndex);
+      // Toujours défiler une seule carte à la fois sur mobile
+      if (isMobile) {
+        setStartIndex(startIndex - 1);
+      } else {
+        // Sur desktop, défiler selon visibleCount
+        const newIndex = Math.max(0, startIndex - scrollStep);
+        setStartIndex(newIndex);
+      }
     }
   };
 
   // Fonction pour faire défiler vers la droite
   const scrollRight = () => {
-    if (startIndex + responsiveVisibleCount < totalFilms) {
-      // Sur mobile, défiler un film à la fois
-      const newIndex = Math.min(totalFilms - responsiveVisibleCount, startIndex + 1);
-      setStartIndex(newIndex);
+    const maxIndex = totalFilms - responsiveVisibleCount;
+    if (startIndex < maxIndex) {
+      // Toujours défiler une seule carte à la fois sur mobile
+      if (isMobile) {
+        setStartIndex(Math.min(maxIndex, startIndex + 1));
+      } else {
+        // Sur desktop, défiler selon visibleCount
+        const newIndex = Math.min(maxIndex, startIndex + scrollStep);
+        setStartIndex(newIndex);
+      }
     }
   };
   
@@ -108,7 +119,7 @@ export default function FilmCarousel({ films, title, visibleCount = 4 }) {
 
   // Vérifier si les boutons de navigation doivent être affichés
   const showLeftButton = startIndex > 0;
-  const showRightButton = startIndex + responsiveVisibleCount < totalFilms;
+  const showRightButton = startIndex < (totalFilms - responsiveVisibleCount);
 
   return (
     <div className="space-y-4">
