@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
+import { useSwipeable } from 'react-swipeable';
 
 export default function BasicFilmCarousel({ films, title, visibleCount = 4 }) {
   // État pour suivre l'index actuel
   const [currentIndex, setCurrentIndex] = useState(0);
   // État pour stocker le nombre de cartes visibles
   const [visibleCards, setVisibleCards] = useState(1);
+  // Référence au conteneur pour le swipe
+  const containerRef = useRef(null);
   
   // Détecter la taille de l'écran et ajuster le nombre de cartes visibles
   useEffect(() => {
@@ -60,6 +63,16 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4 }) {
   const canGoLeft = currentIndex > 0;
   const canGoRight = currentIndex < maxIndex;
   
+  // Configuration des gestionnaires de swipe
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: nextCard,  // Swipe vers la gauche -> carte suivante
+    onSwipedRight: prevCard, // Swipe vers la droite -> carte précédente
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: false,
+    delta: 10,
+  });
+  
   // Déterminer quels films afficher
   const displayedFilms = [];
   for (let i = currentIndex; i < currentIndex + visibleCards && i < films.length; i++) {
@@ -95,8 +108,12 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4 }) {
         </div>
       </div>
 
-      {/* Grille simple de cartes */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Grille simple de cartes avec gestion du swipe */}
+      <div 
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 touch-pan-y"
+        ref={containerRef}
+        {...swipeHandlers}
+      >
         {displayedFilms.map((film) => (
           <div key={film.id} className="h-full">
             <FilmCard film={film} />
