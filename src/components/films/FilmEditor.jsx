@@ -326,9 +326,9 @@ export default function FilmEditor({ movieDetails }) {
                   type="range"
                   min="0"
                   max="10"
-                  step="0.5"
+                  step="1"
                   value={rating}
-                  onChange={(e) => setRating(parseFloat(e.target.value))}
+                  onChange={(e) => setRating(parseInt(e.target.value, 10))}
                   className="w-full mr-2"
                 />
                 <span className="font-bold text-xl ml-2">{rating}/10</span>
@@ -496,14 +496,19 @@ export default function FilmEditor({ movieDetails }) {
               {movieDetails.credits.crew
                 .filter((person) => [
                   'Director',            // Réalisateur
-                  'Writer',              // Auteur
+                  'Writer',              // Scénariste
+                  'Producer',            // Producteur
                   'Screenplay',          // Scénariste
                   'Director of Photography', // Directeur de la photographie
-                  'Cinematography',      // Cinématographie (autre terme pour directeur de la photo)
+                  'Cinematography',      // Cinématographie
                   'Original Music Composer', // Compositeur de musique
                   'Music',               // Musique
+                  'Production Design',   // Directeur artistique
                   'Costume Design',      // Costumes
-                  // Producteurs retirés comme demandé
+                  'Editor',              // Monteur
+                  'Sound',               // Son
+                  'Visual Effects',      // Effets visuels
+                  'Executive Producer'   // Producteur exécutif
                 ].includes(person.job || ''))
                 .slice(0, 20) // Augmenter le nombre maximum de membres d'équipe affichés
                 .map((person) => (
