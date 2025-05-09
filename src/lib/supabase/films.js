@@ -493,3 +493,59 @@ export async function getFeaturedFilms(limit = 5, minRating = 6) {
     return [];
   }
 }
+
+/**
+ * Recherche des films par terme de recherche
+ * @param {string} searchTerm - Terme de recherche
+ * @returns {Array} - Liste des films correspondant au terme de recherche
+ */
+export async function searchFilms(searchTerm) {
+  try {
+    if (!searchTerm || searchTerm.trim() === '') {
+      return [];
+    }
+    
+    const supabase = getSupabaseClient();
+    const formattedSearchTerm = searchTerm.trim().toLowerCase();
+    
+    // Recherche dans le titre, le synopsis et les genres
+    const { data: films, error } = await supabase
+      .from('films')
+      .select('*')
+      .or(
+        `title.ilike.%${formattedSearchTerm}%,` +
+        `synopsis.ilike.%${formattedSearchTerm}%,` +
+        `genres.ilike.%${formattedSearchTerm}%`
+      )
+      .order('title', { ascending: true });
+
+    if (error) throw error;
+    if (!films) return [];
+
+    // Pour chaque film, récupérer son staff remarquable
+    const filmsWithStaff = await Promise.all(
+      films.map(async (film) => {
+        const supabase = getSupabaseClient();
+        const { data: staff, error: staffError } = await supabase
+          .from('remarkable_staff')
+          .select('*')
+          .eq('film_id', film.id);
+
+        if (staffError) {
+          console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
+          return { ...film, remarkable_staff: [] };
+        }
+
+        return {
+          ...film,
+          remarkable_staff: staff || [],
+        };
+      })
+    );
+
+    return filmsWithStaff;
+  } catch (error) {
+    console.error('Erreur lors de la recherche de films:', error);
+    return [];
+  }
+}
