@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
+import { useSwipeable } from 'react-swipeable';
 
 export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
   // État pour suivre l'index actuel
@@ -56,6 +57,16 @@ export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
   const canGoLeft = currentIndex > 0;
   const canGoRight = currentIndex < maxIndex;
   
+  // Configuration des gestionnaires de swipe
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: nextCard,  // Swipe vers la gauche -> carte suivante
+    onSwipedRight: prevCard, // Swipe vers la droite -> carte précédente
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: false,
+    delta: 10,
+  });
+  
   // Déterminer quels films afficher
   const displayedFilms = [];
   for (let i = currentIndex; i < currentIndex + visibleCards && i < films.length; i++) {
@@ -91,13 +102,13 @@ export default function SimpleFilmCarousel({ films, title, visibleCount = 4 }) {
         </div>
       </div>
 
-      {/* Conteneur du carrousel */}
-      <div className="relative">
+      {/* Conteneur du carrousel avec gestion du swipe */}
+      <div className="relative" {...swipeHandlers}>
         <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
         
         {/* Grille de cartes avec transition */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-300">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-300 touch-pan-y">
           {displayedFilms.map((film) => (
             <div key={film.id} className="h-full">
               <FilmCard film={film} />
