@@ -161,35 +161,42 @@ function AdvancedSearch() {
         query = query.in('note_sur_10', ratings);
       }
       
-      // Appliquer les filtres d'années
-      if (years.length > 0) {
-        // Créer une condition OR pour chaque année sélectionnée
-        const yearConditions = [];
-        
-        years.forEach(year => {
-          // Pour chaque année, ajouter une condition qui vérifie si l'année extraite de la date de sortie correspond
-          yearConditions.push(`release_date.gte.${year}-01-01`);
-          yearConditions.push(`release_date.lte.${year}-12-31`);
-        });
-        
-        // Combiner les conditions avec OR
-        query = query.or(yearConditions.join(','));
-      }
-      
       // Trier par note décroissante
       query = query.order('note_sur_10', { ascending: false });
       
+      // Exécuter la requête
       const { data, error, count } = await query;
       
       if (error) {
         console.error('Erreur lors de la recherche des films:', error);
+        setFilms([]);
+        setTotalCount(0);
         return;
       }
       
-      setFilms(data || []);
-      setTotalCount(count || 0);
+      let filteredData = data || [];
+      
+      // Appliquer le filtre d'années manuellement si nécessaire
+      if (years.length > 0) {
+        filteredData = filteredData.filter(film => {
+          if (!film.release_date) return false;
+          
+          try {
+            const filmYear = new Date(film.release_date).getFullYear();
+            return years.includes(filmYear);
+          } catch (e) {
+            console.error('Erreur lors de l\'extraction de l\'année:', e, film.release_date);
+            return false;
+          }
+        });
+      }
+      
+      setFilms(filteredData);
+      setTotalCount(filteredData.length);
     } catch (error) {
       console.error('Erreur lors de la recherche des films:', error);
+      setFilms([]);
+      setTotalCount(0);
     } finally {
       setLoading(false);
     }
