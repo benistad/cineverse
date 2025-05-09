@@ -54,28 +54,73 @@ export const findMovieByTitleAndYear = async (title, year) => {
  */
 export const getMovieTrailers = async (movieId) => {
   try {
-    // Stratégie de recherche par ordre de préférence linguistique
-    const languagePreferences = [
-      'fr-FR',  // Français (prioritaire)
-      'en-US',  // Anglais
-      null      // Toutes les langues (paramètre null pour obtenir toutes les vidéos sans filtre de langue)
-    ];
+    // IMPORTANT: D'abord récupérer TOUTES les bandes-annonces disponibles sans filtre de langue
+    // Cela nous assure de ne manquer aucune bande-annonce, même si elle n'est disponible qu'en VO
+    const allVideosResponse = await tmdbApi.get(`/movie/${movieId}/videos`);
+    const allVideos = allVideosResponse.data;
     
+    // Vérifier si nous avons des vidéos, quelle que soit la langue
+    if (allVideos && allVideos.results && allVideos.results.length > 0) {
+      console.log(`${allVideos.results.length} vidéos trouvées pour le film ${movieId} toutes langues confondues`);      
+      
+      // Organiser les vidéos par langue pour pouvoir les prioriser
+      const videosByLanguage = {
+        'fr': allVideos.results.filter(v => v.iso_639_1 === 'fr'),
+        'en': allVideos.results.filter(v => v.iso_639_1 === 'en'),
+        'other': allVideos.results.filter(v => v.iso_639_1 !== 'fr' && v.iso_639_1 !== 'en')
+      };
+      
+      // Stratégie de recherche par ordre de préférence linguistique
+      const languagePreferences = ['fr', 'en', 'other'];
+      
+      let trailerKey = null;
+      
+      // Essayer chaque langue dans l'ordre de préférence
+      for (const lang of languagePreferences) {
+        if (trailerKey) break; // Arrêter si une bande-annonce a été trouvée
+        
+        if (videosByLanguage[lang].length > 0) {
+          // Créer un objet au format attendu par getTrailerKey
+          const videosData = {
+            results: videosByLanguage[lang]
+          };
+          
+          // Utiliser la fonction améliorée pour trouver la meilleure bande-annonce
+          trailerKey = getTrailerKey(videosData);
+          
+          if (trailerKey) {
+            console.log(`Bande-annonce trouvée pour le film ${movieId} en ${lang}`);
+          }
+        }
+      }
+      
+      // Si aucune bande-annonce n'a été trouvée par langue, essayer avec toutes les vidéos
+      if (!trailerKey) {
+        trailerKey = getTrailerKey(allVideos);
+        if (trailerKey) {
+          console.log(`Bande-annonce trouvée pour le film ${movieId} en utilisant toutes les vidéos disponibles`);
+        }
+      }
+      
+      return trailerKey;
+    }
+    
+    // Si l'approche ci-dessus ne fonctionne pas, essayons l'ancienne méthode avec les requêtes par langue
+    // Cette partie est conservée pour la compatibilité, mais ne devrait plus être nécessaire
+    const languagePreferences = ['fr-FR', 'en-US'];
     let trailerKey = null;
     
-    // Essayer chaque langue dans l'ordre de préférence
     for (const language of languagePreferences) {
-      if (trailerKey) break; // Arrêter si une bande-annonce a été trouvée
+      if (trailerKey) break;
       
-      const params = language ? { language } : {};
+      const response = await tmdbApi.get(`/movie/${movieId}/videos`, { 
+        params: { language }
+      });
       
-      const response = await tmdbApi.get(`/movie/${movieId}/videos`, { params });
-      
-      // Utiliser la fonction améliorée pour trouver la meilleure bande-annonce
       trailerKey = getTrailerKey(response.data);
       
       if (trailerKey) {
-        console.log(`Bande-annonce trouvée pour le film ${movieId} en ${language || 'toutes langues'}`);
+        console.log(`Bande-annonce trouvée pour le film ${movieId} en ${language} (méthode alternative)`);
       }
     }
     

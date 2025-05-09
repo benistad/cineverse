@@ -40,23 +40,53 @@ export default function FilmPage() {
         setFilm(data);
         
         // Si le film n'a pas de bande-annonce, essayer d'en trouver une automatiquement
-        if (!data.youtube_trailer_key) {
+        // Toujours rechercher une bande-annonce, même si nous en avons déjà une
+        // Cela permet de mettre à jour les bandes-annonces manquantes ou obsolètes
+        const shouldSearchTrailer = !data.youtube_trailer_key || data.tmdb_id; // Rechercher si pas de bande-annonce OU si nous avons un ID TMDB
+        
+        if (shouldSearchTrailer) {
           setSearchingTrailer(true);
+          
           try {
-            // Extraire l'année de sortie à partir de la date d'ajout (ou utiliser une année par défaut)
-            const releaseYear = data.release_year || new Date(data.date_ajout).getFullYear();
-            const foundTrailerKey = await findTrailerByTitleAndYear(data.title, releaseYear);
+            // Extraire l'année de sortie
+            const releaseYear = data.release_date ? new Date(data.release_date).getFullYear() : null;
+            
+            // Si nous avons un ID TMDB, l'utiliser directement (plus précis)
+            let foundTrailerKey = null;
+            
+            if (data.tmdb_id) {
+              // Utiliser directement l'ID TMDB pour récupérer la bande-annonce
+              const { getMovieTrailers } = await import('@/lib/tmdb/trailers');
+              foundTrailerKey = await getMovieTrailers(data.tmdb_id);
+              console.log(`Recherche de bande-annonce pour ${data.title} avec ID TMDB ${data.tmdb_id}: ${foundTrailerKey ? 'Trouvée' : 'Non trouvée'}`);
+            } 
+            
+            // Si pas d'ID TMDB ou pas de bande-annonce trouvée, essayer par titre et année
+            if (!foundTrailerKey) {
+              foundTrailerKey = await findTrailerByTitleAndYear(data.title, releaseYear);
+              console.log(`Recherche de bande-annonce pour ${data.title} (${releaseYear}) par titre: ${foundTrailerKey ? 'Trouvée' : 'Non trouvée'}`);
+            }
             
             if (foundTrailerKey) {
               setTrailerKey(foundTrailerKey);
-              // Optionnel: mettre à jour la base de données avec la bande-annonce trouvée
-              // Cette étape nécessiterait des droits d'écriture et une API appropriée
+              
+              // Mettre à jour le film avec la clé de la bande-annonce seulement si elle est différente
+              if (foundTrailerKey !== data.youtube_trailer_key) {
+                console.log(`Mise à jour de la bande-annonce pour ${data.title}: ${foundTrailerKey}`);
+                await fetch(`/api/films/${data.id}/trailer`, {
+                  method: 'PUT',
+                  body: JSON.stringify({ trailerKey: foundTrailerKey }),
+                });
+              }
             }
           } catch (error) {
-            console.error('Erreur lors de la recherche de bande-annonce:', error);
+            console.error('Erreur lors de la recherche de la bande-annonce:', error);
           } finally {
             setSearchingTrailer(false);
           }
+        } else {
+          // Utiliser la bande-annonce existante
+          setTrailerKey(data.youtube_trailer_key);
         }
       } catch (error) {
         console.error('Erreur:', error);
