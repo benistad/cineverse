@@ -18,10 +18,6 @@ const COMMON_GENRES = [
 // Liste des notes possibles (entières de 0 à 10)
 const RATINGS = Array.from({ length: 11 }, (_, i) => i);
 
-// Années de sortie (de 1900 à l'année actuelle)
-const CURRENT_YEAR = new Date().getFullYear();
-const YEARS = Array.from({ length: CURRENT_YEAR - 1899 }, (_, i) => CURRENT_YEAR - i);
-
 function AdvancedSearch() {
   // Composant interne qui utilise useSearchParams
 
@@ -38,6 +34,10 @@ function AdvancedSearch() {
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   
+  // État pour les années disponibles
+  const [availableYears, setAvailableYears] = useState([]);
+  const [loadingYears, setLoadingYears] = useState(true);
+  
   // État pour les accordéons de filtres
   const [expandedFilters, setExpandedFilters] = useState({
     genres: true,
@@ -45,7 +45,48 @@ function AdvancedSearch() {
     years: true
   });
 
-  // Récupérer les filtres depuis l'URL au chargement
+  // Fonction pour récupérer les années des films déjà notés et publiés
+  const fetchAvailableYears = async () => {
+    setLoadingYears(true);
+    
+    try {
+      // Récupérer tous les films
+      const { data, error } = await supabase
+        .from('films')
+        .select('release_date');
+      
+      if (error) {
+        console.error('Erreur lors de la récupération des années:', error);
+        setAvailableYears([]);
+        return;
+      }
+      
+      // Extraire les années uniques des dates de sortie
+      const years = data
+        .filter(film => film.release_date) // Filtrer les films sans date de sortie
+        .map(film => {
+          try {
+            return new Date(film.release_date).getFullYear();
+          } catch (e) {
+            console.error('Erreur lors de l\'extraction de l\'année:', e, film.release_date);
+            return null;
+          }
+        })
+        .filter(year => year !== null); // Filtrer les années invalides
+      
+      // Supprimer les doublons et trier par ordre décroissant
+      const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
+      
+      setAvailableYears(uniqueYears);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des années:', error);
+      setAvailableYears([]);
+    } finally {
+      setLoadingYears(false);
+    }
+  };
+  
+  // Récupérer les filtres depuis l'URL au chargement et les années disponibles
   useEffect(() => {
     const genres = searchParams.get('genres')?.split(',') || [];
     const ratings = searchParams.get('ratings')?.split(',').map(Number) || [];
@@ -54,6 +95,9 @@ function AdvancedSearch() {
     setSelectedGenres(genres);
     setSelectedRatings(ratings);
     setSelectedYears(years);
+    
+    // Récupérer les années disponibles
+    fetchAvailableYears();
     
     // Si des filtres sont présents, lancer la recherche
     if (genres.length > 0 || ratings.length > 0 || years.length > 0) {
@@ -293,21 +337,29 @@ function AdvancedSearch() {
             
             {expandedFilters.years && (
               <div className="mt-2 max-h-60 overflow-y-auto">
-                <div className="flex flex-wrap gap-2">
-                  {YEARS.slice(0, 30).map(year => (
-                    <button
-                      key={year}
-                      onClick={() => toggleYear(year)}
-                      className={`px-2 py-1 text-sm rounded ${
-                        selectedYears.includes(year)
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                      }`}
-                    >
-                      {year}
-                    </button>
-                  ))}
-                </div>
+                {loadingYears ? (
+                  <div className="flex justify-center items-center py-4">
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+                  </div>
+                ) : availableYears.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {availableYears.map(year => (
+                      <button
+                        key={year}
+                        onClick={() => toggleYear(year)}
+                        className={`px-2 py-1 text-sm rounded ${
+                          selectedYears.includes(year)
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                        }`}
+                      >
+                        {year}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-sm py-2">Aucune année disponible</p>
+                )}
               </div>
             )}
           </div>
