@@ -38,7 +38,14 @@ export default function HiddenGemsFilms() {
         </Link>
       </div>
       
-      <h1 className="text-3xl md:text-4xl font-bold mb-8">Films méconnus à voir</h1>
+      <div className="flex items-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold">Films méconnus à voir</h1>
+        {!loading && !error && films.length > 0 && (
+          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+            {films.length}
+          </span>
+        )}
+      </div>
       
       {loading ? (
         <div className="flex justify-center items-center h-64">
