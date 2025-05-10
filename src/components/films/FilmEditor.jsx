@@ -497,19 +497,48 @@ export default function FilmEditor({ movieDetails }) {
                 .filter((person) => [
                   'Director',            // Réalisateur
                   'Writer',              // Scénariste
-                  'Producer',            // Producteur
                   'Screenplay',          // Scénariste
-                  'Director of Photography', // Directeur de la photographie
-                  'Cinematography',      // Cinématographie
                   'Original Music Composer', // Compositeur de musique
                   'Music',               // Musique
+                  'Director of Photography', // Directeur de la photographie
+                  'Cinematography',      // Cinématographie
                   'Production Design',   // Directeur artistique
                   'Costume Design',      // Costumes
                   'Editor',              // Monteur
                   'Sound',               // Son
                   'Visual Effects',      // Effets visuels
+                  'Producer',            // Producteur
                   'Executive Producer'   // Producteur exécutif
                 ].includes(person.job || ''))
+                .sort((a, b) => {
+                  // Définir l'ordre de priorité des rôles
+                  const roleOrder = {
+                    'Director': 1,
+                    'Writer': 2,
+                    'Screenplay': 3,
+                    'Original Music Composer': 4,
+                    'Music': 5,
+                    'Director of Photography': 6,
+                    'Cinematography': 7,
+                    'Production Design': 8,
+                    'Costume Design': 9,
+                    'Editor': 10,
+                    'Sound': 11,
+                    'Visual Effects': 12,
+                    'Producer': 13,
+                    'Executive Producer': 14
+                  };
+                  
+                  // Trier par ordre de priorité, puis par nom si même rôle
+                  const orderA = roleOrder[a.job] || 999;
+                  const orderB = roleOrder[b.job] || 999;
+                  
+                  if (orderA === orderB) {
+                    return a.name.localeCompare(b.name);
+                  }
+                  
+                  return orderA - orderB;
+                })
                 .slice(0, 20) // Augmenter le nombre maximum de membres d'équipe affichés
                 .map((person) => (
                   <div 
