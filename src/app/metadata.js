@@ -3,12 +3,12 @@
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata
  */
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'),
   title: {
-    default: 'MovieHunt - Votre collection de films notés',
+    default: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
     template: '%s | MovieHunt'
   },
-  description: 'Découvrez ma collection de films notés et mes recommandations de casting et d\'équipe technique',
+  description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
   keywords: ['films', 'cinéma', 'critiques', 'notes', 'recommandations', 'acteurs', 'réalisateurs'],
   authors: [{ name: 'MovieHunt' }],
   creator: 'MovieHunt',
@@ -23,21 +23,21 @@ export const metadata = {
     locale: 'fr_FR',
     url: '/',
     siteName: 'MovieHunt',
-    title: 'MovieHunt - Votre collection de films notés',
-    description: 'Découvrez ma collection de films notés et mes recommandations de casting et d\'équipe technique',
+    title: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+    description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'MovieHunt - Votre collection de films notés',
+        alt: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MovieHunt - Votre collection de films notés',
-    description: 'Découvrez ma collection de films notés et mes recommandations de casting et d\'équipe technique',
+    title: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+    description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: ['/images/og-image.jpg'],
   },
   robots: {

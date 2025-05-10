@@ -6,7 +6,7 @@ import { getAllFilmsForSitemap } from '@/lib/supabase/server';
  */
 export default async function sitemap() {
   // URL de base du site
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
   
   // Pages statiques
   const staticPages = [

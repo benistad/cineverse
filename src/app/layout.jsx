@@ -31,14 +31,14 @@ export default function RootLayout({ children }) {
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
+        <meta property="og:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         <meta property="og:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
         <meta property="og:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta property="og:image" content="/images/og-image.jpg" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
+        <meta name="twitter:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         <meta name="twitter:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
         <meta name="twitter:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="twitter:image" content="/images/og-image.jpg" />
@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/images/favicon.ico" sizes="any" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         
         {/* Google tag (gtag.js) - Implémentation directe de la balise fournie par Google */}
         <Script

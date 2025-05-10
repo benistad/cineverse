@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -11,7 +11,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'}/sitemap.xml`,
+      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/sitemap.xml`,
     ],
   },
   exclude: ['/admin/*', '/api/*'],

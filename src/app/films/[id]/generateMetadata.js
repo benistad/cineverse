@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
       ? `${film.synopsis.substring(0, 150)}${film.synopsis.length > 150 ? '...' : ''}` 
       : `Découvrez le film ${filmTitle} noté ${film.note_sur_10}/10 sur MovieHunt`;
     
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
     
     return {
       title: pageTitle,
