@@ -5,7 +5,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
 import { useSwipeable } from 'react-swipeable';
 
-export default function BasicFilmCarousel({ films, title, visibleCount = 4, showAllLink, showAllText }) {
+export default function BasicFilmCarousel({ films, title, visibleCount = 4, showAllLink, showAllText, totalCount }) {
   // État pour suivre l'index actuel
   const [currentIndex, setCurrentIndex] = useState(0);
   // État pour stocker le nombre de cartes visibles
@@ -87,7 +87,7 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4, show
           <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
           {/* Compteur de films */}
           <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-            {films.length}
+            {totalCount !== undefined ? totalCount : films.length}
           </span>
           {showAllLink && showAllText && (
             <a 

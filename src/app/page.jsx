@@ -1,7 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getRecentlyRatedFilms, getTopRatedFilms, getPaginatedFilms, getHiddenGems } from '@/lib/supabase/films';
+import { 
+  getRecentlyRatedFilms, 
+  getTopRatedFilms, 
+  getPaginatedFilms, 
+  getHiddenGems,
+  getTopRatedFilmsCount,
+  getHiddenGemsCount
+} from '@/lib/supabase/films';
 import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
@@ -13,6 +20,8 @@ export default function Home() {
   const [hiddenGems, setHiddenGems] = useState([]);
   const [allFilms, setAllFilms] = useState([]);
   const [totalFilmsCount, setTotalFilmsCount] = useState(0);
+  const [topRatedFilmsCount, setTopRatedFilmsCount] = useState(0);
+  const [hiddenGemsCount, setHiddenGemsCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadingPagination, setLoadingPagination] = useState(false);
@@ -55,9 +64,17 @@ export default function Home() {
         const topRated = await getTopRatedFilms(10);
         setTopRatedFilms(topRated);
         
+        // Récupérer le nombre total de films les mieux notés
+        const topRatedCount = await getTopRatedFilmsCount();
+        setTopRatedFilmsCount(topRatedCount);
+        
         // Récupérer les films méconnus à voir
         const gems = await getHiddenGems(8);
         setHiddenGems(gems);
+        
+        // Récupérer le nombre total de films méconnus à voir
+        const hiddenGemsCount = await getHiddenGemsCount();
+        setHiddenGemsCount(hiddenGemsCount);
         
         // Récupérer tous les films (première page)
         await loadPaginatedFilms(1);
@@ -120,10 +137,11 @@ export default function Home() {
         ) : (
           <BasicFilmCarousel 
             films={topRatedFilms} 
-            title="Films les mieux notés (Top 10)" 
+            title="Films les mieux notés" 
             visibleCount={4} 
             showAllLink="/top-rated"
             showAllText="Voir tous les films"
+            totalCount={topRatedFilmsCount}
           />
         )}
       </section>
@@ -141,6 +159,7 @@ export default function Home() {
             visibleCount={4} 
             showAllLink="/hidden-gems"
             showAllText="Voir tous les films"
+            totalCount={hiddenGemsCount}
           />
         ) : null}
       </section>

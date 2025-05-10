@@ -543,6 +543,47 @@ export async function getFeaturedFilms(limit = 5, minRating = 6) {
 }
 
 /**
+ * Récupère le nombre total de films les mieux notés
+ * @param {number} minRating - Note minimale stricte pour inclure un film (défaut: 6)
+ * @returns {number} - Nombre total de films les mieux notés
+ */
+export async function getTopRatedFilmsCount(minRating = 6) {
+  try {
+    const supabase = getSupabaseClient();
+    const { count, error } = await supabase
+      .from('films')
+      .select('*', { count: 'exact', head: true })
+      .gt('note_sur_10', minRating);
+
+    if (error) throw error;
+    return count || 0;
+  } catch (error) {
+    console.error('Erreur lors du comptage des films les mieux notés:', error);
+    return 0;
+  }
+}
+
+/**
+ * Récupère le nombre total de films méconnus à voir
+ * @returns {number} - Nombre total de films méconnus à voir
+ */
+export async function getHiddenGemsCount() {
+  try {
+    const supabase = getSupabaseClient();
+    const { count, error } = await supabase
+      .from('films')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_hidden_gem', true);
+
+    if (error) throw error;
+    return count || 0;
+  } catch (error) {
+    console.error('Erreur lors du comptage des films méconnus à voir:', error);
+    return 0;
+  }
+}
+
+/**
  * Recherche des films par terme de recherche
  * @param {string} searchTerm - Terme de recherche
  * @returns {Array} - Liste des films correspondant au terme de recherche
