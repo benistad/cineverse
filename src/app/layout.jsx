@@ -20,27 +20,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
-        <title>MovieHunt - Votre collection de films notés</title>
-        <meta name="description" content="Découvrez ma collection de films notés et mes recommandations de casting et d'équipe technique" />
+        <title>MovieHunt - Trouvez votre prochain film coup de cœur</title>
+        <meta name="description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#1e293b" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="MovieHunt" />
-        <meta name="keywords" content="films, cinéma, critiques, notes, recommandations, acteurs, réalisateurs" />
+        <meta name="keywords" content="films, cinéma, critiques, notes, recommandations, perles rares, streaming, plateformes françaises, casting remarquable, coup de cœur" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
-        <meta property="og:title" content="MovieHunt - Votre collection de films notés" />
-        <meta property="og:description" content="Découvrez ma collection de films notés et mes recommandations de casting et d'équipe technique" />
+        <meta property="og:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
+        <meta property="og:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta property="og:image" content="/images/og-image.jpg" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.vercel.app'} />
-        <meta name="twitter:title" content="MovieHunt - Votre collection de films notés" />
-        <meta name="twitter:description" content="Découvrez ma collection de films notés et mes recommandations de casting et d'équipe technique" />
+        <meta name="twitter:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
+        <meta name="twitter:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="twitter:image" content="/images/og-image.jpg" />
         
         {/* Liens vers les ressources importantes */}
