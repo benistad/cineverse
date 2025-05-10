@@ -123,7 +123,8 @@ export default function Home() {
           <BasicFilmCarousel 
             films={recentFilms} 
             title="Films récemment notés" 
-            visibleCount={4} 
+            visibleCount={4}
+            showCount={false}
           />
         )}
       </section>
