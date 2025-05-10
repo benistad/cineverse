@@ -85,6 +85,10 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4, show
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+          {/* Compteur de films */}
+          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+            {films.length}
+          </span>
           {showAllLink && showAllText && (
             <a 
               href={showAllLink} 
