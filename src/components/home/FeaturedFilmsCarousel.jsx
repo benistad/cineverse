@@ -8,9 +8,7 @@ import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import { optimizeBackdropImage, optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
-// Importer les styles CSS de Slick
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
 
 export default function FeaturedFilmsCarousel() {
   const [films, setFilms] = useState([]);

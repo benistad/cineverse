@@ -1,5 +1,9 @@
 'use client';
 
+// Importer les styles slick-carousel globalement pour éviter les requêtes multiples
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -13,21 +17,7 @@ const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
   { ssr: false }
 );
-
-const ImageOptimizer = dynamic(
-  () => import('@/components/optimization/ImageOptimizer'),
-  { ssr: false }
-);
-
-const SpeedIndexOptimizer = dynamic(
-  () => import('@/components/optimization/SpeedIndexOptimizer'),
-  { ssr: false }
-);
-
-const ResourceOptimizer = dynamic(
-  () => import('@/components/optimization/ResourceOptimizer'),
-  { ssr: false }
-);
+// Suppression de tous les autres composants d'optimisation avancés
 
 // Désactiver les autres composants d'optimisation qui pourraient causer des problèmes
 // const CacheInitializer = dynamic(
@@ -125,10 +115,10 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
-        <ImageOptimizer />
-        <SpeedIndexOptimizer />
-        <ResourceOptimizer />
-        {/* Composants d'optimisation désactivés pour améliorer les performances */}
+        {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
+        {/* <ImageOptimizer /> */}
+        {/* <SpeedIndexOptimizer /> */}
+        {/* <ResourceOptimizer /> */}
         {/* <CacheInitializer /> */}
         {/* <DataPreloader /> */}
         {/* <ServiceWorkerRegistration /> */}
