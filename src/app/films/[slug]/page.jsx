@@ -167,7 +167,7 @@ export default function FilmPageBySlug() {
                 src={film.poster_url}
                 alt={`Affiche du film ${film.title}`}
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="(max-width: 768px) 100vw, 33vw"
                 priority
               />
