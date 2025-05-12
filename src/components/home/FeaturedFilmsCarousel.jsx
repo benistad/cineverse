@@ -55,7 +55,7 @@ export default function FeaturedFilmsCarousel() {
 
   // Configuration du carrousel
   const settings = {
-    dots: true,
+    dots: false, // Points de navigation désactivés
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -116,18 +116,6 @@ export default function FeaturedFilmsCarousel() {
       <style jsx global>{`
         .carousel-container {
           margin-bottom: 2rem;
-        }
-        .carousel-container .slick-dots {
-          bottom: 15px;
-        }
-        .carousel-container .slick-dots li button:before {
-          color: white;
-          opacity: 0.5;
-          font-size: 10px;
-        }
-        .carousel-container .slick-dots li.slick-active button:before {
-          color: white;
-          opacity: 1;
         }
         .carousel-container .slick-prev, 
         .carousel-container .slick-next {
