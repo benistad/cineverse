@@ -13,7 +13,6 @@ import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
-import DynamicFilmCarousel from '@/components/films/DynamicFilmCarousel';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 
 export default function Home() {
@@ -154,7 +153,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <DynamicFilmCarousel 
+          <BasicFilmCarousel 
             films={topRatedFilms} 
             title="Films les mieux notés" 
             visibleCount={4} 
@@ -172,7 +171,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : hiddenGems.length > 0 ? (
-          <DynamicFilmCarousel 
+          <BasicFilmCarousel 
             films={hiddenGems} 
             title="Films méconnus à voir" 
             visibleCount={4} 
