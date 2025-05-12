@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /debug-dates/
+
+# Host
+Host: https://www.moviehunt.fr
+
+# Sitemaps
+Sitemap: https://www.moviehunt.fr/sitemap.xml
+Sitemap: https://www.moviehunt.fr/server-sitemap.xml
