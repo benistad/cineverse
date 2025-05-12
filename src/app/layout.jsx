@@ -6,6 +6,13 @@ import Navbar from "@/components/layout/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import dynamic from 'next/dynamic';
+
+// Importer dynamiquement le composant d'optimisation mobile pour éviter de bloquer le rendu initial
+const MobilePerformanceOptimizer = dynamic(
+  () => import('@/components/optimization/MobilePerformanceOptimizer'),
+  { ssr: false }
+);
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,6 +88,7 @@ export default function RootLayout({ children }) {
           </main>
         </AuthProvider>
         <SpeedInsights />
+        <MobilePerformanceOptimizer />
       </body>
     </html>
   );

@@ -1,12 +1,50 @@
 {
   "name": "MovieHunt",
   "short_name": "MovieHunt",
-  "description": "Votre collection de films notés",
+  "description": "Trouvez votre prochain film coup de cœur",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1e293b",
   "theme_color": "#1e293b",
-  "orientation": "portrait-primary",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "fr-FR",
+  "categories": ["entertainment", "movies"],
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Films les mieux notés",
+      "short_name": "Top Films",
+      "description": "Découvrez les films les mieux notés",
+      "url": "/top-rated",
+      "icons": [{ "src": "/images/logo-mh.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Films méconnus à voir",
+      "short_name": "Perles rares",
+      "description": "Découvrez des perles rares du cinéma",
+      "url": "/hidden-gems",
+      "icons": [{ "src": "/images/logo-mh.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot1.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Accueil de MovieHunt"
+    },
+    {
+      "src": "/images/screenshot2.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "narrow",
+      "label": "Détail d'un film sur MovieHunt"
+    }
+  ],
   "icons": [
     {
       "src": "/images/logo-mh.png",

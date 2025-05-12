@@ -1,5 +1,6 @@
 /**
  * Métadonnées statiques pour la page d'accueil et configuration globale du site
+ * Optimisé pour le référencement mobile
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata
  */
 export const metadata = {
@@ -17,6 +18,24 @@ export const metadata = {
     email: false,
     address: false,
     telephone: false,
+  },
+  // Configuration optimisée pour les appareils mobiles
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  // Thème de couleur pour la barre d'adresse mobile
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#1e293b' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+  ],
+  // Configuration pour les appareils Apple
+  appleWebApp: {
+    title: 'MovieHunt',
+    statusBarStyle: 'black-translucent',
+    capable: true,
   },
   openGraph: {
     type: 'website',
@@ -43,6 +62,7 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -50,6 +70,13 @@ export const metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+    // Optimisations spécifiques pour les robots mobiles
+    'googlebot-mobile': {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
+    'mobile-friendly': true,
   },
   icons: {
     icon: [{ url: '/favicon.ico', sizes: 'any' }],
