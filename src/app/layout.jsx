@@ -8,9 +8,29 @@ import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from 'next/dynamic';
 
-// Importer dynamiquement le composant d'optimisation mobile pour éviter de bloquer le rendu initial
+// Importer dynamiquement les composants d'optimisation pour éviter de bloquer le rendu initial
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
+  { ssr: false }
+);
+
+const CacheInitializer = dynamic(
+  () => import('@/components/performance/CacheInitializer'),
+  { ssr: false }
+);
+
+const DataPreloader = dynamic(
+  () => import('@/components/performance/DataPreloader'),
+  { ssr: false }
+);
+
+const ServiceWorkerRegistration = dynamic(
+  () => import('@/components/performance/ServiceWorkerRegistration'),
+  { ssr: false }
+);
+
+const SmartImagePreloader = dynamic(
+  () => import('@/components/performance/SmartImagePreloader'),
   { ssr: false }
 );
 
@@ -89,6 +109,10 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
+        <CacheInitializer />
+        <DataPreloader />
+        <ServiceWorkerRegistration />
+        <SmartImagePreloader />
       </body>
     </html>
   );
