@@ -18,8 +18,8 @@ export default function FeaturedFilmsCarousel() {
     async function loadTopRatedFilms() {
       try {
         const topFilms = await getFeaturedFilms(5, 6);
-        console.log('Films chargés:', topFilms);
-        console.log('URL du poster du premier film:', topFilms[0]?.poster_url);
+        
+        
         setFilms(topFilms);
       } catch (error) {
         console.error('Erreur lors du chargement des films en vedette:', error);

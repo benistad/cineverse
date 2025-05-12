@@ -30,7 +30,7 @@ export default function DataPreloader() {
           cacheKey: 'providers_list'
         });
         
-        console.log('Préchargement des données critiques terminé');
+        
       } catch (error) {
         // Ignorer les erreurs de préchargement pour ne pas bloquer l'expérience utilisateur
         console.error('Erreur lors du préchargement des données:', error);

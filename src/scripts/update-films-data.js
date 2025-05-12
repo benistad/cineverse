@@ -126,4 +126,4 @@ window.updateMovieHuntFilms = async () => {
   console.log('Résultat:', result);
 };
 
-console.log('Script de mise à jour des films chargé. Exécutez window.updateMovieHuntFilms() pour lancer la mise à jour.');
+

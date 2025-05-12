@@ -140,7 +140,7 @@ export const getMovieTrailers = async (movieId) => {
       trailerKey = getTrailerKey(response.data);
       
       if (trailerKey) {
-        console.log(`Bande-annonce trouvée pour le film ${movieId} en ${language} (méthode alternative)`);
+        
       }
     }
     
@@ -159,13 +159,13 @@ export const getMovieTrailers = async (movieId) => {
  */
 export const findTrailerByTitleAndYear = async (title, year) => {
   try {
-    console.log(`Recherche d'une bande-annonce pour: ${title} (${year})`);
+    
     
     // Étape 1: Trouver l'ID TMDB du film
     const movieId = await findMovieByTitleAndYear(title, year);
     
     if (!movieId) {
-      console.log(`Aucun film trouvé sur TMDB pour: ${title} (${year})`);
+      
       return null;
     }
     
@@ -173,9 +173,9 @@ export const findTrailerByTitleAndYear = async (title, year) => {
     const trailerKey = await getMovieTrailers(movieId);
     
     if (trailerKey) {
-      console.log(`Bande-annonce trouvée pour: ${title} (${year}) - Clé YouTube: ${trailerKey}`);
+      
     } else {
-      console.log(`Aucune bande-annonce trouvée pour: ${title} (${year})`);
+      
     }
     
     return trailerKey;

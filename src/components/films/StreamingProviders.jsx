@@ -90,24 +90,24 @@ export default function StreamingProviders({ tmdbId, title, year }) {
     async function fetchStreamingProviders() {
       if (!tmdbId) {
         if (isMounted) {
-          console.log(`Pas d'ID TMDB fourni pour le film: ${title}`);
+          
           setLoading(false);
         }
         return;
       }
       
       try {
-        console.log(`Récupération des plateformes de streaming pour le film avec TMDB ID: ${tmdbId}`);
+        
         const data = await getStreamingProviders(tmdbId);
         
         if (!isMounted) return;
         
         if (data) {
-          console.log(`Plateformes trouvées:`, data);
+          
           setProviders(data.providers);
           // setJustWatchLink supprimé car plus utilisé
         } else {
-          console.log(`Aucune plateforme trouvée pour le film avec TMDB ID: ${tmdbId}`);
+          
         }
       } catch (err) {
         console.error('Erreur lors de la récupération des plateformes de streaming:', err);
