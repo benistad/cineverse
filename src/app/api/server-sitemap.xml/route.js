@@ -25,24 +25,25 @@ export async function GET() {
 
     // Créer les entrées du sitemap pour chaque film
     const filmEntries = films.map((film) => {
-      // Créer une URL conviviale pour les moteurs de recherche
-      const slug = film.title
-        ? encodeURIComponent(
-            film.title
-              .toLowerCase()
-              .replace(/[^\w\s-]/g, '') // Supprimer les caractères spéciaux
-              .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
-              .replace(/--+/g, '-') // Éviter les tirets multiples
-          )
-        : '';
-
-      // Année de sortie pour l'URL
-      const releaseYear = film.release_date 
-        ? new Date(film.release_date).getFullYear() 
-        : '';
+      // Utiliser le slug existant ou en créer un nouveau
+      let slug = film.slug;
+      
+      // Si le film n'a pas de slug, en créer un à partir du titre
+      if (!slug && film.title) {
+        slug = film.title
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '') // Supprimer les caractères spéciaux
+          .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
+          .replace(/--+/g, '-'); // Éviter les tirets multiples
+      }
+      
+      // Utiliser l'ID comme fallback si pas de slug ni de titre
+      if (!slug) {
+        slug = film.id;
+      }
 
       return {
-        loc: `${baseUrl}/films/${film.id}/${slug}${releaseYear ? `-${releaseYear}` : ''}`,
+        loc: `${baseUrl}/films/${encodeURIComponent(slug)}`,
         lastmod: new Date(film.date_ajout).toISOString(),
         changefreq: 'weekly',
         priority: 0.8,

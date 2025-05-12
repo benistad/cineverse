@@ -78,8 +78,8 @@ export default function SimilarFilms({ currentFilm }) {
             ? new Date(film.release_date).getFullYear() 
             : '';
             
-          // Construire l'URL SEO
-          const seoUrl = `/films/${film.id}/${encodeURIComponent(slug)}${releaseYear ? `-${releaseYear}` : ''}`;
+          // Construire l'URL SEO basée uniquement sur le slug
+          const seoUrl = `/films/${encodeURIComponent(slug)}`;
           
           return {
             ...film,
