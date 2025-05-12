@@ -15,67 +15,21 @@ const nextConfig = {
   transpilePackages: ['react-youtube'],
   // Optimisations pour la performance mobile
   reactStrictMode: true, // Activer le mode strict de React pour de meilleures performances
-  // Configuration des en-têtes HTTP pour améliorer la mise en cache et la sécurité
+  // Configuration simplifiée des en-têtes HTTP pour améliorer les performances
   async headers() {
     return [
       {
-        // Stratégie de cache avancée pour les ressources statiques immuables
-        source: '/:path*.(jpg|jpeg|png|webp|svg|gif|ico)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable, stale-while-revalidate=86400',
-          },
-          {
-            key: 'Vary',
-            value: 'Accept-Encoding',
-          },
-        ],
-      },
-      {
-        // Stratégie de cache pour les fichiers CSS et JS
-        source: '/:path*.(css|js)',
+        // En-têtes de cache pour les ressources statiques
+        source: '/:path*.(jpg|jpeg|png|webp|svg|gif|ico|css|js|woff|woff2|ttf|otf|eot)',
         headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
           },
-          {
-            key: 'Vary',
-            value: 'Accept-Encoding',
-          },
         ],
       },
       {
-        // Stratégie de cache pour les polices
-        source: '/:path*.(woff|woff2|ttf|otf|eot)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-          {
-            key: 'Vary',
-            value: 'Accept-Encoding',
-          },
-        ],
-      },
-      {
-        // Stratégie de cache pour les pages HTML et API dynamiques
-        source: '/((?!_next/static|_next/image|images/|api/).*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=60, stale-while-revalidate=86400',
-          },
-          {
-            key: 'Vary',
-            value: 'Accept-Encoding, Cookie',
-          },
-        ],
-      },
-      {
-        // En-têtes pour améliorer la sécurité et les performances - appliqués à toutes les routes
+        // En-têtes de sécurité de base pour toutes les routes
         source: '/(.*)',
         headers: [
           {
@@ -93,18 +47,6 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=(), accelerometer=(), autoplay=(), gyroscope=(), magnetometer=(), payment=(), usb=()',
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
           },
         ],
       },

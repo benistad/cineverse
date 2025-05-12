@@ -1,26 +1,12 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
-import { cacheMiddleware } from './middleware/cacheMiddleware';
+// Middleware de cache désactivé pour résoudre les problèmes de performance
+// import { cacheMiddleware } from './middleware/cacheMiddleware';
 
 export async function middleware(request) {
   const url = new URL(request.url);
   
-  // Appliquer le middleware de cache pour les routes non-admin
-  if (!url.pathname.startsWith('/admin')) {
-    try {
-      const cacheResponse = await cacheMiddleware(request);
-      
-      // Si le middleware de cache a modifié la réponse, retourner cette réponse
-      if (cacheResponse && cacheResponse.headers && cacheResponse.headers.has('X-Cache-Status')) {
-        return cacheResponse;
-      }
-    } catch (error) {
-      console.error('Erreur dans le middleware de cache:', error);
-      // En cas d'erreur, continuer sans bloquer la navigation
-    }
-  }
-  
-  // Pour les routes admin, appliquer le middleware d'authentification
+  // Appliquer uniquement le middleware d'authentification pour les routes admin
   if (url.pathname.startsWith('/admin')) {
     let response = NextResponse.next({
       request: {
@@ -78,20 +64,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    // Routes d'administration
-    '/admin/:path*',
-    // Routes publiques principales (pas les routes dynamiques de films)
-    '/',
-    '/films',
-    '/genres/:path*',
-    // Routes d'API
-    '/api/:path*',
-    // Fichiers statiques et autres routes à mettre en cache
-    '/:path*.jpg',
-    '/:path*.jpeg',
-    '/:path*.png',
-    '/:path*.webp',
-    '/:path*.css',
-    '/:path*.js'
+    // Routes d'administration uniquement
+    '/admin/:path*'
   ],
 };

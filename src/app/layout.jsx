@@ -8,31 +8,32 @@ import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from 'next/dynamic';
 
-// Importer dynamiquement les composants d'optimisation pour éviter de bloquer le rendu initial
+// Conserver uniquement l'optimiseur mobile qui est essentiel
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
   { ssr: false }
 );
 
-const CacheInitializer = dynamic(
-  () => import('@/components/performance/CacheInitializer'),
-  { ssr: false }
-);
-
-const DataPreloader = dynamic(
-  () => import('@/components/performance/DataPreloader'),
-  { ssr: false }
-);
-
-const ServiceWorkerRegistration = dynamic(
-  () => import('@/components/performance/ServiceWorkerRegistration'),
-  { ssr: false }
-);
-
-const SmartImagePreloader = dynamic(
-  () => import('@/components/performance/SmartImagePreloader'),
-  { ssr: false }
-);
+// Désactiver les autres composants d'optimisation qui pourraient causer des problèmes
+// const CacheInitializer = dynamic(
+//   () => import('@/components/performance/CacheInitializer'),
+//   { ssr: false }
+// );
+// 
+// const DataPreloader = dynamic(
+//   () => import('@/components/performance/DataPreloader'),
+//   { ssr: false }
+// );
+// 
+// const ServiceWorkerRegistration = dynamic(
+//   () => import('@/components/performance/ServiceWorkerRegistration'),
+//   { ssr: false }
+// );
+// 
+// const SmartImagePreloader = dynamic(
+//   () => import('@/components/performance/SmartImagePreloader'),
+//   { ssr: false }
+// );
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -109,10 +110,11 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
-        <CacheInitializer />
-        <DataPreloader />
-        <ServiceWorkerRegistration />
-        <SmartImagePreloader />
+        {/* Composants d'optimisation désactivés pour améliorer les performances */}
+        {/* <CacheInitializer /> */}
+        {/* <DataPreloader /> */}
+        {/* <ServiceWorkerRegistration /> */}
+        {/* <SmartImagePreloader /> */}
       </body>
     </html>
   );
