@@ -8,9 +8,24 @@ import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from 'next/dynamic';
 
-// Conserver uniquement l'optimiseur mobile qui est essentiel
+// Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
+  { ssr: false }
+);
+
+const ImageOptimizer = dynamic(
+  () => import('@/components/optimization/ImageOptimizer'),
+  { ssr: false }
+);
+
+const SpeedIndexOptimizer = dynamic(
+  () => import('@/components/optimization/SpeedIndexOptimizer'),
+  { ssr: false }
+);
+
+const ResourceOptimizer = dynamic(
+  () => import('@/components/optimization/ResourceOptimizer'),
   { ssr: false }
 );
 
@@ -110,6 +125,9 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
+        <ImageOptimizer />
+        <SpeedIndexOptimizer />
+        <ResourceOptimizer />
         {/* Composants d'optimisation désactivés pour améliorer les performances */}
         {/* <CacheInitializer /> */}
         {/* <DataPreloader /> */}
