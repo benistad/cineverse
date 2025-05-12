@@ -13,6 +13,8 @@ import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
+import DynamicFilmCarousel from '@/components/films/DynamicFilmCarousel';
+import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 
 export default function Home() {
   const [recentFilms, setRecentFilms] = useState([]);
@@ -106,8 +108,24 @@ export default function Home() {
     }
   };
 
+  // Préparer les chemins d'images critiques pour le préchargement
+  const criticalImagePaths = [];
+  
+  // Ajouter les images des films à la une s'ils sont disponibles
+  if (topRatedFilms.length > 0) {
+    // Ajouter les 2 premières images des films les mieux notés
+    topRatedFilms.slice(0, 2).forEach(film => {
+      if (film.poster_url) {
+        criticalImagePaths.push(film.poster_url);
+      }
+    });
+  }
+
   return (
     <div className="space-y-12">
+      {/* Préchargement des images critiques */}
+      <PreloadCriticalImages imagePaths={criticalImagePaths} />
+      
       {/* Carrousel des films à la une */}
       <section>
         <FeaturedFilmsCarousel />
@@ -136,7 +154,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <BasicFilmCarousel 
+          <DynamicFilmCarousel 
             films={topRatedFilms} 
             title="Films les mieux notés" 
             visibleCount={4} 
@@ -154,7 +172,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : hiddenGems.length > 0 ? (
-          <BasicFilmCarousel 
+          <DynamicFilmCarousel 
             films={hiddenGems} 
             title="Films méconnus à voir" 
             visibleCount={4} 

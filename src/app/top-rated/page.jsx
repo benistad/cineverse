@@ -5,6 +5,7 @@ import { getTopRatedFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
+import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 
 export default function TopRatedFilms() {
   const [films, setFilms] = useState([]);
@@ -29,8 +30,24 @@ export default function TopRatedFilms() {
     fetchTopRatedFilms();
   }, []);
 
+  // Préparer les chemins d'images critiques pour le préchargement
+  const criticalImagePaths = [];
+  
+  // Ajouter les images des films les mieux notés s'ils sont disponibles
+  if (films.length > 0) {
+    // Ajouter les 3 premières images des films les mieux notés
+    films.slice(0, 3).forEach(film => {
+      if (film.poster_url) {
+        criticalImagePaths.push(film.poster_url);
+      }
+    });
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Préchargement des images critiques */}
+      <PreloadCriticalImages imagePaths={criticalImagePaths} />
+      
       <div className="flex items-center mb-6">
         <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 mr-4">
           <FiArrowLeft className="mr-2" />
