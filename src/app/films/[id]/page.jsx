@@ -1,285 +1,90 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import SafeImage from '@/components/ui/SafeImage';
+import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import RemarkableStaffList from '@/components/films/RemarkableStaffList';
-import RatingIcon from '@/components/ui/RatingIcon';
-import YouTube from 'react-youtube';
 import { createBrowserClient } from '@supabase/ssr';
-import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
-import StreamingProviders from '@/components/films/StreamingProviders';
-import Script from 'next/script';
-import SimilarFilms from '@/components/films/SimilarFilms';
-import Head from 'next/head';
-import MovieSchema from '@/components/seo/MovieSchema';
 
-export default function FilmPage() {
+/**
+ * Cette page sert de redirection des anciennes URLs avec ID vers les nouvelles URLs avec slug
+ * Par exemple: /films/123 -> /films/nom-du-film
+ */
+export default function FilmPageRedirect() {
   const params = useParams();
   const router = useRouter();
-  const [film, setFilm] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [trailerKey, setTrailerKey] = useState(null);
-  const [searchingTrailer, setSearchingTrailer] = useState(false);
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-
+  
   useEffect(() => {
-    async function fetchFilm() {
+    async function redirectToSlugUrl() {
       try {
-        const { data, error } = await supabase
+        // Récupérer l'ID du film depuis les paramètres d'URL
+        const filmId = params.id;
+        if (!filmId) {
+          router.push('/not-found');
+          return;
+        }
+        
+        // Initialiser le client Supabase
+        const supabase = createBrowserClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        );
+        
+        // Récupérer le film par son ID
+        const { data: film, error } = await supabase
           .from('films')
-          .select('*')
-          .eq('id', params.id)
+          .select('id, title, slug')
+          .eq('id', filmId)
           .single();
-
-        if (error) {
+        
+        if (error || !film) {
           console.error('Erreur lors de la récupération du film:', error);
           router.push('/not-found');
           return;
         }
-
-        setFilm(data);
         
-        // Si le film n'a pas de bande-annonce, essayer d'en trouver une automatiquement
-        // Toujours rechercher une bande-annonce, même si nous en avons déjà une
-        // Cela permet de mettre à jour les bandes-annonces manquantes ou obsolètes
-        const shouldSearchTrailer = !data.youtube_trailer_key || data.tmdb_id; // Rechercher si pas de bande-annonce OU si nous avons un ID TMDB
-        
-        if (shouldSearchTrailer) {
-          setSearchingTrailer(true);
-          
-          try {
-            // Extraire l'année de sortie
-            const releaseYear = data.release_date ? new Date(data.release_date).getFullYear() : null;
-            
-            // Si nous avons un ID TMDB, l'utiliser directement (plus précis)
-            let foundTrailerKey = null;
-            
-            if (data.tmdb_id) {
-              // Utiliser directement l'ID TMDB pour récupérer la bande-annonce
-              const { getMovieTrailers } = await import('@/lib/tmdb/trailers');
-              foundTrailerKey = await getMovieTrailers(data.tmdb_id);
-              console.log(`Recherche de bande-annonce pour ${data.title} avec ID TMDB ${data.tmdb_id}: ${foundTrailerKey ? 'Trouvée' : 'Non trouvée'}`);
-            } 
-            
-            // Si pas d'ID TMDB ou pas de bande-annonce trouvée, essayer par titre et année
-            if (!foundTrailerKey) {
-              foundTrailerKey = await findTrailerByTitleAndYear(data.title, releaseYear);
-              console.log(`Recherche de bande-annonce pour ${data.title} (${releaseYear}) par titre: ${foundTrailerKey ? 'Trouvée' : 'Non trouvée'}`);
-            }
-            
-            if (foundTrailerKey) {
-              setTrailerKey(foundTrailerKey);
-              
-              // Mettre à jour le film avec la clé de la bande-annonce seulement si elle est différente
-              if (foundTrailerKey !== data.youtube_trailer_key) {
-                console.log(`Mise à jour de la bande-annonce pour ${data.title}: ${foundTrailerKey}`);
-                await fetch(`/api/films/${data.id}/trailer`, {
-                  method: 'PUT',
-                  body: JSON.stringify({ trailerKey: foundTrailerKey }),
-                });
-              }
-            }
-          } catch (error) {
-            console.error('Erreur lors de la recherche de la bande-annonce:', error);
-          } finally {
-            setSearchingTrailer(false);
-          }
-        } else {
-          // Utiliser la bande-annonce existante
-          setTrailerKey(data.youtube_trailer_key);
+        // Vérifier si le film a déjà un slug
+        if (film.slug) {
+          // Rediriger vers l'URL avec le slug
+          router.replace(`/films/${film.slug}`);
+          return;
         }
+        
+        // Si le film n'a pas de slug, en créer un à partir du titre
+        const newSlug = film.title
+          ? film.title
+              .toLowerCase()
+              .replace(/[^\w\s-]/g, '') // Supprimer les caractères spéciaux
+              .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
+              .replace(/--+/g, '-') // Éviter les tirets multiples
+          : filmId; // Utiliser l'ID comme fallback si pas de titre
+        
+        // Mettre à jour le film avec le nouveau slug
+        const { error: updateError } = await supabase
+          .from('films')
+          .update({ slug: newSlug })
+          .eq('id', filmId);
+        
+        if (updateError) {
+          console.error('Erreur lors de la mise à jour du slug:', updateError);
+        }
+        
+        // Rediriger vers l'URL avec le slug
+        router.replace(`/films/${newSlug}`);
       } catch (error) {
-        console.error('Erreur:', error);
+        console.error('Erreur lors de la redirection:', error);
         router.push('/not-found');
-      } finally {
-        setLoading(false);
       }
     }
+    
+    redirectToSlugUrl();
+  }, [params.id, router]);
 
-    fetchFilm();
-  }, [params.id, router, supabase]);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        <p>Chargement...</p>
-      </div>
-    );
-  }
-
-  if (!film) {
-    return (
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        <p>Film non trouvé</p>
-      </div>
-    );
-  }
-
+  // Afficher un indicateur de chargement pendant la redirection
   return (
-    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
-      {/* Balisage structuré JSON-LD pour les moteurs de recherche */}
-      {film && (
-        <Script
-          id="movie-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Movie',
-              name: film.title,
-              description: film.synopsis || `Film noté ${film.note_sur_10}/10 sur MovieHunt`,
-              image: film.poster_url,
-              datePublished: film.release_date,
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: film.note_sur_10,
-                bestRating: '10',
-                worstRating: '0',
-                ratingCount: '1'
-              },
-              genre: film.genres ? film.genres.split(',').map(genre => genre.trim()) : [],
-              ...(film.youtube_trailer_key && {
-                trailer: {
-                  '@type': 'VideoObject',
-                  name: `Bande-annonce de ${film.title}`,
-                  thumbnailUrl: film.poster_url,
-                  uploadDate: film.date_ajout,
-                  embedUrl: `https://www.youtube.com/embed/${film.youtube_trailer_key}`
-                }
-              })
-            })
-          }}
-          strategy="afterInteractive"
-        />
-      )}
-      
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-4 sm:mb-6">
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/3 mb-4 md:mb-0 md:pr-6">
-            <div className="w-full rounded-lg shadow-md overflow-hidden">
-              <SafeImage
-                src={film.poster_url}
-                alt={film.title || 'Poster du film'}
-                width={500}
-                height={750}
-                className="w-full h-auto rounded-lg"
-                priority
-              />
-            </div>
-          </div>
-          
-          <div className="md:w-2/3">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{film.title}</h1>
-            
-            <div className="flex flex-wrap items-center mb-4 text-gray-700">
-              {film.release_date && (
-                <span className="mr-3">
-                  {new Date(film.release_date).getFullYear()}
-                </span>
-              )}
-              {film.genres && (
-                <span>
-                  {film.genres}
-                </span>
-              )}
-            </div>
-            
-            <p className="text-gray-600 mb-2">
-              <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
-            </p>
-            
-            {film.genres && (
-              <p className="text-gray-600 mb-2">
-                <span className="font-semibold">Genre:</span> {film.genres}
-              </p>
-            )}
-            
-            <div className="flex items-center mb-4">
-              <span className="font-semibold mr-2">Note:</span>
-              <span className="flex items-center">
-                <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                {film.note_sur_10}/10
-              </span>
-            </div>
-            
-            {/* Plateformes de streaming */}
-            {film.tmdb_id && (
-              <StreamingProviders 
-                tmdbId={film.tmdb_id} 
-                title={film.title} 
-                year={film.release_date ? new Date(film.release_date).getFullYear() : null} 
-              />
-            )}
-            
-            <div className="mb-4">
-              <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
-              <p className="text-sm sm:text-base text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
-            </div>
-            
-            {film.why_watch_enabled && film.why_watch_content && (
-              <div className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
-                <style jsx>{`
-                  .why-watch-content {
-                    white-space: pre-wrap;
-                  }
-                  .why-watch-content p {
-                    margin-bottom: 0.5rem;
-                  }
-                `}</style>
-                <div className="text-sm sm:text-base text-gray-700 why-watch-content">
-                  {film.why_watch_content.split('\n').map((line, index) => {
-                    if (line.trim() === '') {
-                      return <br key={index} />;
-                    }
-                    if (line.trim().startsWith('• ')) {
-                      return (
-                        <p key={index} className="flex">
-                          <span className="mr-2">•</span>
-                          <span>{line.substring(2)}</span>
-                        </p>
-                      );
-                    }
-                    return <p key={index}>{line}</p>;
-                  })}
-                </div>
-              </div>
-            )}
-            
-            {(film.youtube_trailer_key || trailerKey) && (
-              <div className="mb-4 sm:mb-6">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
-                <div className="aspect-w-16 aspect-h-9">
-                  <YouTube videoId={film.youtube_trailer_key || trailerKey} className="w-full" />
-                </div>
-              </div>
-            )}
-            
-            {searchingTrailer && (
-              <div className="mb-6">
-                <p className="text-gray-500 italic">Recherche d'une bande-annonce...</p>
-              </div>
-            )}
-          </div>
-        </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <p className="ml-4 text-gray-600">Redirection en cours...</p>
       </div>
-      
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</h2>
-        <RemarkableStaffList filmId={film.id} />
-      </div>
-      
-      {/* Films similaires pour la navigation interne et le SEO */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mt-6">
-        <SimilarFilms currentFilm={film} />
-      </div>
-      
-      {/* Schéma structuré pour les moteurs de recherche */}
-      <MovieSchema film={film} />
     </div>
   );
 }
