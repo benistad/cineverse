@@ -94,7 +94,7 @@ export default function FeaturedFilmsCarousel() {
                     fill
                     className="object-cover" 
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
-                    priority
+                    priority={index === 0}
                   />
                 </div>
                 

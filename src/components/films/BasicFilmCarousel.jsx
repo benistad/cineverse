@@ -137,9 +137,9 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4, show
         ref={containerRef}
         {...swipeHandlers}
       >
-        {displayedFilms.map((film) => (
+        {displayedFilms.map((film, idx) => (
           <div key={film.id} className="h-full">
-            <FilmCard film={film} />
+            <FilmCard film={film} priority={currentIndex + idx === 0} />
           </div>
         ))}
       </div>
