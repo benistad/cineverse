@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Utilitaire de cache côté client pour les requêtes API
  * Implémente un cache local avec localStorage/sessionStorage
@@ -19,7 +20,7 @@ function isStorageAvailable(type) {
     storage.setItem(testKey, testKey);
     storage.removeItem(testKey);
     return true;
-  } catch (_) {
+  } catch (e) {
     return false;
   }
 }
@@ -225,7 +226,7 @@ export function clearCacheByAge(maxAge, storageType = 'localStorage') {
         if (item && item.cachedAt && (now - item.cachedAt > maxAge)) {
           keysToRemove.push(key);
         }
-      } catch (_) {
+      } catch (e) {
         // Ignorer les erreurs de parsing
       }
     }
