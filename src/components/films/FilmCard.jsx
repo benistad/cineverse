@@ -25,7 +25,7 @@ const extractYear = (dateString) => {
   }
 };
 
-export default function FilmCard({ film, showRating = true, showAdminControls = false }) {
+export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   
