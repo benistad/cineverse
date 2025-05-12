@@ -19,7 +19,7 @@ function isStorageAvailable(type) {
     storage.setItem(testKey, testKey);
     storage.removeItem(testKey);
     return true;
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 }
@@ -225,7 +225,7 @@ export function clearCacheByAge(maxAge, storageType = 'localStorage') {
         if (item && item.cachedAt && (now - item.cachedAt > maxAge)) {
           keysToRemove.push(key);
         }
-      } catch (e) {
+      } catch (_) {
         // Ignorer les erreurs de parsing
       }
     }
