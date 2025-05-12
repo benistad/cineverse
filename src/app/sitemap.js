@@ -30,7 +30,7 @@ export default async function sitemap() {
     
     // Générer les URLs pour chaque film
     const filmPages = films.map((film) => ({
-      url: `${baseUrl}/films/${film.id}`,
+      url: `${baseUrl}/films/${film.slug || film.id}`,
       lastModified: new Date(film.date_ajout),
       changeFrequency: 'weekly',
       priority: 0.7,

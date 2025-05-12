@@ -17,7 +17,7 @@ export default function MovieSchema({ film }) {
     name: film.title,
     description: film.synopsis || `Film noté ${film.note_sur_10}/10 sur MovieHunt`,
     image: film.poster_url,
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/films/${film.id}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/films/${film.slug || film.id}`,
     datePublished: film.release_date,
     aggregateRating: {
       '@type': 'AggregateRating',

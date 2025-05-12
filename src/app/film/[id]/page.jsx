@@ -6,7 +6,7 @@ import { createBrowserClient } from '@supabase/ssr';
 
 /**
  * Cette page sert de redirection des anciennes URLs avec ID vers les nouvelles URLs avec slug
- * Par exemple: /films/123 -> /films/nom-du-film
+ * Par exemple: /film/123 -> /films/nom-du-film
  */
 export default function FilmPageRedirect() {
   const params = useParams();
