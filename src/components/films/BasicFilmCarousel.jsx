@@ -81,16 +81,20 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4, show
 
   return (
     <div className="space-y-4">
-      {/* Titre et boutons de navigation */}
+      {/* Titre, compteur et boutons de navigation */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
-          {/* Compteur de films - n'affiche que si showCount est true */}
-          {showCount && (
-            <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-              {totalCount !== undefined ? totalCount : films.length}
-            </span>
-          )}
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center">
+            <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+            {/* Compteur de films - n'affiche que si showCount est true */}
+            {showCount && (
+              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+                {totalCount !== undefined ? totalCount : films.length}
+              </span>
+            )}
+          </div>
+          
+          {/* Bouton "Voir tous les films" */}
           {showAllLink && showAllText && (
             <a 
               href={showAllLink} 
@@ -101,6 +105,8 @@ export default function BasicFilmCarousel({ films, title, visibleCount = 4, show
             </a>
           )}
         </div>
+        
+        {/* Boutons de navigation */}
         <div className="flex space-x-2">
           <button 
             onClick={prevCard}
