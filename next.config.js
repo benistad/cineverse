@@ -13,6 +13,21 @@ const nextConfig = {
   },
   // Ajouter des règles de transpilation pour les modules qui utilisent ESM
   transpilePackages: ['react-youtube'],
+  // Configuration des en-têtes HTTP pour améliorer la mise en cache
+  async headers() {
+    return [
+      {
+        // Appliquer ces en-têtes à tous les fichiers statiques
+        source: '/:path*.(jpg|jpeg|png|webp|svg|gif|ico|css|js)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -58,6 +58,7 @@ export default function SmartImage({
       className={imageClasses}
       sizes={sizes}
       priority={priority}
+      loading={priority ? "eager" : "lazy"}
       unoptimized={unoptimized}
       style={imageStyle}
       onLoad={handleImageLoad}

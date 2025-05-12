@@ -43,6 +43,7 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
       sizes={sizes}
       className={className}
       priority={priority}
+      loading={priority ? "eager" : "lazy"}
       onError={() => setError(true)}
       {...props}
     />
