@@ -48,6 +48,8 @@ export default function MovieSearchResults({ movies, isLoading }) {
                 src={movie.poster_path ? getImageUrl(movie.poster_path) : null}
                 alt={movie.title || 'Poster du film'}
                 fill
+                width={300}
+                height={450}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
               />

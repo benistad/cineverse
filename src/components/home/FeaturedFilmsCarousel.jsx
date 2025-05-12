@@ -90,6 +90,8 @@ export default function FeaturedFilmsCarousel() {
                       : optimizePosterImage(film.poster_url)}
                     alt={film.title}
                     fill
+                    width={1280}
+                    height={720}
                     className="object-cover" 
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
                     priority={index === 0}

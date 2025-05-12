@@ -126,6 +126,8 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
               src={person.photo_url}
               alt={person.nom || 'Photo du staff'}
               fill
+              width={128}
+              height={128}
               sizes="128px"
               className="object-cover"
             />

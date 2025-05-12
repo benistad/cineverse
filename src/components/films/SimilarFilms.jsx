@@ -131,6 +131,8 @@ export default function SimilarFilms({ currentFilm }) {
                 src={optimizePosterImage(film.poster_url)}
                 alt={film.title}
                 fill
+                width={300}
+                height={450}
                 className="object-cover"
                 sizes="(max-width: 768px) 50vw, 25vw"
               />

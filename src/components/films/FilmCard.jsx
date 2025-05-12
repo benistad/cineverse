@@ -64,6 +64,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
             src={optimizePosterImage(film.poster_url)}
             alt={film.title || 'Poster du film'}
             fill
+            width={300}
+            height={450}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover"
             priority={!!priority}
