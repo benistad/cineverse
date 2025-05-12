@@ -10,6 +10,9 @@ import { createBrowserClient } from '@supabase/ssr';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 import StreamingProviders from '@/components/films/StreamingProviders';
 import Script from 'next/script';
+import SimilarFilms from '@/components/films/SimilarFilms';
+import Head from 'next/head';
+import MovieSchema from '@/components/seo/MovieSchema';
 
 export default function FilmPage() {
   const params = useParams();
@@ -269,6 +272,14 @@ export default function FilmPage() {
         <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</h2>
         <RemarkableStaffList filmId={film.id} />
       </div>
+      
+      {/* Films similaires pour la navigation interne et le SEO */}
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mt-6">
+        <SimilarFilms currentFilm={film} />
+      </div>
+      
+      {/* Schéma structuré pour les moteurs de recherche */}
+      <MovieSchema film={film} />
     </div>
   );
 }
