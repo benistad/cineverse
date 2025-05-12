@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
@@ -28,6 +29,21 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   
+  // Utiliser un état pour stocker la largeur de la fenêtre
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  
+  // Mettre à jour la largeur de la fenêtre lors du redimensionnement
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   // Vérifier si le film existe
   if (!film) {
     return (
@@ -55,7 +71,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           
           {showRating && film.note_sur_10 !== undefined && (
             <div className="absolute top-2 right-2">
-              <RatingIcon rating={film.note_sur_10} size={window.innerWidth < 640 ? 32 : 40} />
+              <RatingIcon rating={film.note_sur_10} size={windowWidth < 640 ? 32 : 40} />
             </div>
           )}
           
@@ -70,10 +86,10 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
           <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
             {extractYear(film.release_date) || extractYear(film.date_ajout)}
-            {film.genres && <span> • {truncateText(film.genres, window.innerWidth < 640 ? 15 : 30)}</span>}
+            {film.genres && <span> • {truncateText(film.genres, windowWidth < 640 ? 15 : 30)}</span>}
           </p>
           <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
-            {truncateText(film.synopsis || 'Aucun synopsis disponible.', window.innerWidth < 640 ? 60 : 100)}
+            {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 60 : 100)}
           </p>
         </div>
       </Link>
