@@ -11,6 +11,7 @@ import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
+import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 export default function FilmPageBySlug() {
   const params = useParams();
@@ -164,7 +165,7 @@ export default function FilmPageBySlug() {
           <div className="md:w-1/3 lg:w-1/4">
             <div className="relative h-[400px] md:h-full">
               <SafeImage
-                src={film.poster_url}
+                src={optimizePosterImage(film.poster_url)}
                 alt={`Affiche du film ${film.title}`}
                 fill
                 className="object-contain object-top"

@@ -5,6 +5,7 @@ import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiEdit } from 'react-icons/fi';
+import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -44,7 +45,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
         <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
           <SafeImage
-            src={film.poster_url}
+            src={optimizePosterImage(film.poster_url)}
             alt={film.title || 'Poster du film'}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

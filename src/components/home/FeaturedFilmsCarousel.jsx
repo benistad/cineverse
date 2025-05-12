@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import { getFeaturedFilms } from '@/lib/supabase/films';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
+import { optimizeBackdropImage, optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 // Importer les styles CSS de Slick
 import 'slick-carousel/slick/slick.css';
@@ -86,13 +87,14 @@ export default function FeaturedFilmsCarousel() {
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
-                    src={film.backdrop_url || film.poster_url}
+                    src={film.backdrop_url 
+                      ? optimizeBackdropImage(film.backdrop_url)
+                      : optimizePosterImage(film.poster_url)}
                     alt={film.title}
                     fill
                     className="object-cover" 
-                    sizes="100vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
                     priority
-                    unoptimized={true}
                   />
                 </div>
                 

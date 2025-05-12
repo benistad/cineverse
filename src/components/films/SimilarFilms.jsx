@@ -5,6 +5,7 @@ import { createBrowserClient } from '@supabase/ssr';
 import Link from 'next/link';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
+import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
@@ -127,7 +128,7 @@ export default function SimilarFilms({ currentFilm }) {
           >
             <div className="relative aspect-[2/3] w-full">
               <SafeImage
-                src={film.poster_url}
+                src={optimizePosterImage(film.poster_url)}
                 alt={film.title}
                 fill
                 className="object-cover"

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getStreamingProviders, WATCH_TYPES } from '@/lib/tmdb/streaming';
+import { optimizeLogoImage } from '@/lib/utils/imageOptimizer';
 
 // Fonction utilitaire pour obtenir le texte du type de disponibilité
 function getWatchTypeText(type) {
@@ -31,12 +32,11 @@ function ProviderItem({ provider }) {
     >
       <div className="relative w-10 h-10 rounded-lg overflow-hidden mx-auto">
         <Image
-          src={`/api/image-proxy?url=${encodeURIComponent(`https://image.tmdb.org/t/p/original${provider.logo_path}`)}`}
+          src={`/api/image-proxy?url=${encodeURIComponent(optimizeLogoImage(`https://image.tmdb.org/t/p/original${provider.logo_path}`))}`}
           alt={provider.provider_name}
           fill
-          className="object-cover"
+          className="object-contain"
           sizes="40px"
-          unoptimized
         />
       </div>
       <span className="text-[10px] mt-1 text-center break-words line-clamp-2 h-8 overflow-hidden">{provider.provider_name}</span>
