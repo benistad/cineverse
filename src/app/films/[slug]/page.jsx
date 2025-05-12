@@ -257,8 +257,27 @@ export default function FilmPageBySlug() {
             {(film.youtube_trailer_key || trailerKey) && (
               <div className="mb-4 sm:mb-6">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
-                <div className="aspect-w-16 aspect-h-9">
-                  <YouTube videoId={film.youtube_trailer_key || trailerKey} className="w-full" />
+                <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
+                  <YouTube 
+                    videoId={film.youtube_trailer_key || trailerKey} 
+                    className="absolute top-0 left-0 w-full h-full" 
+                    opts={{
+                      width: '100%',
+                      height: '100%',
+                      playerVars: {
+                        // https://developers.google.com/youtube/player_parameters
+                        autoplay: 0,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        playsinline: 1, // Important pour iOS
+                      },
+                    }}
+                    onReady={(event) => {
+                      // Événement déclenché lorsque le lecteur est prêt
+                      // Vous pouvez ajouter des actions personnalisées ici si nécessaire
+                    }}
+                  />
                 </div>
               </div>
             )}
