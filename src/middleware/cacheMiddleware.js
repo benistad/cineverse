@@ -48,40 +48,52 @@ function getCacheConfig(pathname) {
 
 // Middleware principal de cache
 export async function cacheMiddleware(request) {
-  // Ne pas mettre en cache les requêtes non GET
-  if (request.method !== 'GET') {
+  try {
+    // Ne pas mettre en cache les requêtes non GET
+    if (request.method !== 'GET') {
+      return NextResponse.next();
+    }
+    
+    const url = new URL(request.url);
+    
+    // Ne pas mettre en cache les routes d'administration
+    if (url.pathname.startsWith('/admin')) {
+      return NextResponse.next();
+    }
+    
+    // Ne pas interférer avec les routes dynamiques de navigation
+    if (url.pathname.startsWith('/films/') && !url.pathname.endsWith('.json') && !url.pathname.endsWith('.js') && !url.pathname.endsWith('.css')) {
+      // Pour les pages de détail des films, laisser Next.js gérer la navigation sans interférence
+      return NextResponse.next();
+    }
+    
+    // Vérifier si la requête est pour un fichier statique déjà mis en cache par défaut
+    if (isCacheableByDefault(request)) {
+      // Laisser le CDN gérer le cache pour les fichiers statiques
+      return NextResponse.next();
+    }
+    
+    // Déterminer si la route est cacheable et sa durée de validité
+    const { cacheable, maxAge } = getCacheConfig(url.pathname);
+    
+    if (!cacheable) {
+      return NextResponse.next();
+    }
+    
+    // Créer une réponse avec les en-têtes de cache appropriés
+    const response = NextResponse.next();
+    
+    // Ajouter les en-têtes de cache
+    response.headers.set('Cache-Control', `public, max-age=${maxAge}, s-maxage=${maxAge * 2}, stale-while-revalidate=${maxAge * 10}`);
+    response.headers.set('Vary', 'Accept-Encoding, Accept, X-User-Agent');
+    
+    // Ajouter un en-tête personnalisé pour le débogage
+    response.headers.set('X-Cache-Status', 'MISS');
+    
+    return response;
+  } catch (error) {
+    console.error('Erreur dans le middleware de cache:', error);
+    // En cas d'erreur, continuer sans bloquer la navigation
     return NextResponse.next();
   }
-  
-  const url = new URL(request.url);
-  
-  // Ne pas mettre en cache les routes d'administration
-  if (url.pathname.startsWith('/admin')) {
-    return NextResponse.next();
-  }
-  
-  // Vérifier si la requête est pour un fichier statique déjà mis en cache par défaut
-  if (isCacheableByDefault(request)) {
-    // Laisser le CDN gérer le cache pour les fichiers statiques
-    return NextResponse.next();
-  }
-  
-  // Déterminer si la route est cacheable et sa durée de validité
-  const { cacheable, maxAge } = getCacheConfig(url.pathname);
-  
-  if (!cacheable) {
-    return NextResponse.next();
-  }
-  
-  // Créer une réponse avec les en-têtes de cache appropriés
-  const response = NextResponse.next();
-  
-  // Ajouter les en-têtes de cache
-  response.headers.set('Cache-Control', `public, max-age=${maxAge}, s-maxage=${maxAge * 2}, stale-while-revalidate=${maxAge * 10}`);
-  response.headers.set('Vary', 'Accept-Encoding, Accept, X-User-Agent');
-  
-  // Ajouter un en-tête personnalisé pour le débogage
-  response.headers.set('X-Cache-Status', 'MISS');
-  
-  return response;
 }

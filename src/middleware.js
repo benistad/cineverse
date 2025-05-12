@@ -7,11 +7,16 @@ export async function middleware(request) {
   
   // Appliquer le middleware de cache pour les routes non-admin
   if (!url.pathname.startsWith('/admin')) {
-    const cacheResponse = await cacheMiddleware(request);
-    
-    // Si le middleware de cache a modifié la réponse, retourner cette réponse
-    if (cacheResponse.headers.has('X-Cache-Status')) {
-      return cacheResponse;
+    try {
+      const cacheResponse = await cacheMiddleware(request);
+      
+      // Si le middleware de cache a modifié la réponse, retourner cette réponse
+      if (cacheResponse && cacheResponse.headers && cacheResponse.headers.has('X-Cache-Status')) {
+        return cacheResponse;
+      }
+    } catch (error) {
+      console.error('Erreur dans le middleware de cache:', error);
+      // En cas d'erreur, continuer sans bloquer la navigation
     }
   }
   
@@ -75,13 +80,18 @@ export const config = {
   matcher: [
     // Routes d'administration
     '/admin/:path*',
-    // Routes publiques
+    // Routes publiques principales (pas les routes dynamiques de films)
     '/',
-    '/films/:path*',
+    '/films',
     '/genres/:path*',
     // Routes d'API
     '/api/:path*',
-    // Exclure les fichiers statiques gérés par Next.js
-    '/((?!_next/static|_next/image|favicon.ico).*)'
+    // Fichiers statiques et autres routes à mettre en cache
+    '/:path*.jpg',
+    '/:path*.jpeg',
+    '/:path*.png',
+    '/:path*.webp',
+    '/:path*.css',
+    '/:path*.js'
   ],
 };
