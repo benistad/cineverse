@@ -5,7 +5,7 @@ import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiEdit, FiShare2, FiInstagram } from 'react-icons/fi';
+import { FiEdit, FiShare2, FiInstagram, FiX } from 'react-icons/fi';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 // Fonction utilitaire pour tronquer le texte
@@ -42,7 +42,7 @@ ${genres ? `🎬 Genre: ${genres}` : ''}
 };
 
 // Fonction pour partager sur Instagram
-const shareToInstagram = async (film) => {
+const shareToInstagram = async (film, setShareModalOpen, setShareData) => {
   try {
     // Préparer le texte de la légende
     const caption = prepareInstagramCaption(film);
@@ -50,19 +50,37 @@ const shareToInstagram = async (film) => {
     // Vérifier si nous sommes sur mobile
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
+    // Optimiser l'URL de l'image pour s'assurer qu'elle est accessible
+    const imageUrl = film.poster_url.startsWith('http') 
+      ? film.poster_url 
+      : `https://www.moviehunt.fr${film.poster_url}`;
+    
     if (isMobile) {
-      // Sur mobile, essayer d'ouvrir Instagram directement
-      const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(film.poster_url)}`;
-      window.open(instagramUrl, '_blank');
-      
-      // Copier le texte dans le presse-papiers pour que l'utilisateur puisse le coller
-      await navigator.clipboard.writeText(caption);
-      alert('Texte copié dans le presse-papiers. Collez-le dans votre publication Instagram.');
+      try {
+        // Essayer d'ouvrir Instagram directement avec l'image
+        // Note: Ceci fonctionne mieux sur iOS que sur Android
+        const instagramUrl = `instagram://library`;
+        window.open(instagramUrl, '_blank');
+        
+        // Copier le texte dans le presse-papiers pour que l'utilisateur puisse le coller
+        await navigator.clipboard.writeText(caption);
+        
+        // Afficher un message plus convivial
+        setShareData({
+          imageUrl,
+          caption,
+          filmTitle: film.title
+        });
+        setShareModalOpen(true);
+      } catch (err) {
+        // Fallback si l'ouverture d'Instagram échoue
+        alert(`Texte copié dans le presse-papiers. Veuillez ouvrir Instagram manuellement et créer un nouveau post avec l'image du film.`);
+      }
     } else {
-      // Sur desktop, proposer de télécharger l'image et copier le texte
-      // Créer un élément temporaire pour télécharger l'image
+      // Sur desktop, proposer une expérience plus guidée
+      // Télécharger l'image
       const link = document.createElement('a');
-      link.href = film.poster_url;
+      link.href = imageUrl;
       link.download = `${film.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_moviehunt.jpg`;
       document.body.appendChild(link);
       link.click();
@@ -70,7 +88,14 @@ const shareToInstagram = async (film) => {
       
       // Copier le texte dans le presse-papiers
       await navigator.clipboard.writeText(caption);
-      alert('Image téléchargée et texte copié dans le presse-papiers. Vous pouvez maintenant les partager sur Instagram.');
+      
+      // Afficher des instructions plus détaillées
+      setShareData({
+        imageUrl,
+        caption,
+        filmTitle: film.title
+      });
+      setShareModalOpen(true);
     }
   } catch (error) {
     console.error('Erreur lors du partage sur Instagram:', error);
@@ -78,9 +103,69 @@ const shareToInstagram = async (film) => {
   }
 };
 
+// Composant pour le modal de partage Instagram
+const InstagramShareModal = ({ isOpen, onClose, data }) => {
+  if (!isOpen || !data) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        >
+          <FiX size={24} />
+        </button>
+        
+        <h3 className="text-xl font-bold mb-4">Partager "{data.filmTitle}" sur Instagram</h3>
+        
+        <div className="mb-4 border rounded-lg overflow-hidden">
+          <img 
+            src={data.imageUrl} 
+            alt={data.filmTitle} 
+            className="w-full h-auto"
+          />
+        </div>
+        
+        <div className="mb-4">
+          <p className="text-sm text-gray-600 mb-2">Légende (copiée dans le presse-papiers) :</p>
+          <div className="bg-gray-100 p-3 rounded-md text-sm font-mono overflow-auto max-h-32">
+            {data.caption.split('\n').map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          <h4 className="font-medium">Instructions :</h4>
+          <ol className="list-decimal pl-5 space-y-2 text-sm">
+            <li>L'image a été téléchargée sur votre appareil</li>
+            <li>La légende a été copiée dans votre presse-papiers</li>
+            <li>Ouvrez Instagram et créez un nouveau post</li>
+            <li>Sélectionnez l'image téléchargée</li>
+            <li>Collez la légende (Ctrl+V ou Cmd+V)</li>
+            <li>Publiez votre post !</li>
+          </ol>
+        </div>
+        
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={onClose}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            J'ai compris
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
-  // État pour contrôler l'affichage du menu de partage
+  // États pour contrôler l'affichage du menu et du modal de partage
   const [showShareMenu, setShowShareMenu] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareData, setShareData] = useState(null);
   
   // Référence pour le menu de partage
   const shareMenuRef = useRef(null);
@@ -133,8 +218,16 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
-      {/* Lien vers la page publique ou admin selon le contexte */}
+    <>
+      {/* Modal de partage Instagram */}
+      <InstagramShareModal 
+        isOpen={showShareModal} 
+        onClose={() => setShowShareModal(false)} 
+        data={shareData} 
+      />
+      
+      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
+        {/* Lien vers la page publique ou admin selon le contexte */}
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
         <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
           <SafeImage
@@ -179,7 +272,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          shareToInstagram(film);
+                          shareToInstagram(film, setShowShareModal, setShareData);
+                          setShowShareMenu(false);
                         }}
                       >
                         <FiInstagram className="text-pink-600" />
@@ -204,6 +298,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           </p>
         </div>
       </Link>
-    </div>
+      </div>
+    </>
   );
 }
