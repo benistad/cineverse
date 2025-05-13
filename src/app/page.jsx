@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { 
-  getRecentlyRatedFilms, 
-  getTopRatedFilms, 
-  getPaginatedFilms, 
+  getPaginatedFilms
+} from '@/lib/supabase/films';
+import {
+  getRecentlyRatedFilms,
+  getTopRatedFilms,
   getHiddenGems,
   getTopRatedFilmsCount,
   getHiddenGemsCount
-} from '@/lib/supabase/films';
-import BasicFilmCarousel from '@/components/films/BasicFilmCarousel';
+} from '@/lib/supabase/optimizedFilms';
+import OptimizedFilmCarousel from '@/components/films/OptimizedFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
@@ -57,28 +59,35 @@ export default function Home() {
       try {
         setLoading(true);
         
-        // Récupérer les films récemment notés
-        const recent = await getRecentlyRatedFilms(8);
+        // Charger toutes les données en parallèle pour améliorer les performances
+        const [
+          recent,
+          topRated,
+          topRatedCount,
+          gems,
+          hiddenGemsCount,
+          paginatedResult
+        ] = await Promise.all([
+          getRecentlyRatedFilms(8),
+          getTopRatedFilms(10),
+          getTopRatedFilmsCount(),
+          getHiddenGems(8),
+          getHiddenGemsCount(),
+          getPaginatedFilms(1, filmsPerPage)
+        ]);
+        
+        // Mettre à jour l'état avec les résultats
         setRecentFilms(recent);
-        
-        // Récupérer les films les mieux notés (Top 10)
-        const topRated = await getTopRatedFilms(10);
         setTopRatedFilms(topRated);
-        
-        // Récupérer le nombre total de films les mieux notés
-        const topRatedCount = await getTopRatedFilmsCount();
         setTopRatedFilmsCount(topRatedCount);
-        
-        // Récupérer les films méconnus à voir
-        const gems = await getHiddenGems(8);
         setHiddenGems(gems);
-        
-        // Récupérer le nombre total de films méconnus à voir
-        const hiddenGemsCount = await getHiddenGemsCount();
         setHiddenGemsCount(hiddenGemsCount);
         
-        // Récupérer tous les films (première page)
-        await loadPaginatedFilms(1);
+        // Mettre à jour les films paginés
+        if (paginatedResult) {
+          setAllFilms(paginatedResult.films || []);
+          setTotalFilmsCount(paginatedResult.totalCount || 0);
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération des films:', error);
       } finally {
@@ -87,7 +96,7 @@ export default function Home() {
     }
 
     fetchFilms();
-  }, []);
+  }, [filmsPerPage]);
   
   // Calculer le nombre total de pages
   const totalPages = Math.ceil(totalFilmsCount / filmsPerPage);
@@ -137,7 +146,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <BasicFilmCarousel 
+          <OptimizedFilmCarousel 
             films={recentFilms} 
             title="Films récemment notés" 
             visibleCount={4}
@@ -153,7 +162,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <BasicFilmCarousel 
+          <OptimizedFilmCarousel 
             films={topRatedFilms} 
             title="Films les mieux notés" 
             visibleCount={4} 
@@ -171,7 +180,7 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : hiddenGems.length > 0 ? (
-          <BasicFilmCarousel 
+          <OptimizedFilmCarousel 
             films={hiddenGems} 
             title="Films méconnus à voir" 
             visibleCount={4} 
