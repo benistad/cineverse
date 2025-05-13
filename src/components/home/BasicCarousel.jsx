@@ -18,18 +18,38 @@ export default function BasicCarousel() {
       try {
         console.log('Chargement des films pour le carrousel basique...');
         setLoading(true);
+        setError(null); // Réinitialiser les erreurs précédentes
+        
+        // Ajouter un timestamp pour éviter la mise en cache du navigateur
+        const timestamp = new Date().getTime();
+        console.log(`Timestamp: ${timestamp}`);
+        
         const topFilms = await getFeaturedFilms(5, 6);
         console.log('Films chargés pour le carrousel basique:', topFilms);
-        setFilms(topFilms);
+        
+        if (topFilms && topFilms.length > 0) {
+          setFilms(topFilms);
+        } else {
+          console.warn('Aucun film n\'a été récupéré pour le carrousel');
+          setFilms([]);
+        }
       } catch (err) {
         console.error('Erreur lors du chargement des films:', err);
-        setError(err.message);
+        setError(err.message || 'Erreur lors du chargement des films');
+        setFilms([]);
       } finally {
         setLoading(false);
       }
     }
 
     loadFilms();
+    
+    // Recharger les films toutes les 30 secondes
+    const interval = setInterval(() => {
+      loadFilms();
+    }, 30000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   // Gérer le défilement automatique

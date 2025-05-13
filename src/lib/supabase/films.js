@@ -635,34 +635,31 @@ export async function getFeaturedFilms(limit = 5, minRating = 6) {
     
     const supabase = getSupabaseClient();
     
-    // Désactiver la mise en cache pour s'assurer d'avoir les données les plus récentes
+    // Requête simple sans options de cache qui ne sont pas supportées
     const { data, error } = await supabase
       .from('films')
       .select('*')
       .gte('note_sur_10', minRating)
       .order('date_ajout', { ascending: false })
-      .limit(limit)
-      .options({
-        cache: 'no-store',
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
-        }
-      });
+      .limit(limit);
 
     if (error) {
       console.error('Erreur lors de la récupération des films en vedette:', error);
       throw error;
     }
     
-    console.log(`${data.length} films en vedette récupérés`);
+    console.log(`${data ? data.length : 0} films en vedette récupérés`);
     
     // Vérifier si les films ont des images de carrousel
-    data.forEach(film => {
-      console.log(`Film: ${film.title}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
-    });
+    if (data && data.length > 0) {
+      data.forEach(film => {
+        console.log(`Film: ${film.title}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
+      });
+    } else {
+      console.log('Aucun film récupéré');
+    }
     
-    return data;
+    return data || [];
   } catch (error) {
     console.error('Erreur lors de la récupération des films bien notés:', error);
     return [];
