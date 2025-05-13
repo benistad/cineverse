@@ -5,8 +5,9 @@ import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiEdit, FiShare2, FiInstagram, FiX } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
+import InstagramShareButton from './InstagramShareButton';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -162,25 +163,11 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
 };
 
 export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
-  const [showShareMenu, setShowShareMenu] = useState(false);
-  const [showShareModal, setShowShareModal] = useState(false);
-  const [shareData, setShareData] = useState(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
-  const shareMenuRef = useRef(null);
   const pathname = usePathname();
   const isAdmin = pathname?.includes('/admin');
   
-  // Fermer le menu de partage lorsqu'on clique en dehors
-  const handleClickOutside = (event) => {
-    if (shareMenuRef.current && !shareMenuRef.current.contains(event.target)) {
-      setShowShareMenu(false);
-    }
-  };
-  
   useEffect(() => {
-    // Ajouter l'écouteur d'événements pour les clics en dehors du menu
-    document.addEventListener('mousedown', handleClickOutside);
-    
     // Ajouter l'écouteur pour le redimensionnement de la fenêtre
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -190,7 +177,6 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
     
     // Nettoyer les écouteurs d'événements
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -207,89 +193,52 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   }
 
   return (
-    <>
-      {/* Modal de partage Instagram */}
-      <InstagramShareModal 
-        isOpen={showShareModal} 
-        onClose={() => setShowShareModal(false)} 
-        data={shareData} 
-      />
-      
-      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
-        {/* Boutons d'action (en dehors du lien principal) */}
-        {isAdmin && showAdminControls && (
-          <>
-            <Link href={`/admin/edit-rated/${film.id}`} className="absolute top-2 left-2 z-10 bg-blue-600 text-white rounded-full p-2 flex items-center justify-center hover:bg-blue-700">
-              <FiEdit />
-            </Link>
-            
-            {/* Bouton de partage (uniquement pour les films notés) */}
-            {film.note_sur_10 && (
-              <div className="absolute top-2 left-12 z-10 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-2 flex items-center justify-center cursor-pointer"
-                   onClick={(e) => {
-                     e.preventDefault();
-                     e.stopPropagation();
-                     setShowShareMenu(!showShareMenu);
-                   }}
-                   ref={shareMenuRef}>
-                <FiShare2 />
-                
-                {/* Menu de partage */}
-                {showShareMenu && (
-                  <div className="absolute left-0 top-10 bg-white shadow-lg rounded-md p-2 z-20 w-48 border border-gray-200">
-                    <button 
-                      className="flex items-center space-x-2 text-gray-800 hover:bg-gray-100 w-full p-2 rounded-md text-left"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        shareToInstagram(film, setShowShareModal, setShareData);
-                        setShowShareMenu(false);
-                      }}
-                    >
-                      <FiInstagram className="text-pink-600" />
-                      <span>Partager sur Instagram</span>
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </>
-        )}
-        
-        {/* Affichage de la note */}
-        {showRating && film.note_sur_10 !== undefined && (
-          <div className="absolute top-2 right-2 z-10">
-            <RatingIcon rating={film.note_sur_10} size={windowWidth < 640 ? 32 : 40} />
-          </div>
-        )}
-        
-        {/* Lien vers la page publique ou admin selon le contexte */}
-        <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
-          <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
-            <SafeImage
-              src={optimizePosterImage(film.poster_url)}
-              alt={film.title || 'Poster du film'}
-              fill
-              width={300}
-              height={450}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover"
-              priority={!!priority}
-            />
-          </div>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
+      {/* Boutons d'action (en dehors du lien principal) */}
+      {isAdmin && showAdminControls && (
+        <>
+          <Link href={`/admin/edit-rated/${film.id}`} className="absolute top-2 left-2 z-10 bg-blue-600 text-white rounded-full p-2 flex items-center justify-center hover:bg-blue-700">
+            <FiEdit />
+          </Link>
           
-          <div className="p-3 sm:p-4 flex-grow">
-            <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
-            <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
-              {extractYear(film.release_date) || extractYear(film.date_ajout)}
-              {film.genres && <span> • <span className="line-clamp-1">{film.genres}</span></span>}
-            </p>
-            <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
-              {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 60 : 100)}
-            </p>
-          </div>
-        </Link>
-      </div>
-    </>
+          {/* Bouton de partage Instagram indépendant */}
+          {film.note_sur_10 && <InstagramShareButton film={film} />}
+        </>
+      )}
+        
+      {/* Affichage de la note */}
+      {showRating && film.note_sur_10 !== undefined && (
+        <div className="absolute top-2 right-2 z-10">
+          <RatingIcon rating={film.note_sur_10} size={windowWidth < 640 ? 32 : 40} />
+        </div>
+      )}
+      
+      {/* Lien vers la page publique ou admin selon le contexte */}
+      <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
+        <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
+          <SafeImage
+            src={optimizePosterImage(film.poster_url)}
+            alt={film.title || 'Poster du film'}
+            fill
+            width={300}
+            height={450}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+            priority={!!priority}
+          />
+        </div>
+        
+        <div className="p-3 sm:p-4 flex-grow">
+          <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
+          <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
+            {extractYear(film.release_date) || extractYear(film.date_ajout)}
+            {film.genres && <span> • <span className="line-clamp-1">{film.genres}</span></span>}
+          </p>
+          <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
+            {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 60 : 100)}
+          </p>
+        </div>
+      </Link>
+    </div>
   );
 }
