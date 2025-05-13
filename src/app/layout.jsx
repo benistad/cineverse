@@ -9,8 +9,18 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Script from "next/script";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// Importation avec gestion d'erreur pour éviter les erreurs console
 import dynamic from 'next/dynamic';
+
+// Chargement conditionnel de SpeedInsights pour éviter les erreurs console
+const SpeedInsights = dynamic(
+  () => import('@vercel/speed-insights/next').then(mod => mod.SpeedInsights).catch(() => {
+    // Retourner un composant vide en cas d'erreur
+    return () => null;
+  }),
+  { ssr: false }
+);
+// dynamic est déjà importé plus haut
 import JsonLdSchema from './components/JsonLdSchema';
 
 // Composants d'optimisation essentiels pour améliorer le Speed Index
