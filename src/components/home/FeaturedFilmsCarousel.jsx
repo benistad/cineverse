@@ -81,7 +81,7 @@ export default function FeaturedFilmsCarousel() {
         {films.map((film, index) => (
           <div key={film.id} className="carousel-item">
             <Link href={`/films/${film.slug || film.id}`}>
-              <div className="relative h-[250px] sm:h-[300px] md:h-[430px] rounded-lg overflow-hidden cursor-pointer group">
+              <div className="relative h-[250px] sm:h-[300px] md:h-[475px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
