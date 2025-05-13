@@ -9,6 +9,7 @@ import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/f
 import { useAuth } from '@/contexts/AuthContext';
 import RatingIcon from '@/components/ui/RatingIcon';
 import SimpleRichTextEditor from '@/components/ui/SimpleRichTextEditor';
+import SafeImage from '@/components/ui/SafeImage';
 
 export default function FilmEditor({ movieDetails }) {
   const router = useRouter();
