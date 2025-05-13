@@ -14,7 +14,7 @@ const prepareInstagramCaption = (film) => {
   const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + (film.synopsis.length > 150 ? '...' : '') : '';
   
   return `🎥 ${film.title} ${year ? `(${year})` : ''}
-⭐ Note: ${film.note_sur_10}/10
+🔵 Note: ${film.note_sur_10}/10
 ${genres ? `🎬 Genre: ${genres}` : ''}
 🔍 ${synopsis}
 
