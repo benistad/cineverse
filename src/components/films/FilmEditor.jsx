@@ -125,56 +125,9 @@ export default function FilmEditor({ movieDetails }) {
         } catch (error) {
           console.error('Erreur lors du chargement du film existant:', error);
         }
-      })();
-    }
-  }, [movieDetails]);
-                
-
-            
-            // Précharger les MovieHunt's Picks
-            if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
-              const preselectedRoles = {};
-              
-              existingFilm.remarkable_staff.forEach(staffMember => {
-                // Trouver la personne correspondante dans les crédits du film
-                let matchingPerson = null;
-                
-                // Chercher dans le casting
-                if (movieDetails.credits?.cast) {
-                  matchingPerson = movieDetails.credits.cast.find(p => 
-                    p.name === staffMember.nom && 
-                    (staffMember.role.includes('Acteur') || staffMember.role.includes('acteur'))
-                  );
-                }
-                
-                // Si non trouvé dans le casting, chercher dans l'équipe technique
-                if (!matchingPerson && movieDetails.credits?.crew) {
-                  matchingPerson = movieDetails.credits.crew.find(p => 
-                    p.name === staffMember.nom && 
-                    (staffMember.role === p.job || staffMember.role.includes(p.job))
-                  );
-                }
-                
-                if (matchingPerson) {
-                  if (!preselectedRoles[matchingPerson.id]) {
-                    preselectedRoles[matchingPerson.id] = [];
-                  }
-                  
-                  preselectedRoles[matchingPerson.id].push({
-                    role: staffMember.role,
-                    name: staffMember.nom,
-                    profile_path: matchingPerson.profile_path
-                  });
-                }
-              });
-              
-              setSelectedRoles(preselectedRoles);
-            }
-          }
-        } catch (error) {
-          console.error('Erreur lors du chargement du film existant:', error);
-        }
-      })();
+      };
+      
+      loadExistingFilm();
     }
   }, [movieDetails]);
 
