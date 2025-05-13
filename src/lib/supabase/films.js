@@ -266,15 +266,24 @@ export async function getFilmByTmdbId(tmdbId) {
  */
 export async function saveFilm(film) {
   try {
+    console.log('Début de saveFilm avec les données:', { ...film, synopsis: film.synopsis?.substring(0, 50) + '...' });
+    
     const supabase = getSupabaseClient();
     // Vérifier si le film existe déjà (par tmdb_id)
+    console.log('Recherche d\'un film existant avec tmdb_id:', film.tmdb_id);
+    
     const { data: existingFilm, error: checkError } = await supabase
       .from('films')
       .select('id')
       .eq('tmdb_id', film.tmdb_id)
       .maybeSingle();
 
-    if (checkError) throw checkError;
+    if (checkError) {
+      console.error('Erreur lors de la vérification du film existant:', checkError);
+      throw checkError;
+    }
+    
+    console.log('Film existant trouvé:', existingFilm);
 
     // Générer un slug à partir du titre si non fourni
     const filmToSave = {
@@ -282,10 +291,25 @@ export async function saveFilm(film) {
       slug: film.slug || createSlug(film.title),
       date_ajout: film.date_ajout || new Date().toISOString(),
     };
+    
+    // Vérifier les propriétés potentiellement problématiques
+    if (filmToSave.carousel_image_url && typeof filmToSave.carousel_image_url !== 'string') {
+      console.warn('carousel_image_url n\'est pas une chaîne de caractères:', filmToSave.carousel_image_url);
+      filmToSave.carousel_image_url = String(filmToSave.carousel_image_url);
+    }
+    
+    console.log('Données du film prêtes à sauvegarder:', {
+      ...filmToSave,
+      synopsis: filmToSave.synopsis?.substring(0, 50) + '...',
+      poster_url: filmToSave.poster_url?.substring(0, 50) + '...',
+      backdrop_url: filmToSave.backdrop_url?.substring(0, 50) + '...',
+      carousel_image_url: filmToSave.carousel_image_url?.substring(0, 50) + '...',
+    });
 
     let result;
 
     if (existingFilm) {
+      console.log('Mise à jour du film existant avec ID:', existingFilm.id);
       // Mettre à jour le film existant
       const { data, error } = await supabase
         .from('films')
@@ -294,9 +318,14 @@ export async function saveFilm(film) {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erreur lors de la mise à jour du film:', error);
+        throw error;
+      }
+      console.log('Film mis à jour avec succès');
       result = data;
     } else {
+      console.log('Insertion d\'un nouveau film');
       // Insérer un nouveau film
       const { data, error } = await supabase
         .from('films')
@@ -304,14 +333,18 @@ export async function saveFilm(film) {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erreur lors de l\'insertion du film:', error);
+        throw error;
+      }
+      console.log('Nouveau film inséré avec succès');
       result = data;
     }
 
     return result;
   } catch (error) {
     console.error('Erreur lors de l\'enregistrement du film:', error);
-    return null;
+    throw error; // Propager l'erreur pour permettre une meilleure gestion dans le composant
   }
 }
 

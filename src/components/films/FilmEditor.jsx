@@ -341,6 +341,19 @@ export default function FilmEditor({ movieDetails }) {
       if (!movieDetails) {
         throw new Error('Détails du film non disponibles');
       }
+      
+      // Logs de débogage pour l'image du carrousel
+      console.log('Image du carrousel sélectionnée:', selectedCarouselImage);
+      
+      // Déterminer l'URL de l'image du carrousel
+      let carouselImageUrl = null;
+      if (selectedCarouselImage) {
+        carouselImageUrl = getImageUrl(selectedCarouselImage, 'original');
+        console.log('URL générée pour l\'image du carrousel:', carouselImageUrl);
+      } else if (movieDetails.backdrop_path) {
+        carouselImageUrl = getImageUrl(movieDetails.backdrop_path, 'original');
+        console.log('URL de l\'image de backdrop utilisée par défaut:', carouselImageUrl);
+      }
 
       // Préparer les données du film avec vérification des valeurs nulles
       const filmData = {
@@ -352,7 +365,7 @@ export default function FilmEditor({ movieDetails }) {
         synopsis: movieDetails.overview || '',
         poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
-        carousel_image_url: selectedCarouselImage ? getImageUrl(selectedCarouselImage, 'original') : (movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null),
+        carousel_image_url: carouselImageUrl,
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         date_ajout: new Date().toISOString(),
@@ -364,6 +377,9 @@ export default function FilmEditor({ movieDetails }) {
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
+      
+      // Log des données complètes du film avant sauvegarde
+      console.log('Données du film à sauvegarder:', filmData);
 
       // Sauvegarder le film
       const savedFilm = await saveFilm(filmData);
