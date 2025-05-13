@@ -69,7 +69,7 @@ export default function FilmEditor({ movieDetails }) {
 
   useEffect(() => {
     if (movieDetails?.id) {
-      (async () => {
+      const loadExistingFilm = async () => {
         try {
           const existingFilm = await getFilmByTmdbId(movieDetails.id);
           if (existingFilm) {
