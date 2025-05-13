@@ -226,10 +226,8 @@ export async function getFilmBySlug(slug) {
  */
 export async function getFilmByTmdbId(tmdbId) {
   try {
-    console.log(`Début de la récupération du film avec l'ID TMDB ${tmdbId}`);
     const supabase = getSupabaseClient();
-    
-    // Récupérer le film avec tous ses champs
+    // Récupérer le film
     const { data: film, error } = await supabase
       .from('films')
       .select('*')
@@ -239,28 +237,11 @@ export async function getFilmByTmdbId(tmdbId) {
     if (error) {
       // Si l'erreur est que le film n'existe pas, ce n'est pas une erreur critique
       if (error.code === 'PGRST116') {
-        console.log(`Aucun film trouvé avec l'ID TMDB ${tmdbId}`);
         return null;
       }
-      console.error(`Erreur lors de la récupération du film avec l'ID TMDB ${tmdbId}:`, error);
       throw error;
     }
-    
-    if (!film) {
-      console.log(`Aucun film trouvé avec l'ID TMDB ${tmdbId}`);
-      return null;
-    }
-    
-    console.log(`Film trouvé avec l'ID TMDB ${tmdbId}:`, {
-      id: film.id,
-      title: film.title,
-      carousel_image_url: film.carousel_image_url ? film.carousel_image_url.substring(0, 50) + '...' : 'non définie'
-    });
-
-    // Vérifier spécifiquement si l'URL du carrousel est définie
-    if (!film.carousel_image_url) {
-      console.warn(`L'URL du carrousel n'est pas définie pour le film avec l'ID TMDB ${tmdbId}`);
-    }
+    if (!film) return null;
 
     // Récupérer le staff remarquable du film
     const { data: staff, error: staffError } = await supabase
@@ -268,18 +249,12 @@ export async function getFilmByTmdbId(tmdbId) {
       .select('*')
       .eq('film_id', film.id);
 
-    if (staffError) {
-      console.error(`Erreur lors de la récupération du staff remarquable pour le film avec l'ID ${film.id}:`, staffError);
-      throw staffError;
-    }
+    if (staffError) throw staffError;
 
-    const result = {
+    return {
       ...film,
       remarkable_staff: staff || [],
     };
-    
-    console.log(`Film et staff remarquable récupérés avec succès pour l'ID TMDB ${tmdbId}`);
-    return result;
   } catch (error) {
     console.error(`Erreur lors de la récupération du film avec l'ID TMDB ${tmdbId}:`, error);
     return null;
@@ -351,40 +326,39 @@ export async function saveFilm(film) {
       console.log('Mise à jour du film existant avec ID:', existingFilm.id);
       
       try {
-        // Sauvegarder toutes les données du film en une seule opération, y compris l'URL du carrousel
-        console.log('Sauvegarde de toutes les données du film, y compris l\'URL du carrousel:', 
-          filmToSave.carousel_image_url ? filmToSave.carousel_image_url.substring(0, 50) + '...' : 'non définie');
+        // Essayer d'abord de mettre à jour sans l'URL du carrousel
+        const filmWithoutCarousel = { ...filmToSave };
+        delete filmWithoutCarousel.carousel_image_url;
         
         const { data, error } = await supabase
           .from('films')
-          .update(filmToSave)
+          .update(filmWithoutCarousel)
           .eq('id', existingFilm.id)
           .select()
           .single();
         
         if (error) {
-          console.error('Erreur lors de la mise à jour du film:', error);
+          console.error('Erreur lors de la mise à jour du film sans carousel_image_url:', error);
           throw error;
         }
         
         result = data;
-        console.log('Film mis à jour avec succès, y compris l\'URL du carrousel:', 
-          result.carousel_image_url ? result.carousel_image_url.substring(0, 50) + '...' : 'non définie');
         
-        // Vérification supplémentaire pour s'assurer que l'URL du carrousel a bien été sauvegardée
-        if (filmToSave.carousel_image_url && (!result.carousel_image_url || result.carousel_image_url !== filmToSave.carousel_image_url)) {
-          console.warn('L\'URL du carrousel ne semble pas avoir été correctement sauvegardée. Tentative de mise à jour spécifique.');
+        // Si l'URL du carrousel existe, essayer de la mettre à jour séparément
+        if (filmToSave.carousel_image_url) {
+          console.log('Mise à jour de l\'URL du carrousel séparément');
           
-          // Tentative de mise à jour spécifique de l'URL du carrousel
           const { error: carouselError } = await supabase
             .from('films')
             .update({ carousel_image_url: filmToSave.carousel_image_url })
             .eq('id', existingFilm.id);
           
           if (carouselError) {
-            console.error('Erreur lors de la mise à jour spécifique de l\'URL du carrousel:', carouselError);
+            console.error('Erreur lors de la mise à jour de l\'URL du carrousel:', carouselError);
+            // Ne pas faire échouer toute la sauvegarde si seule l'URL du carrousel échoue
+            console.warn('La sauvegarde du film a réussi, mais l\'URL du carrousel n\'a pas pu être mise à jour');
           } else {
-            console.log('URL du carrousel mise à jour avec succès via mise à jour spécifique');
+            console.log('URL du carrousel mise à jour avec succès');
           }
         }
         
@@ -397,39 +371,38 @@ export async function saveFilm(film) {
       console.log('Insertion d\'un nouveau film');
       
       try {
-        // Insérer toutes les données du film en une seule opération, y compris l'URL du carrousel
-        console.log('Sauvegarde de toutes les données du nouveau film, y compris l\'URL du carrousel:', 
-          filmToSave.carousel_image_url ? filmToSave.carousel_image_url.substring(0, 50) + '...' : 'non définie');
+        // Essayer d'abord d'insérer sans l'URL du carrousel
+        const filmWithoutCarousel = { ...filmToSave };
+        delete filmWithoutCarousel.carousel_image_url;
         
         const { data, error } = await supabase
           .from('films')
-          .insert(filmToSave)
+          .insert(filmWithoutCarousel)
           .select()
           .single();
         
         if (error) {
-          console.error('Erreur lors de l\'insertion du film:', error);
+          console.error('Erreur lors de l\'insertion du film sans carousel_image_url:', error);
           throw error;
         }
         
         result = data;
-        console.log('Nouveau film inséré avec succès, y compris l\'URL du carrousel:', 
-          result.carousel_image_url ? result.carousel_image_url.substring(0, 50) + '...' : 'non définie');
         
-        // Vérification supplémentaire pour s'assurer que l'URL du carrousel a bien été sauvegardée
-        if (filmToSave.carousel_image_url && (!result.carousel_image_url || result.carousel_image_url !== filmToSave.carousel_image_url)) {
-          console.warn('L\'URL du carrousel ne semble pas avoir été correctement sauvegardée pour le nouveau film. Tentative de mise à jour spécifique.');
+        // Si l'URL du carrousel existe, essayer de la mettre à jour séparément
+        if (filmToSave.carousel_image_url && result.id) {
+          console.log('Mise à jour de l\'URL du carrousel pour le nouveau film');
           
-          // Tentative de mise à jour spécifique de l'URL du carrousel
           const { error: carouselError } = await supabase
             .from('films')
             .update({ carousel_image_url: filmToSave.carousel_image_url })
             .eq('id', result.id);
           
           if (carouselError) {
-            console.error('Erreur lors de la mise à jour spécifique de l\'URL du carrousel pour le nouveau film:', carouselError);
+            console.error('Erreur lors de la mise à jour de l\'URL du carrousel pour le nouveau film:', carouselError);
+            // Ne pas faire échouer toute la sauvegarde si seule l'URL du carrousel échoue
+            console.warn('L\'insertion du film a réussi, mais l\'URL du carrousel n\'a pas pu être mise à jour');
           } else {
-            console.log('URL du carrousel mise à jour avec succès via mise à jour spécifique pour le nouveau film');
+            console.log('URL du carrousel mise à jour avec succès pour le nouveau film');
           }
         }
         
@@ -653,59 +626,44 @@ export async function getHiddenGems(limit = 8) {
 }
 
 /**
- * Récupère les derniers films ajoutés avec une note supérieure à un certain seuil
- * et qui ont une image de carrousel définie
- * @param {Object} options - Options de récupération
- * @param {number} options.limit - Nombre maximum de films à récupérer
- * @param {number} options.minRating - Note minimale des films à récupérer
- * @param {number} options.timestamp - Timestamp pour forcer le rechargement des données
+ * Récupère les derniers films avec une note supérieure à un seuil donné
+ * Utilisé pour le carrousel de la page d'accueil
+ * @param {number} limit - Nombre maximum de films à récupérer
+ * @param {number} minRating - Note minimale des films à récupérer
+ * @param {number} timestamp - Timestamp pour forcer le rechargement des données
  * @returns {Array} - Liste des films récupérés
  */
-export async function getFeaturedFilms({ limit = 10, minRating = 7, timestamp = Date.now() } = {}) {
+export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = null) {
   try {
-    console.log(`Récupération des films mis en avant (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp})`);
+    console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp || 'non spécifié'})...`);
     
     const supabase = getSupabaseClient();
     
-    // Récupérer les films avec une note supérieure au seuil
+    // Requête simple sans options de cache qui ne sont pas supportées
     const { data, error } = await supabase
       .from('films')
       .select('*')
       .gte('note_sur_10', minRating)
       .order('date_ajout', { ascending: false })
-      .limit(limit * 2); // Récupérer plus de films que nécessaire pour avoir assez de films avec des images de carrousel
-    
+      .limit(limit);
+
     if (error) {
-      console.error('Erreur lors de la récupération des films mis en avant:', error);
+      console.error('Erreur lors de la récupération des films en vedette:', error);
       throw error;
     }
     
-    // Filtrer les films qui ont une image de carrousel définie
-    const filmsWithCarouselImage = data?.filter(film => film.carousel_image_url) || [];
+    console.log(`${data ? data.length : 0} films en vedette récupérés`);
     
-    // Si nous n'avons pas assez de films avec des images de carrousel, inclure également des films sans image de carrousel
-    let featuredFilms = filmsWithCarouselImage;
-    if (featuredFilms.length < limit && data) {
-      console.warn(`Seulement ${featuredFilms.length} films sur ${data.length} ont une image de carrousel définie. Inclusion de films sans image de carrousel.`);
-      
-      // Ajouter des films sans image de carrousel jusqu'à atteindre la limite
-      const filmsWithoutCarouselImage = data.filter(film => !film.carousel_image_url);
-      const filmsToAdd = filmsWithoutCarouselImage.slice(0, limit - featuredFilms.length);
-      
-      featuredFilms = [...featuredFilms, ...filmsToAdd];
+    // Vérifier si les films ont des images de carrousel
+    if (data && data.length > 0) {
+      data.forEach(film => {
+        console.log(`Film: ${film.title}, ID: ${film.id}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
+      });
+    } else {
+      console.log('Aucun film récupéré');
     }
     
-    // Limiter le nombre de films retournés à la limite demandée
-    featuredFilms = featuredFilms.slice(0, limit);
-    
-    console.log(`${featuredFilms.length} films mis en avant récupérés, dont ${filmsWithCarouselImage.length} avec une image de carrousel`);
-    
-    // Afficher des informations sur les images de carrousel des films retournés
-    featuredFilms.forEach((film, index) => {
-      console.log(`Film #${index + 1}: ${film.title}, Image de carrousel: ${film.carousel_image_url ? 'OUI' : 'NON'}`);
-    });
-    
-    return featuredFilms;
+    return data || [];
   } catch (error) {
     console.error('Erreur lors de la récupération des films bien notés:', error);
     return [];

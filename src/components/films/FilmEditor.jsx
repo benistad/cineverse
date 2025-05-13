@@ -191,10 +191,37 @@ export default function FilmEditor({ movieDetails }) {
       setMultiRolePersons(multiRoles);
     }
     
+    // Fonctions pour gérer le localStorage
+    function getCarouselImageFromLocalStorage(tmdbId) {
+      if (typeof window !== 'undefined') {
+        const savedImagePath = localStorage.getItem(`carousel_image_${tmdbId}_path`);
+        if (savedImagePath) {
+          console.log('Image du carrousel récupérée depuis le localStorage:', savedImagePath);
+          return savedImagePath;
+        }
+      }
+      return null;
+    }
+
+    function saveCarouselImageToLocalStorage(tmdbId, imagePath, imageUrl) {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`carousel_image_${tmdbId}_path`, imagePath);
+        localStorage.setItem(`carousel_image_${tmdbId}_url`, imageUrl);
+        console.log('Image du carrousel sauvegardée dans le localStorage:', imagePath);
+      }
+    }
+
     // Vérifier si le film existe déjà et récupérer ses MovieHunt's Picks
     async function loadExistingFilm() {
       if (movieDetails?.id) {
         try {
+          // Vérifier d'abord si nous avons une image du carrousel dans le localStorage
+          const savedImagePath = getCarouselImageFromLocalStorage(movieDetails.id);
+          if (savedImagePath) {
+            setSelectedCarouselImage(savedImagePath);
+            console.log('Image du carrousel définie depuis le localStorage:', savedImagePath);
+          }
+          
           const existingFilm = await getFilmByTmdbId(movieDetails.id);
           
           if (existingFilm) {
@@ -402,12 +429,20 @@ export default function FilmEditor({ movieDetails }) {
           if (typeof selectedCarouselImage === 'string' && selectedCarouselImage.startsWith('/')) {
             carouselImageUrl = getImageUrl(selectedCarouselImage, 'original');
             console.log('URL générée pour l\'image du carrousel:', carouselImageUrl);
+            
+            // Sauvegarder l'image du carrousel dans le localStorage
+            saveCarouselImageToLocalStorage(movieDetails.id, selectedCarouselImage, carouselImageUrl);
+            console.log('Image du carrousel sauvegardée dans le localStorage lors de la sauvegarde');
           } else {
             console.error('Format invalide pour selectedCarouselImage:', selectedCarouselImage);
           }
         } else if (movieDetails.backdrop_path) {
           carouselImageUrl = getImageUrl(movieDetails.backdrop_path, 'original');
           console.log('URL de l\'image de backdrop utilisée par défaut:', carouselImageUrl);
+          
+          // Sauvegarder l'image de backdrop par défaut dans le localStorage
+          saveCarouselImageToLocalStorage(movieDetails.id, movieDetails.backdrop_path, carouselImageUrl);
+          console.log('Image de backdrop par défaut sauvegardée dans le localStorage');
         }
         
         // Vérifier que l'URL est une chaîne de caractères valide
