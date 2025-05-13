@@ -78,19 +78,13 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
       alt={alt || 'Image'}
       fill={fill}
       sizes={sizes}
-      className={`transition-opacity duration-300 ${className}`}
+      className={className}
       priority={priority}
       loading={priority ? 'eager' : 'lazy'}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
       onError={() => setError(true)}
-      style={{
-        objectFit: className.includes('object-contain') ? 'contain' : 
-                  className.includes('object-cover') ? 'cover' : 
-                  className.includes('object-fill') ? 'fill' : 'cover',
-        ...style
-      }}
-      quality={90}
+      style={style}
       {...props}
     />
   );

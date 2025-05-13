@@ -81,7 +81,7 @@ export default function FeaturedFilmsCarousel() {
         {films.map((film, index) => (
           <div key={film.id} className="carousel-item">
             <Link href={`/films/${film.slug || film.id}`}>
-              <div className="relative h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] rounded-lg overflow-hidden cursor-pointer group">
+              <div className="relative h-[280px] sm:h-[330px] md:h-[430px] rounded-lg overflow-hidden cursor-pointer group">
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
@@ -92,10 +92,9 @@ export default function FeaturedFilmsCarousel() {
                     fill
                     width={1280}
                     height={720}
-                    className="object-contain md:object-cover" 
+                    className="object-cover" 
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
                     priority={index === 0}
-                    style={{ objectPosition: 'center center' }}
                   />
                 </div>
                 
@@ -119,22 +118,6 @@ export default function FeaturedFilmsCarousel() {
       <style jsx global>{`
         .carousel-container {
           margin-bottom: 2rem;
-          overflow: hidden;
-          border-radius: 0.5rem;
-        }
-        .carousel-item {
-          position: relative;
-          overflow: hidden;
-        }
-        .carousel-container .slick-slide {
-          padding: 0;
-          margin: 0;
-        }
-        .carousel-container .slick-track {
-          display: flex !important;
-        }
-        .carousel-container .slick-list {
-          overflow: visible;
         }
         .carousel-container .slick-prev, 
         .carousel-container .slick-next {
@@ -176,13 +159,6 @@ export default function FeaturedFilmsCarousel() {
         }
         .text-shadow-md {
           text-shadow: 0 0 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.7);
-        }
-        /* Styles pour les images du carrousel */
-        .carousel-item img {
-          transition: transform 0.3s ease-in-out;
-        }
-        .carousel-item:hover img {
-          transform: scale(1.05);
         }
       `}</style>
     </div>
