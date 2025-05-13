@@ -1,0 +1,99 @@
+{
+  "id": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": false,
+    "sample": "16faafb6-fb2e-47c6-b68d-eff53a0894de",
+    "primaryKey": true
+  },
+  "tmdb_id": {
+    "type": "number",
+    "pgType": "integer",
+    "nullable": true,
+    "sample": 1208983
+  },
+  "title": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "Neighborhood Watch"
+  },
+  "slug": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "neighborhood-watch"
+  },
+  "synopsis": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "Lorsqu'un jeune homme souffrant de troubles mentaux pense avoir été témoin d'un enlèvement et que la police refuse de le croire, il se tourne à contrecœur vers son voisin, un agent de sécurité retraité et amer, pour l'aider à retrouver la femme disparue."
+  },
+  "poster_url": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "https://image.tmdb.org/t/p/w500/dtSYJ20Qy1yLM9KTnv2SUEfxekO.jpg"
+  },
+  "backdrop_url": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "https://image.tmdb.org/t/p/original/2OKBeiYlEBwWs8LUaZbYl7ZPJZE.jpg"
+  },
+  "note_sur_10": {
+    "type": "number",
+    "pgType": "integer",
+    "nullable": true,
+    "sample": 5
+  },
+  "youtube_trailer_key": {
+    "type": "object",
+    "pgType": "text",
+    "nullable": true,
+    "sample": null
+  },
+  "date_ajout": {
+    "type": "string",
+    "pgType": "timestamp with time zone",
+    "nullable": true,
+    "sample": "2025-05-07T20:47:25.245+00:00"
+  },
+  "created_at": {
+    "type": "string",
+    "pgType": "timestamp with time zone",
+    "nullable": true,
+    "sample": "2025-05-07T20:47:25.571245+00:00"
+  },
+  "why_watch_enabled": {
+    "type": "boolean",
+    "pgType": "boolean",
+    "nullable": true,
+    "sample": false
+  },
+  "why_watch_content": {
+    "type": "object",
+    "pgType": "text",
+    "nullable": true,
+    "sample": null
+  },
+  "release_date": {
+    "type": "string",
+    "pgType": "date",
+    "nullable": true,
+    "sample": "2025-04-25"
+  },
+  "genres": {
+    "type": "string",
+    "pgType": "varchar",
+    "nullable": true,
+    "sample": "Crime, Thriller"
+  },
+  "is_hidden_gem": {
+    "type": "boolean",
+    "pgType": "boolean",
+    "nullable": true,
+    "sample": false
+  }
+}
