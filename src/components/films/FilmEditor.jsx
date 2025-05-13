@@ -129,19 +129,7 @@ export default function FilmEditor({ movieDetails }) {
     }
   }, [movieDetails]);
                 
-                if (match && match[2]) {
-                  const imagePath = match[2]; // /path/to/image.jpg
-                  console.log('Chemin d\'image extrait:', imagePath);
-                  setSelectedCarouselImage(imagePath);
-                  
-                  
-                } else {
-                  console.error('Format d\'URL d\'image non reconnu:', existingFilm.carousel_image_url);
-                }
-              } catch (error) {
-                console.error('Erreur lors de l\'extraction du chemin d\'image:', error);
-              }
-            }
+
             
             // Précharger les MovieHunt's Picks
             if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
