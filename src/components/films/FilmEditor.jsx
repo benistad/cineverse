@@ -347,12 +347,27 @@ export default function FilmEditor({ movieDetails }) {
       
       // Déterminer l'URL de l'image du carrousel
       let carouselImageUrl = null;
-      if (selectedCarouselImage) {
-        carouselImageUrl = getImageUrl(selectedCarouselImage, 'original');
-        console.log('URL générée pour l\'image du carrousel:', carouselImageUrl);
-      } else if (movieDetails.backdrop_path) {
-        carouselImageUrl = getImageUrl(movieDetails.backdrop_path, 'original');
-        console.log('URL de l\'image de backdrop utilisée par défaut:', carouselImageUrl);
+      try {
+        if (selectedCarouselImage) {
+          // S'assurer que selectedCarouselImage est une chaîne de caractères valide
+          if (typeof selectedCarouselImage === 'string' && selectedCarouselImage.startsWith('/')) {
+            carouselImageUrl = getImageUrl(selectedCarouselImage, 'original');
+            console.log('URL générée pour l\'image du carrousel:', carouselImageUrl);
+          } else {
+            console.error('Format invalide pour selectedCarouselImage:', selectedCarouselImage);
+          }
+        } else if (movieDetails.backdrop_path) {
+          carouselImageUrl = getImageUrl(movieDetails.backdrop_path, 'original');
+          console.log('URL de l\'image de backdrop utilisée par défaut:', carouselImageUrl);
+        }
+        
+        // Vérifier que l'URL est une chaîne de caractères valide
+        if (carouselImageUrl && typeof carouselImageUrl !== 'string') {
+          carouselImageUrl = String(carouselImageUrl);
+        }
+      } catch (error) {
+        console.error('Erreur lors de la génération de l\'URL de l\'image du carrousel:', error);
+        carouselImageUrl = null;
       }
 
       // Préparer les données du film avec vérification des valeurs nulles
