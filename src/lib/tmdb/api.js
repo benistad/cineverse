@@ -46,8 +46,28 @@ export const getMovieDetails = async (movieId) => {
       params: {
         language: 'fr-FR',
         append_to_response: 'credits,videos,images',
+        include_image_language: 'fr,null',  // Inclure les images en français et sans langue spécifique
       },
     });
+    
+    // Si les images sont vides, essayer de les récupérer séparément
+    if (!response.data.images || 
+        (!response.data.images.backdrops?.length && !response.data.images.posters?.length)) {
+      try {
+        const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`, {
+          params: {
+            include_image_language: 'fr,en,null',  // Inclure les images en français, anglais et sans langue
+          },
+        });
+        
+        if (imagesResponse.data) {
+          response.data.images = imagesResponse.data;
+        }
+      } catch (imageError) {
+        console.error(`Erreur lors de la récupération des images du film ${movieId}:`, imageError);
+      }
+    }
+    
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération des détails du film ${movieId}:`, error);
