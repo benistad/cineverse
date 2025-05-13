@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FiCheck, FiSave, FiX } from 'react-icons/fi';
+import { FiSave, FiX } from 'react-icons/fi';
 import YouTube from 'react-youtube';
 import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/films';
 import { useAuth } from '@/contexts/AuthContext';
-import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import SimpleRichTextEditor from '@/components/ui/SimpleRichTextEditor';
 
@@ -24,8 +23,6 @@ export default function FilmEditor({ movieDetails }) {
   const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
   const [whyWatchContent, setWhyWatchContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
-  const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
-  const [availableImages, setAvailableImages] = useState([]);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -35,129 +32,10 @@ export default function FilmEditor({ movieDetails }) {
     }
   }, [movieDetails]);
   
-  // Effet séparé pour récupérer les images
+  // Identifier les personnes qui ont plusieurs rôles
   useEffect(() => {
-    // Vérifier que nous avons bien un ID de film
-    if (!movieDetails || !movieDetails.id) {
-      console.log('Pas de détails de film disponibles pour récupérer les images');
-      return;
-    }
-    
-    console.log('Début de la récupération des images pour le film ID:', movieDetails.id);
-    
-    // Fonction pour récupérer les images
-    const fetchAllImages = async () => {
-      try {
-        console.log('Appel API direct pour récupérer les images du film', movieDetails.id);
-        
-        // Initialiser le tableau d'images avec les images principales
-        const images = [];
-        
-        // Ajouter l'image principale du poster si disponible
-        if (movieDetails?.poster_path) {
-          console.log('Ajout du poster principal:', movieDetails.poster_path);
-          images.push({
-            path: movieDetails.poster_path,
-            type: 'poster',
-            url: getImageUrl(movieDetails.poster_path, 'w500')
-          });
-        }
-        
-        // Ajouter l'image principale du backdrop si disponible
-        if (movieDetails?.backdrop_path) {
-          console.log('Ajout du backdrop principal:', movieDetails.backdrop_path);
-          images.push({
-            path: movieDetails.backdrop_path,
-            type: 'backdrop',
-            url: getImageUrl(movieDetails.backdrop_path, 'w1280')
-          });
-        }
-        
-        // Appel direct à l'API TMDB pour récupérer toutes les images
-        const tmdbToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsIm5iZiI6MS43NDY1MTUwNTQyODE5OTk4ZSs5LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.mI9mPVyASt5bsbRwtVN5eUs6uyz28Tvy-FRJTT6vdg8';
-        const apiUrl = `https://api.themoviedb.org/3/movie/${movieDetails.id}/images`;
-        
-        console.log('URL de l\'API:', apiUrl);
-        
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${tmdbToken}`,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP: ${response.status}`);
-        }
-        
-        const imagesData = await response.json();
-        console.log('Réponse de l\'API TMDB:', imagesData);
-        
-        // Traiter tous les backdrops récupérés directement
-        if (imagesData?.backdrops && imagesData.backdrops.length > 0) {
-          console.log('Nombre total de backdrops récupérés:', imagesData.backdrops.length);
-          
-          imagesData.backdrops.forEach(backdrop => {
-            // Éviter les doublons avec l'image principale du backdrop
-            if (backdrop.file_path && backdrop.file_path !== movieDetails.backdrop_path) {
-              console.log('Ajout d\'un backdrop:', backdrop.file_path);
-              images.push({
-                path: backdrop.file_path,
-                type: 'backdrop',
-                url: getImageUrl(backdrop.file_path, 'w1280'),
-                width: backdrop.width,
-                height: backdrop.height,
-                aspect_ratio: backdrop.aspect_ratio
-              });
-            }
-          });
-        } else {
-          console.log('Aucun backdrop trouvé dans la réponse de l\'API');
-        }
-        
-        // Traiter tous les posters récupérés directement
-        if (imagesData?.posters && imagesData.posters.length > 0) {
-          console.log('Nombre total de posters récupérés:', imagesData.posters.length);
-          
-          imagesData.posters.forEach(poster => {
-            // Éviter les doublons avec l'image principale du poster
-            if (poster.file_path && poster.file_path !== movieDetails.poster_path) {
-              console.log('Ajout d\'un poster:', poster.file_path);
-              images.push({
-                path: poster.file_path,
-                type: 'poster',
-                url: getImageUrl(poster.file_path, 'w500'),
-                width: poster.width,
-                height: poster.height,
-                aspect_ratio: poster.aspect_ratio
-              });
-            }
-          });
-        } else {
-          console.log('Aucun poster trouvé dans la réponse de l\'API');
-        }
-        
-        console.log('Nombre total d\'images disponibles après récupération directe:', images.length);
-        setAvailableImages(images);
-      } catch (error) {
-        console.error('Erreur lors de la récupération directe des images:', error);
-      }
-    };
-    
-    // Exécuter la fonction de récupération des images
-    fetchAllImages();
-    
-    // Par défaut, sélectionner l'image principale du backdrop si disponible
-    if (movieDetails?.backdrop_path) {
-      setSelectedCarouselImage(movieDetails.backdrop_path);
-    }
-    
-    // Identifier les personnes qui ont plusieurs rôles
     if (movieDetails?.credits) {
       const personRoles = {};
-      
       // Parcourir le casting
       if (movieDetails.credits.cast) {
         movieDetails.credits.cast.forEach(person => {
@@ -167,7 +45,6 @@ export default function FilmEditor({ movieDetails }) {
           personRoles[person.id].push('cast');
         });
       }
-      
       // Parcourir l'équipe technique
       if (movieDetails.credits.crew) {
         movieDetails.credits.crew.forEach(person => {
@@ -179,7 +56,6 @@ export default function FilmEditor({ movieDetails }) {
           }
         });
       }
-      
       // Identifier les personnes qui ont plusieurs rôles
       const multiRoles = {};
       Object.entries(personRoles).forEach(([personId, roles]) => {
@@ -187,22 +63,20 @@ export default function FilmEditor({ movieDetails }) {
           multiRoles[personId] = true;
         }
       });
-      
       setMultiRolePersons(multiRoles);
     }
-    
-    // Vérifier si le film existe déjà et récupérer ses MovieHunt's Picks
-    async function loadExistingFilm() {
-      if (movieDetails?.id) {
+  }, [movieDetails]);
+
+  useEffect(() => {
+    if (movieDetails?.id) {
+      (async () => {
         try {
           const existingFilm = await getFilmByTmdbId(movieDetails.id);
-          
           if (existingFilm) {
             // Précharger la note
             if (existingFilm.note_sur_10) {
               setRating(existingFilm.note_sur_10);
             }
-            
             // Précharger les données "Pourquoi regarder ce film ?"
             if (existingFilm.why_watch_enabled !== undefined) {
               setWhyWatchEnabled(existingFilm.why_watch_enabled);
@@ -210,46 +84,57 @@ export default function FilmEditor({ movieDetails }) {
             if (existingFilm.why_watch_content) {
               setWhyWatchContent(existingFilm.why_watch_content);
             }
-            
             // Précharger l'état "Film méconnu à voir"
             if (existingFilm.is_hidden_gem !== undefined) {
               setIsHiddenGem(existingFilm.is_hidden_gem);
             }
-            
-            // Précharger l'image sélectionnée pour le carrousel principal
-            if (existingFilm.carousel_image_url) {
-              console.log('Image du carrousel existante:', existingFilm.carousel_image_url);
-              
-              try {
-                // Extraire le chemin de l'image à partir de l'URL complète
-                // Format attendu: https://image.tmdb.org/t/p/original/path/to/image.jpg
-                const urlPattern = /https:\/\/image\.tmdb\.org\/t\/p\/([^/]+)(\/[^/]+\/[^/]+)$/;
-                const match = existingFilm.carousel_image_url.match(urlPattern);
+            // Précharger les MovieHunt's Picks
+            if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
+              const preselectedRoles = {};
+              existingFilm.remarkable_staff.forEach(staffMember => {
+                // Trouver la personne correspondante dans les crédits du film
+                let matchingPerson = null;
+                // Chercher dans le casting
+                if (movieDetails.credits?.cast) {
+                  matchingPerson = movieDetails.credits.cast.find(p => 
+                    p.name === staffMember.nom && 
+                    (staffMember.role.includes('Acteur') || staffMember.role.includes('acteur'))
+                  );
+                }
+                // Si non trouvé dans le casting, chercher dans l'équipe technique
+                if (!matchingPerson && movieDetails.credits?.crew) {
+                  matchingPerson = movieDetails.credits.crew.find(p => 
+                    p.name === staffMember.nom && 
+                    (staffMember.role === p.job || staffMember.role.includes(p.job))
+                  );
+                }
+                if (matchingPerson) {
+                  if (!preselectedRoles[matchingPerson.id]) {
+                    preselectedRoles[matchingPerson.id] = [];
+                  }
+                  preselectedRoles[matchingPerson.id].push({
+                    role: staffMember.role,
+                    name: staffMember.nom,
+                    profile_path: matchingPerson.profile_path
+                  });
+                }
+              });
+              setSelectedRoles(preselectedRoles);
+            }
+          }
+        } catch (error) {
+          console.error('Erreur lors du chargement du film existant:', error);
+        }
+      })();
+    }
+  }, [movieDetails]);
                 
                 if (match && match[2]) {
                   const imagePath = match[2]; // /path/to/image.jpg
                   console.log('Chemin d\'image extrait:', imagePath);
                   setSelectedCarouselImage(imagePath);
                   
-                  // Vérifier si l'image existe dans les images disponibles
-                  setTimeout(() => {
-                    const imageExists = availableImages.some(img => img.path === imagePath);
-                    console.log('L\'image existe dans les images disponibles:', imageExists);
-                    
-                    if (!imageExists) {
-                      console.log('Ajout de l\'image du carrousel aux images disponibles');
-                      // Ajouter l'image aux images disponibles si elle n'existe pas encore
-                      const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
-                      setAvailableImages(prevImages => [
-                        ...prevImages,
-                        {
-                          path: imagePath,
-                          type: imageType,
-                          url: existingFilm.carousel_image_url
-                        }
-                      ]);
-                    }
-                  }, 1000); // Attendre que les images soient chargées
+                  
                 } else {
                   console.error('Format d\'URL d\'image non reconnu:', existingFilm.carousel_image_url);
                 }
@@ -470,101 +355,10 @@ export default function FilmEditor({ movieDetails }) {
         </div>
       )}
 
-      {/* Sélection d'image pour le carrousel principal */}
-      <div className="bg-white rounded-lg shadow p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4">Image pour le carrousel principal</h2>
-        <p className="text-gray-600 mb-4">Sélectionnez l'image qui sera utilisée pour le carrousel principal sur la page d'accueil.</p>
+      
         
         {/* Onglets pour séparer les backdrops et les posters */}
-        <div className="flex border-b mb-4">
-          <button 
-            className={`px-4 py-2 font-medium ${availableImages.filter(img => img.type === 'backdrop').length > 0 ? '' : 'opacity-50 cursor-not-allowed'}`}
-            onClick={() => document.getElementById('backdrops-section').scrollIntoView({ behavior: 'smooth' })}
-          >
-            Backdrops ({availableImages.filter(img => img.type === 'backdrop').length})
-          </button>
-          <button 
-            className={`px-4 py-2 font-medium ${availableImages.filter(img => img.type === 'poster').length > 0 ? '' : 'opacity-50 cursor-not-allowed'}`}
-            onClick={() => document.getElementById('posters-section').scrollIntoView({ behavior: 'smooth' })}
-          >
-            Affiches ({availableImages.filter(img => img.type === 'poster').length})
-          </button>
-        </div>
         
-        {/* Section des backdrops */}
-        <div id="backdrops-section" className="mb-6">
-          <h3 className="text-xl font-semibold mb-3">Backdrops</h3>
-          {availableImages.filter(img => img.type === 'backdrop').length === 0 ? (
-            <p className="text-gray-500 italic">Aucun backdrop disponible</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              {availableImages
-                .filter(image => image.type === 'backdrop')
-                .map((image, index) => (
-                <div 
-                  key={`backdrop-${index}`} 
-                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
-                  onClick={() => setSelectedCarouselImage(image.path)}
-                >
-                  <div className="relative h-40 w-full">
-                    <SafeImage
-                      src={image.url}
-                      alt={`Backdrop ${index + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  {selectedCarouselImage === image.path && (
-                    <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-                      <div className="bg-blue-500 text-white rounded-full p-2">
-                        <FiCheck size={24} />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        
-        {/* Section des posters */}
-        <div id="posters-section" className="mb-6">
-          <h3 className="text-xl font-semibold mb-3">Affiches</h3>
-          {availableImages.filter(img => img.type === 'poster').length === 0 ? (
-            <p className="text-gray-500 italic">Aucune affiche disponible</p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
-              {availableImages
-                .filter(image => image.type === 'poster')
-                .map((image, index) => (
-                <div 
-                  key={`poster-${index}`} 
-                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
-                  onClick={() => setSelectedCarouselImage(image.path)}
-                >
-                  <div className="relative h-60 w-full">
-                    <SafeImage
-                      src={image.url}
-                      alt={`Affiche ${index + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  {selectedCarouselImage === image.path && (
-                    <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-                      <div className="bg-blue-500 text-white rounded-full p-2">
-                        <FiCheck size={24} />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Poster */}
