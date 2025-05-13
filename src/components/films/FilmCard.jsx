@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiShare2, FiInstagram } from 'react-icons/fi';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 // Fonction utilitaire pour tronquer le texte
@@ -25,7 +25,84 @@ const extractYear = (dateString) => {
   }
 };
 
+// Fonction pour préparer le texte à partager sur Instagram
+const prepareInstagramCaption = (film) => {
+  const year = film.release_date ? new Date(film.release_date).getFullYear() : '';
+  const genres = film.genres ? film.genres.split(',')[0] : '';
+  const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + (film.synopsis.length > 150 ? '...' : '') : '';
+  
+  return `🎥 ${film.title} ${year ? `(${year})` : ''}
+⭐ Note: ${film.note_sur_10}/10
+${genres ? `🎬 Genre: ${genres}` : ''}
+🔍 ${synopsis}
+
+👉 Voir plus sur MovieHunt: https://moviehunt.fr/films/${film.slug || film.id}
+
+#moviehunt #cinema #film #critique`;
+};
+
+// Fonction pour partager sur Instagram
+const shareToInstagram = async (film) => {
+  try {
+    // Préparer le texte de la légende
+    const caption = prepareInstagramCaption(film);
+    
+    // Vérifier si nous sommes sur mobile
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Sur mobile, essayer d'ouvrir Instagram directement
+      const instagramUrl = `instagram://library?AssetPath=${encodeURIComponent(film.poster_url)}`;
+      window.open(instagramUrl, '_blank');
+      
+      // Copier le texte dans le presse-papiers pour que l'utilisateur puisse le coller
+      await navigator.clipboard.writeText(caption);
+      alert('Texte copié dans le presse-papiers. Collez-le dans votre publication Instagram.');
+    } else {
+      // Sur desktop, proposer de télécharger l'image et copier le texte
+      // Créer un élément temporaire pour télécharger l'image
+      const link = document.createElement('a');
+      link.href = film.poster_url;
+      link.download = `${film.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_moviehunt.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Copier le texte dans le presse-papiers
+      await navigator.clipboard.writeText(caption);
+      alert('Image téléchargée et texte copié dans le presse-papiers. Vous pouvez maintenant les partager sur Instagram.');
+    }
+  } catch (error) {
+    console.error('Erreur lors du partage sur Instagram:', error);
+    alert('Une erreur est survenue lors du partage. Veuillez réessayer.');
+  }
+};
+
 export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
+  // État pour contrôler l'affichage du menu de partage
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  
+  // Référence pour le menu de partage
+  const shareMenuRef = useRef(null);
+  
+  // Fermer le menu de partage lorsque l'utilisateur clique ailleurs sur la page
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (shareMenuRef.current && !shareMenuRef.current.contains(event.target)) {
+        setShowShareMenu(false);
+      }
+    };
+    
+    // Ajouter l'écouteur d'événement lorsque le menu est ouvert
+    if (showShareMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    // Nettoyer l'écouteur d'événement
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showShareMenu]);
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   
@@ -78,9 +155,41 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           )}
           
           {isAdmin && showAdminControls && (
-            <div className="absolute top-2 left-2 bg-blue-600 text-white rounded-full p-2 flex items-center justify-center">
-              <FiEdit />
-            </div>
+            <>
+              <div className="absolute top-2 left-2 bg-blue-600 text-white rounded-full p-2 flex items-center justify-center">
+                <FiEdit />
+              </div>
+              
+              {/* Bouton de partage (uniquement pour les films notés) */}
+              {film.note_sur_10 && (
+                <div className="absolute top-2 left-12 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-2 flex items-center justify-center cursor-pointer"
+                     onClick={(e) => {
+                       e.preventDefault();
+                       e.stopPropagation();
+                       setShowShareMenu(!showShareMenu);
+                     }}
+                     ref={shareMenuRef}>
+                  <FiShare2 />
+                  
+                  {/* Menu de partage */}
+                  {showShareMenu && (
+                    <div className="absolute left-0 top-10 bg-white shadow-lg rounded-md p-2 z-20 w-48 border border-gray-200">
+                      <button 
+                        className="flex items-center space-x-2 text-gray-800 hover:bg-gray-100 w-full p-2 rounded-md text-left"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          shareToInstagram(film);
+                        }}
+                      >
+                        <FiInstagram className="text-pink-600" />
+                        <span>Partager sur Instagram</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
         
