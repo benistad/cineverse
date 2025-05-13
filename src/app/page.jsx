@@ -14,7 +14,7 @@ import {
 import OptimizedFilmCarousel from '@/components/films/OptimizedFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
-import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
+import ClientFeaturedCarousel from '@/components/home/ClientFeaturedCarousel';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 
 export default function Home() {
@@ -136,7 +136,7 @@ export default function Home() {
       
       {/* Carrousel des films à la une */}
       <section>
-        <FeaturedFilmsCarousel />
+        <ClientFeaturedCarousel />
       </section>
 
       {/* Films récemment notés */}
