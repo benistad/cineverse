@@ -285,20 +285,34 @@ export async function saveFilm(film) {
     
     console.log('Film existant trouvé:', existingFilm);
 
+    // Nettoyer et valider les données du film avant sauvegarde
+    const cleanedFilm = { ...film };
+    
+    // Nettoyer les URLs d'images
+    const imageFields = ['poster_url', 'backdrop_url', 'carousel_image_url'];
+    imageFields.forEach(field => {
+      if (cleanedFilm[field]) {
+        // S'assurer que les URLs sont des chaînes de caractères
+        if (typeof cleanedFilm[field] !== 'string') {
+          cleanedFilm[field] = String(cleanedFilm[field]);
+        }
+        
+        // Limiter la longueur des URLs pour éviter les erreurs de base de données
+        if (cleanedFilm[field].length > 500) {
+          console.warn(`${field} est trop long (${cleanedFilm[field].length} caractères), troncature à 500 caractères`);
+          cleanedFilm[field] = cleanedFilm[field].substring(0, 500);
+        }
+      }
+    });
+    
     // Générer un slug à partir du titre si non fourni
     const filmToSave = {
-      ...film,
-      slug: film.slug || createSlug(film.title),
-      date_ajout: film.date_ajout || new Date().toISOString(),
+      ...cleanedFilm,
+      slug: cleanedFilm.slug || createSlug(cleanedFilm.title),
+      date_ajout: cleanedFilm.date_ajout || new Date().toISOString(),
     };
     
-    // Vérifier les propriétés potentiellement problématiques
-    if (filmToSave.carousel_image_url && typeof filmToSave.carousel_image_url !== 'string') {
-      console.warn('carousel_image_url n\'est pas une chaîne de caractères:', filmToSave.carousel_image_url);
-      filmToSave.carousel_image_url = String(filmToSave.carousel_image_url);
-    }
-    
-    console.log('Données du film prêtes à sauvegarder:', {
+    console.log('Données du film nettoyées et prêtes à sauvegarder:', {
       ...filmToSave,
       synopsis: filmToSave.synopsis?.substring(0, 50) + '...',
       poster_url: filmToSave.poster_url?.substring(0, 50) + '...',
@@ -310,35 +324,93 @@ export async function saveFilm(film) {
 
     if (existingFilm) {
       console.log('Mise à jour du film existant avec ID:', existingFilm.id);
-      // Mettre à jour le film existant
-      const { data, error } = await supabase
-        .from('films')
-        .update(filmToSave)
-        .eq('id', existingFilm.id)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Erreur lors de la mise à jour du film:', error);
-        throw error;
+      
+      try {
+        // Essayer d'abord de mettre à jour sans l'URL du carrousel
+        const filmWithoutCarousel = { ...filmToSave };
+        delete filmWithoutCarousel.carousel_image_url;
+        
+        const { data, error } = await supabase
+          .from('films')
+          .update(filmWithoutCarousel)
+          .eq('id', existingFilm.id)
+          .select()
+          .single();
+        
+        if (error) {
+          console.error('Erreur lors de la mise à jour du film sans carousel_image_url:', error);
+          throw error;
+        }
+        
+        result = data;
+        
+        // Si l'URL du carrousel existe, essayer de la mettre à jour séparément
+        if (filmToSave.carousel_image_url) {
+          console.log('Mise à jour de l\'URL du carrousel séparément');
+          
+          const { error: carouselError } = await supabase
+            .from('films')
+            .update({ carousel_image_url: filmToSave.carousel_image_url })
+            .eq('id', existingFilm.id);
+          
+          if (carouselError) {
+            console.error('Erreur lors de la mise à jour de l\'URL du carrousel:', carouselError);
+            // Ne pas faire échouer toute la sauvegarde si seule l'URL du carrousel échoue
+            console.warn('La sauvegarde du film a réussi, mais l\'URL du carrousel n\'a pas pu être mise à jour');
+          } else {
+            console.log('URL du carrousel mise à jour avec succès');
+          }
+        }
+        
+        console.log('Film mis à jour avec succès');
+      } catch (updateError) {
+        console.error('Erreur lors de la mise à jour du film:', updateError);
+        throw updateError;
       }
-      console.log('Film mis à jour avec succès');
-      result = data;
     } else {
       console.log('Insertion d\'un nouveau film');
-      // Insérer un nouveau film
-      const { data, error } = await supabase
-        .from('films')
-        .insert(filmToSave)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Erreur lors de l\'insertion du film:', error);
-        throw error;
+      
+      try {
+        // Essayer d'abord d'insérer sans l'URL du carrousel
+        const filmWithoutCarousel = { ...filmToSave };
+        delete filmWithoutCarousel.carousel_image_url;
+        
+        const { data, error } = await supabase
+          .from('films')
+          .insert(filmWithoutCarousel)
+          .select()
+          .single();
+        
+        if (error) {
+          console.error('Erreur lors de l\'insertion du film sans carousel_image_url:', error);
+          throw error;
+        }
+        
+        result = data;
+        
+        // Si l'URL du carrousel existe, essayer de la mettre à jour séparément
+        if (filmToSave.carousel_image_url && result.id) {
+          console.log('Mise à jour de l\'URL du carrousel pour le nouveau film');
+          
+          const { error: carouselError } = await supabase
+            .from('films')
+            .update({ carousel_image_url: filmToSave.carousel_image_url })
+            .eq('id', result.id);
+          
+          if (carouselError) {
+            console.error('Erreur lors de la mise à jour de l\'URL du carrousel pour le nouveau film:', carouselError);
+            // Ne pas faire échouer toute la sauvegarde si seule l'URL du carrousel échoue
+            console.warn('L\'insertion du film a réussi, mais l\'URL du carrousel n\'a pas pu être mise à jour');
+          } else {
+            console.log('URL du carrousel mise à jour avec succès pour le nouveau film');
+          }
+        }
+        
+        console.log('Nouveau film inséré avec succès');
+      } catch (insertError) {
+        console.error('Erreur lors de l\'insertion du film:', insertError);
+        throw insertError;
       }
-      console.log('Nouveau film inséré avec succès');
-      result = data;
     }
 
     return result;
