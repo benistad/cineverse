@@ -41,7 +41,9 @@ export const searchMovies = async (query, page = 1) => {
  * Récupération des détails d'un film par son ID
  */
 export const getMovieDetails = async (movieId) => {
+  console.log(`Début de getMovieDetails pour le film ${movieId}`);
   try {
+    console.log(`Appel à l'API TMDB pour le film ${movieId}`);
     const response = await tmdbApi.get(`/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
@@ -50,17 +52,24 @@ export const getMovieDetails = async (movieId) => {
       },
     });
     
+    console.log(`Réponse reçue pour le film ${movieId}`);
+    console.log(`Images dans la réponse principale:`, response.data.images ? 'Oui' : 'Non');
+    if (response.data.images) {
+      console.log(`Nombre de backdrops: ${response.data.images.backdrops?.length || 0}`);
+      console.log(`Nombre de posters: ${response.data.images.posters?.length || 0}`);
+    }
+    
     // Si les images sont vides, essayer de les récupérer séparément
     if (!response.data.images || 
         (!response.data.images.backdrops?.length && !response.data.images.posters?.length)) {
+      console.log(`Pas d'images dans la réponse principale, récupération séparée pour le film ${movieId}`);
       try {
-        const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`, {
-          params: {
-            include_image_language: 'fr,en,null',  // Inclure les images en français, anglais et sans langue
-          },
-        });
+        const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`);
         
+        console.log(`Réponse d'images séparée reçue pour le film ${movieId}`);
         if (imagesResponse.data) {
+          console.log(`Nombre de backdrops dans la réponse séparée: ${imagesResponse.data.backdrops?.length || 0}`);
+          console.log(`Nombre de posters dans la réponse séparée: ${imagesResponse.data.posters?.length || 0}`);
           response.data.images = imagesResponse.data;
         }
       } catch (imageError) {
@@ -68,6 +77,58 @@ export const getMovieDetails = async (movieId) => {
       }
     }
     
+    // Ajouter manuellement les images principales si elles ne sont pas dans la collection d'images
+    if (response.data.images) {
+      if (response.data.poster_path && response.data.images.posters) {
+        const posterExists = response.data.images.posters.some(p => p.file_path === response.data.poster_path);
+        if (!posterExists) {
+          console.log(`Ajout manuel du poster principal aux images`);
+          response.data.images.posters.unshift({
+            file_path: response.data.poster_path,
+            width: 500,
+            height: 750
+          });
+        }
+      }
+      
+      if (response.data.backdrop_path && response.data.images.backdrops) {
+        const backdropExists = response.data.images.backdrops.some(b => b.file_path === response.data.backdrop_path);
+        if (!backdropExists) {
+          console.log(`Ajout manuel du backdrop principal aux images`);
+          response.data.images.backdrops.unshift({
+            file_path: response.data.backdrop_path,
+            width: 1280,
+            height: 720
+          });
+        }
+      }
+    } else {
+      // Créer un objet images si aucun n'existe
+      response.data.images = {
+        backdrops: [],
+        posters: []
+      };
+      
+      if (response.data.poster_path) {
+        console.log(`Création d'un objet images avec le poster principal`);
+        response.data.images.posters.push({
+          file_path: response.data.poster_path,
+          width: 500,
+          height: 750
+        });
+      }
+      
+      if (response.data.backdrop_path) {
+        console.log(`Ajout du backdrop principal à l'objet images créé`);
+        response.data.images.backdrops.push({
+          file_path: response.data.backdrop_path,
+          width: 1280,
+          height: 720
+        });
+      }
+    }
+    
+    console.log(`Fin de getMovieDetails pour le film ${movieId}, retour des données`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération des détails du film ${movieId}:`, error);
