@@ -229,27 +229,42 @@ export default function FilmEditor({ movieDetails }) {
                 if (match && match[2]) {
                   const imagePath = match[2]; // /path/to/image.jpg
                   console.log('Chemin d\'image extrait:', imagePath);
-                  setSelectedCarouselImage(imagePath);
                   
-                  // Vérifier si l'image existe dans les images disponibles
-                  setTimeout(() => {
-                    const imageExists = availableImages.some(img => img.path === imagePath);
-                    console.log('L\'image existe dans les images disponibles:', imageExists);
-                    
-                    if (!imageExists) {
-                      console.log('Ajout de l\'image du carrousel aux images disponibles');
-                      // Ajouter l'image aux images disponibles si elle n'existe pas encore
-                      const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
-                      setAvailableImages(prevImages => [
-                        ...prevImages,
-                        {
-                          path: imagePath,
-                          type: imageType,
-                          url: existingFilm.carousel_image_url
-                        }
-                      ]);
+                  // Attendre que les images soient chargées avant de définir l'image sélectionnée
+                  const waitForImagesAndSetCarousel = () => {
+                    if (availableImages.length > 0) {
+                      // Vérifier si l'image existe dans les images disponibles
+                      const imageExists = availableImages.some(img => img.path === imagePath);
+                      console.log(`L'image ${imagePath} existe dans les images disponibles: ${imageExists}`);
+                      
+                      if (!imageExists) {
+                        console.log('Ajout de l\'image du carrousel aux images disponibles');
+                        // Ajouter l'image aux images disponibles si elle n'existe pas encore
+                        const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
+                        setAvailableImages(prevImages => [
+                          ...prevImages,
+                          {
+                            path: imagePath,
+                            type: imageType,
+                            url: existingFilm.carousel_image_url
+                          }
+                        ]);
+                      }
+                      
+                      // Définir l'image sélectionnée APRÈS avoir vérifié et ajouté l'image si nécessaire
+                      setTimeout(() => {
+                        setSelectedCarouselImage(imagePath);
+                        console.log('Image du carrousel définie:', imagePath);
+                      }, 100);
+                    } else {
+                      // Si les images ne sont pas encore chargées, réessayer après un court délai
+                      console.log('Images pas encore chargées, réessai dans 500ms...');
+                      setTimeout(waitForImagesAndSetCarousel, 500);
                     }
-                  }, 1000); // Attendre que les images soient chargées
+                  };
+                  
+                  // Démarrer le processus d'attente et de définition
+                  waitForImagesAndSetCarousel();
                 } else {
                   console.error('Format d\'URL d\'image non reconnu:', existingFilm.carousel_image_url);
                 }
