@@ -43,38 +43,36 @@ export const searchMovies = async (query, page = 1) => {
 export const getMovieDetails = async (movieId) => {
   console.log(`Début de getMovieDetails pour le film ${movieId}`);
   try {
+    // Récupérer les détails du film
     console.log(`Appel à l'API TMDB pour le film ${movieId}`);
     const response = await tmdbApi.get(`/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
-        append_to_response: 'credits,videos,images',
-        include_image_language: 'fr,null',  // Inclure les images en français et sans langue spécifique
+        append_to_response: 'credits,videos',
       },
     });
     
     console.log(`Réponse reçue pour le film ${movieId}`);
-    console.log(`Images dans la réponse principale:`, response.data.images ? 'Oui' : 'Non');
-    if (response.data.images) {
-      console.log(`Nombre de backdrops: ${response.data.images.backdrops?.length || 0}`);
-      console.log(`Nombre de posters: ${response.data.images.posters?.length || 0}`);
-    }
     
-    // Si les images sont vides, essayer de les récupérer séparément
-    if (!response.data.images || 
-        (!response.data.images.backdrops?.length && !response.data.images.posters?.length)) {
-      console.log(`Pas d'images dans la réponse principale, récupération séparée pour le film ${movieId}`);
-      try {
-        const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`);
-        
-        console.log(`Réponse d'images séparée reçue pour le film ${movieId}`);
-        if (imagesResponse.data) {
-          console.log(`Nombre de backdrops dans la réponse séparée: ${imagesResponse.data.backdrops?.length || 0}`);
-          console.log(`Nombre de posters dans la réponse séparée: ${imagesResponse.data.posters?.length || 0}`);
-          response.data.images = imagesResponse.data;
-        }
-      } catch (imageError) {
-        console.error(`Erreur lors de la récupération des images du film ${movieId}:`, imageError);
+    // Récupérer toutes les images disponibles, sans filtre de langue pour avoir le maximum d'images
+    console.log(`Récupération de toutes les images disponibles pour le film ${movieId}`);
+    try {
+      const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`, {
+        params: {
+          // Ne pas filtrer par langue pour obtenir toutes les images possibles
+          include_image_language: 'fr,en,null,ja,es,de,it,pt,ru,zh,ko',
+        },
+      });
+      
+      if (imagesResponse.data) {
+        console.log(`Nombre total de backdrops: ${imagesResponse.data.backdrops?.length || 0}`);
+        console.log(`Nombre total de posters: ${imagesResponse.data.posters?.length || 0}`);
+        response.data.images = imagesResponse.data;
       }
+    } catch (imageError) {
+      console.error(`Erreur lors de la récupération des images du film ${movieId}:`, imageError);
+      // Créer un objet images vide si l'appel échoue
+      response.data.images = { backdrops: [], posters: [] };
     }
     
     // Ajouter manuellement les images principales si elles ne sont pas dans la collection d'images

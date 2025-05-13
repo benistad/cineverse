@@ -390,34 +390,94 @@ export default function FilmEditor({ movieDetails }) {
         <h2 className="text-2xl font-bold mb-4">Image pour le carrousel principal</h2>
         <p className="text-gray-600 mb-4">Sélectionnez l'image qui sera utilisée pour le carrousel principal sur la page d'accueil.</p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-          {availableImages.map((image, index) => (
-            <div 
-              key={index} 
-              className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
-              onClick={() => setSelectedCarouselImage(image.path)}
-            >
-              <div className="relative h-40 w-full">
-                <SafeImage
-                  src={image.url}
-                  alt={`Image ${index + 1} - ${image.type}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute top-2 right-2 bg-gray-800 text-white text-xs px-2 py-1 rounded">
-                {image.type === 'poster' ? 'Affiche' : 'Backdrop'}
-              </div>
-              {selectedCarouselImage === image.path && (
-                <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
-                  <div className="bg-blue-500 text-white rounded-full p-2">
-                    <FiCheck size={24} />
+        {/* Onglets pour séparer les backdrops et les posters */}
+        <div className="flex border-b mb-4">
+          <button 
+            className={`px-4 py-2 font-medium ${availableImages.filter(img => img.type === 'backdrop').length > 0 ? '' : 'opacity-50 cursor-not-allowed'}`}
+            onClick={() => document.getElementById('backdrops-section').scrollIntoView({ behavior: 'smooth' })}
+          >
+            Backdrops ({availableImages.filter(img => img.type === 'backdrop').length})
+          </button>
+          <button 
+            className={`px-4 py-2 font-medium ${availableImages.filter(img => img.type === 'poster').length > 0 ? '' : 'opacity-50 cursor-not-allowed'}`}
+            onClick={() => document.getElementById('posters-section').scrollIntoView({ behavior: 'smooth' })}
+          >
+            Affiches ({availableImages.filter(img => img.type === 'poster').length})
+          </button>
+        </div>
+        
+        {/* Section des backdrops */}
+        <div id="backdrops-section" className="mb-6">
+          <h3 className="text-xl font-semibold mb-3">Backdrops</h3>
+          {availableImages.filter(img => img.type === 'backdrop').length === 0 ? (
+            <p className="text-gray-500 italic">Aucun backdrop disponible</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+              {availableImages
+                .filter(image => image.type === 'backdrop')
+                .map((image, index) => (
+                <div 
+                  key={`backdrop-${index}`} 
+                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
+                  onClick={() => setSelectedCarouselImage(image.path)}
+                >
+                  <div className="relative h-40 w-full">
+                    <SafeImage
+                      src={image.url}
+                      alt={`Backdrop ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                    />
                   </div>
+                  {selectedCarouselImage === image.path && (
+                    <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
+                      <div className="bg-blue-500 text-white rounded-full p-2">
+                        <FiCheck size={24} />
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
-          ))}
+          )}
+        </div>
+        
+        {/* Section des posters */}
+        <div id="posters-section" className="mb-6">
+          <h3 className="text-xl font-semibold mb-3">Affiches</h3>
+          {availableImages.filter(img => img.type === 'poster').length === 0 ? (
+            <p className="text-gray-500 italic">Aucune affiche disponible</p>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+              {availableImages
+                .filter(image => image.type === 'poster')
+                .map((image, index) => (
+                <div 
+                  key={`poster-${index}`} 
+                  className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
+                  onClick={() => setSelectedCarouselImage(image.path)}
+                >
+                  <div className="relative h-60 w-full">
+                    <SafeImage
+                      src={image.url}
+                      alt={`Affiche ${index + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  {selectedCarouselImage === image.path && (
+                    <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
+                      <div className="bg-blue-500 text-white rounded-full p-2">
+                        <FiCheck size={24} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       
