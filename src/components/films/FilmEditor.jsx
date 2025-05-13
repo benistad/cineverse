@@ -218,10 +218,44 @@ export default function FilmEditor({ movieDetails }) {
             
             // Précharger l'image sélectionnée pour le carrousel principal
             if (existingFilm.carousel_image_url) {
-              // Extraire le chemin de l'image à partir de l'URL complète
-              const urlParts = existingFilm.carousel_image_url.split('/');
-              const imagePath = '/' + urlParts[urlParts.length - 2] + '/' + urlParts[urlParts.length - 1];
-              setSelectedCarouselImage(imagePath);
+              console.log('Image du carrousel existante:', existingFilm.carousel_image_url);
+              
+              try {
+                // Extraire le chemin de l'image à partir de l'URL complète
+                // Format attendu: https://image.tmdb.org/t/p/original/path/to/image.jpg
+                const urlPattern = /https:\/\/image\.tmdb\.org\/t\/p\/([^/]+)(\/[^/]+\/[^/]+)$/;
+                const match = existingFilm.carousel_image_url.match(urlPattern);
+                
+                if (match && match[2]) {
+                  const imagePath = match[2]; // /path/to/image.jpg
+                  console.log('Chemin d\'image extrait:', imagePath);
+                  setSelectedCarouselImage(imagePath);
+                  
+                  // Vérifier si l'image existe dans les images disponibles
+                  setTimeout(() => {
+                    const imageExists = availableImages.some(img => img.path === imagePath);
+                    console.log('L\'image existe dans les images disponibles:', imageExists);
+                    
+                    if (!imageExists) {
+                      console.log('Ajout de l\'image du carrousel aux images disponibles');
+                      // Ajouter l'image aux images disponibles si elle n'existe pas encore
+                      const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
+                      setAvailableImages(prevImages => [
+                        ...prevImages,
+                        {
+                          path: imagePath,
+                          type: imageType,
+                          url: existingFilm.carousel_image_url
+                        }
+                      ]);
+                    }
+                  }, 1000); // Attendre que les images soient chargées
+                } else {
+                  console.error('Format d\'URL d\'image non reconnu:', existingFilm.carousel_image_url);
+                }
+              } catch (error) {
+                console.error('Erreur lors de l\'extraction du chemin d\'image:', error);
+              }
             }
             
             // Précharger les MovieHunt's Picks
