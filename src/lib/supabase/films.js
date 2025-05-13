@@ -628,10 +628,14 @@ export async function getHiddenGems(limit = 8) {
 /**
  * Récupère les derniers films avec une note supérieure à un seuil donné
  * Utilisé pour le carrousel de la page d'accueil
+ * @param {number} limit - Nombre maximum de films à récupérer
+ * @param {number} minRating - Note minimale des films à récupérer
+ * @param {number} timestamp - Timestamp pour forcer le rechargement des données
+ * @returns {Array} - Liste des films récupérés
  */
-export async function getFeaturedFilms(limit = 5, minRating = 6) {
+export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = null) {
   try {
-    console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating})...`);
+    console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp || 'non spécifié'})...`);
     
     const supabase = getSupabaseClient();
     
@@ -653,7 +657,7 @@ export async function getFeaturedFilms(limit = 5, minRating = 6) {
     // Vérifier si les films ont des images de carrousel
     if (data && data.length > 0) {
       data.forEach(film => {
-        console.log(`Film: ${film.title}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
+        console.log(`Film: ${film.title}, ID: ${film.id}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
       });
     } else {
       console.log('Aucun film récupéré');

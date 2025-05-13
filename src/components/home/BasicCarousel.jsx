@@ -102,14 +102,57 @@ export default function BasicCarousel() {
 
   const currentFilm = films[currentIndex];
 
+  // Fonction pour forcer le rechargement des données
+  const forceReload = () => {
+    setLoading(true);
+    setError(null);
+    
+    // Ajouter un timestamp pour éviter la mise en cache du navigateur
+    const timestamp = new Date().getTime();
+    console.log(`Rechargement forcé des films (timestamp: ${timestamp})...`);
+    
+    // Appeler getFeaturedFilms avec un paramètre supplémentaire pour éviter la mise en cache
+    getFeaturedFilms(5, 6, timestamp)
+      .then(topFilms => {
+        console.log('Films rechargés:', topFilms);
+        if (topFilms && topFilms.length > 0) {
+          setFilms(topFilms);
+        } else {
+          console.warn('Aucun film n\'a été récupéré lors du rechargement');
+        }
+      })
+      .catch(err => {
+        console.error('Erreur lors du rechargement des films:', err);
+        setError(err.message || 'Erreur lors du rechargement des films');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  
   return (
     <div className="relative rounded-lg overflow-hidden">
+      {/* Bouton de rechargement */}
+      <button 
+        onClick={forceReload}
+        className="absolute top-2 right-2 z-20 bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors"
+      >
+        Recharger
+      </button>
+      
       {/* Carrousel */}
       <div className="relative h-[250px] sm:h-[300px] md:h-[500px] rounded-lg overflow-hidden">
         {/* Image d'arrière-plan */}
         <div className="absolute inset-0 bg-gray-800">
           {currentFilm && (
             <div className="relative w-full h-full">
+              {/* Afficher l'URL de l'image pour le débogage */}
+              <div className="absolute top-0 left-0 right-0 z-10 bg-black/70 text-white text-xs p-1 overflow-hidden">
+                <div>Film ID: {currentFilm.id}</div>
+                <div className="truncate">Carousel URL: {currentFilm.carousel_image_url || 'non définie'}</div>
+                <div className="truncate">Backdrop URL: {currentFilm.backdrop_url || 'non définie'}</div>
+              </div>
+              
               <Image
                 src={
                   currentFilm.carousel_image_url 
