@@ -14,21 +14,35 @@ export default function FeaturedFilmsCarousel() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function loadTopRatedFilms() {
-      try {
-        const topFilms = await getFeaturedFilms(5, 6);
-        
-        
-        setFilms(topFilms);
-      } catch (error) {
-        console.error('Erreur lors du chargement des films en vedette:', error);
-      } finally {
-        setLoading(false);
-      }
+  // Fonction pour charger les films en vedette
+  const loadTopRatedFilms = async () => {
+    try {
+      setLoading(true);
+      // Ajouter un timestamp pour éviter la mise en cache
+      const timestamp = new Date().getTime();
+      console.log(`Chargement des films en vedette (timestamp: ${timestamp})...`);
+      
+      const topFilms = await getFeaturedFilms(5, 6);
+      console.log('Films en vedette chargés:', topFilms);
+      
+      setFilms(topFilms);
+    } catch (error) {
+      console.error('Erreur lors du chargement des films en vedette:', error);
+    } finally {
+      setLoading(false);
     }
-
+  };
+  
+  // Charger les films au chargement du composant
+  useEffect(() => {
     loadTopRatedFilms();
+    
+    // Rafraîchir les données toutes les 30 secondes pour s'assurer d'avoir les données les plus récentes
+    const refreshInterval = setInterval(() => {
+      loadTopRatedFilms();
+    }, 30000);
+    
+    return () => clearInterval(refreshInterval);
   }, []);
 
   // Afficher un message de chargement pendant la récupération des films
