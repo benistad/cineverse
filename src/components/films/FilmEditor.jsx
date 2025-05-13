@@ -121,7 +121,6 @@ export default function FilmEditor({ movieDetails }) {
               });
               setSelectedRoles(preselectedRoles);
             }
-          }
         } catch (error) {
           console.error('Erreur lors du chargement du film existant:', error);
         }
@@ -170,7 +169,6 @@ export default function FilmEditor({ movieDetails }) {
               
               setSelectedRoles(preselectedRoles);
             }
-          }
         } catch (error) {
           console.error('Erreur lors du chargement du film existant:', error);
         }
