@@ -33,87 +33,121 @@ export default function FilmEditor({ movieDetails }) {
       const key = getTrailerKey(movieDetails.videos);
       setTrailerKey(key);
     }
-    
-    // Récupérer les images disponibles pour le film
-    console.log('movieDetails:', movieDetails);
-    console.log('movieDetails.images:', movieDetails?.images);
-    
-    // Initialiser le tableau d'images
-    const images = [];
-    
-    console.log('movieDetails:', movieDetails);
-    console.log('movieDetails.images:', movieDetails?.images);
-    
-    // Ajouter l'image principale du poster si disponible
-    if (movieDetails?.poster_path) {
-      console.log('Ajout du poster principal:', movieDetails.poster_path);
-      images.push({
-        path: movieDetails.poster_path,
-        type: 'poster',
-        url: getImageUrl(movieDetails.poster_path, 'w500')
-      });
+  }, [movieDetails]);
+  
+  // Effet séparé pour récupérer les images
+  useEffect(() => {
+    // Vérifier que nous avons bien un ID de film
+    if (!movieDetails || !movieDetails.id) {
+      console.log('Pas de détails de film disponibles pour récupérer les images');
+      return;
     }
     
-    // Ajouter l'image principale du backdrop si disponible
-    if (movieDetails?.backdrop_path) {
-      console.log('Ajout du backdrop principal:', movieDetails.backdrop_path);
-      images.push({
-        path: movieDetails.backdrop_path,
-        type: 'backdrop',
-        url: getImageUrl(movieDetails.backdrop_path, 'w1280')
-      });
-    }
+    console.log('Début de la récupération des images pour le film ID:', movieDetails.id);
     
-    // Traiter toutes les images de backdrops
-    if (movieDetails?.images?.backdrops && movieDetails.images.backdrops.length > 0) {
-      console.log('Nombre total de backdrops:', movieDetails.images.backdrops.length);
-      
-      // Parcourir tous les backdrops
-      movieDetails.images.backdrops.forEach(backdrop => {
-        // Éviter les doublons avec l'image principale du backdrop
-        if (backdrop.file_path && backdrop.file_path !== movieDetails.backdrop_path) {
-          console.log('Ajout d\'un backdrop:', backdrop.file_path);
+    // Fonction pour récupérer les images
+    const fetchAllImages = async () => {
+      try {
+        console.log('Appel API direct pour récupérer les images du film', movieDetails.id);
+        
+        // Initialiser le tableau d'images avec les images principales
+        const images = [];
+        
+        // Ajouter l'image principale du poster si disponible
+        if (movieDetails?.poster_path) {
+          console.log('Ajout du poster principal:', movieDetails.poster_path);
           images.push({
-            path: backdrop.file_path,
-            type: 'backdrop',
-            url: getImageUrl(backdrop.file_path, 'w1280'),
-            width: backdrop.width,
-            height: backdrop.height,
-            aspect_ratio: backdrop.aspect_ratio,
-            vote_average: backdrop.vote_average
-          });
-        }
-      });
-    } else {
-      console.log('Pas de backdrops disponibles dans movieDetails.images');
-    }
-    
-    // Traiter toutes les images de posters
-    if (movieDetails?.images?.posters && movieDetails.images.posters.length > 0) {
-      console.log('Nombre total de posters:', movieDetails.images.posters.length);
-      
-      // Parcourir tous les posters
-      movieDetails.images.posters.forEach(poster => {
-        // Éviter les doublons avec l'image principale du poster
-        if (poster.file_path && poster.file_path !== movieDetails.poster_path) {
-          console.log('Ajout d\'un poster:', poster.file_path);
-          images.push({
-            path: poster.file_path,
+            path: movieDetails.poster_path,
             type: 'poster',
-            url: getImageUrl(poster.file_path, 'w500'),
-            width: poster.width,
-            height: poster.height,
-            aspect_ratio: poster.aspect_ratio,
-            vote_average: poster.vote_average
+            url: getImageUrl(movieDetails.poster_path, 'w500')
           });
         }
-      });
-    } else {
-      console.log('Pas de posters disponibles dans movieDetails.images');
-    }
+        
+        // Ajouter l'image principale du backdrop si disponible
+        if (movieDetails?.backdrop_path) {
+          console.log('Ajout du backdrop principal:', movieDetails.backdrop_path);
+          images.push({
+            path: movieDetails.backdrop_path,
+            type: 'backdrop',
+            url: getImageUrl(movieDetails.backdrop_path, 'w1280')
+          });
+        }
+        
+        // Appel direct à l'API TMDB pour récupérer toutes les images
+        const tmdbToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsIm5iZiI6MS43NDY1MTUwNTQyODE5OTk4ZSs5LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.mI9mPVyASt5bsbRwtVN5eUs6uyz28Tvy-FRJTT6vdg8';
+        const apiUrl = `https://api.themoviedb.org/3/movie/${movieDetails.id}/images`;
+        
+        console.log('URL de l\'API:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${tmdbToken}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP: ${response.status}`);
+        }
+        
+        const imagesData = await response.json();
+        console.log('Réponse de l\'API TMDB:', imagesData);
+        
+        // Traiter tous les backdrops récupérés directement
+        if (imagesData?.backdrops && imagesData.backdrops.length > 0) {
+          console.log('Nombre total de backdrops récupérés:', imagesData.backdrops.length);
+          
+          imagesData.backdrops.forEach(backdrop => {
+            // Éviter les doublons avec l'image principale du backdrop
+            if (backdrop.file_path && backdrop.file_path !== movieDetails.backdrop_path) {
+              console.log('Ajout d\'un backdrop:', backdrop.file_path);
+              images.push({
+                path: backdrop.file_path,
+                type: 'backdrop',
+                url: getImageUrl(backdrop.file_path, 'w1280'),
+                width: backdrop.width,
+                height: backdrop.height,
+                aspect_ratio: backdrop.aspect_ratio
+              });
+            }
+          });
+        } else {
+          console.log('Aucun backdrop trouvé dans la réponse de l\'API');
+        }
+        
+        // Traiter tous les posters récupérés directement
+        if (imagesData?.posters && imagesData.posters.length > 0) {
+          console.log('Nombre total de posters récupérés:', imagesData.posters.length);
+          
+          imagesData.posters.forEach(poster => {
+            // Éviter les doublons avec l'image principale du poster
+            if (poster.file_path && poster.file_path !== movieDetails.poster_path) {
+              console.log('Ajout d\'un poster:', poster.file_path);
+              images.push({
+                path: poster.file_path,
+                type: 'poster',
+                url: getImageUrl(poster.file_path, 'w500'),
+                width: poster.width,
+                height: poster.height,
+                aspect_ratio: poster.aspect_ratio
+              });
+            }
+          });
+        } else {
+          console.log('Aucun poster trouvé dans la réponse de l\'API');
+        }
+        
+        console.log('Nombre total d\'images disponibles après récupération directe:', images.length);
+        setAvailableImages(images);
+      } catch (error) {
+        console.error('Erreur lors de la récupération directe des images:', error);
+      }
+    };
     
-    console.log('Images disponibles:', images);
-    setAvailableImages(images);
+    // Exécuter la fonction de récupération des images
+    fetchAllImages();
     
     // Par défaut, sélectionner l'image principale du backdrop si disponible
     if (movieDetails?.backdrop_path) {
