@@ -174,10 +174,8 @@ export default function FilmEditor({ movieDetails }) {
         } catch (error) {
           console.error('Erreur lors du chargement du film existant:', error);
         }
-      }
+      })();
     }
-    
-    loadExistingFilm();
   }, [movieDetails]);
 
   // Vérifier si l'utilisateur est connecté
