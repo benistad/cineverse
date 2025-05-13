@@ -54,19 +54,32 @@ export const getMovieDetails = async (movieId) => {
     
     console.log(`Réponse reçue pour le film ${movieId}`);
     
-    // Récupérer toutes les images disponibles, sans filtre de langue pour avoir le maximum d'images
+    // Récupérer toutes les images disponibles sans aucun filtre de langue
     console.log(`Récupération de toutes les images disponibles pour le film ${movieId}`);
     try {
-      const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`, {
-        params: {
-          // Ne pas filtrer par langue pour obtenir toutes les images possibles
-          include_image_language: 'fr,en,null,ja,es,de,it,pt,ru,zh,ko',
-        },
-      });
+      // Appel direct à l'endpoint images sans paramètres de filtre pour obtenir toutes les images possibles
+      const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`);
       
       if (imagesResponse.data) {
         console.log(`Nombre total de backdrops: ${imagesResponse.data.backdrops?.length || 0}`);
         console.log(`Nombre total de posters: ${imagesResponse.data.posters?.length || 0}`);
+        
+        // Afficher les 5 premiers backdrops pour débogage
+        if (imagesResponse.data.backdrops && imagesResponse.data.backdrops.length > 0) {
+          console.log('Exemples de backdrops:');
+          imagesResponse.data.backdrops.slice(0, 5).forEach((backdrop, index) => {
+            console.log(`Backdrop ${index + 1}:`, backdrop.file_path);
+          });
+        }
+        
+        // Afficher les 5 premiers posters pour débogage
+        if (imagesResponse.data.posters && imagesResponse.data.posters.length > 0) {
+          console.log('Exemples de posters:');
+          imagesResponse.data.posters.slice(0, 5).forEach((poster, index) => {
+            console.log(`Poster ${index + 1}:`, poster.file_path);
+          });
+        }
+        
         response.data.images = imagesResponse.data;
       }
     } catch (imageError) {

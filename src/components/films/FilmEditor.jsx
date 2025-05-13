@@ -38,8 +38,11 @@ export default function FilmEditor({ movieDetails }) {
     console.log('movieDetails:', movieDetails);
     console.log('movieDetails.images:', movieDetails?.images);
     
-    // Toujours initialiser avec au moins les images principales
+    // Initialiser le tableau d'images
     const images = [];
+    
+    console.log('movieDetails:', movieDetails);
+    console.log('movieDetails.images:', movieDetails?.images);
     
     // Ajouter l'image principale du poster si disponible
     if (movieDetails?.poster_path) {
@@ -61,40 +64,52 @@ export default function FilmEditor({ movieDetails }) {
       });
     }
     
-    // Ajouter les backdrops supplémentaires
+    // Traiter toutes les images de backdrops
     if (movieDetails?.images?.backdrops && movieDetails.images.backdrops.length > 0) {
-      console.log('Nombre de backdrops supplémentaires:', movieDetails.images.backdrops.length);
-      movieDetails.images.backdrops.slice(0, 10).forEach(backdrop => {
+      console.log('Nombre total de backdrops:', movieDetails.images.backdrops.length);
+      
+      // Parcourir tous les backdrops
+      movieDetails.images.backdrops.forEach(backdrop => {
         // Éviter les doublons avec l'image principale du backdrop
-        if (backdrop.file_path !== movieDetails.backdrop_path) {
-          console.log('Ajout d\'un backdrop supplémentaire:', backdrop.file_path);
+        if (backdrop.file_path && backdrop.file_path !== movieDetails.backdrop_path) {
+          console.log('Ajout d\'un backdrop:', backdrop.file_path);
           images.push({
             path: backdrop.file_path,
             type: 'backdrop',
-            url: getImageUrl(backdrop.file_path, 'w1280')
+            url: getImageUrl(backdrop.file_path, 'w1280'),
+            width: backdrop.width,
+            height: backdrop.height,
+            aspect_ratio: backdrop.aspect_ratio,
+            vote_average: backdrop.vote_average
           });
         }
       });
     } else {
-      console.log('Pas de backdrops supplémentaires disponibles');
+      console.log('Pas de backdrops disponibles dans movieDetails.images');
     }
     
-    // Ajouter les posters supplémentaires
+    // Traiter toutes les images de posters
     if (movieDetails?.images?.posters && movieDetails.images.posters.length > 0) {
-      console.log('Nombre de posters supplémentaires:', movieDetails.images.posters.length);
-      movieDetails.images.posters.slice(0, 5).forEach(poster => {
+      console.log('Nombre total de posters:', movieDetails.images.posters.length);
+      
+      // Parcourir tous les posters
+      movieDetails.images.posters.forEach(poster => {
         // Éviter les doublons avec l'image principale du poster
-        if (poster.file_path !== movieDetails.poster_path) {
-          console.log('Ajout d\'un poster supplémentaire:', poster.file_path);
+        if (poster.file_path && poster.file_path !== movieDetails.poster_path) {
+          console.log('Ajout d\'un poster:', poster.file_path);
           images.push({
             path: poster.file_path,
             type: 'poster',
-            url: getImageUrl(poster.file_path, 'w500')
+            url: getImageUrl(poster.file_path, 'w500'),
+            width: poster.width,
+            height: poster.height,
+            aspect_ratio: poster.aspect_ratio,
+            vote_average: poster.vote_average
           });
         }
       });
     } else {
-      console.log('Pas de posters supplémentaires disponibles');
+      console.log('Pas de posters disponibles dans movieDetails.images');
     }
     
     console.log('Images disponibles:', images);
