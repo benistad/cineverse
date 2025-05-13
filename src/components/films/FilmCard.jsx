@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiInstagram } from 'react-icons/fi';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
-import InstagramShareButton from './InstagramShareButton';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -201,8 +200,16 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
             <FiEdit />
           </Link>
           
-          {/* Bouton de partage Instagram indépendant */}
-          {film.note_sur_10 && <InstagramShareButton film={film} />}
+          {/* Bouton de partage Instagram qui redirige vers la page dédiée */}
+          {film.note_sur_10 && (
+            <Link 
+              href={`/admin/share-instagram/${film.id}`} 
+              className="absolute top-2 left-12 z-10 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-2 flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FiInstagram />
+            </Link>
+          )}
         </>
       )}
         
