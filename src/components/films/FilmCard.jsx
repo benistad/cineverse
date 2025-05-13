@@ -88,7 +88,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
           <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
             {extractYear(film.release_date) || extractYear(film.date_ajout)}
-            {film.genres && <span> • {truncateText(film.genres, windowWidth < 640 ? 15 : 30)}</span>}
+            {film.genres && <span> • <span className="line-clamp-1">{film.genres}</span></span>}
           </p>
           <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
             {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 60 : 100)}
