@@ -79,11 +79,18 @@ export const metadata = {
     'mobile-friendly': true,
   },
   icons: {
-    icon: [{ url: '/favicon.ico', sizes: 'any' }],
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icons/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '192x192', type: 'image/png' }
+    ],
     shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    apple: [
+      { url: '/favicon.png', sizes: '180x180', type: 'image/png' }
+    ],
     other: [
       { rel: 'icon', url: '/images/favicon.ico' },
+      { rel: 'apple-touch-icon', url: '/favicon.png' },
     ],
   },
   manifest: '/manifest.json',

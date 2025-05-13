@@ -11,6 +11,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from 'next/dynamic';
+import JsonLdSchema from './components/JsonLdSchema';
 
 // Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
@@ -115,6 +116,7 @@ export default function RootLayout({ children }) {
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
+        <JsonLdSchema />
         {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
         {/* <ImageOptimizer /> */}
         {/* <SpeedIndexOptimizer /> */}
