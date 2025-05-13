@@ -191,37 +191,10 @@ export default function FilmEditor({ movieDetails }) {
       setMultiRolePersons(multiRoles);
     }
     
-    // Fonctions pour gérer le localStorage
-    function getCarouselImageFromLocalStorage(tmdbId) {
-      if (typeof window !== 'undefined') {
-        const savedImagePath = localStorage.getItem(`carousel_image_${tmdbId}_path`);
-        if (savedImagePath) {
-          console.log('Image du carrousel récupérée depuis le localStorage:', savedImagePath);
-          return savedImagePath;
-        }
-      }
-      return null;
-    }
-
-    function saveCarouselImageToLocalStorage(tmdbId, imagePath, imageUrl) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(`carousel_image_${tmdbId}_path`, imagePath);
-        localStorage.setItem(`carousel_image_${tmdbId}_url`, imageUrl);
-        console.log('Image du carrousel sauvegardée dans le localStorage:', imagePath);
-      }
-    }
-
     // Vérifier si le film existe déjà et récupérer ses MovieHunt's Picks
     async function loadExistingFilm() {
       if (movieDetails?.id) {
         try {
-          // Vérifier d'abord si nous avons une image du carrousel dans le localStorage
-          const savedImagePath = getCarouselImageFromLocalStorage(movieDetails.id);
-          if (savedImagePath) {
-            setSelectedCarouselImage(savedImagePath);
-            console.log('Image du carrousel définie depuis le localStorage:', savedImagePath);
-          }
-          
           const existingFilm = await getFilmByTmdbId(movieDetails.id);
           
           if (existingFilm) {
@@ -256,42 +229,27 @@ export default function FilmEditor({ movieDetails }) {
                 if (match && match[2]) {
                   const imagePath = match[2]; // /path/to/image.jpg
                   console.log('Chemin d\'image extrait:', imagePath);
+                  setSelectedCarouselImage(imagePath);
                   
-                  // Attendre que les images soient chargées avant de définir l'image sélectionnée
-                  const waitForImagesAndSetCarousel = () => {
-                    if (availableImages.length > 0) {
-                      // Vérifier si l'image existe dans les images disponibles
-                      const imageExists = availableImages.some(img => img.path === imagePath);
-                      console.log(`L'image ${imagePath} existe dans les images disponibles: ${imageExists}`);
-                      
-                      if (!imageExists) {
-                        console.log('Ajout de l\'image du carrousel aux images disponibles');
-                        // Ajouter l'image aux images disponibles si elle n'existe pas encore
-                        const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
-                        setAvailableImages(prevImages => [
-                          ...prevImages,
-                          {
-                            path: imagePath,
-                            type: imageType,
-                            url: existingFilm.carousel_image_url
-                          }
-                        ]);
-                      }
-                      
-                      // Définir l'image sélectionnée APRÈS avoir vérifié et ajouté l'image si nécessaire
-                      setTimeout(() => {
-                        setSelectedCarouselImage(imagePath);
-                        console.log('Image du carrousel définie:', imagePath);
-                      }, 100);
-                    } else {
-                      // Si les images ne sont pas encore chargées, réessayer après un court délai
-                      console.log('Images pas encore chargées, réessai dans 500ms...');
-                      setTimeout(waitForImagesAndSetCarousel, 500);
+                  // Vérifier si l'image existe dans les images disponibles
+                  setTimeout(() => {
+                    const imageExists = availableImages.some(img => img.path === imagePath);
+                    console.log('L\'image existe dans les images disponibles:', imageExists);
+                    
+                    if (!imageExists) {
+                      console.log('Ajout de l\'image du carrousel aux images disponibles');
+                      // Ajouter l'image aux images disponibles si elle n'existe pas encore
+                      const imageType = imagePath.includes('backdrop') ? 'backdrop' : 'poster';
+                      setAvailableImages(prevImages => [
+                        ...prevImages,
+                        {
+                          path: imagePath,
+                          type: imageType,
+                          url: existingFilm.carousel_image_url
+                        }
+                      ]);
                     }
-                  };
-                  
-                  // Démarrer le processus d'attente et de définition
-                  waitForImagesAndSetCarousel();
+                  }, 1000); // Attendre que les images soient chargées
                 } else {
                   console.error('Format d\'URL d\'image non reconnu:', existingFilm.carousel_image_url);
                 }
@@ -429,20 +387,12 @@ export default function FilmEditor({ movieDetails }) {
           if (typeof selectedCarouselImage === 'string' && selectedCarouselImage.startsWith('/')) {
             carouselImageUrl = getImageUrl(selectedCarouselImage, 'original');
             console.log('URL générée pour l\'image du carrousel:', carouselImageUrl);
-            
-            // Sauvegarder l'image du carrousel dans le localStorage
-            saveCarouselImageToLocalStorage(movieDetails.id, selectedCarouselImage, carouselImageUrl);
-            console.log('Image du carrousel sauvegardée dans le localStorage lors de la sauvegarde');
           } else {
             console.error('Format invalide pour selectedCarouselImage:', selectedCarouselImage);
           }
         } else if (movieDetails.backdrop_path) {
           carouselImageUrl = getImageUrl(movieDetails.backdrop_path, 'original');
           console.log('URL de l\'image de backdrop utilisée par défaut:', carouselImageUrl);
-          
-          // Sauvegarder l'image de backdrop par défaut dans le localStorage
-          saveCarouselImageToLocalStorage(movieDetails.id, movieDetails.backdrop_path, carouselImageUrl);
-          console.log('Image de backdrop par défaut sauvegardée dans le localStorage');
         }
         
         // Vérifier que l'URL est une chaîne de caractères valide
