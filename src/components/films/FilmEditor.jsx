@@ -24,12 +24,72 @@ export default function FilmEditor({ movieDetails }) {
   const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
   const [whyWatchContent, setWhyWatchContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
+  const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
+  const [availableImages, setAvailableImages] = useState([]);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
     if (movieDetails?.videos?.results) {
       const key = getTrailerKey(movieDetails.videos);
       setTrailerKey(key);
+    }
+    
+    // Récupérer les images disponibles pour le film
+    if (movieDetails?.images) {
+      const images = [];
+      
+      // Ajouter l'image principale du poster si disponible
+      if (movieDetails.poster_path) {
+        images.push({
+          path: movieDetails.poster_path,
+          type: 'poster',
+          url: getImageUrl(movieDetails.poster_path, 'w500')
+        });
+      }
+      
+      // Ajouter l'image principale du backdrop si disponible
+      if (movieDetails.backdrop_path) {
+        images.push({
+          path: movieDetails.backdrop_path,
+          type: 'backdrop',
+          url: getImageUrl(movieDetails.backdrop_path, 'w1280')
+        });
+      }
+      
+      // Ajouter les backdrops supplémentaires
+      if (movieDetails.images.backdrops && movieDetails.images.backdrops.length > 0) {
+        movieDetails.images.backdrops.slice(0, 10).forEach(backdrop => {
+          // Éviter les doublons avec l'image principale du backdrop
+          if (backdrop.file_path !== movieDetails.backdrop_path) {
+            images.push({
+              path: backdrop.file_path,
+              type: 'backdrop',
+              url: getImageUrl(backdrop.file_path, 'w1280')
+            });
+          }
+        });
+      }
+      
+      // Ajouter les posters supplémentaires
+      if (movieDetails.images.posters && movieDetails.images.posters.length > 0) {
+        movieDetails.images.posters.slice(0, 5).forEach(poster => {
+          // Éviter les doublons avec l'image principale du poster
+          if (poster.file_path !== movieDetails.poster_path) {
+            images.push({
+              path: poster.file_path,
+              type: 'poster',
+              url: getImageUrl(poster.file_path, 'w500')
+            });
+          }
+        });
+      }
+      
+      setAvailableImages(images);
+      
+      // Par défaut, sélectionner l'image principale du backdrop si disponible
+      if (movieDetails.backdrop_path) {
+        setSelectedCarouselImage(movieDetails.backdrop_path);
+      }
     }
     
     // Identifier les personnes qui ont plusieurs rôles
@@ -92,6 +152,14 @@ export default function FilmEditor({ movieDetails }) {
             // Précharger l'état "Film méconnu à voir"
             if (existingFilm.is_hidden_gem !== undefined) {
               setIsHiddenGem(existingFilm.is_hidden_gem);
+            }
+            
+            // Précharger l'image sélectionnée pour le carrousel principal
+            if (existingFilm.carousel_image_url) {
+              // Extraire le chemin de l'image à partir de l'URL complète
+              const urlParts = existingFilm.carousel_image_url.split('/');
+              const imagePath = '/' + urlParts[urlParts.length - 2] + '/' + urlParts[urlParts.length - 1];
+              setSelectedCarouselImage(imagePath);
             }
             
             // Précharger les MovieHunt's Picks
@@ -222,6 +290,7 @@ export default function FilmEditor({ movieDetails }) {
         synopsis: movieDetails.overview || '',
         poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
+        carousel_image_url: selectedCarouselImage ? getImageUrl(selectedCarouselImage, 'original') : (movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null),
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         date_ajout: new Date().toISOString(),
@@ -303,6 +372,42 @@ export default function FilmEditor({ movieDetails }) {
         </div>
       )}
 
+      {/* Sélection d'image pour le carrousel principal */}
+      <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <h2 className="text-2xl font-bold mb-4">Image pour le carrousel principal</h2>
+        <p className="text-gray-600 mb-4">Sélectionnez l'image qui sera utilisée pour le carrousel principal sur la page d'accueil.</p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          {availableImages.map((image, index) => (
+            <div 
+              key={index} 
+              className={`relative border-2 rounded-lg overflow-hidden cursor-pointer ${selectedCarouselImage === image.path ? 'border-blue-500' : 'border-gray-200'}`}
+              onClick={() => setSelectedCarouselImage(image.path)}
+            >
+              <div className="relative h-40 w-full">
+                <SafeImage
+                  src={image.url}
+                  alt={`Image ${index + 1} - ${image.type}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="absolute top-2 right-2 bg-gray-800 text-white text-xs px-2 py-1 rounded">
+                {image.type === 'poster' ? 'Affiche' : 'Backdrop'}
+              </div>
+              {selectedCarouselImage === image.path && (
+                <div className="absolute inset-0 bg-blue-500 bg-opacity-20 flex items-center justify-center">
+                  <div className="bg-blue-500 text-white rounded-full p-2">
+                    <FiCheck size={24} />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Poster */}
         <div className="md:col-span-1">

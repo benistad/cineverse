@@ -45,7 +45,7 @@ export const getMovieDetails = async (movieId) => {
     const response = await tmdbApi.get(`/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
-        append_to_response: 'credits,videos',
+        append_to_response: 'credits,videos,images',
       },
     });
     return response.data;

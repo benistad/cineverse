@@ -85,9 +85,13 @@ export default function FeaturedFilmsCarousel() {
                 {/* Image d'arrière-plan avec SafeImage */}
                 <div className="absolute inset-0">
                   <SafeImage
-                    src={film.backdrop_url 
-                      ? optimizeBackdropImage(film.backdrop_url)
-                      : optimizePosterImage(film.poster_url)}
+                    src={
+                      film.carousel_image_url 
+                        ? optimizeBackdropImage(film.carousel_image_url)
+                        : film.backdrop_url 
+                          ? optimizeBackdropImage(film.backdrop_url)
+                          : optimizePosterImage(film.poster_url)
+                    }
                     alt={film.title}
                     fill
                     width={1280}
