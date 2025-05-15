@@ -134,14 +134,12 @@ export default function Home() {
       <section className="py-10 text-center">
   <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-gray-900">
     <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
-    <span className="text-gray-800 font-semibold">Trouvez l’inspiration sur Movie Hunt</span>
+    <span className="text-gray-800 font-semibold">Trouvez l’inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
   </h1>
   <div className="flex justify-center my-4">
     <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
   </div>
-  <p className="max-w-xl mx-auto text-lg text-gray-600">
-    Explorez nos critiques, notes et sélections pour découvrir des films originaux ou méconnus à voir absolument. Movie Hunt, c’est votre boussole ciné pour ne plus jamais manquer d’idées !
-  </p>
+
 </section>
       {/* Préchargement des images critiques */}
       <PreloadCriticalImages imagePaths={criticalImagePaths} />
