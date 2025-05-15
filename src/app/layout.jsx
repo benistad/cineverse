@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
-        <title>Quel film regarder ? Découvrez Movie Hunt pour des critiques de films uniques</title>
+        <title>Movie Hunt • Quel film regarder ?</title>
         <meta name="description" content="Vous vous demandez quel film regarder ? Movie Hunt vous guide avec des critiques détaillées, des notes /10 et des recommandations de films méconnus. Explorez nos avis et trouvez le film parfait à visionner !" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
