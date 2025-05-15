@@ -131,6 +131,9 @@ export default function Home() {
 
   return (
     <div className="space-y-12">
+      <h1 className="text-4xl font-extrabold text-center mb-8">
+        Idée de film : quel film regarder ? Trouvez l’inspiration sur Movie Hunt
+      </h1>
       {/* Préchargement des images critiques */}
       <PreloadCriticalImages imagePaths={criticalImagePaths} />
       
