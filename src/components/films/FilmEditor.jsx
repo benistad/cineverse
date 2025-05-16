@@ -25,6 +25,7 @@ export default function FilmEditor({ movieDetails }) {
   const [whyWatchContent, setWhyWatchContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
   const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
+  const [existingFilmData, setExistingFilmData] = useState(null);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -75,6 +76,8 @@ export default function FilmEditor({ movieDetails }) {
         try {
           const existingFilm = await getFilmByTmdbId(movieDetails.id);
           if (existingFilm) {
+            // Stocker le film existant dans l'état
+            setExistingFilmData(existingFilm);
             // Précharger la note
             if (existingFilm.note_sur_10) {
               setRating(existingFilm.note_sur_10);
@@ -224,7 +227,8 @@ export default function FilmEditor({ movieDetails }) {
         carousel_image_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
-        date_ajout: new Date().toISOString(),
+        // Ne mettre à jour date_ajout que pour les nouveaux films
+        date_ajout: existingFilmData ? existingFilmData.date_ajout : new Date().toISOString(),
         // Ajouter la date de sortie du film
         release_date: movieDetails.release_date || null,
         why_watch_enabled: whyWatchEnabled,
