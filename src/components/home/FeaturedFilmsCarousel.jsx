@@ -208,13 +208,19 @@ export default function FeaturedFilmsCarousel() {
               {/* Badge Hunted by MovieHunt */}
               {film.is_hunted_by_moviehunt && (
                 <div className="absolute bottom-20 left-4 z-10">
-                  <img 
-                    src="/images/badges/hunted-badge.png" 
-                    alt="Hunted by MovieHunt" 
-                    width={133} 
-                    height={133}
-                    className="drop-shadow-md"
-                  />
+                  <Link 
+                    href="/huntedbymoviehunt" 
+                    className="block transition-transform hover:scale-110"
+                    title="En savoir plus sur Hunted by MovieHunt"
+                  >
+                    <img 
+                      src="/images/badges/hunted-badge.png" 
+                      alt="Hunted by MovieHunt" 
+                      width={133} 
+                      height={133}
+                      className="drop-shadow-md cursor-pointer"
+                    />
+                  </Link>
                 </div>
               )}
               

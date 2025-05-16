@@ -181,13 +181,19 @@ export default function FilmPageBySlug() {
               <h1 className="text-2xl sm:text-3xl font-bold">{film.title}</h1>
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
-                  <img 
-                    src="/images/badges/hunted-badge.png" 
-                    alt="Hunted by MovieHunt" 
-                    width={115} 
-                    height={115}
-                    className="drop-shadow-md"
-                  />
+                  <Link 
+                    href="/huntedbymoviehunt" 
+                    className="block transition-transform hover:scale-110"
+                    title="En savoir plus sur Hunted by MovieHunt"
+                  >
+                    <img 
+                      src="/images/badges/hunted-badge.png" 
+                      alt="Hunted by MovieHunt" 
+                      width={115} 
+                      height={115}
+                      className="drop-shadow-md cursor-pointer"
+                    />
+                  </Link>
                 </div>
               )}
             </div>

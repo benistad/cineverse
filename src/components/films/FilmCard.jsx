@@ -242,13 +242,19 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-base sm:text-lg font-bold line-clamp-1">{film.title || 'Sans titre'}</h3>
             {film.is_hunted_by_moviehunt && (
-              <Image 
-                src="/images/badges/hunted-badge.png" 
-                alt="Hunted by MovieHunt" 
-                width={windowWidth < 640 ? 50 : 62} 
-                height={windowWidth < 640 ? 50 : 62}
-                className="flex-shrink-0"
-              />
+              <Link 
+                href="/huntedbymoviehunt" 
+                onClick={(e) => e.stopPropagation()} 
+                className="flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
+                title="En savoir plus sur Hunted by MovieHunt"
+              >
+                <Image 
+                  src="/images/badges/hunted-badge.png" 
+                  alt="Hunted by MovieHunt" 
+                  width={windowWidth < 640 ? 50 : 62} 
+                  height={windowWidth < 640 ? 50 : 62}
+                />
+              </Link>
             )}
           </div>
           <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
