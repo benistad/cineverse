@@ -326,13 +326,14 @@ export async function saveFilm(film) {
       console.log('Mise à jour du film existant avec ID:', existingFilm.id);
       
       try {
-        // Essayer d'abord de mettre à jour sans l'URL du carrousel
-        const filmWithoutCarousel = { ...filmToSave };
-        delete filmWithoutCarousel.carousel_image_url;
+        // Essayer d'abord de mettre à jour sans les champs spéciaux
+        const filmWithoutSpecialFields = { ...filmToSave };
+        delete filmWithoutSpecialFields.carousel_image_url;
+        delete filmWithoutSpecialFields.is_hunted_by_moviehunt;
         
         const { data, error } = await supabase
           .from('films')
-          .update(filmWithoutCarousel)
+          .update(filmWithoutSpecialFields)
           .eq('id', existingFilm.id)
           .select()
           .single();
@@ -344,21 +345,29 @@ export async function saveFilm(film) {
         
         result = data;
         
-        // Si l'URL du carrousel existe, essayer de la mettre à jour séparément
-        if (filmToSave.carousel_image_url) {
-          console.log('Mise à jour de l\'URL du carrousel séparément');
+        // Si l'URL du carrousel ou is_hunted_by_moviehunt existe, essayer de les mettre à jour séparément
+        if (filmToSave.carousel_image_url || filmToSave.is_hunted_by_moviehunt !== undefined) {
+          console.log('Mise à jour des champs spéciaux séparément');
           
-          const { error: carouselError } = await supabase
+          const specialFields = {};
+          if (filmToSave.carousel_image_url) {
+            specialFields.carousel_image_url = filmToSave.carousel_image_url;
+          }
+          if (filmToSave.is_hunted_by_moviehunt !== undefined) {
+            specialFields.is_hunted_by_moviehunt = filmToSave.is_hunted_by_moviehunt;
+          }
+          
+          const { error: specialFieldsError } = await supabase
             .from('films')
-            .update({ carousel_image_url: filmToSave.carousel_image_url })
+            .update(specialFields)
             .eq('id', existingFilm.id);
           
-          if (carouselError) {
-            console.error('Erreur lors de la mise à jour de l\'URL du carrousel:', carouselError);
-            // Ne pas faire échouer toute la sauvegarde si seule l'URL du carrousel échoue
-            console.warn('La sauvegarde du film a réussi, mais l\'URL du carrousel n\'a pas pu être mise à jour');
+          if (specialFieldsError) {
+            console.error('Erreur lors de la mise à jour des champs spéciaux:', specialFieldsError);
+            // Ne pas faire échouer toute la sauvegarde si seuls les champs spéciaux échouent
+            console.warn('La sauvegarde du film a réussi, mais les champs spéciaux n\'ont pas pu être mis à jour');
           } else {
-            console.log('URL du carrousel mise à jour avec succès');
+            console.log('Champs spéciaux mis à jour avec succès');
           }
         }
         
