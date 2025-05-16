@@ -24,6 +24,7 @@ export default function FilmEditor({ movieDetails }) {
   const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
   const [whyWatchContent, setWhyWatchContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
+  const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -88,6 +89,10 @@ export default function FilmEditor({ movieDetails }) {
             // Précharger l'état "Film méconnu à voir"
             if (existingFilm.is_hidden_gem !== undefined) {
               setIsHiddenGem(existingFilm.is_hidden_gem);
+            }
+            // Précharger l'état "Hunted by MovieHunt"
+            if (existingFilm.is_hunted_by_moviehunt !== undefined) {
+              setIsHuntedByMovieHunt(existingFilm.is_hunted_by_moviehunt);
             }
             // Précharger les MovieHunt's Picks
             if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
@@ -219,6 +224,7 @@ export default function FilmEditor({ movieDetails }) {
         why_watch_enabled: whyWatchEnabled,
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
         is_hidden_gem: isHiddenGem,
+        is_hunted_by_moviehunt: isHuntedByMovieHunt,
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
@@ -379,6 +385,19 @@ export default function FilmEditor({ movieDetails }) {
                 <span className="ml-2">Marquer comme "Film méconnu à voir"</span>
               </label>
               <p className="text-sm text-gray-500 mt-1 ml-7">Ce film apparaîtra dans la section "Films méconnus à voir" sur la page d'accueil.</p>
+            </div>
+            
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={isHuntedByMovieHunt}
+                  onChange={(e) => setIsHuntedByMovieHunt(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+                <span className="ml-2">Hunted by MovieHunt</span>
+              </label>
+              <p className="text-sm text-gray-500 mt-1 ml-7">Un badge "Hunted" sera affiché sur l'affiche du film.</p>
             </div>
             
             {whyWatchEnabled && (

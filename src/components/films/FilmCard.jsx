@@ -6,6 +6,7 @@ import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiEdit, FiInstagram } from 'react-icons/fi';
+import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 
 // Fonction utilitaire pour tronquer le texte
@@ -217,6 +218,19 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       {showRating && film.note_sur_10 !== undefined && (
         <div className="absolute top-2 right-2 z-10">
           <RatingIcon rating={film.note_sur_10} size={windowWidth < 640 ? 32 : 40} />
+        </div>
+      )}
+      
+      {/* Badge Hunted by MovieHunt */}
+      {film.is_hunted_by_moviehunt && (
+        <div className="absolute bottom-2 left-2 z-10">
+          <Image 
+            src="/images/hunted-badge/hunted-badge.png" 
+            alt="Hunted by MovieHunt" 
+            width={windowWidth < 640 ? 60 : 80} 
+            height={windowWidth < 640 ? 60 : 80}
+            className="drop-shadow-md"
+          />
         </div>
       )}
       

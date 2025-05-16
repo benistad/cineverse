@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond du badge -->
+  <circle cx="60" cy="60" r="55" fill="#1e40af" />
+  <circle cx="60" cy="60" r="50" fill="#2563eb" />
+  
+  <!-- Texte "HUNTED" -->
+  <text x="60" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">HUNTED</text>
+  
+  <!-- Texte "by" -->
+  <text x="60" y="70" font-family="Arial, sans-serif" font-size="12" font-weight="normal" text-anchor="middle" fill="white">by</text>
+  
+  <!-- Texte "MOVIEHUNT" -->
+  <text x="60" y="90" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">MOVIEHUNT</text>
+</svg>
