@@ -226,6 +226,7 @@ export async function getFilmBySlug(slug) {
  */
 export async function getFilmByTmdbId(tmdbId) {
   try {
+    console.log(`Début de getFilmByTmdbId pour tmdbId: ${tmdbId}`);
     const supabase = getSupabaseClient();
     // Récupérer le film
     const { data: film, error } = await supabase
@@ -329,7 +330,8 @@ export async function saveFilm(film) {
         // Essayer d'abord de mettre à jour sans les champs spéciaux
         const filmWithoutSpecialFields = { ...filmToSave };
         delete filmWithoutSpecialFields.carousel_image_url;
-        delete filmWithoutSpecialFields.is_hunted_by_moviehunt;
+        // Ne pas supprimer is_hunted_by_moviehunt pour qu'il soit inclus dans la mise à jour principale
+        // delete filmWithoutSpecialFields.is_hunted_by_moviehunt;
         
         const { data, error } = await supabase
           .from('films')
@@ -349,13 +351,16 @@ export async function saveFilm(film) {
         if (filmToSave.carousel_image_url || filmToSave.is_hunted_by_moviehunt !== undefined) {
           console.log('Mise à jour des champs spéciaux séparément');
           
-          const specialFields = {};
+          // Toujours inclure is_hunted_by_moviehunt, même s'il est false
+          const specialFields = {
+            is_hunted_by_moviehunt: filmToSave.is_hunted_by_moviehunt === undefined ? false : filmToSave.is_hunted_by_moviehunt
+          };
+          
           if (filmToSave.carousel_image_url) {
             specialFields.carousel_image_url = filmToSave.carousel_image_url;
           }
-          if (filmToSave.is_hunted_by_moviehunt !== undefined) {
-            specialFields.is_hunted_by_moviehunt = filmToSave.is_hunted_by_moviehunt;
-          }
+          
+          console.log('Champs spéciaux à mettre à jour:', specialFields);
           
           const { error: specialFieldsError } = await supabase
             .from('films')

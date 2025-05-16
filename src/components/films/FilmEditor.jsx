@@ -91,8 +91,12 @@ export default function FilmEditor({ movieDetails }) {
               setIsHiddenGem(existingFilm.is_hidden_gem);
             }
             // Précharger l'état "Hunted by MovieHunt"
+            console.log('Valeur is_hunted_by_moviehunt dans existingFilm:', existingFilm.is_hunted_by_moviehunt);
             if (existingFilm.is_hunted_by_moviehunt !== undefined) {
               setIsHuntedByMovieHunt(existingFilm.is_hunted_by_moviehunt);
+              console.log('is_hunted_by_moviehunt défini, valeur:', existingFilm.is_hunted_by_moviehunt);
+            } else {
+              console.log('is_hunted_by_moviehunt non défini dans les données du film');
             }
             // Précharger les MovieHunt's Picks
             if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
@@ -227,11 +231,12 @@ export default function FilmEditor({ movieDetails }) {
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
         is_hidden_gem: isHiddenGem,
         is_hunted_by_moviehunt: isHuntedByMovieHunt,
+        updated_at: new Date().toISOString(),
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
       
-      // Log des données complètes du film avant sauvegarde
+      console.log('Valeur is_hunted_by_moviehunt avant sauvegarde:', isHuntedByMovieHunt);
       console.log('Données du film à sauvegarder:', filmData);
 
       // Sauvegarder le film
