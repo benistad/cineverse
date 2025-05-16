@@ -327,12 +327,29 @@ export async function saveFilm(film) {
       console.log('Mise à jour du film existant avec ID:', existingFilm.id);
       
       try {
-        // Mettre à jour tous les champs en une seule fois
-        console.log('Mise à jour du film avec tous les champs, y compris is_hunted_by_moviehunt:', filmToSave.is_hunted_by_moviehunt);
+        // Ne sélectionner que les champs essentiels pour éviter les erreurs 400
+        const essentialFields = {
+          title: filmToSave.title,
+          slug: filmToSave.slug,
+          synopsis: filmToSave.synopsis,
+          poster_url: filmToSave.poster_url,
+          backdrop_url: filmToSave.backdrop_url,
+          note_sur_10: filmToSave.note_sur_10,
+          youtube_trailer_key: filmToSave.youtube_trailer_key,
+          why_watch_enabled: filmToSave.why_watch_enabled,
+          why_watch_content: filmToSave.why_watch_content,
+          is_hidden_gem: filmToSave.is_hidden_gem,
+          is_hunted_by_moviehunt: filmToSave.is_hunted_by_moviehunt,
+          genres: filmToSave.genres,
+          release_date: filmToSave.release_date
+        };
+        
+        console.log('Mise à jour du film avec les champs essentiels uniquement');
+        console.log('Valeur is_hunted_by_moviehunt:', essentialFields.is_hunted_by_moviehunt);
         
         const { data, error } = await supabase
           .from('films')
-          .update(filmToSave)
+          .update(essentialFields)
           .eq('id', existingFilm.id)
           .select()
           .single();
