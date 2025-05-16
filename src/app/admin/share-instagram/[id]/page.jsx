@@ -139,12 +139,26 @@ export default function ShareInstagramPage() {
             <h2 className="text-lg font-semibold mb-3">1. Télécharger l'affiche</h2>
             <div className="relative aspect-[2/3] w-full max-w-sm mx-auto mb-4 border rounded overflow-hidden">
               {film.poster_url && (
-                <Image
-                  src={film.poster_url.startsWith('http') ? film.poster_url : `https://www.moviehunt.fr${film.poster_url}`}
-                  alt={film.title}
-                  fill
-                  className="object-cover"
-                />
+                <>
+                  <Image
+                    src={film.poster_url.startsWith('http') ? film.poster_url : `https://www.moviehunt.fr${film.poster_url}`}
+                    alt={film.title}
+                    fill
+                    className="object-cover"
+                  />
+                  {film.is_hunted_by_moviehunt && (
+                    <div className="absolute top-2 left-2 z-10">
+                      <Image 
+                        src="/images/badges/hunted-badge.png" 
+                        alt="Hunted by MovieHunt" 
+                        width={80} 
+                        height={80}
+                        className="w-auto h-auto" 
+                        style={{ transform: 'scale(0.6)' }}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
             <button

@@ -28,6 +28,7 @@ function AdvancedSearch() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedRatings, setSelectedRatings] = useState([]);
   const [selectedYears, setSelectedYears] = useState([]);
+  const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
   
   // État pour les résultats et le chargement
   const [films, setFilms] = useState([]);
@@ -42,7 +43,8 @@ function AdvancedSearch() {
   const [expandedFilters, setExpandedFilters] = useState({
     genres: true,
     ratings: true,
-    years: true
+    years: true,
+    hunted: true
   });
 
   // Fonction pour récupérer les années des films déjà notés et publiés
@@ -91,17 +93,19 @@ function AdvancedSearch() {
     const genres = searchParams.get('genres')?.split(',') || [];
     const ratings = searchParams.get('ratings')?.split(',').map(Number) || [];
     const years = searchParams.get('years')?.split(',').map(Number) || [];
+    const hunted = searchParams.get('hunted') === 'true';
     
     setSelectedGenres(genres);
     setSelectedRatings(ratings);
     setSelectedYears(years);
+    setIsHuntedByMovieHunt(hunted);
     
     // Récupérer les années disponibles
     fetchAvailableYears();
     
     // Si des filtres sont présents, lancer la recherche
-    if (genres.length > 0 || ratings.length > 0 || years.length > 0) {
-      searchFilms(genres, ratings, years);
+    if (genres.length > 0 || ratings.length > 0 || years.length > 0 || hunted) {
+      searchFilms(genres, ratings, years, hunted);
     }
   }, [searchParams]);
 
@@ -141,9 +145,14 @@ function AdvancedSearch() {
       ? selectedYears.filter(y => y !== year)
       : [...selectedYears, year];
     setSelectedYears(newSelectedYears);
-    
-    // Mettre à jour l'URL et lancer la recherche automatiquement
-    updateUrlAndSearch(selectedGenres, selectedRatings, newSelectedYears);
+    updateUrlAndSearch(selectedGenres, selectedRatings, newSelectedYears, isHuntedByMovieHunt);
+  };
+
+  // Fonction pour basculer le filtre Hunted by MovieHunt
+  const toggleHuntedByMovieHunt = () => {
+    const newValue = !isHuntedByMovieHunt;
+    setIsHuntedByMovieHunt(newValue);
+    updateUrlAndSearch(selectedGenres, selectedRatings, selectedYears, newValue);
   };
 
   // Fonction pour effacer tous les filtres
@@ -151,7 +160,10 @@ function AdvancedSearch() {
     setSelectedGenres([]);
     setSelectedRatings([]);
     setSelectedYears([]);
-    router.push('/advanced-search');
+    setIsHuntedByMovieHunt(false);
+    
+    // Mettre à jour l'URL et lancer la recherche automatiquement
+    updateUrlAndSearch([], [], [], false);
     
     // Réinitialiser les résultats
     setFilms([]);
@@ -159,7 +171,7 @@ function AdvancedSearch() {
   };
 
   // Fonction pour mettre à jour l'URL et lancer la recherche
-  const updateUrlAndSearch = (genres, ratings, years) => {
+  const updateUrlAndSearch = (genres, ratings, years, hunted = false) => {
     // Construire l'URL avec les paramètres de recherche
     let params = new URLSearchParams();
     
@@ -175,16 +187,20 @@ function AdvancedSearch() {
       params.set('years', years.join(','));
     }
     
+    if (hunted) {
+      params.set('hunted', 'true');
+    }
+    
     // Mettre à jour l'URL sans recharger la page
     const newUrl = `/advanced-search${params.toString() ? `?${params.toString()}` : ''}`;
     window.history.pushState({}, '', newUrl);
     
     // Lancer la recherche
-    searchFilms(genres, ratings, years);
+    searchFilms(genres, ratings, years, hunted);
   };
 
   // Fonction pour rechercher les films avec les filtres
-  const searchFilms = async (genres, ratings, years) => {
+  const searchFilms = async (genres, ratings, years, hunted = false) => {
     setLoading(true);
     
     try {
@@ -203,6 +219,11 @@ function AdvancedSearch() {
       // Appliquer les filtres de notes
       if (ratings.length > 0) {
         query = query.in('note_sur_10', ratings);
+      }
+      
+      // Appliquer le filtre Hunted by MovieHunt
+      if (hunted) {
+        query = query.eq('is_hunted_by_moviehunt', true);
       }
       
       // Trier par note décroissante
@@ -326,7 +347,7 @@ function AdvancedSearch() {
           </div>
           
           {/* Filtre par années */}
-          <div className="mb-4">
+          <div className="mb-4 border-b pb-4">
             <button 
               className="flex justify-between items-center w-full text-left font-medium mb-2"
               onClick={() => toggleFilter('years')}
@@ -360,6 +381,32 @@ function AdvancedSearch() {
                 ) : (
                   <p className="text-gray-500 text-sm py-2">Aucune année disponible</p>
                 )}
+              </div>
+            )}
+          </div>
+          
+          {/* Filtre Hunted by MovieHunt */}
+          <div className="mb-4">
+            <button 
+              className="flex justify-between items-center w-full text-left font-medium mb-2"
+              onClick={() => toggleFilter('hunted')}
+            >
+              Hunted by MovieHunt
+              {expandedFilters.hunted ? <FiChevronUp /> : <FiChevronDown />}
+            </button>
+            
+            {expandedFilters.hunted && (
+              <div className="mt-2">
+                <button
+                  onClick={toggleHuntedByMovieHunt}
+                  className={`px-4 py-2 rounded-lg flex items-center ${isHuntedByMovieHunt ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                >
+                  <span className="mr-2">{isHuntedByMovieHunt ? '✓' : ''}</span>
+                  Afficher uniquement les films Hunted
+                </button>
+                <p className="text-sm text-gray-500 mt-2">
+                  Films sélectionnés par l'équipe de MovieHunt
+                </p>
               </div>
             )}
           </div>
