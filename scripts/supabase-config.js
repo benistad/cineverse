@@ -4,8 +4,8 @@
  */
 
 export const SOURCE_SUPABASE = {
-  url: 'https://ynumbbsdniheeqktblyq.supabase.co', // URL de votre instance source (USA)
-  key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InludW1iYnNkbmloZWVxa3RibHlxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjYyMDQ3NCwiZXhwIjoyMDYyMTk2NDc0fQ.IliW3hcB4RNQwD6mXzkRaIc4C7usCcz3-xd5_fL87lU' // Clé de service de votre instance source
+  url: 'https://rqdzztobbwmffakqixar.supabase.co', // URL de votre instance Supabase
+  key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJxZHp6dG9iYndtZmZha3FpeGFyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NzExMTIzOCwiZXhwIjoyMDYyNjg3MjM4fQ.O5lwnuYfEsgqNH949Fl0wrTv1wAas9tuwOdV52kxMmU' // Clé de service de votre instance Supabase
 };
 
 export const DESTINATION_SUPABASE = {
