@@ -245,8 +245,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
               <Image 
                 src="/images/badges/hunted-badge.png" 
                 alt="Hunted by MovieHunt" 
-                width={windowWidth < 640 ? 40 : 50} 
-                height={windowWidth < 640 ? 40 : 50}
+                width={windowWidth < 640 ? 50 : 62} 
+                height={windowWidth < 640 ? 50 : 62}
                 className="flex-shrink-0"
               />
             )}

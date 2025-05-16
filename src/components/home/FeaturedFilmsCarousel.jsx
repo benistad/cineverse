@@ -211,8 +211,8 @@ export default function FeaturedFilmsCarousel() {
                   <img 
                     src="/images/badges/hunted-badge.png" 
                     alt="Hunted by MovieHunt" 
-                    width={100} 
-                    height={100}
+                    width={133} 
+                    height={133}
                     className="drop-shadow-md"
                   />
                 </div>
