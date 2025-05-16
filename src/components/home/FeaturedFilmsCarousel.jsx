@@ -205,6 +205,19 @@ export default function FeaturedFilmsCarousel() {
                 <RatingIcon rating={film.note_sur_10} size={64} />
               </div>
               
+              {/* Badge Hunted by MovieHunt */}
+              {film.is_hunted_by_moviehunt && (
+                <div className="absolute bottom-20 left-4 z-10">
+                  <img 
+                    src="/images/badges/hunted-badge.png" 
+                    alt="Hunted by MovieHunt" 
+                    width={100} 
+                    height={100}
+                    className="drop-shadow-md"
+                  />
+                </div>
+              )}
+              
               {/* Contenu du film */}
               <Link href={`/films/${film.slug || film.id}`}>
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
