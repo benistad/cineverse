@@ -288,6 +288,32 @@ function AdvancedSearch() {
             )}
           </div>
           
+          {/* Filtre Hunted by MovieHunt */}
+          <div className="mb-4 border-b pb-4">
+            <button 
+              className="flex justify-between items-center w-full text-left font-medium mb-2"
+              onClick={() => toggleFilter('hunted')}
+            >
+              Hunted by MovieHunt
+              {expandedFilters.hunted ? <FiChevronUp /> : <FiChevronDown />}
+            </button>
+            
+            {expandedFilters.hunted && (
+              <div className="mt-2">
+                <button
+                  onClick={toggleHuntedByMovieHunt}
+                  className={`px-4 py-2 rounded-lg flex items-center ${isHuntedByMovieHunt ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                >
+                  <span className="mr-2">{isHuntedByMovieHunt ? '✓' : ''}</span>
+                  Afficher uniquement les films Hunted
+                </button>
+                <p className="text-sm text-gray-500 mt-2">
+                  Films sélectionnés par l'équipe de MovieHunt
+                </p>
+              </div>
+            )}
+          </div>
+          
           {/* Filtre par genres */}
           <div className="mb-4 border-b pb-4">
             <button 
@@ -385,31 +411,6 @@ function AdvancedSearch() {
             )}
           </div>
           
-          {/* Filtre Hunted by MovieHunt */}
-          <div className="mb-4">
-            <button 
-              className="flex justify-between items-center w-full text-left font-medium mb-2"
-              onClick={() => toggleFilter('hunted')}
-            >
-              Hunted by MovieHunt
-              {expandedFilters.hunted ? <FiChevronUp /> : <FiChevronDown />}
-            </button>
-            
-            {expandedFilters.hunted && (
-              <div className="mt-2">
-                <button
-                  onClick={toggleHuntedByMovieHunt}
-                  className={`px-4 py-2 rounded-lg flex items-center ${isHuntedByMovieHunt ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
-                >
-                  <span className="mr-2">{isHuntedByMovieHunt ? '✓' : ''}</span>
-                  Afficher uniquement les films Hunted
-                </button>
-                <p className="text-sm text-gray-500 mt-2">
-                  Films sélectionnés par l'équipe de MovieHunt
-                </p>
-              </div>
-            )}
-          </div>
           
           {/* Indicateur de recherche automatique */}
           <div className="w-full py-2 text-center text-sm text-gray-600 italic">
