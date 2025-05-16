@@ -216,6 +216,8 @@ export default function FilmEditor({ movieDetails }) {
         synopsis: movieDetails.overview || '',
         poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
+        // S'assurer que carousel_image_url est inclus, utiliser backdrop_url par défaut si non défini
+        carousel_image_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         date_ajout: new Date().toISOString(),
