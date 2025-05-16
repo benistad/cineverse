@@ -184,8 +184,8 @@ export default function FilmPageBySlug() {
                   <img 
                     src="/images/badges/hunted-badge.png" 
                     alt="Hunted by MovieHunt" 
-                    width={50} 
-                    height={50}
+                    width={115} 
+                    height={115}
                     className="drop-shadow-md"
                   />
                 </div>

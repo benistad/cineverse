@@ -221,18 +221,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         </div>
       )}
       
-      {/* Badge Hunted by MovieHunt */}
-      {film.is_hunted_by_moviehunt && (
-        <div className="absolute top-2 left-2 z-10">
-          <Image 
-            src="/images/badges/hunted-badge.png" 
-            alt="Hunted by MovieHunt" 
-            width={windowWidth < 640 ? 50 : 60} 
-            height={windowWidth < 640 ? 50 : 60}
-            className="drop-shadow-md"
-          />
-        </div>
-      )}
+      {/* Badge Hunted by MovieHunt - Supprimé d'ici et déplacé à côté du titre */}
       
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
@@ -250,7 +239,18 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         </div>
         
         <div className="p-3 sm:p-4 flex-grow">
-          <h3 className="text-base sm:text-lg font-bold mb-1 line-clamp-1">{film.title || 'Sans titre'}</h3>
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="text-base sm:text-lg font-bold line-clamp-1">{film.title || 'Sans titre'}</h3>
+            {film.is_hunted_by_moviehunt && (
+              <Image 
+                src="/images/badges/hunted-badge.png" 
+                alt="Hunted by MovieHunt" 
+                width={windowWidth < 640 ? 20 : 25} 
+                height={windowWidth < 640 ? 20 : 25}
+                className="flex-shrink-0"
+              />
+            )}
+          </div>
           <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
             {extractYear(film.release_date) || extractYear(film.date_ajout)}
             {film.genres && <span> • <span className="line-clamp-1">{film.genres}</span></span>}
