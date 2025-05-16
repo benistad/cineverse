@@ -177,7 +177,20 @@ export default function FilmPageBySlug() {
           
           {/* Informations du film */}
           <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">{film.title}</h1>
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold">{film.title}</h1>
+              {film.is_hunted_by_moviehunt && (
+                <div className="flex-shrink-0">
+                  <img 
+                    src="/images/badges/hunted-badge.png" 
+                    alt="Hunted by MovieHunt" 
+                    width={50} 
+                    height={50}
+                    className="drop-shadow-md"
+                  />
+                </div>
+              )}
+            </div>
             
             <div className="flex flex-wrap items-center mb-4 text-gray-700">
               {film.release_date && (

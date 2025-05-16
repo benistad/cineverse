@@ -223,12 +223,12 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       
       {/* Badge Hunted by MovieHunt */}
       {film.is_hunted_by_moviehunt && (
-        <div className="absolute bottom-2 left-2 z-10">
+        <div className="absolute top-2 left-2 z-10">
           <Image 
             src="/images/badges/hunted-badge.png" 
             alt="Hunted by MovieHunt" 
-            width={windowWidth < 640 ? 60 : 80} 
-            height={windowWidth < 640 ? 60 : 80}
+            width={windowWidth < 640 ? 50 : 60} 
+            height={windowWidth < 640 ? 50 : 60}
             className="drop-shadow-md"
           />
         </div>
