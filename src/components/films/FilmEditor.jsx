@@ -231,7 +231,6 @@ export default function FilmEditor({ movieDetails }) {
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
         is_hidden_gem: isHiddenGem,
         is_hunted_by_moviehunt: isHuntedByMovieHunt,
-        updated_at: new Date().toISOString(),
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };

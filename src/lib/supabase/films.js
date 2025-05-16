@@ -327,54 +327,23 @@ export async function saveFilm(film) {
       console.log('Mise à jour du film existant avec ID:', existingFilm.id);
       
       try {
-        // Essayer d'abord de mettre à jour sans les champs spéciaux
-        const filmWithoutSpecialFields = { ...filmToSave };
-        delete filmWithoutSpecialFields.carousel_image_url;
-        // Ne pas supprimer is_hunted_by_moviehunt pour qu'il soit inclus dans la mise à jour principale
-        // delete filmWithoutSpecialFields.is_hunted_by_moviehunt;
+        // Mettre à jour tous les champs en une seule fois
+        console.log('Mise à jour du film avec tous les champs, y compris is_hunted_by_moviehunt:', filmToSave.is_hunted_by_moviehunt);
         
         const { data, error } = await supabase
           .from('films')
-          .update(filmWithoutSpecialFields)
+          .update(filmToSave)
           .eq('id', existingFilm.id)
           .select()
           .single();
         
         if (error) {
-          console.error('Erreur lors de la mise à jour du film sans carousel_image_url:', error);
+          console.error('Erreur lors de la mise à jour du film:', error);
           throw error;
         }
         
         result = data;
-        
-        // Si l'URL du carrousel ou is_hunted_by_moviehunt existe, essayer de les mettre à jour séparément
-        if (filmToSave.carousel_image_url || filmToSave.is_hunted_by_moviehunt !== undefined) {
-          console.log('Mise à jour des champs spéciaux séparément');
-          
-          // Toujours inclure is_hunted_by_moviehunt, même s'il est false
-          const specialFields = {
-            is_hunted_by_moviehunt: filmToSave.is_hunted_by_moviehunt === undefined ? false : filmToSave.is_hunted_by_moviehunt
-          };
-          
-          if (filmToSave.carousel_image_url) {
-            specialFields.carousel_image_url = filmToSave.carousel_image_url;
-          }
-          
-          console.log('Champs spéciaux à mettre à jour:', specialFields);
-          
-          const { error: specialFieldsError } = await supabase
-            .from('films')
-            .update(specialFields)
-            .eq('id', existingFilm.id);
-          
-          if (specialFieldsError) {
-            console.error('Erreur lors de la mise à jour des champs spéciaux:', specialFieldsError);
-            // Ne pas faire échouer toute la sauvegarde si seuls les champs spéciaux échouent
-            console.warn('La sauvegarde du film a réussi, mais les champs spéciaux n\'ont pas pu être mis à jour');
-          } else {
-            console.log('Champs spéciaux mis à jour avec succès');
-          }
-        }
+        console.log('Film mis à jour avec succès, y compris is_hunted_by_moviehunt:', data.is_hunted_by_moviehunt);
         
         console.log('Film mis à jour avec succès');
       } catch (updateError) {
