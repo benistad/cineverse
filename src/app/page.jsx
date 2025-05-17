@@ -132,9 +132,9 @@ export default function Home() {
   return (
     <div className="space-y-2">
       <section className="py-0 text-center mt-[-20px]">
-  <h1 className="text-2xl md:text-3xl font-extrabold mb-1 text-gray-900">
+  <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900">
     <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
-    <span className="text-gray-800 font-semibold">Trouvez l’inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
+    <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
   </h1>
   <div className="flex justify-center my-1">
     <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
