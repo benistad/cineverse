@@ -148,20 +148,31 @@ export default function ShareInstagramPage() {
                   />
                   {film.is_hunted_by_moviehunt && (
                     <div className="absolute top-2 left-2 z-10">
-                      <Link 
-                        href="/huntedbymoviehunt" 
-                        className="block transition-transform hover:scale-110"
-                        title="En savoir plus sur Hunted by MovieHunt"
-                      >
+                      {typeof Link !== 'undefined' ? (
+                        <Link 
+                          href="/huntedbymoviehunt" 
+                          className="block transition-transform hover:scale-110"
+                          title="En savoir plus sur Hunted by MovieHunt"
+                        >
+                          <Image 
+                            src="/images/badges/hunted-badge.png" 
+                            alt="Hunted by MovieHunt" 
+                            width={80} 
+                            height={80}
+                            className="w-auto h-auto cursor-pointer" 
+                            style={{ transform: 'scale(0.6)' }}
+                          />
+                        </Link>
+                      ) : (
                         <Image 
                           src="/images/badges/hunted-badge.png" 
                           alt="Hunted by MovieHunt" 
                           width={80} 
                           height={80}
-                          className="w-auto h-auto cursor-pointer" 
+                          className="w-auto h-auto" 
                           style={{ transform: 'scale(0.6)' }}
                         />
-                      </Link>
+                      )}
                     </div>
                   )}
                 </>

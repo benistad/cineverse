@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { createBrowserClient } from '@supabase/ssr';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
@@ -181,19 +182,29 @@ export default function FilmPageBySlug() {
               <h1 className="text-2xl sm:text-3xl font-bold">{film.title}</h1>
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
-                  <Link 
-                    href="/huntedbymoviehunt" 
-                    className="block transition-transform hover:scale-110"
-                    title="En savoir plus sur Hunted by MovieHunt"
-                  >
+                  {typeof Link !== 'undefined' ? (
+                    <Link 
+                      href="/huntedbymoviehunt" 
+                      className="block transition-transform hover:scale-110"
+                      title="En savoir plus sur Hunted by MovieHunt"
+                    >
+                      <img 
+                        src="/images/badges/hunted-badge.png" 
+                        alt="Hunted by MovieHunt" 
+                        width={115} 
+                        height={115}
+                        className="drop-shadow-md cursor-pointer"
+                      />
+                    </Link>
+                  ) : (
                     <img 
                       src="/images/badges/hunted-badge.png" 
                       alt="Hunted by MovieHunt" 
                       width={115} 
                       height={115}
-                      className="drop-shadow-md cursor-pointer"
+                      className="drop-shadow-md"
                     />
-                  </Link>
+                  )}
                 </div>
               )}
             </div>
