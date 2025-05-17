@@ -30,7 +30,7 @@ const extractYear = (dateString) => {
 const prepareInstagramCaption = (film) => {
   const year = film.release_date ? new Date(film.release_date).getFullYear() : '';
   const genres = film.genres ? film.genres.split(',')[0] : '';
-  const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + (film.synopsis.length > 150 ? '...' : '') : '';
+  const synopsis = film.synopsis || '';
   
   return `🎥 ${film.title} ${year ? `(${year})` : ''}
 ⭐ Note: ${film.note_sur_10}/10
