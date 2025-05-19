@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
         <meta name="msapplication-TileColor" content="#1e293b" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
+        {/* La balise canonique est gérée par le composant MetaTags pour chaque page */}
         
         {/* Google tag (gtag.js) - Implémentation directe de la balise fournie par Google */}
         <Script
