@@ -31,7 +31,7 @@ export default async function sitemap() {
     {
       url: `${baseUrl}/quel-film-regarder`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'yearly',
       priority: 0.9,
     },
   ];

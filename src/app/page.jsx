@@ -140,6 +140,18 @@ export default function Home() {
   <div className="flex justify-center my-1">
     <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
   </div>
+  <div className="mt-3 mb-2">
+    <Link 
+      href="/quel-film-regarder" 
+      className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
+      style={{ backgroundColor: '#4A68D9' }}
+    >
+      Découvrir nos suggestions de films
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+      </svg>
+    </Link>
+  </div>
 
 </section>
       {/* Préchargement des images critiques */}
