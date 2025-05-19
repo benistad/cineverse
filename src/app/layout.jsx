@@ -90,11 +90,16 @@ export default function RootLayout({ children }) {
         <meta name="twitter:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="twitter:image" content="/images/og-image.jpg" />
         
-        {/* Liens vers les ressources importantes */}
+        {/* Favicons et icônes pour différentes plateformes */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/images/favicon.ico" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon.ico" />
+        <link rel="icon" href="/images/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/images/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" sizes="180x180" />
+        <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#1e293b" />
+        <meta name="msapplication-TileImage" content="/images/mstile-144x144.png" />
+        <meta name="msapplication-TileColor" content="#1e293b" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <link rel="manifest" href="/site.webmanifest" />
         <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         
         {/* Google tag (gtag.js) - Implémentation directe de la balise fournie par Google */}
