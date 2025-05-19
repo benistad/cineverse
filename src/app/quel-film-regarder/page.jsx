@@ -98,15 +98,12 @@ export default function QuelFilmRegarder() {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/split">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bqb9WsmZmDITzVQAYKpsLNXRVd.jpg" 
-                      alt="Affiche du film Split" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
-                      priority
-                    />
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-blue-600 flex items-center justify-center text-white p-4 text-center">
+                    <div>
+                      <div className="text-4xl mb-2">🎬</div>
+                      <div className="font-bold">Split</div>
+                      <div className="text-sm">(2016)</div>
+                    </div>
                   </div>
                 </Link>
               </div>
@@ -163,14 +160,12 @@ export default function QuelFilmRegarder() {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/les-banshees-dinisherin">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4yFG6cSPaCaPhyJ1vtGOtMD1ymi.jpg" 
-                      alt="Affiche du film Les Banshees d'Inisherin" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
-                    />
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-green-600 flex items-center justify-center text-white p-4 text-center">
+                    <div>
+                      <div className="text-4xl mb-2">🎭</div>
+                      <div className="font-bold">Les Banshees d'Inisherin</div>
+                      <div className="text-sm">(2022)</div>
+                    </div>
                   </div>
                 </Link>
               </div>
