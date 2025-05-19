@@ -1,0 +1,10 @@
+Ce dossier contient les affiches des films pour la page "Quel film regarder?".
+
+Les noms de fichiers attendus sont :
+- fall.jpg
+- split.jpg
+- 1917.jpg
+- les-banshees-d-inisherin.jpg
+- game-night.jpg
+
+Veuillez ajouter ces images dans ce dossier pour que les affiches s'affichent correctement sur la page.
