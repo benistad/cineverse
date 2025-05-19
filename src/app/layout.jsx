@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
-        <title>Movie Hunt • Quel film regarder ?</title>
+        {/* Le titre est géré par les métadonnées de chaque page */}
         <meta name="description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />

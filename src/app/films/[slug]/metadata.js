@@ -76,10 +76,13 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error('Erreur lors de la génération des métadonnées:', error);
     
-    // Métadonnées par défaut en cas d'erreur
+    // Métadonnées par défaut en cas d'erreur, en incluant le slug pour éviter les titres dupliqués
     return {
-      title: 'MovieHunt | Découvrez des films exceptionnels',
-      description: 'MovieHunt est le site pour savoir quel film regarder et découvrir des perles rares.',
+      title: `Erreur de chargement (${slug}) | MovieHunt`,
+      description: 'Une erreur est survenue lors du chargement des informations de ce film. Veuillez réessayer ultérieurement.',
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/films/${slug}`,
+      },
     };
   }
 }
