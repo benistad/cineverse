@@ -34,13 +34,22 @@ export default async function sitemap() {
     // Récupérer tous les films pour générer leurs URLs
     const films = await getAllFilmsForSitemap();
     
-    // Générer les URLs pour chaque film
-    const filmPages = films.map((film) => ({
-      url: `${baseUrl}/films/${film.slug || film.id}`,
-      lastModified: new Date(film.date_ajout),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    }));
+    // Générer les URLs pour chaque film en utilisant prioritairement les slugs
+    const filmPages = films.map((film) => {
+      // S'assurer que chaque film a un slug valide
+      const slug = film.slug || (film.title ? film.title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/--+/g, '-') : film.id);
+      
+      return {
+        url: `${baseUrl}/films/${slug}`,
+        lastModified: new Date(film.date_ajout),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      };
+    });
     
     // Combiner les pages statiques et les pages de films
     return [...staticPages, ...filmPages];
