@@ -100,7 +100,7 @@ export default function QuelFilmRegarder() {
                 <Link href="/films/split">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
                     <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/rXMWOZiCt6eMX22jWuTOSdQ98bY.jpg" 
+                      src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/bqb9WsmZmDITzVQAYKpsLNXRVd.jpg" 
                       alt="Affiche du film Split" 
                       fill 
                       sizes="(max-width: 768px) 100vw, 25vw"
@@ -165,7 +165,7 @@ export default function QuelFilmRegarder() {
                 <Link href="/films/les-banshees-dinisherin">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
                     <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/aQs2JO7kWxITG45KYZQcnsjnRYk.jpg" 
+                      src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/4yFG6cSPaCaPhyJ1vtGOtMD1ymi.jpg" 
                       alt="Affiche du film Les Banshees d'Inisherin" 
                       fill 
                       sizes="(max-width: 768px) 100vw, 25vw"
