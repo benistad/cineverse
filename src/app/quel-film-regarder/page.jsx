@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
+import SafeImage from '@/components/ui/SafeImage';
 
 export default function QuelFilmRegarder() {
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
@@ -60,14 +62,30 @@ export default function QuelFilmRegarder() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold">🔥 Pour un film haletant et intense :</h2>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
-              <h3 className="text-xl font-semibold">🎥 Fall (2022)</h3>
-              <p className="my-3">
-                Deux amies se retrouvent piégées en haut d&apos;une tour de plus de 600 mètres. Tension maximale, vertige garanti.
-              </p>
-              <Link href="/films/fall" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                👉 Voir la fiche sur MovieHunt
-              </Link>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/4 flex-shrink-0">
+                <Link href="/films/fall">
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w500/9f5sIJEgvUpFv0ozfA6TurG4j22.jpg" 
+                      alt="Affiche du film Fall" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </Link>
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-semibold">🎥 Fall (2022)</h3>
+                <p className="my-3">
+                  Deux amies se retrouvent piégées en haut d&apos;une tour de plus de 600 mètres. Tension maximale, vertige garanti.
+                </p>
+                <Link href="/films/fall" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                  👉 Voir la fiche sur MovieHunt
+                </Link>
+              </div>
             </div>
           </section>
           
@@ -75,16 +93,32 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 2 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🧠 Pour un scénario brillant et perturbant :</h2>
+            <h2 className="text-2xl font-bold">🤚 Pour un jeu d'acteur hors du commun :</h2>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
-              <h3 className="text-xl font-semibold">🎥 Split (2016)</h3>
-              <p className="my-3">
-                James McAvoy incarne un homme aux personnalités multiples dans ce thriller signé M. Night Shyamalan.
-              </p>
-              <Link href="/films/split" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                👉 Voir la fiche sur MovieHunt
-              </Link>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/4 flex-shrink-0">
+                <Link href="/films/split">
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w500/rXMWOZiCt6eMX22jWuTOSdQ98bY.jpg" 
+                      alt="Affiche du film Split" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                </Link>
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-semibold">🎥 Split (2016)</h3>
+                <p className="my-3">
+                  James McAvoy incarne un homme aux personnalités multiples dans ce thriller signé M. Night Shyamalan. Sa performance exceptionnelle lui permet d'incarner plus de 20 personnalités différentes avec une précision stupéfiante.
+                </p>
+                <Link href="/films/split" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                  👉 Voir la fiche sur MovieHunt
+                </Link>
+              </div>
             </div>
           </section>
           
@@ -94,14 +128,29 @@ export default function QuelFilmRegarder() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold">🎬 Pour une fresque historique spectaculaire :</h2>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
-              <h3 className="text-xl font-semibold">🎥 1917 (2019)</h3>
-              <p className="my-3">
-                Un chef-d&apos;œuvre de Sam Mendes filmé en un faux plan-séquence. Immersion totale dans les tranchées de la Première Guerre mondiale.
-              </p>
-              <Link href="/films/1917" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                👉 Voir la fiche sur MovieHunt
-              </Link>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/4 flex-shrink-0">
+                <Link href="/films/1917">
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w500/AuGiPiGMYMkSosOJ3BQjDEAiwtO.jpg" 
+                      alt="Affiche du film 1917" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-semibold">🎥 1917 (2019)</h3>
+                <p className="my-3">
+                  Un chef-d&apos;œuvre de Sam Mendes filmé en un faux plan-séquence. Immersion totale dans les tranchées de la Première Guerre mondiale.
+                </p>
+                <Link href="/films/1917" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                  👉 Voir la fiche sur MovieHunt
+                </Link>
+              </div>
             </div>
           </section>
           
@@ -111,14 +160,29 @@ export default function QuelFilmRegarder() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold">🎭 Pour un choc émotionnel et social :</h2>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
-              <h3 className="text-xl font-semibold">🎥 Les Banshees d&apos;Inisherin (2022)</h3>
-              <p className="my-3">
-                Quand une amitié s&apos;effondre sur une île irlandaise, tout bascule. Un drame touchant, étrange et poétique.
-              </p>
-              <Link href="/films/les-banshees-d-inisherin" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                👉 Voir la fiche sur MovieHunt
-              </Link>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/4 flex-shrink-0">
+                <Link href="/films/les-banshees-dinisherin">
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w500/aQs2JO7kWxITG45KYZQcnsjnRYk.jpg" 
+                      alt="Affiche du film Les Banshees d'Inisherin" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-semibold">🎥 Les Banshees d&apos;Inisherin (2022)</h3>
+                <p className="my-3">
+                  Quand une amitié s&apos;effondre sur une île irlandaise, tout bascule. Un drame touchant, étrange et poétique.
+                </p>
+                <Link href="/films/les-banshees-dinisherin" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                  👉 Voir la fiche sur MovieHunt
+                </Link>
+              </div>
             </div>
           </section>
           
@@ -128,14 +192,29 @@ export default function QuelFilmRegarder() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold">🍿 Pour une soirée détente avec un twist :</h2>
             
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
-              <h3 className="text-xl font-semibold">🎥 Game Night (2018)</h3>
-              <p className="my-3">
-                Un jeu entre amis qui tourne à la catastrophe. Drôle, rythmé, surprenant.
-              </p>
-              <Link href="/films/game-night" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                👉 Voir la fiche sur MovieHunt
-              </Link>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
+              <div className="md:w-1/4 flex-shrink-0">
+                <Link href="/films/game-night">
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w500/85R8LMyn9f2Lev2YPBF8Nughrkv.jpg" 
+                      alt="Affiche du film Game Night" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+              </div>
+              <div className="md:w-3/4">
+                <h3 className="text-xl font-semibold">🎥 Game Night (2018)</h3>
+                <p className="my-3">
+                  Un jeu entre amis qui tourne à la catastrophe. Drôle, rythmé, surprenant.
+                </p>
+                <Link href="/films/game-night" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                  👉 Voir la fiche sur MovieHunt
+                </Link>
+              </div>
             </div>
           </section>
           
@@ -158,24 +237,34 @@ export default function QuelFilmRegarder() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="py-2 px-4 border-b font-medium">Science-fiction prenante</td>
-                      <td className="py-2 px-4 border-b">Interstellar, Ad Astra, Tenet</td>
+                      <td className="py-2 px-4 border-b font-medium">Science-fiction à la photographie mémorable</td>
+                      <td className="py-2 px-4 border-b">
+                        <Link href="/films/ad-astra" className="text-blue-600 hover:text-blue-800">Ad Astra</Link>
+                      </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Thriller psychologique</td>
-                      <td className="py-2 px-4 border-b">Knock at the Cabin, Vivarium, Funny Games U.S.</td>
+                      <td className="py-2 px-4 border-b">
+                        <Link href="/films/funny-games-us" className="text-blue-600 hover:text-blue-800">Funny Games U.S.</Link>
+                      </td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b font-medium">Histoire vraie inspirante</td>
-                      <td className="py-2 px-4 border-b">Le Fondateur, Oppenheimer, Escape from Pretoria</td>
+                      <td className="py-2 px-4 border-b font-medium">Histoire vraie incroyable</td>
+                      <td className="py-2 px-4 border-b">
+                        <Link href="/films/last-breath" className="text-blue-600 hover:text-blue-800">Last Breath</Link>
+                      </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Film de procès ou politique</td>
-                      <td className="py-2 px-4 border-b">L&apos;Étau de Munich, Le Procès du siècle</td>
+                      <td className="py-2 px-4 border-b">
+                        <Link href="/films/le-proces-du-siecle" className="text-blue-600 hover:text-blue-800">Le Procès du siècle</Link>
+                      </td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-4 border-b font-medium">Action explosive</td>
-                      <td className="py-2 px-4 border-b">The Beekeeper, Mad Max, Old Henry, RRR</td>
+                      <td className="py-2 px-4 border-b font-medium">Western Palpitant</td>
+                      <td className="py-2 px-4 border-b">
+                        <Link href="/films/old-henry" className="text-blue-600 hover:text-blue-800">Old Henry</Link>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
