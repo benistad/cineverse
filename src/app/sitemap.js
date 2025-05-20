@@ -29,6 +29,12 @@ export default async function sitemap() {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/all-films`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/huntedbymoviehunt`,
       lastModified: new Date(),
       changeFrequency: 'weekly',

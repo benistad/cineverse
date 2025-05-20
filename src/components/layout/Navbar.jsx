@@ -105,6 +105,16 @@ export default function Navbar() {
                 <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
                   <div className="py-1" role="menu" aria-orientation="vertical">
                     <Link 
+                      href="/all-films" 
+                      className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${
+                        pathname === '/all-films' ? 'bg-gray-700' : ''
+                      }`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiFilm className="mr-2" />
+                      Tous les films
+                    </Link>
+                    <Link 
                       href="/quel-film-regarder" 
                       className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${
                         pathname === '/quel-film-regarder' ? 'bg-gray-700' : ''
@@ -217,6 +227,16 @@ export default function Navbar() {
             
             {/* Découvrir section dans le menu mobile */}
             <div className="px-3 py-2 font-medium text-gray-300 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
+            
+            <Link 
+              href="/all-films" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/all-films' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiFilm className="mr-2" /> Tous les films
+            </Link>
             
             <Link 
               href="/quel-film-regarder" 
