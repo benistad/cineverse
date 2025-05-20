@@ -112,12 +112,7 @@ export default function OptimizedFilmCarousel({
             {!hideTitle && (
               <SeoHeading level={2} className="text-2xl md:text-3xl font-bold m-0">{title}</SeoHeading>
             )}
-            {/* Compteur de films - n'affiche que si showCount est true */}
-            {showCount && (
-              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-                {totalCount !== undefined ? totalCount : films.length}
-              </span>
-            )}
+            {/* Compteur supprimé */}
           </div>
           
           {/* Bouton "Voir tous les films" */}
