@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { FiHome, FiSearch } from 'react-icons/fi';
+import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function NotFound() {
   return (
     <div className="container mx-auto px-4 py-16 text-center">
       <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto">
-        <h1 className="text-6xl font-bold text-gray-800 mb-6">404</h1>
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Page non trouvée</h2>
+        <SeoHeading level={1} className="text-6xl font-bold text-gray-800 mb-6">404</SeoHeading>
+        <SeoHeading level={2} className="text-2xl font-semibold text-gray-700 mb-4">Page non trouvée</SeoHeading>
         <p className="text-gray-600 mb-8">
           Désolé, la page que vous recherchez n&apos;existe pas ou a été déplacée.
         </p>

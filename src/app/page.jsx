@@ -17,6 +17,7 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import FeaturedFilmsCarousel from '@/components/home/FeaturedFilmsCarousel';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
+import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function Home() {
   const [recentFilms, setRecentFilms] = useState([]);
@@ -131,29 +132,22 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-2">
-      <section className="py-0 text-center mt-[-20px]">
-  <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900">
-    <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
-    <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
-  </h1>
-  <div className="flex justify-center my-1">
-    <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
-  </div>
-  <div className="mt-3 mb-2">
-    <Link 
-      href="/quel-film-regarder" 
-      className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
-      style={{ backgroundColor: '#4A68D9' }}
-    >
-      Découvrir nos suggestions de films
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-      </svg>
-    </Link>
-  </div>
-
-</section>
+    <div className="container mx-auto px-4 py-8">
+      {/* Section d'introduction */}
+      <section className="mb-10 text-center">
+        <SeoHeading level={1}>Bienvenue sur MovieHunt</SeoHeading>
+        <p className="text-lg mb-6">Découvrez notre sélection de films notés et commentés avec passion.</p>
+        <Link 
+          href="/quel-film-regarder" 
+          className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
+          style={{ backgroundColor: '#4A68D9' }}
+        >
+          Découvrir nos suggestions de films
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </Link>
+      </section>
       {/* Préchargement des images critiques */}
       <PreloadCriticalImages imagePaths={criticalImagePaths} />
       
@@ -169,12 +163,16 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <OptimizedFilmCarousel 
-            films={recentFilms} 
-            title="Films récemment notés" 
-            visibleCount={4}
-            showCount={false}
-          />
+          <>
+            <SeoHeading level={2} className="mb-4">Films récemment notés</SeoHeading>
+            <OptimizedFilmCarousel 
+              films={recentFilms} 
+              title="Films récemment notés" 
+              visibleCount={4}
+              showCount={false}
+              hideTitle={true}
+            />
+          </>
         )}
       </section>
 
@@ -185,14 +183,18 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : (
-          <OptimizedFilmCarousel 
-            films={topRatedFilms} 
-            title="Films les mieux notés" 
-            visibleCount={4} 
-            showAllLink="/top-rated"
-            showAllText="Voir tous les films"
-            totalCount={topRatedFilmsCount}
-          />
+          <>
+            <SeoHeading level={2} className="mb-4">Films les mieux notés</SeoHeading>
+            <OptimizedFilmCarousel 
+              films={topRatedFilms} 
+              title="Films les mieux notés" 
+              visibleCount={4} 
+              showAllLink="/top-rated"
+              showAllText="Voir tous les films"
+              totalCount={topRatedFilmsCount}
+              hideTitle={true}
+            />
+          </>
         )}
       </section>
 
@@ -203,21 +205,25 @@ export default function Home() {
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
           </div>
         ) : hiddenGems.length > 0 ? (
-          <OptimizedFilmCarousel 
-            films={hiddenGems} 
-            title="Films méconnus à voir" 
-            visibleCount={4} 
-            showAllLink="/hidden-gems"
-            showAllText="Voir tous les films"
-            totalCount={hiddenGemsCount}
-          />
+          <>
+            <SeoHeading level={2} className="mb-4">Films méconnus à voir</SeoHeading>
+            <OptimizedFilmCarousel 
+              films={hiddenGems} 
+              title="Films méconnus à voir" 
+              visibleCount={4} 
+              showAllLink="/hidden-gems"
+              showAllText="Voir tous les films"
+              totalCount={hiddenGemsCount}
+              hideTitle={true}
+            />
+          </>
         ) : null}
       </section>
 
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
         <div className="flex items-center mb-6">
-          <h2 className="text-3xl font-bold">Tous les films</h2>
+          <SeoHeading level={2} className="text-3xl font-bold m-0">Tous les films</SeoHeading>
           <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
             {totalFilmsCount}
           </span>

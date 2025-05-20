@@ -6,6 +6,7 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
+import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function HiddenGemsFilms() {
   const [films, setFilms] = useState([]);
@@ -56,7 +57,7 @@ export default function HiddenGemsFilms() {
       </div>
       
       <div className="flex items-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold">Films méconnus à voir</h1>
+        <SeoHeading level={1} className="text-3xl md:text-4xl font-bold m-0">Films méconnus à voir</SeoHeading>
         {!loading && !error && films.length > 0 && (
           <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
             {films.length}
