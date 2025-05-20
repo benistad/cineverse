@@ -134,7 +134,7 @@ export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Section d'introduction */}
-      <section className="py-0 text-center mt-[-20px]">
+      <section className="py-0 text-center mt-[-30px]">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900">
           <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
           <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
@@ -171,7 +171,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <SeoHeading level={2} className="mb-4">Films récemment notés</SeoHeading>
+            <SeoHeading level={2} className="mb-2">Derniers films notés</SeoHeading>
             <OptimizedFilmCarousel 
               films={recentFilms} 
               title="Films récemment notés" 
@@ -191,14 +191,23 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <SeoHeading level={2} className="mb-4">Films les mieux notés</SeoHeading>
+            <div className="flex items-center mb-2">
+              <SeoHeading level={2} className="text-xl font-bold m-0">Films les mieux notés</SeoHeading>
+              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+                {topRatedFilmsCount}
+              </span>
+              <Link 
+                href="/top-rated" 
+                className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
+                style={{ backgroundColor: '#4A68D9' }}
+              >
+                Voir tous les films
+              </Link>
+            </div>
             <OptimizedFilmCarousel 
               films={topRatedFilms} 
               title="Films les mieux notés" 
               visibleCount={4} 
-              showAllLink="/top-rated"
-              showAllText="Voir tous les films"
-              totalCount={topRatedFilmsCount}
               hideTitle={true}
             />
           </>
@@ -213,14 +222,23 @@ export default function Home() {
           </div>
         ) : hiddenGems.length > 0 ? (
           <>
-            <SeoHeading level={2} className="mb-4">Films méconnus à voir</SeoHeading>
+            <div className="flex items-center mb-2">
+              <SeoHeading level={2} className="text-xl font-bold m-0">Films méconnus à voir</SeoHeading>
+              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+                {hiddenGemsCount}
+              </span>
+              <Link 
+                href="/hidden-gems" 
+                className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
+                style={{ backgroundColor: '#4A68D9' }}
+              >
+                Voir tous les films
+              </Link>
+            </div>
             <OptimizedFilmCarousel 
               films={hiddenGems} 
               title="Films méconnus à voir" 
               visibleCount={4} 
-              showAllLink="/hidden-gems"
-              showAllText="Voir tous les films"
-              totalCount={hiddenGemsCount}
               hideTitle={true}
             />
           </>
