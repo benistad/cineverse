@@ -172,7 +172,7 @@ export default function Home() {
         ) : (
           <>
             <div className="flex items-center mb-2">
-              <h2 className="text-xl font-bold m-0">Derniers films notés</h2>
+              <h2 className="text-2xl font-bold m-0">Derniers films notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {recentFilms.length}
               </span>
@@ -197,7 +197,7 @@ export default function Home() {
         ) : (
           <>
             <div className="flex items-center mb-2">
-              <h2 className="text-xl font-bold m-0">Films les mieux notés</h2>
+              <h2 className="text-2xl font-bold m-0">Films les mieux notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {topRatedFilmsCount}
               </span>
@@ -228,7 +228,7 @@ export default function Home() {
         ) : hiddenGems.length > 0 ? (
           <>
             <div className="flex items-center mb-2">
-              <h2 className="text-xl font-bold m-0">Films méconnus à voir</h2>
+              <h2 className="text-2xl font-bold m-0">Films méconnus à voir</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {hiddenGemsCount}
               </span>

@@ -104,9 +104,9 @@ export default function OptimizedFilmCarousel({
   }, [films, currentIndex, visibleCards]);
 
   return (
-    <div className="space-y-2">
+    <div>
       {/* Titre, compteur et boutons de navigation */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         <div className="flex items-center">
           {!hideTitle && (
             <SeoHeading level={2} className="text-2xl md:text-3xl font-bold m-0">{title}</SeoHeading>
