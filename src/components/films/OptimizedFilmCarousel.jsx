@@ -107,13 +107,11 @@ export default function OptimizedFilmCarousel({
     <div className="space-y-4">
       {/* Titre, compteur et boutons de navigation */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-3">
-          <div className="flex items-center">
-            {!hideTitle && (
-              <SeoHeading level={2} className="text-2xl md:text-3xl font-bold m-0">{title}</SeoHeading>
-            )}
-            {/* Compteur supprimé */}
-          </div>
+        <div className="flex items-center">
+          {!hideTitle && (
+            <SeoHeading level={2} className="text-2xl md:text-3xl font-bold m-0">{title}</SeoHeading>
+          )}
+          {/* Compteur supprimé */}
           
           {/* Bouton "Voir tous les films" */}
           {showAllLink && showAllText && (

@@ -173,6 +173,9 @@ export default function Home() {
           <>
             <div className="flex items-center mb-6">
               <SeoHeading level={2} className="text-xl font-bold m-0">Derniers films notés</SeoHeading>
+              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+                {recentFilms.length}
+              </span>
             </div>
             <OptimizedFilmCarousel 
               films={recentFilms} 
