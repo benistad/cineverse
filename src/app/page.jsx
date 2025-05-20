@@ -162,7 +162,7 @@ export default function Home() {
         <FeaturedFilmsCarousel />
       </section>
 
-      {/* Films récemment notés */}
+      {/* Derniers films notés */}
       <section>
         {loading ? (
           <div className="flex justify-center items-center h-64">
@@ -171,7 +171,7 @@ export default function Home() {
         ) : (
           <OptimizedFilmCarousel 
             films={recentFilms} 
-            title="Films récemment notés" 
+            title="Derniers films notés" 
             visibleCount={4}
             showCount={false}
           />
