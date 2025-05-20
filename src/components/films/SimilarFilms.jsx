@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
+import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
@@ -102,7 +103,7 @@ export default function SimilarFilms({ currentFilm }) {
   if (loading) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Films similaires</h2>
+        <SeoHeading level={2} className="text-xl font-bold mb-4">Films similaires</SeoHeading>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-gray-200 animate-pulse h-64 rounded-lg"></div>
@@ -118,7 +119,7 @@ export default function SimilarFilms({ currentFilm }) {
   
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold mb-4">Films similaires que vous pourriez aimer</h2>
+      <SeoHeading level={2} className="text-xl font-bold mb-4">Films similaires que vous pourriez aimer</SeoHeading>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {similarFilms.map(film => (
           <Link 
@@ -138,7 +139,7 @@ export default function SimilarFilms({ currentFilm }) {
               />
             </div>
             <div className="p-3">
-              <h3 className="font-semibold text-sm md:text-base line-clamp-1">{film.title}</h3>
+              <SeoHeading level={3} className="font-semibold text-sm md:text-base line-clamp-1 m-0">{film.title}</SeoHeading>
               <div className="flex items-center mt-1">
                 <RatingIcon rating={film.note_sur_10} size={16} />
                 <span className="ml-1 text-sm">{film.note_sur_10}/10</span>
