@@ -6,7 +6,6 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function TopRatedFilms() {
   const [films, setFilms] = useState([]);
@@ -57,7 +56,7 @@ export default function TopRatedFilms() {
       </div>
       
       <div className="flex items-center mb-8">
-        <SeoHeading level={1} className="text-3xl md:text-4xl font-bold m-0">Films les mieux notés</SeoHeading>
+        <h1 className="text-3xl md:text-4xl font-bold">Films les mieux notés</h1>
         {!loading && !error && films.length > 0 && (
           <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
             {films.length}

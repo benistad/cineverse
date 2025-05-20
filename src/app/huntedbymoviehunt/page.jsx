@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowRight } from 'react-icons/fi';
 import { FaInstagram, FaTwitter } from 'react-icons/fa';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function HuntedByMovieHuntPage() {
   return (
@@ -20,12 +19,12 @@ export default function HuntedByMovieHuntPage() {
             className="w-auto h-auto"
           />
         </div>
-        <SeoHeading level={1} className="text-3xl md:text-4xl font-bold mb-2">Hunted by MovieHunt</SeoHeading>
+        <h1 className="text-3xl md:text-4xl font-bold mb-2">Hunted by MovieHunt</h1>
         <p className="text-xl text-gray-600 italic">Les Films Qu'il Ne Faut Surtout Pas Rater</p>
       </div>
       
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <SeoHeading level={2} className="text-2xl font-bold mb-4">🎯 Découvrez le Badge "Hunted"</SeoHeading>
+        <h2 className="text-2xl font-bold mb-4">🎯 Découvrez le Badge "Hunted"</h2>
         <p className="mb-4">
           Chez MovieHunt.fr, notre mission est simple : vous aider à trouver l'idée de film parfaite pour chaque moment. 
           Face à la surabondance de contenus, nous savons combien il est difficile de choisir quel film regarder. 
@@ -34,7 +33,7 @@ export default function HuntedByMovieHuntPage() {
       </div>
       
       <div className="bg-blue-50 rounded-lg shadow-md p-6 mb-8">
-        <SeoHeading level={2} className="text-2xl font-bold mb-4">🔥 Qu'est-ce que le badge #HuntedbyMovieHunt ?</SeoHeading>
+        <h2 className="text-2xl font-bold mb-4">🔥 Qu'est-ce que le badge #HuntedbyMovieHunt ?</h2>
         <div className="flex flex-col md:flex-row items-center gap-6">
           <div className="md:w-1/3 flex justify-center">
             <Image 
@@ -59,7 +58,7 @@ export default function HuntedByMovieHuntPage() {
       </div>
       
       <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <SeoHeading level={2} className="text-2xl font-bold mb-4">🎬 Pourquoi ce badge ?</SeoHeading>
+        <h2 className="text-2xl font-bold mb-4">🎬 Pourquoi ce badge ?</h2>
         <ul className="list-disc pl-6 space-y-2">
           <li>Parce que trop de films passent inaperçus.</li>
           <li>Parce qu'il est temps de sortir des sentiers battus.</li>
@@ -68,7 +67,7 @@ export default function HuntedByMovieHuntPage() {
       </div>
       
       <div className="bg-purple-50 rounded-lg shadow-md p-6 mb-8">
-        <SeoHeading level={2} className="text-2xl font-bold mb-4">🔍 Où le trouver ?</SeoHeading>
+        <h2 className="text-2xl font-bold mb-4">🔍 Où le trouver ?</h2>
         <p className="mb-4">
           Vous retrouverez ce badge sur les affiches des films directement sur notre site :
         </p>
@@ -91,7 +90,7 @@ export default function HuntedByMovieHuntPage() {
       </div>
       
       <div className="bg-gray-100 rounded-lg shadow-md p-6 mb-8">
-        <SeoHeading level={2} className="text-2xl font-bold mb-4">🧠 En résumé</SeoHeading>
+        <h2 className="text-2xl font-bold mb-4">🧠 En résumé</h2>
         <div className="bg-white p-4 rounded-lg mb-4">
           <p className="mb-2 font-medium">Vous cherchez une idée de film originale ?</p>
           <p className="mb-2 font-medium">Vous hésitez sur quel film regarder ce soir ?</p>

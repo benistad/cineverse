@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useMemo, memo } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import FilmCard from './FilmCard';
 import { useSwipeable } from 'react-swipeable';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 // Composant FilmCard optimisé avec memo pour éviter les re-rendus inutiles
 const MemoizedFilmCard = memo(FilmCard);
@@ -16,8 +15,7 @@ export default function OptimizedFilmCarousel({
   showAllLink, 
   showAllText, 
   totalCount, 
-  showCount = true,
-  hideTitle = false
+  showCount = true 
 }) {
   // État pour suivre l'index actuel
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -104,14 +102,19 @@ export default function OptimizedFilmCarousel({
   }, [films, currentIndex, visibleCards]);
 
   return (
-    <div>
+    <div className="space-y-4">
       {/* Titre, compteur et boutons de navigation */}
-      <div className="flex justify-between items-center mb-2">
-        <div className="flex items-center">
-          {!hideTitle && (
-            <SeoHeading level={2} className="text-2xl md:text-3xl font-bold m-0">{title}</SeoHeading>
-          )}
-          {/* Compteur supprimé */}
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center">
+            <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+            {/* Compteur de films - n'affiche que si showCount est true */}
+            {showCount && (
+              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+                {totalCount !== undefined ? totalCount : films.length}
+              </span>
+            )}
+          </div>
           
           {/* Bouton "Voir tous les films" */}
           {showAllLink && showAllText && (

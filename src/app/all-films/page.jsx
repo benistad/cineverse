@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function AllFilmsPage() {
   const [films, setFilms] = useState([]);
@@ -32,7 +31,7 @@ export default function AllFilmsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
-          <SeoHeading level={1} className="text-3xl font-bold m-0">Tous les films</SeoHeading>
+          <h1 className="text-3xl font-bold">Tous les films</h1>
           <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
             {totalCount}
           </span>

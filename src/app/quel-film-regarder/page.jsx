@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import SafeImage from '@/components/ui/SafeImage';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function QuelFilmRegarder() {
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
@@ -40,7 +39,7 @@ export default function QuelFilmRegarder() {
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm">
           <header className="mb-8">
-            <SeoHeading level={1} className="text-3xl md:text-4xl font-bold text-center mb-4" id="quel-film-regarder">🎬 Quel film regarder ce soir ? Top 10 des films à voir absolument</SeoHeading>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4" id="quel-film-regarder">🎬 Quel film regarder ce soir ? Top 10 des films à voir absolument</h1>
             <div className="flex justify-center">
               <span className="inline-block w-32 h-1 rounded bg-blue-500 mb-4"></span>
             </div>
@@ -61,7 +60,7 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 1 */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">🔥 Pour un film haletant et intense :</SeoHeading>
+            <h2 className="text-2xl font-bold">🔥 Pour un film haletant et intense :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
@@ -94,7 +93,7 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 2 */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">🎭 Pour un jeu d'acteur hors du commun :</SeoHeading>
+            <h2 className="text-2xl font-bold">🤚 Pour un jeu d'acteur hors du commun :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
@@ -112,12 +111,12 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎬 Split (2016)</h3>
+                <h3 className="text-xl font-semibold">🎥 Split (2016)</h3>
                 <p className="my-3">
                   James McAvoy incarne un homme aux personnalités multiples dans ce thriller signé M. Night Shyamalan. Sa performance exceptionnelle lui permet d'incarner plus de 20 personnalités différentes avec une précision stupéfiante.
                 </p>
                 <Link href="/films/split" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                  Voir la fiche sur MovieHunt
+                  👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
             </div>
@@ -127,7 +126,7 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 3 */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">🎖️ Pour une fresque historique spectaculaire :</SeoHeading>
+            <h2 className="text-2xl font-bold">🎬 Pour une fresque historique spectaculaire :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
@@ -144,12 +143,12 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎬 1917 (2019)</h3>
+                <h3 className="text-xl font-semibold">🎥 1917 (2019)</h3>
                 <p className="my-3">
                   Un chef-d&apos;œuvre de Sam Mendes filmé en un faux plan-séquence. Immersion totale dans les tranchées de la Première Guerre mondiale.
                 </p>
                 <Link href="/films/1917" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                  Voir la fiche sur MovieHunt
+                  👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
             </div>
@@ -159,7 +158,7 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 4 */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">🎙️ Pour un drame touchant :</SeoHeading>
+            <h2 className="text-2xl font-bold">🎭 Pour un choc émotionnel et social :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
@@ -176,12 +175,12 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎬 Les Banshees d'Inisherin (2022)</h3>
+                <h3 className="text-xl font-semibold">🎥 Les Banshees d&apos;Inisherin (2022)</h3>
                 <p className="my-3">
                   Quand une amitié s&apos;effondre sur une île irlandaise, tout bascule. Un drame touchant, étrange et poétique.
                 </p>
                 <Link href="/films/les-banshees-dinisherin" className="inline-flex items-center text-blue-600 hover:text-blue-800">
-                  Voir la fiche sur MovieHunt
+                  👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
             </div>
@@ -191,7 +190,7 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 5 */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">🍿 Pour une soirée détente :</SeoHeading>
+            <h2 className="text-2xl font-bold">🍿 Pour une soirée détente avec un twist :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
@@ -275,7 +274,7 @@ export default function QuelFilmRegarder() {
           
           {/* Confiance MovieHunt */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">📽️ Et si vous faisiez confiance à la note MovieHunt ?</SeoHeading>
+            <h2 className="text-2xl font-bold">📽️ Et si vous faisiez confiance à la note MovieHunt ?</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
               <p className="mb-4">
@@ -296,7 +295,7 @@ export default function QuelFilmRegarder() {
           
           {/* Pourquoi suivre MovieHunt */}
           <section className="mb-8">
-            <SeoHeading level={2} className="text-2xl font-bold">✅ Pourquoi suivre MovieHunt ?</SeoHeading>
+            <h2 className="text-2xl font-bold">✅ Pourquoi suivre MovieHunt ?</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
               <ul className="list-none pl-0">

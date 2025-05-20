@@ -13,7 +13,6 @@ import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
-import SeoHeading from '@/components/ui/SeoHeading';
 
 export default function FilmPageBySlug() {
   const params = useParams();
@@ -179,19 +178,10 @@ export default function FilmPageBySlug() {
           
           {/* Informations du film */}
           <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
-            <div className="flex flex-col">
-              <div className="flex items-center mb-2">
-                <div className="flex items-center">
-                  <SeoHeading level={1} className="text-2xl sm:text-3xl font-bold m-0">{film.title}</SeoHeading>
-                  {film.release_date && (
-                    <span className="ml-2 text-gray-500 text-sm sm:text-base">
-                      ({new Date(film.release_date).getFullYear()})
-                    </span>
-                  )}
-                </div>
-              </div>
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-2xl sm:text-3xl font-bold">{film.title}</h1>
               {film.is_hunted_by_moviehunt && (
-                <div className="flex-shrink-0 mt-2">
+                <div className="flex-shrink-0">
                   {typeof Link !== 'undefined' ? (
                     <Link 
                       href="/huntedbymoviehunt" 
@@ -260,13 +250,13 @@ export default function FilmPageBySlug() {
             )}
             
             <div className="mb-4">
-              <SeoHeading level={2} className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</SeoHeading>
+              <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
               <p className="text-sm sm:text-base text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
             </div>
             
             {film.why_watch_enabled && film.why_watch_content && (
               <div className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
-                <SeoHeading level={2} className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</SeoHeading>
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
                 <style jsx>{`
                   .why-watch-content {
                     white-space: pre-wrap;
@@ -296,7 +286,7 @@ export default function FilmPageBySlug() {
             
             {(film.youtube_trailer_key || trailerKey) && (
               <div className="mb-4 sm:mb-6">
-                <SeoHeading level={2} className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</SeoHeading>
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
                 <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
                   <YouTube 
                     videoId={film.youtube_trailer_key || trailerKey} 
@@ -332,7 +322,7 @@ export default function FilmPageBySlug() {
       </div>
       
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <SeoHeading level={2} className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</SeoHeading>
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</h2>
         <RemarkableStaffList filmId={film.id} />
       </div>
       
