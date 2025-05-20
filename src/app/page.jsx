@@ -171,7 +171,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-2">
               <h2 className="text-xl font-bold m-0">Derniers films notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {recentFilms.length}
@@ -196,7 +196,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-2">
               <h2 className="text-xl font-bold m-0">Films les mieux notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {topRatedFilmsCount}
@@ -227,7 +227,7 @@ export default function Home() {
           </div>
         ) : hiddenGems.length > 0 ? (
           <>
-            <div className="flex items-center mb-6">
+            <div className="flex items-center mb-2">
               <h2 className="text-xl font-bold m-0">Films méconnus à voir</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {hiddenGemsCount}
@@ -252,7 +252,7 @@ export default function Home() {
 
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
-        <div className="flex items-center mb-6">
+        <div className="flex items-center mb-2">
           <h2 className="text-3xl font-bold m-0">Tous les films</h2>
           <Link 
             href="/all-films" 

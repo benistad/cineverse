@@ -104,7 +104,7 @@ export default function OptimizedFilmCarousel({
   }, [films, currentIndex, visibleCards]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {/* Titre, compteur et boutons de navigation */}
       <div className="flex justify-between items-center">
         <div className="flex items-center">
