@@ -98,12 +98,15 @@ export default function QuelFilmRegarder() {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/split">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-blue-600 flex items-center justify-center text-white p-4 text-center">
-                    <div>
-                      <div className="text-4xl mb-2">🎬</div>
-                      <div className="font-bold">Split</div>
-                      <div className="text-sm">(2016)</div>
-                    </div>
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w780/lli31lYTFpvxVBeFHWoe5PMfW5s.jpg" 
+                      alt="Affiche du film Split" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                      priority
+                    />
                   </div>
                 </Link>
               </div>
@@ -160,12 +163,14 @@ export default function QuelFilmRegarder() {
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/les-banshees-dinisherin">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-green-600 flex items-center justify-center text-white p-4 text-center">
-                    <div>
-                      <div className="text-4xl mb-2">🎭</div>
-                      <div className="font-bold">Les Banshees d'Inisherin</div>
-                      <div className="text-sm">(2022)</div>
-                    </div>
+                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                    <SafeImage 
+                      src="https://image.tmdb.org/t/p/w780/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg" 
+                      alt="Affiche du film Les Banshees d'Inisherin" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      className="object-cover"
+                    />
                   </div>
                 </Link>
               </div>
