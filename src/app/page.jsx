@@ -172,7 +172,7 @@ export default function Home() {
         ) : (
           <>
             <div className="flex items-center mb-6">
-              <SeoHeading level={2} className="text-xl font-bold m-0">Derniers films notés</SeoHeading>
+              <h2 className="text-xl font-bold m-0">Derniers films notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {recentFilms.length}
               </span>
@@ -197,7 +197,7 @@ export default function Home() {
         ) : (
           <>
             <div className="flex items-center mb-6">
-              <SeoHeading level={2} className="text-xl font-bold m-0">Films les mieux notés</SeoHeading>
+              <h2 className="text-xl font-bold m-0">Films les mieux notés</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {topRatedFilmsCount}
               </span>
@@ -228,7 +228,7 @@ export default function Home() {
         ) : hiddenGems.length > 0 ? (
           <>
             <div className="flex items-center mb-6">
-              <SeoHeading level={2} className="text-xl font-bold m-0">Films méconnus à voir</SeoHeading>
+              <h2 className="text-xl font-bold m-0">Films méconnus à voir</h2>
               <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
                 {hiddenGemsCount}
               </span>
@@ -253,7 +253,7 @@ export default function Home() {
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
         <div className="flex items-center mb-6">
-          <SeoHeading level={2} className="text-3xl font-bold m-0">Tous les films</SeoHeading>
+          <h2 className="text-3xl font-bold m-0">Tous les films</h2>
           <Link 
             href="/all-films" 
             className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
