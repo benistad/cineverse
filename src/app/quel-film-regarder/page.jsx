@@ -165,7 +165,7 @@ export default function QuelFilmRegarder() {
                 <Link href="/films/les-banshees-dinisherin">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
                     <SafeImage 
-                      src="https://image.tmdb.org/t/p/w780/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg" 
+                      src="https://image.tmdb.org/t/p/w500/5Y0AINkH7xDqmuxJXUQdPbtyrub.jpg" 
                       alt="Affiche du film Les Banshees d'Inisherin" 
                       fill 
                       sizes="(max-width: 768px) 100vw, 25vw"
