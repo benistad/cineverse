@@ -22,6 +22,7 @@ const SpeedInsights = dynamic(
 );
 // dynamic est déjà importé plus haut
 import JsonLdSchema from './components/JsonLdSchema';
+import CanonicalTag from './components/CanonicalTag';
 
 // Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
@@ -132,6 +133,7 @@ export default function RootLayout({ children }) {
         <SpeedInsights />
         <MobilePerformanceOptimizer />
         <JsonLdSchema />
+        <CanonicalTag />
         {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
         {/* <ImageOptimizer /> */}
         {/* <SpeedIndexOptimizer /> */}
