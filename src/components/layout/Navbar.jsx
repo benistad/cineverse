@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDiscoverOpen, setIsDiscoverOpen] = useState(false);
+  const discoverMenuRef = useRef(null);
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   const { user, loading, signOut } = useAuth();
@@ -22,6 +24,24 @@ export default function Navbar() {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  
+  const toggleDiscoverMenu = () => {
+    setIsDiscoverOpen(!isDiscoverOpen);
+  };
+  
+  // Fermer le menu déroulant quand on clique en dehors
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (discoverMenuRef.current && !discoverMenuRef.current.contains(event.target)) {
+        setIsDiscoverOpen(false);
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
@@ -57,16 +77,57 @@ export default function Navbar() {
               Accueil
             </Link>
             <Link 
-              href="/advanced-search" 
+              href="/search" 
               className={`px-3 py-2 rounded-md text-sm font-medium ${
-                pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
             >
               <span className="flex items-center">
                 <FiFilter className="mr-1" />
-                Recherche avancée
+                Recherche
               </span>
             </Link>
+            
+            {/* Menu déroulant Découvrir */}
+            <div className="relative" ref={discoverMenuRef}>
+              <button
+                onClick={toggleDiscoverMenu}
+                className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                }`}
+              >
+                <FiCompass className="mr-1" />
+                Découvrir
+                <FiChevronDown className={`ml-1 transition-transform ${isDiscoverOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isDiscoverOpen && (
+                <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+                  <div className="py-1" role="menu" aria-orientation="vertical">
+                    <Link 
+                      href="/quel-film-regarder" 
+                      className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${
+                        pathname === '/quel-film-regarder' ? 'bg-gray-700' : ''
+                      }`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiHelpCircle className="mr-2" />
+                      Quel film regarder ?
+                    </Link>
+                    <Link 
+                      href="/huntedbymoviehunt" 
+                      className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${
+                        pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : ''
+                      }`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiAward className="mr-2" />
+                      Hunted by MovieHunt
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
             
             {!loading && user && (
               <>
@@ -145,13 +206,36 @@ export default function Navbar() {
               <FiHome className="mr-2" /> Accueil
             </Link>
             <Link 
-              href="/advanced-search" 
+              href="/search" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiFilter className="mr-2" /> Recherche avancée
+              <FiFilter className="mr-2" /> Recherche
+            </Link>
+            
+            {/* Découvrir section dans le menu mobile */}
+            <div className="px-3 py-2 font-medium text-gray-300 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
+            
+            <Link 
+              href="/quel-film-regarder" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/quel-film-regarder' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiHelpCircle className="mr-2" /> Quel film regarder ?
+            </Link>
+            
+            <Link 
+              href="/huntedbymoviehunt" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiAward className="mr-2" /> Hunted by MovieHunt
             </Link>
             
             {!loading && user && (

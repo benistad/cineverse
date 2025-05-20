@@ -23,6 +23,12 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/advanced-search`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/huntedbymoviehunt`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
