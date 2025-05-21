@@ -1,13 +1,14 @@
-import { headers } from 'next/headers';
+'use client';
+
+import { usePathname } from 'next/navigation';
 
 /**
  * Composant pour ajouter une balise title à chaque page
- * Cette implémentation côté serveur est compatible avec les crawlers
+ * Cette implémentation côté client est compatible avec le layout client
  */
 export default function TitleTag() {
-  // Récupérer le chemin actuel depuis les en-têtes de la requête
-  const headersList = headers();
-  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '/';
+  // Récupérer le chemin actuel depuis le hook usePathname
+  const pathname = usePathname() || '/';
   
   // Fonction pour déterminer le titre en fonction du chemin
   const getTitle = (path) => {

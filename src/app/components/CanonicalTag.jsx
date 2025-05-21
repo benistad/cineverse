@@ -1,13 +1,14 @@
-import { headers } from 'next/headers';
+'use client';
+
+import { usePathname } from 'next/navigation';
 
 /**
  * Composant pour ajouter une balise canonique à chaque page
- * Cette implémentation côté serveur est compatible avec les crawlers
+ * Cette implémentation côté client est compatible avec le layout client
  */
 export default function CanonicalTag() {
-  // Récupérer le chemin actuel depuis les en-têtes de la requête
-  const headersList = headers();
-  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '/';
+  // Récupérer le chemin actuel depuis le hook usePathname
+  const pathname = usePathname() || '/';
   
   // Construire l'URL canonique
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
