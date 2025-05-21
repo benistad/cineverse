@@ -1,15 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
 import { FiLink, FiExternalLink } from 'react-icons/fi';
 
 export default function AdminSEOPage() {
-  const router = useRouter();
-  const { user, loading } = useAuth();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
   // Liste des liens retour pour les annuaires
   const directoryLinks = [
     {
@@ -24,29 +17,7 @@ export default function AdminSEOPage() {
     }
   ];
 
-  useEffect(() => {
-    // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
-    if (!loading && !user) {
-      router.push('/admin');
-    } else if (!loading && user) {
-      setIsAuthorized(true);
-    }
-  }, [user, loading, router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-700">Chargement...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthorized) {
-    return null; // Ne rien afficher pendant la redirection
-  }
+  // Aucune vérification d'authentification - la page est accessible publiquement
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -67,7 +38,7 @@ export default function AdminSEOPage() {
                 <div className="flex">
                   <div className="ml-3">
                     <p className="text-sm text-yellow-700">
-                      Cette page est uniquement visible par les administrateurs et n'est pas indexée par les moteurs de recherche.
+                      Cette page est accessible publiquement si vous connaissez l'URL, mais elle n'est pas indexée par les moteurs de recherche et n'apparaît dans la navigation que pour les administrateurs connectés.
                     </p>
                   </div>
                 </div>
