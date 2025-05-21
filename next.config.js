@@ -70,8 +70,8 @@ const nextConfig = {
       },
       // Rediriger les URLs en double slash vers la version correcte
       {
-        source: '/:path*//+',
-        destination: '/:path*/',
+        source: '/:path*//:rest*',
+        destination: '/:path*/:rest*',
         permanent: true,
       },
       // Rediriger les anciennes URLs de recherche
