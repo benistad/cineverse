@@ -34,15 +34,7 @@ export default function AdminSEOPage() {
               <p className="text-gray-600 mb-4">
                 Cette page contient les liens retour pour les annuaires partenaires. Ces liens sont importants pour le référencement du site.
               </p>
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-                <div className="flex">
-                  <div className="ml-3">
-                    <p className="text-sm text-yellow-700">
-                      Cette page est accessible publiquement si vous connaissez l'URL, mais elle n'est pas indexée par les moteurs de recherche et n'apparaît dans la navigation que pour les administrateurs connectés.
-                    </p>
-                  </div>
-                </div>
-              </div>
+
             </div>
             
             <div className="overflow-x-auto">
