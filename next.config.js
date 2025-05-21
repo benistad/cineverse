@@ -62,18 +62,18 @@ const nextConfig = {
         destination: '/films/:id',
         permanent: true, // Redirection 301 pour préserver le SEO
       },
-      // Rediriger les URLs sans slash final vers la version avec slash
-      {
-        source: '/films/:slug((?!\/).*)',
-        destination: '/films/:slug/',
-        permanent: true,
-      },
-      // Rediriger les URLs en double slash vers la version correcte
-      {
-        source: '/:path*//:rest*',
-        destination: '/:path*/:rest*',
-        permanent: true,
-      },
+      // Redirection supprimée pour éviter les redirections infinies
+      // {
+      //   source: '/films/:slug((?!\/).*)',
+      //   destination: '/films/:slug/',
+      //   permanent: true,
+      // },
+      // Redirection supprimée pour éviter les redirections infinies
+      // {
+      //   source: '/:path*//:rest*',
+      //   destination: '/:path*/:rest*',
+      //   permanent: true,
+      // },
       // Rediriger les anciennes URLs de recherche
       {
         source: '/recherche',
