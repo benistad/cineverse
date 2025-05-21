@@ -1,15 +1,13 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
-import Script from 'next/script';
+import { headers } from 'next/headers';
 
 /**
  * Composant pour ajouter une balise title à chaque page
- * Ce composant utilise un script côté client pour injecter la balise title
- * dans le head du document après le chargement de la page
+ * Cette implémentation côté serveur est compatible avec les crawlers
  */
 export default function TitleTag() {
-  const pathname = usePathname();
+  // Récupérer le chemin actuel depuis les en-têtes de la requête
+  const headersList = headers();
+  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '/';
   
   // Fonction pour déterminer le titre en fonction du chemin
   const getTitle = (path) => {
@@ -44,47 +42,10 @@ export default function TitleTag() {
   
   // Obtenir le titre pour la page actuelle
   const pageTitle = getTitle(pathname);
-  
-  // Script qui injecte la balise title dans le head
-  const injectTitleScript = `
-    (function() {
-      // Supprimer toute balise title existante
-      const existingTitle = document.querySelector('title');
-      if (existingTitle) {
-        existingTitle.remove();
-      }
-      
-      // Créer et ajouter la nouvelle balise title
-      const titleElement = document.createElement('title');
-      titleElement.textContent = '${pageTitle}';
-      document.head.appendChild(titleElement);
-      
-      // Pour les pages de films, récupérer le titre exact du film
-      if (window.location.pathname.startsWith('/films/')) {
-        const fetchFilmTitle = async () => {
-          try {
-            const slug = window.location.pathname.split('/films/')[1];
-            // Essayer de récupérer le titre du film depuis les métadonnées de la page
-            const h1Element = document.querySelector('h1');
-            if (h1Element && h1Element.textContent) {
-              titleElement.textContent = h1Element.textContent + ' | MovieHunt';
-            }
-          } catch (error) {
-            console.error('Erreur lors de la récupération du titre du film:', error);
-          }
-        };
-        
-        // Exécuter après un court délai pour s'assurer que le DOM est chargé
-        setTimeout(fetchFilmTitle, 500);
-      }
-    })();
-  `;
 
+  // Dans l'App Router, nous ne pouvons pas directement modifier le title,
+  // mais nous pouvons ajouter une balise meta pour les robots
   return (
-    <Script
-      id="title-tag"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{ __html: injectTitleScript }}
-    />
+    <meta name="title" content={pageTitle} />
   );
 }

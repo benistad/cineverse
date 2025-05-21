@@ -1,0 +1,1799 @@
+{
+  "totalUrls": 128,
+  "issueCount": 128,
+  "checkedAt": "2025-05-21T11:02:46.024Z",
+  "results": [
+    {
+      "url": "https://www.moviehunt.fr",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/search",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/advanced-search",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/all-films",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/huntedbymoviehunt",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/quel-film-regarder",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/night-of-the-hunted",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/old-henry",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/triangle",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/blood-star",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-luckiest-man-in-america",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/last-breath",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/mystre-venise",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/agora",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-vieux-fusil",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-fall-guy",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/civil-war",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/oppenheimer",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/retribution",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-monde-aprs-nous",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-manoir-hant",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/walkyrie",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/encanto-la-fantastique-famille-madrigal",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/aquaman-et-le-royaume-perdu",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/aquaman",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/wish-asha-et-la-bonne-toile",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/hunger-games-la-ballade-du-serpent-et-de-loiseau-chanteur",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/festen",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/napolon",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/braveheart",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-mans-66",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-fondateur",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/blackberry",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/lexorciste-du-vatican",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/supercell",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/red-eye-sous-haute-pression",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/green-book-sur-les-routes-du-sud",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/whiplash",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/incassable",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/split",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/lun-de-nous-doit-mourir",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/tetris",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/dark-waters",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/peter-pan-et-wendy",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/ghosted",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/detective-knight-independence",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/newsies",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-pire-voisin-au-monde",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/roudram-ranam-rudhiram-rrr",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/hook-ou-la-revanche-du-capitaine-crochet",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/enola-holmes-2",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/knock-at-the-cabin",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/barbare",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/we-have-a-ghost",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/jerry-marge-go-large",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/1917",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/inglourious-basterds",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/django-unchained",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-loup-de-wall-street",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/fall",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/les-banshees-dinisherin",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/game-night",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/speed",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/on-the-line",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/avatar-la-voie-de-leau",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/glass",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-secret-de-la-cit-perdue",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/escape-from-pretoria",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-pale-blue-eye",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/avalonia-ltrange-voyage",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-power-of-the-dog",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/-louest-rien-de-nouveau",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/bloodshot",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/glass-onion-une-histoire-couteaux-tirs",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/joker",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/once-upon-a-time-in-hollywood",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/love-actually",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/interstellar",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/-couteaux-tirs",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/troll",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/dans-lombre-de-mary-la-promesse-de-walt-disney",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/black-adam",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/amsterdam",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/1br-the-apartment",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/skyscraper",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/nope",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/dom-hemingway",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-disaster-artist",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/elvis",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/uncharted",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/downton-abbey-ii-une-nouvelle-re",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-procs-du-sicle",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/3-billboards-les-panneaux-de-la-vengeance",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/pre-stu-un-hros-pas-comme-les-autres",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/mad-max-audel-du-dme-du-tonnerre",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/mad-max-2-le-dfi",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/mad-max",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/ltau-de-munich",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/free-guy",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-suicide-squad",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/irresistible",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/black-widow",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/greedy-people",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/hit-man",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/funny-games-us",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/vivarium",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/jungle-cruise",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/le-got-de-la-haine",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/last-knights",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/tenet",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/the-beekeeper",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/alien-romulus",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/berlin-nobody",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/trap",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/la-plateforme-2",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/old",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/heretic",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/ad-astra",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/mufasa-le-roi-lion",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/jur-n2",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/to-the-moon",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/gold",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/cellar-door",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/tu-ne-mentiras-point",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/-contresens-londres",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/conclave",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/neighborhood-watch",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    },
+    {
+      "url": "https://www.moviehunt.fr/films/drop-game",
+      "title": null,
+      "robotsContent": "index, follow",
+      "canonicalUrl": null,
+      "issues": {
+        "hasNoIndex": false,
+        "hasNoFollow": false,
+        "missingCanonical": true,
+        "incorrectCanonical": null,
+        "missingTitle": true
+      },
+      "hasIssue": true
+    }
+  ]
+}

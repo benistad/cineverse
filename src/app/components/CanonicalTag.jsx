@@ -1,40 +1,20 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
-import Script from 'next/script';
+import { headers } from 'next/headers';
 
 /**
  * Composant pour ajouter une balise canonique à chaque page
- * Ce composant utilise un script côté client pour injecter la balise canonique
- * dans le head du document après le chargement de la page
+ * Cette implémentation côté serveur est compatible avec les crawlers
  */
 export default function CanonicalTag() {
-  const pathname = usePathname();
+  // Récupérer le chemin actuel depuis les en-têtes de la requête
+  const headersList = headers();
+  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '/';
+  
+  // Construire l'URL canonique
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
   const canonicalUrl = `${baseUrl}${pathname}`;
-  
-  // Script qui injecte la balise canonique dans le head
-  const injectCanonicalScript = `
-    (function() {
-      // Supprimer toute balise canonique existante
-      const existingCanonical = document.querySelector('link[rel="canonical"]');
-      if (existingCanonical) {
-        existingCanonical.remove();
-      }
-      
-      // Créer et ajouter la nouvelle balise canonique
-      const canonicalLink = document.createElement('link');
-      canonicalLink.rel = 'canonical';
-      canonicalLink.href = '${canonicalUrl}';
-      document.head.appendChild(canonicalLink);
-    })();
-  `;
 
+  // Dans l'App Router, nous devons utiliser des balises meta directement dans le HTML
   return (
-    <Script
-      id="canonical-tag"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{ __html: injectCanonicalScript }}
-    />
+    <link rel="canonical" href={canonicalUrl} />
   );
 }

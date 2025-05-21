@@ -52,6 +52,42 @@ const nextConfig = {
       },
     ];
   },
+  
+  // Redirections permanentes pour améliorer l'indexation et résoudre les problèmes de redirection
+  async redirects() {
+    return [
+      // Rediriger les anciennes URLs de film vers le nouveau format
+      {
+        source: '/film/:id',
+        destination: '/films/:id',
+        permanent: true, // Redirection 301 pour préserver le SEO
+      },
+      // Rediriger les URLs sans slash final vers la version avec slash
+      {
+        source: '/films/:slug((?!\/).*)',
+        destination: '/films/:slug/',
+        permanent: true,
+      },
+      // Rediriger les URLs en double slash vers la version correcte
+      {
+        source: '/:path*//+',
+        destination: '/:path*/',
+        permanent: true,
+      },
+      // Rediriger les anciennes URLs de recherche
+      {
+        source: '/recherche',
+        destination: '/search',
+        permanent: true,
+      },
+      // Rediriger les anciennes URLs de catégories
+      {
+        source: '/categorie/:category',
+        destination: '/search?category=:category',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

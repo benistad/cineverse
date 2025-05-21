@@ -1,5 +1,3 @@
-'use client';
-
 // Importer les styles slick-carousel globalement pour éviter les requêtes multiples
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -22,8 +20,12 @@ const SpeedInsights = dynamic(
 );
 // dynamic est déjà importé plus haut
 import JsonLdSchema from './components/JsonLdSchema';
-import CanonicalTag from './components/CanonicalTag';
-import TitleTag from './components/TitleTag';
+
+// Importer les composants côté client avec 'use client'
+const ClientComponents = dynamic(
+  () => import('@/components/ClientComponents'),
+  { ssr: false }
+);
 
 // Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
@@ -134,8 +136,7 @@ export default function RootLayout({ children }) {
         <SpeedInsights />
         <MobilePerformanceOptimizer />
         <JsonLdSchema />
-        <CanonicalTag />
-        <TitleTag />
+        <ClientComponents />
         {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
         {/* <ImageOptimizer /> */}
         {/* <SpeedIndexOptimizer /> */}

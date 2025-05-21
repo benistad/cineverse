@@ -1,5 +1,3 @@
-'use server';
-
 import { getFilmBySlug } from '@/lib/supabase/server';
 
 /**
@@ -39,6 +37,19 @@ export async function generateMetadata({ params }) {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
     const canonicalUrl = `${baseUrl}/films/${slug}`;
     
+    // Ajouter des balises robots spécifiques pour améliorer l'indexation
+    const robotsConfig = {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    };
+    
     // Construire l'URL de l'image pour Open Graph
     const ogImage = film.poster_path 
       ? `${baseUrl}/api/og?title=${encodeURIComponent(film.title)}&image=${encodeURIComponent(film.poster_path)}`
@@ -72,6 +83,7 @@ export async function generateMetadata({ params }) {
       alternates: {
         canonical: canonicalUrl,
       },
+      robots: robotsConfig,
     };
   } catch (error) {
     console.error('Erreur lors de la génération des métadonnées:', error);
