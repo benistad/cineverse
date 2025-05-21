@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiLink } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -157,6 +157,17 @@ export default function Navbar() {
                 >
                   Rechercher
                 </Link>
+                <Link 
+                  href="/admin/seo" 
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    pathname === '/admin/seo' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                  }`}
+                >
+                  <span className="flex items-center">
+                    <FiLink className="mr-1" />
+                    SEO
+                  </span>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
@@ -277,6 +288,15 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                 >
                   <FiSearch className="mr-2" /> Rechercher
+                </Link>
+                <Link 
+                  href="/admin/seo" 
+                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                    pathname === '/admin/seo' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <FiLink className="mr-2" /> SEO
                 </Link>
                 <button
                   onClick={() => {
