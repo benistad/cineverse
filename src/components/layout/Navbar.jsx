@@ -158,14 +158,14 @@ export default function Navbar() {
                   Rechercher
                 </Link>
                 <Link 
-                  href="/admin/seo" 
+                  href="/annuaires" 
                   className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    pathname === '/admin/seo' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                    pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
                   }`}
                 >
                   <span className="flex items-center">
                     <FiLink className="mr-1" />
-                    SEO
+                    Annuaires
                   </span>
                 </Link>
                 <button
@@ -290,13 +290,13 @@ export default function Navbar() {
                   <FiSearch className="mr-2" /> Rechercher
                 </Link>
                 <Link 
-                  href="/admin/seo" 
+                  href="/annuaires" 
                   className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                    pathname === '/admin/seo' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                    pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  <FiLink className="mr-2" /> SEO
+                  <FiLink className="mr-2" /> Annuaires
                 </Link>
                 <button
                   onClick={() => {
