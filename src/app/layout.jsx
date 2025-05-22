@@ -29,6 +29,12 @@ const ClientComponents = dynamic(
   { ssr: false }
 );
 
+// Bouton d'ajout aux favoris
+const AddToFavoritesButton = dynamic(
+  () => import('@/components/ui/AddToFavoritesButton'),
+  { ssr: false }
+);
+
 // Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
@@ -134,6 +140,7 @@ export default function RootLayout({ children }) {
           <main className="container mx-auto px-4 py-8">
             {children}
           </main>
+          <AddToFavoritesButton />
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
