@@ -132,8 +132,18 @@ export default function Home() {
 
   return (
     <div className="space-y-2">
-      <section className="py-0 text-center mt-[-20px]">
-  <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900">
+      <section 
+        className="py-0 text-center mt-[-20px]" 
+        itemScope 
+        itemType="https://schema.org/WebPage"
+        aria-labelledby="idee-de-film-quel-film-regarder"
+      >
+  <h1 
+    className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900" 
+    id="idee-de-film-quel-film-regarder" 
+    aria-label="Idée de film : quel film regarder ? Trouvez l'inspiration sur Movie Hunt"
+    itemScope itemProp="headline"
+  >
     <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
     <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
   </h1>
