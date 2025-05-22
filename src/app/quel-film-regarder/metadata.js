@@ -2,12 +2,12 @@
  * Métadonnées optimisées pour la page "Quel film regarder ?"
  */
 export const metadata = {
-  title: 'Quel film regarder ce soir ? Top 10 des films à voir absolument | MovieHunt',
-  description: 'Vous ne savez pas quel film regarder ? Découvrez notre sélection des meilleurs films à voir ce soir : thrillers, drames, science-fiction. Recommandations cinéphiles pour tous les goûts.',
+  title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
+  description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
   keywords: 'quel film regarder, film à voir ce soir, idée film, suggestion film, recommandation film, meilleur film à voir, film à ne pas manquer',
   openGraph: {
-    title: 'Quel film regarder ce soir ? Top 10 des films à voir absolument | MovieHunt',
-    description: 'Vous ne savez pas quel film regarder ? Découvrez notre sélection des meilleurs films à voir ce soir : thrillers, drames, science-fiction. Recommandations cinéphiles pour tous les goûts.',
+    title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
+    description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
     url: 'https://moviehunt.fr/quel-film-regarder',
     images: [
       {
@@ -22,8 +22,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quel film regarder ce soir ? Top 10 des films à voir absolument | MovieHunt',
-    description: 'Vous ne savez pas quel film regarder ? Découvrez notre sélection des meilleurs films à voir ce soir : thrillers, drames, science-fiction. Recommandations cinéphiles pour tous les goûts.',
+    title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
+    description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
     images: ['/images/og-image.jpg'],
     site: '@moviehuntfr',
   },
