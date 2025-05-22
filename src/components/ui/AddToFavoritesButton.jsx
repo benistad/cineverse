@@ -72,13 +72,13 @@ export default function AddToFavoritesButton() {
 
   return (
     <div 
-      className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+      className={`fixed top-20 right-6 z-50 transition-all duration-300 ${
         isAnimating ? 'scale-110' : 'scale-100'
       }`}
     >
       <button
         onClick={addToFavorites}
-        className={`group flex items-center space-x-2 px-4 py-3 rounded-full shadow-lg transition-all duration-300 ${
+        className={`group flex items-center space-x-2 px-3 py-2 text-sm rounded-full shadow-lg transition-all duration-300 ${
           isAdded 
             ? 'bg-yellow-500 text-white hover:bg-yellow-600' 
             : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
