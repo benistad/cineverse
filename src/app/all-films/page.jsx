@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
+import FilmIndexLinks from './FilmIndexLinks';
 import Link from 'next/link';
 
 export default function AllFilmsPage() {
@@ -58,6 +59,9 @@ export default function AllFilmsPage() {
           <p className="text-gray-500">Aucun film disponible pour le moment.</p>
         </div>
       )}
+      
+      {/* Index des films pour améliorer l'indexation SEO */}
+      {!loading && films.length > 0 && <FilmIndexLinks />}
     </div>
   );
 }

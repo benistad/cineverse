@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
+import dynamic from 'next/dynamic';
 import { AuthProvider } from "@/contexts/AuthContext";
 import Script from "next/script";
 // Importation avec gestion d'erreur pour éviter les erreurs console
@@ -26,6 +27,12 @@ import JsonLdSchema from './components/JsonLdSchema';
 // Importer les composants côté client avec 'use client'
 const ClientComponents = dynamic(
   () => import('@/components/ClientComponents'),
+  { ssr: false }
+);
+
+// Composant Footer
+const Footer = dynamic(
+  () => import('@/components/layout/Footer'),
   { ssr: false }
 );
 
@@ -140,6 +147,7 @@ export default function RootLayout({ children }) {
           <main className="container mx-auto px-4 py-8">
             {children}
           </main>
+          <Footer />
           <AddToFavoritesButton />
         </AuthProvider>
         <SpeedInsights />

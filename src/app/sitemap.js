@@ -38,6 +38,12 @@ export default async function sitemap() {
       url: `${baseUrl}/huntedbymoviehunt`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/films-index`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
