@@ -9,16 +9,26 @@ export default function AddToFavoritesButton() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    // Vérifier si le site est déjà dans les favoris (via localStorage)
-    const isFavorited = localStorage.getItem('moviehunt-favorited') === 'true';
-    setIsAdded(isFavorited);
-    
-    // Si c'est déjà ajouté, on peut cacher le bouton après un certain temps
-    if (isFavorited) {
-      const timer = setTimeout(() => {
-        setIsVisible(false);
-      }, 3000);
-      return () => clearTimeout(timer);
+    try {
+      // Vérifier si le site est déjà dans les favoris (via localStorage)
+      const isFavorited = localStorage.getItem('moviehunt-favorited') === 'true';
+      setIsAdded(isFavorited);
+      
+      // Réinitialiser l'état de fermeture pour s'assurer que le bouton s'affiche
+      localStorage.removeItem('moviehunt-favorites-dismissed');
+      setIsVisible(true);
+      
+      // Si c'est déjà ajouté, on peut cacher le bouton après un certain temps plus long
+      if (isFavorited) {
+        const timer = setTimeout(() => {
+          setIsVisible(false);
+        }, 10000); // 10 secondes au lieu de 3
+        return () => clearTimeout(timer);
+      }
+    } catch (error) {
+      // En cas d'erreur avec localStorage, on affiche quand même le bouton
+      console.error('Erreur avec localStorage:', error);
+      setIsVisible(true);
     }
   }, []);
 
@@ -65,23 +75,23 @@ export default function AddToFavoritesButton() {
     localStorage.setItem('moviehunt-favorites-dismissed', 'true');
   };
 
-  // Si le bouton n'est pas visible ou a été fermé précédemment, ne rien afficher
-  if (!isVisible || localStorage.getItem('moviehunt-favorites-dismissed') === 'true') {
+  // Toujours afficher le bouton, sauf si explicitement fermé
+  if (!isVisible) {
     return null;
   }
 
   return (
     <div 
-      className={`fixed top-20 right-6 z-50 transition-all duration-300 ${
+      className={`fixed top-20 right-6 z-[9999] transition-all duration-300 ${
         isAnimating ? 'scale-110' : 'scale-100'
       }`}
     >
       <button
         onClick={addToFavorites}
-        className={`group flex items-center space-x-2 px-3 py-2 text-sm rounded-full shadow-lg transition-all duration-300 ${
+        className={`group flex items-center space-x-2 px-4 py-2.5 text-sm font-medium rounded-full shadow-xl transition-all duration-300 animate-pulse hover:animate-none ${
           isAdded 
-            ? 'bg-yellow-500 text-white hover:bg-yellow-600' 
-            : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
+            ? 'bg-yellow-500 text-white hover:bg-yellow-600 border-2 border-yellow-400' 
+            : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 border-2 border-blue-400'
         }`}
       >
         <FiStar className={`${isAdded ? 'text-white' : 'text-yellow-300'} group-hover:animate-pulse`} />
