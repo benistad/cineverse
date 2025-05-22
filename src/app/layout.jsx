@@ -7,7 +7,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import dynamic from 'next/dynamic';
 import { AuthProvider } from "@/contexts/AuthContext";
 import Script from "next/script";
 // Importation avec gestion d'erreur pour éviter les erreurs console
