@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import FilmEditor from '@/components/films/FilmEditor';
 import axios from 'axios';
-// Import direct des fonctions TMDB pour éviter les problèmes d'authentification
+// Import direct des fonctions TMDB et de la configuration pour éviter les problèmes d'authentification
 import { getMovieDetails } from '@/lib/tmdb/api';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function EditPage() {
   const params = useParams();
   const router = useRouter();
+  const { supabase } = useAuth();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,13 +28,22 @@ export default function EditPage() {
         
         console.log(`Tentative de récupération des détails du film ${movieId}...`);
         
-        // Utiliser notre fonction getMovieDetails au lieu d'un appel direct à l'API TMDB
-        // Cette fonction gère déjà l'authentification et les erreurs
-        const movieData = await getMovieDetails(movieId);
+        // Appel direct à l'API TMDB avec le token d'authentification
+        const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN;
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+          params: {
+            language: 'fr-FR',
+            append_to_response: 'credits,videos,images',
+          },
+          headers: {
+            Authorization: `Bearer ${TMDB_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+        });
         
-        if (movieData) {
+        if (response.data) {
           console.log(`Détails du film ${movieId} récupérés avec succès`);
-          setMovie(movieData);
+          setMovie(response.data);
         } else {
           throw new Error(`Impossible de récupérer les détails du film ${movieId}`);
         }
@@ -60,7 +71,36 @@ export default function EditPage() {
   if (error || !movie) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <p>Erreur lors du chargement du film</p>
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Erreur lors du chargement du film</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error?.message || 'Impossible de récupérer les détails du film. Veuillez réessayer.'}</p>
+                <p className="mt-2">Code d'erreur: {error?.response?.status || 'Inconnu'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex space-x-4 mt-4">
+          <button 
+            onClick={() => router.push('/admin/search')} 
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Retour à la recherche
+          </button>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          >
+            Réessayer
+          </button>
+        </div>
       </div>
     );
   }
