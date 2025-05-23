@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import FilmEditor from '@/components/films/FilmEditor';
 import axios from 'axios';
+// Import direct des fonctions TMDB pour éviter les problèmes d'authentification
+import { getMovieDetails } from '@/lib/tmdb/api';
 
 export default function EditPage() {
   const params = useParams();
@@ -22,26 +24,23 @@ export default function EditPage() {
           return;
         }
         
-        // Utiliser directement le token TMDB pour éviter les problèmes avec les variables d'environnement
-        const tmdbToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
-        
         console.log(`Tentative de récupération des détails du film ${movieId}...`);
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR&append_to_response=credits,videos`,
-          {
-            headers: {
-              Authorization: `Bearer ${tmdbToken}`,
-              'Content-Type': 'application/json'
-            }
-          }
-        );
-        console.log(`Détails du film ${movieId} récupérés avec succès`);
-        setMovie(response.data);
+        
+        // Utiliser notre fonction getMovieDetails au lieu d'un appel direct à l'API TMDB
+        // Cette fonction gère déjà l'authentification et les erreurs
+        const movieData = await getMovieDetails(movieId);
+        
+        if (movieData) {
+          console.log(`Détails du film ${movieId} récupérés avec succès`);
+          setMovie(movieData);
+        } else {
+          throw new Error(`Impossible de récupérer les détails du film ${movieId}`);
+        }
       } catch (error) {
         console.error('Erreur lors de la récupération des détails du film:', error);
         setError(error);
-        // Rediriger vers la page de recherche au lieu de not-found
-        router.push('/admin/search');
+        // Afficher l'erreur mais ne pas rediriger
+        setLoading(false);
       } finally {
         setLoading(false);
       }
