@@ -81,9 +81,32 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
     }
   }
 
+  // Vérifier si nous sommes dans la partie admin
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
+  
   // Fonction de gestion d'erreur améliorée
   const handleImageError = () => {
-    // Si l'URL est une URL TMDB et que nous n'avons pas encore essayé une alternative
+    // Si nous sommes dans la partie admin, utiliser directement une image placeholder
+    if (isAdmin) {
+      // Générer un numéro aléatoire entre 1 et 5 pour les placeholders
+      const placeholderNum = Math.floor(Math.random() * 5) + 1;
+      const placeholderSrc = `/images/placeholders/movie-${placeholderNum}.jpg`;
+      
+      // Vérifier si le placeholder existe, sinon utiliser l'image par défaut
+      const img = new Image();
+      img.onload = () => {
+        setImageSrc(placeholderSrc);
+        setHasError(true);
+      };
+      img.onerror = () => {
+        // Si le placeholder n'existe pas, utiliser l'image par défaut
+        setError(true);
+      };
+      img.src = placeholderSrc;
+      return;
+    }
+    
+    // Pour les autres parties du site, essayer des tailles alternatives
     if (!hasError && src && typeof src === 'string' && src.includes('image.tmdb.org/t/p/')) {
       console.warn(`Tentative de récupération d'une taille alternative pour l'image TMDB: ${src}`);
       

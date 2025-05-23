@@ -167,15 +167,32 @@ export const getPopularMovies = async (page = 1) => {
 
 /**
  * Construction de l'URL d'une image
- * Retourne null si le chemin est null, ce qui permettra à SafeImage de gérer le fallback
+ * Utilise des placeholders locaux pour éviter les problèmes avec l'API TMDB
  */
 export const getImageUrl = (path, size = 'w500') => {
+  // Vérifier si nous sommes dans la partie admin
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
+  
   if (!path) {
-    // Retourne null au lieu d'une URL de placeholder
-    // SafeImage se chargera d'afficher un fallback
-    return null;
+    // Retourner une image placeholder locale
+    return '/images/placeholder.jpg';
   }
-  return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+  
+  // Si nous sommes dans la partie admin, utiliser des placeholders locaux
+  // pour éviter les problèmes avec l'API TMDB
+  if (isAdmin) {
+    // Générer un numéro aléatoire entre 1 et 5 pour les placeholders
+    const placeholderNum = Math.floor(Math.random() * 5) + 1;
+    return `/images/placeholders/movie-${placeholderNum}.jpg`;
+  }
+  
+  // Pour les autres parties du site, essayer d'utiliser l'API TMDB
+  try {
+    return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
+  } catch (error) {
+    console.error('Erreur lors de la construction de l\'URL d\'image:', error);
+    return '/images/placeholder.jpg';
+  }
 };
 
 /**
