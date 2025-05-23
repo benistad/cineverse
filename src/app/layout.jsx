@@ -14,10 +14,13 @@ import dynamic from 'next/dynamic';
 
 // Chargement conditionnel de SpeedInsights pour éviter les erreurs console
 const SpeedInsights = dynamic(
-  () => import('@vercel/speed-insights/next').then(mod => mod.SpeedInsights).catch(() => {
-    // Retourner un composant vide en cas d'erreur
-    return () => null;
-  }),
+  () => import('@vercel/speed-insights/next')
+    .then(mod => mod.SpeedInsights)
+    .catch((error) => {
+      console.warn('SpeedInsights non chargé:', error?.message || 'Erreur inconnue');
+      // Retourner un composant vide en cas d'erreur
+      return () => null;
+    }),
   { ssr: false }
 );
 // dynamic est déjà importé plus haut
@@ -92,6 +95,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#1e293b" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="MovieHunt" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="keywords" content="films, cinéma, critiques, notes, recommandations, perles rares, streaming, plateformes françaises, casting remarquable, coup de cœur" />
         
         {/* Open Graph / Facebook */}

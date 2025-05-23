@@ -1,11 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FiImage } from 'react-icons/fi';
 
 export default function SafeImage({ src, alt, fill = false, sizes, className = '', priority = false, width, height, style = {}, ...props }) {
+  const [imageSrc, setImageSrc] = useState(src);
+  const [hasError, setHasError] = useState(false);
   const [error, setError] = useState(false);
+  
+  // Réinitialiser l'état si la source change
+  useEffect(() => {
+    if (src !== imageSrc && !hasError) {
+      setImageSrc(src);
+      setError(false);
+    }
+  }, [src, imageSrc, hasError]);
 
   // Warn in development if neither width/height (for non-fill) nor fill+parent aspect ratio is provided
   if (process.env.NODE_ENV !== 'production') {
@@ -71,10 +81,38 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
     }
   }
 
+  // Fonction de gestion d'erreur améliorée
+  const handleImageError = () => {
+    // Si l'URL est une URL TMDB et que nous n'avons pas encore essayé une alternative
+    if (!hasError && src && typeof src === 'string' && src.includes('image.tmdb.org/t/p/')) {
+      console.warn(`Tentative de récupération d'une taille alternative pour l'image TMDB: ${src}`);
+      
+      // Essayer avec une taille d'image plus petite
+      let newSrc;
+      if (src.includes('/w500/')) {
+        newSrc = src.replace('/w500/', '/w342/');
+      } else if (src.includes('/w1280/')) {
+        newSrc = src.replace('/w1280/', '/w780/');
+      } else if (src.includes('/original/')) {
+        newSrc = src.replace('/original/', '/w780/');
+      }
+      
+      if (newSrc && newSrc !== src) {
+        console.log('Tentative avec une taille d\'image alternative:', newSrc);
+        setImageSrc(newSrc);
+        setHasError(true);
+        return;
+      }
+    }
+    
+    // Si ce n'est pas une URL TMDB ou si la tentative alternative échoue
+    setError(true);
+  };
+
   // Render Next.js Image with enforced width/height or fill
   return (
     <Image
-      src={src}
+      src={imageSrc}
       alt={alt || 'Image'}
       fill={fill}
       sizes={sizes}
@@ -83,7 +121,7 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
       loading={priority ? 'eager' : 'lazy'}
       width={!fill ? width : undefined}
       height={!fill ? height : undefined}
-      onError={() => setError(true)}
+      onError={handleImageError}
       style={style}
       {...props}
     />
