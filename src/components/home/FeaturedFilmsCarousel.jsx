@@ -26,16 +26,53 @@ export default function FeaturedFilmsCarousel() {
   const getOptimalImageUrl = (film) => {
     if (!film) return null;
     
-    // Priorité: carousel_image_url > backdrop_url > poster_url
+    // Priorité: carousel_image_url > backdrop_url > poster_url > backdrop_path > poster_path
     if (film.carousel_image_url) {
-      return optimizeBackdropImage(film.carousel_image_url);
-    } else if (film.backdrop_url) {
-      return optimizeBackdropImage(film.backdrop_url);
-    } else if (film.poster_url) {
-      return optimizePosterImage(film.poster_url);
+      // Vérifier si c'est déjà une URL complète
+      if (film.carousel_image_url.startsWith('http')) {
+        return film.carousel_image_url;
+      } else if (film.carousel_image_url.startsWith('/')) {
+        return `https://image.tmdb.org/t/p/w1280${film.carousel_image_url}`;
+      }
     }
     
-    return null;
+    if (film.backdrop_url) {
+      // Vérifier si c'est déjà une URL complète
+      if (film.backdrop_url.startsWith('http')) {
+        return film.backdrop_url;
+      } else if (film.backdrop_url.startsWith('/')) {
+        return `https://image.tmdb.org/t/p/w1280${film.backdrop_url}`;
+      }
+    }
+    
+    if (film.backdrop_path) {
+      // Vérifier si c'est déjà une URL complète
+      if (film.backdrop_path.startsWith('http')) {
+        return film.backdrop_path;
+      } else if (film.backdrop_path.startsWith('/')) {
+        return `https://image.tmdb.org/t/p/w1280${film.backdrop_path}`;
+      }
+    }
+    
+    if (film.poster_url) {
+      // Vérifier si c'est déjà une URL complète
+      if (film.poster_url.startsWith('http')) {
+        return film.poster_url;
+      } else if (film.poster_url.startsWith('/')) {
+        return `https://image.tmdb.org/t/p/w500${film.poster_url}`;
+      }
+    }
+    
+    if (film.poster_path) {
+      // Vérifier si c'est déjà une URL complète
+      if (film.poster_path.startsWith('http')) {
+        return film.poster_path;
+      } else if (film.poster_path.startsWith('/')) {
+        return `https://image.tmdb.org/t/p/w500${film.poster_path}`;
+      }
+    }
+    
+    return '/images/placeholder.jpg';
   };
 
   // Précharger les images pour éviter le clignotement
