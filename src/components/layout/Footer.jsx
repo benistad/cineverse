@@ -78,13 +78,28 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            © {currentYear} MovieHunt. Tous droits réservés.
-          </p>
-          <div className="mt-4 md:mt-0">
-            <Link href="/annuaires" className="text-gray-400 hover:text-white text-sm">
+          <div>
+            <p className="text-gray-400 text-sm">
+              © {currentYear} MovieHunt. Tous droits réservés.
+            </p>
+            <p className="text-gray-400 text-xs mt-1">
+              Ce site utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.
+              <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer" className="ml-1 hover:text-white">
+                The Movie Database
+              </a>
+            </p>
+          </div>
+          <div className="mt-4 md:mt-0 flex items-center">
+            <Link href="/annuaires" className="text-gray-400 hover:text-white text-sm mr-4">
               Partenaires
             </Link>
+            <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">
+              <img 
+                src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" 
+                alt="TMDB Logo" 
+                className="h-6" 
+              />
+            </a>
           </div>
         </div>
       </div>
