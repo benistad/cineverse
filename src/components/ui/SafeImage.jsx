@@ -84,37 +84,52 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
   // Vérifier si nous sommes dans la partie admin
   const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
   
-  // Fonction de gestion d'erreur améliorée
+  // Si nous sommes dans la partie admin, utiliser une balise img standard au lieu de Next/Image
+  // Cela évite les problèmes d'optimisation d'images qui peuvent causer des erreurs 404
+  if (isAdmin) {
+    // Utiliser des placeholders en ligne pour éviter les problèmes de fichiers locaux
+    // Ces placeholders sont disponibles publiquement et ne nécessitent pas d'authentification
+    const placeholderSizes = [300, 400, 500, 600, 700];
+    const placeholderNum = ((width || 0) % 5) + 1; // Utilise width pour générer un nombre déterministe
+    const placeholderSize = placeholderSizes[placeholderNum - 1];
+    const placeholderSrc = `https://placehold.co/${placeholderSize}x${placeholderSize * 1.5}/3498db/ffffff?text=Image+non+disponible`;
+    
+    // Styles pour l'image standard
+    const imgStyles = {
+      objectFit: 'cover',
+      width: fill ? '100%' : width ? `${width}px` : 'auto',
+      height: fill ? '100%' : height ? `${height}px` : 'auto',
+      position: fill ? 'absolute' : 'relative',
+      inset: fill ? '0' : undefined,
+      ...style
+    };
+    
+    // Conteneur pour le mode fill
+    const containerStyles = fill ? {
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+    } : {};
+    
+    return (
+      <div style={containerStyles}>
+        <img 
+          src={src || placeholderSrc}
+          alt={alt || 'Image'}
+          className={className}
+          style={imgStyles}
+          onError={(e) => {
+            console.log(`Erreur de chargement d'image admin: ${src}`);
+            e.target.src = placeholderSrc;
+          }}
+          {...props}
+        />
+      </div>
+    );
+  }
+  
+  // Fonction de gestion d'erreur améliorée pour les parties non-admin
   const handleImageError = () => {
-    // Si nous sommes dans la partie admin, utiliser une image placeholder
-    if (isAdmin) {
-      // Générer un numéro fixe entre 1 et 5 pour les placeholders (évite les changements aléatoires)
-      const placeholderNum = ((width || 0) % 5) + 1; // Utilise width pour générer un nombre déterministe
-      const placeholderSrc = `/images/placeholders/movie-${placeholderNum}.jpg`;
-      
-      // Remplacer directement l'image par le placeholder sans passer par Next.js Image
-      // Cela contourne les problèmes d'optimisation d'images sur le serveur
-      setTimeout(() => {
-        const imgElement = document.createElement('img');
-        imgElement.src = placeholderSrc;
-        imgElement.alt = alt || 'Image';
-        imgElement.className = className;
-        imgElement.style.width = fill ? '100%' : `${width}px`;
-        imgElement.style.height = fill ? '100%' : `${height}px`;
-        imgElement.style.objectFit = 'cover';
-        
-        // Appliquer les styles supplémentaires
-        Object.assign(imgElement.style, style);
-        
-        // Remplacer l'image actuelle par le placeholder
-        const currentImg = document.querySelector(`img[alt="${alt || 'Image'}"]`);
-        if (currentImg && currentImg.parentNode) {
-          currentImg.parentNode.replaceChild(imgElement, currentImg);
-        }
-      }, 0);
-      
-      return;
-    }
     
     // Pour les autres parties du site, essayer des tailles alternatives
     if (!hasError && src && typeof src === 'string' && src.includes('image.tmdb.org/t/p/')) {

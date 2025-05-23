@@ -49,13 +49,15 @@ export default function MovieSearchResults({ movies, isLoading }) {
                 <img
                   src={movie.poster_path 
                     ? getImageUrl(movie.poster_path) 
-                    : `/images/placeholders/movie-${(movie.id % 5) + 1}.jpg`}
+                    : `https://placehold.co/400x600/3498db/ffffff?text=${encodeURIComponent(movie.title || 'Film')}`}
                   alt={movie.title || 'Poster du film'}
                   className="object-cover w-full h-full"
                   onError={(e) => {
-                    // En cas d'erreur, utiliser un placeholder
-                    const placeholderNum = (movie.id % 5) + 1;
-                    e.target.src = `/images/placeholders/movie-${placeholderNum}.jpg`;
+                    // En cas d'erreur, utiliser un placeholder en ligne
+                    const placeholderSizes = [300, 400, 500, 600, 700];
+                    const placeholderNum = (movie.id % 5);
+                    const placeholderSize = placeholderSizes[placeholderNum] || 400;
+                    e.target.src = `https://placehold.co/${placeholderSize}x${placeholderSize * 1.5}/3498db/ffffff?text=${encodeURIComponent(movie.title || 'Film')}`;
                   }}
                 />
               ) : (

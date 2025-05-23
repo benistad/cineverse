@@ -172,20 +172,34 @@ export const getPopularMovies = async (page = 1) => {
 /**
  * Construction de l'URL d'une image
  * Utilise les images TMDB quand c'est possible, avec des placeholders en cas d'erreur
+ * Gestion spéciale pour la partie admin afin d'assurer que les images s'affichent correctement
  */
 export const getImageUrl = (path, size = 'w500') => {
+  // Détecter si nous sommes dans la partie admin (côté client uniquement)
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
+  
   if (!path) {
-    // Retourner une image placeholder locale si aucun chemin n'est fourni
+    // Utiliser des placeholders en ligne pour éviter les problèmes de fichiers locaux
+    // Ces placeholders sont disponibles publiquement et ne nécessitent pas d'authentification
+    if (isAdmin) {
+      const placeholderSizes = [300, 400, 500, 600, 700];
+      const placeholderNum = (size.charCodeAt(1) % 5);
+      const placeholderSize = placeholderSizes[placeholderNum] || 400;
+      return `https://placehold.co/${placeholderSize}x${placeholderSize * 1.5}/3498db/ffffff?text=Image+non+disponible`;
+    }
     return '/images/placeholder.jpg';
   }
   
-  // Pour toutes les parties du site, essayer d'utiliser l'API TMDB
-  try {
-    return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
-  } catch (error) {
-    console.error('Erreur lors de la construction de l\'URL d\'image:', error);
-    return '/images/placeholder.jpg';
-  }
+  // S'assurer que le chemin commence par un slash
+  const formattedPath = path.startsWith('/') ? path : `/${path}`;
+  
+  // Construire l'URL complète pour l'API TMDB
+  const imageUrl = `${TMDB_IMAGE_BASE_URL}/${size}${formattedPath}`;
+  
+  // Log pour débogage
+  console.log(`Construction de l'URL d'image: ${imageUrl} (admin: ${isAdmin})`); 
+  
+  return imageUrl;
 };
 
 /**
