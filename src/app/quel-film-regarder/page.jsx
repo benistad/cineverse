@@ -79,13 +79,21 @@ export default function QuelFilmRegarder() {
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/fall">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/9f5sIJEgvUpFv0ozfA6TurG4j22.jpg" 
+                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+                    <img 
+                      src="https://image.tmdb.org/t/p/w342/9f5sIJEgvUpFv0ozfA6TurG4j22.jpg" 
                       alt="Affiche du film Fall" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
-                      priority
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="eager"
+                      onError={(e) => {
+                        // En cas d'erreur, essayer une taille plus petite
+                        if (e.target.src.includes('/w342/')) {
+                          e.target.src = e.target.src.replace('/w342/', '/w185/');
+                        } else {
+                          // Si toutes les tentatives échouent, utiliser un placeholder
+                          e.target.src = '/images/placeholder.jpg';
+                        }
+                      }}
                     />
                   </div>
                 </Link>
@@ -112,13 +120,21 @@ export default function QuelFilmRegarder() {
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/split">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://image.tmdb.org/t/p/w780/lli31lYTFpvxVBeFHWoe5PMfW5s.jpg" 
+                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+                    <img 
+                      src="https://image.tmdb.org/t/p/w342/lli31lYTFpvxVBeFHWoe5PMfW5s.jpg" 
                       alt="Affiche du film Split" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
-                      priority
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="eager"
+                      onError={(e) => {
+                        // En cas d'erreur, essayer une taille plus petite
+                        if (e.target.src.includes('/w342/')) {
+                          e.target.src = e.target.src.replace('/w342/', '/w185/');
+                        } else {
+                          // Si toutes les tentatives échouent, utiliser un placeholder
+                          e.target.src = '/images/placeholder.jpg';
+                        }
+                      }}
                     />
                   </div>
                 </Link>
@@ -145,12 +161,21 @@ export default function QuelFilmRegarder() {
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/1917">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/AuGiPiGMYMkSosOJ3BQjDEAiwtO.jpg" 
+                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+                    <img 
+                      src="https://image.tmdb.org/t/p/w342/AuGiPiGMYMkSosOJ3BQjDEAiwtO.jpg" 
                       alt="Affiche du film 1917" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        // En cas d'erreur, essayer une taille plus petite
+                        if (e.target.src.includes('/w342/')) {
+                          e.target.src = e.target.src.replace('/w342/', '/w185/');
+                        } else {
+                          // Si toutes les tentatives échouent, utiliser un placeholder
+                          e.target.src = '/images/placeholder.jpg';
+                        }
+                      }}
                     />
                   </div>
                 </Link>
@@ -177,12 +202,21 @@ export default function QuelFilmRegarder() {
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/les-banshees-dinisherin">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/5Y0AINkH7xDqmuxJXUQdPbtyrub.jpg" 
+                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+                    <img 
+                      src="https://image.tmdb.org/t/p/w342/5Y0AINkH7xDqmuxJXUQdPbtyrub.jpg" 
                       alt="Affiche du film Les Banshees d'Inisherin" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        // En cas d'erreur, essayer une taille plus petite
+                        if (e.target.src.includes('/w342/')) {
+                          e.target.src = e.target.src.replace('/w342/', '/w185/');
+                        } else {
+                          // Si toutes les tentatives échouent, utiliser un placeholder
+                          e.target.src = '/images/placeholder.jpg';
+                        }
+                      }}
                     />
                   </div>
                 </Link>
@@ -209,12 +243,21 @@ export default function QuelFilmRegarder() {
               <div className="md:w-1/4 flex-shrink-0">
                 <Link href="/films/game-night">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <SafeImage 
-                      src="https://image.tmdb.org/t/p/w500/85R8LMyn9f2Lev2YPBF8Nughrkv.jpg" 
+                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+                    <img 
+                      src="https://image.tmdb.org/t/p/w342/85R8LMyn9f2Lev2YPBF8Nughrkv.jpg" 
                       alt="Affiche du film Game Night" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover"
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        // En cas d'erreur, essayer une taille plus petite
+                        if (e.target.src.includes('/w342/')) {
+                          e.target.src = e.target.src.replace('/w342/', '/w185/');
+                        } else {
+                          // Si toutes les tentatives échouent, utiliser un placeholder
+                          e.target.src = '/images/placeholder.jpg';
+                        }
+                      }}
                     />
                   </div>
                 </Link>
