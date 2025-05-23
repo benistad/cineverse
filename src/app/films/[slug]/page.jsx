@@ -113,14 +113,11 @@ export default function FilmPageBySlug() {
             if (foundTrailerKey) {
               setTrailerKey(foundTrailerKey);
               
-              // Mettre à jour le film dans la base de données avec la clé de la bande-annonce
-              const { error: updateError } = await supabase
-                .from('films')
-                .update({ youtube_trailer_key: foundTrailerKey })
-                .eq('id', data.id);
-              
-              if (updateError) {
-                console.error('Erreur lors de la mise à jour de la clé de la bande-annonce:', updateError);
+              if (foundTrailerKey !== data.youtube_trailer_key) {
+                await fetch(`/api/films/${data.id}/trailer`, {
+                  method: 'PUT',
+                  body: JSON.stringify({ trailerKey: foundTrailerKey }),
+                });
               }
             }
           } catch (error) {
@@ -128,9 +125,12 @@ export default function FilmPageBySlug() {
           } finally {
             setSearchingTrailer(false);
           }
+        } else {
+          setTrailerKey(data.youtube_trailer_key);
         }
       } catch (error) {
-        console.error('Erreur lors du chargement du film:', error);
+        console.error('Erreur:', error);
+        router.push('/not-found');
       } finally {
         setLoading(false);
       }
@@ -167,14 +167,18 @@ export default function FilmPageBySlug() {
           <div className="md:w-1/3 lg:w-1/4">
             <div className="relative h-[400px] md:h-full">
               <SafeImage
-                src={film.poster_path ? 
-                  // Vérifier si le chemin est déjà une URL complète ou un chemin relatif
-                  film.poster_path.includes('http') ? 
-                    optimizePosterImage(film.poster_path) : 
-                    film.poster_path.startsWith('/') ? 
+                src={
+                  // Priorité 1: poster_path (chemin TMDB)
+                  film.poster_path ? 
+                    (film.poster_path.startsWith('/') ? 
                       `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
-                      film.poster_url || '/images/placeholder.jpg'
-                  : film.poster_url || null}
+                      film.poster_path) :
+                  // Priorité 2: poster_url (URL complète)
+                  film.poster_url ? 
+                    optimizePosterImage(film.poster_url) : 
+                    // Fallback: placeholder
+                    null
+                }
                 alt={`Affiche du film ${film.title}`}
                 fill
                 className="object-contain object-top"
@@ -196,17 +200,17 @@ export default function FilmPageBySlug() {
                       className="block transition-transform hover:scale-110"
                       title="En savoir plus sur Hunted by MovieHunt"
                     >
-                      <SafeImage 
-                        src="/images/hunted-badge.png" 
+                      <img 
+                        src="/images/badges/hunted-badge.png" 
                         alt="Hunted by MovieHunt" 
                         width={115} 
                         height={115}
-                        className="drop-shadow-md"
+                        className="drop-shadow-md cursor-pointer"
                       />
                     </Link>
                   ) : (
                     <img 
-                      src="/images/hunted-badge.png" 
+                      src="/images/badges/hunted-badge.png" 
                       alt="Hunted by MovieHunt" 
                       width={115} 
                       height={115}
@@ -223,29 +227,27 @@ export default function FilmPageBySlug() {
                   {new Date(film.release_date).getFullYear()}
                 </span>
               )}
-              
-              {film.runtime && (
-                <span className="mr-3">
-                  {Math.floor(film.runtime / 60)}h{film.runtime % 60 ? ` ${film.runtime % 60}min` : ''}
-                </span>
-              )}
-              
-              {film.genres && film.genres.length > 0 && (
-                <span className="mr-3">
-                  {film.genres.join(', ')}
-                </span>
-              )}
-              
-              {film.director && (
-                <span className="mr-3">
-                  Réalisé par {film.director}
+              {film.genres && (
+                <span>
+                  {film.genres}
                 </span>
               )}
             </div>
             
+            <p className="text-gray-600 mb-2">
+              <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
+            </p>
+            
+            {film.genres && (
+              <p className="text-gray-600 mb-2">
+                <span className="font-semibold">Genre:</span> {film.genres}
+              </p>
+            )}
+            
             <div className="flex items-center mb-4">
-              <RatingIcon rating={film.note_sur_10 || 0} size={32} />
-              <span className="ml-2 text-lg font-semibold">
+              <span className="font-semibold mr-2">Note:</span>
+              <span className="flex items-center">
+                <RatingIcon rating={film.note_sur_10} className="mr-2" />
                 {film.note_sur_10}/10
               </span>
             </div>
