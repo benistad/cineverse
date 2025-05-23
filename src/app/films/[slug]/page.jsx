@@ -170,9 +170,7 @@ export default function FilmPageBySlug() {
                 src={
                   // Priorité 1: poster_path (chemin TMDB)
                   film.poster_path ? 
-                    (film.poster_path.startsWith('/') ? 
-                      `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
-                      film.poster_path) :
+                    getImageUrl(film.poster_path, 'w500') :
                   // Priorité 2: poster_url (URL complète)
                   film.poster_url ? 
                     optimizePosterImage(film.poster_url) : 

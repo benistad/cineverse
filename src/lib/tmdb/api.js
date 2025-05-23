@@ -190,6 +190,11 @@ export const getImageUrl = (path, size = 'w500') => {
     return '/images/placeholder.jpg';
   }
   
+  // Vérifier si l'URL est déjà complète
+  if (path.startsWith('http')) {
+    return path;
+  }
+  
   // S'assurer que le chemin commence par un slash
   const formattedPath = path.startsWith('/') ? path : `/${path}`;
   
