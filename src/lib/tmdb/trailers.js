@@ -3,6 +3,9 @@
 import axios from 'axios';
 import { getTrailerKey } from './api';
 
+// Configuration de l'API YouTube Data
+const YOUTUBE_API_KEY = 'AIzaSyDJbN4xIKQRM8-73Jg-qopIJW9ksqIqZwU'; // Clé API YouTube pour les recherches
+
 // Configuration de l'API TMDB (reprise du fichier api.js)
 // Note: Ce token a été mis à jour le 23/05/2025
 const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
@@ -142,26 +145,33 @@ export const getMovieTrailers = async (movieId) => {
       return trailerKey;
     }
     
-    // Si l'approche ci-dessus ne fonctionne pas, essayons l'ancienne méthode avec les requêtes par langue
-    // Cette partie est conservée pour la compatibilité, mais ne devrait plus être nécessaire
-    const languagePreferences = ['fr-FR', 'en-US'];
-    let trailerKey = null;
-    
-    for (const language of languagePreferences) {
-      if (trailerKey) break;
-      
-      const response = await tmdbApi.get(`/movie/${movieId}/videos`, { 
-        params: { language }
+    // Si aucune bande-annonce n'a été trouvée sur TMDB, essayons de récupérer le titre et l'année du film
+    // pour faire une recherche sur YouTube
+    try {
+      // Récupérer les détails du film pour avoir son titre et son année
+      const movieDetails = await tmdbApi.get(`/movie/${movieId}`, {
+        params: { language: 'fr-FR' }
       });
       
-      trailerKey = getTrailerKey(response.data);
-      
-      if (trailerKey) {
+      if (movieDetails.data && movieDetails.data.title) {
+        const title = movieDetails.data.title;
+        const year = movieDetails.data.release_date ? new Date(movieDetails.data.release_date).getFullYear() : null;
         
+        console.log(`Aucune bande-annonce TMDB pour le film ${movieId} (${title}), recherche sur YouTube...`);
+        const youtubeKey = await searchYouTubeTrailer(title, year);
+        
+        if (youtubeKey) {
+          console.log(`Bande-annonce YouTube trouvée pour le film ${movieId} (${title}): ${youtubeKey}`);
+          return youtubeKey;
+        }
       }
+    } catch (youtubeError) {
+      console.error(`Erreur lors de la recherche YouTube pour le film ${movieId}:`, youtubeError);
     }
     
-    return trailerKey;
+    // Si toutes les approches ont échoué, retourner null
+    console.log(`Aucune bande-annonce trouvée pour le film ${movieId}, ni sur TMDB ni sur YouTube`);
+    return null;
   } catch (error) {
     console.error(`Erreur lors de la récupération des bandes-annonces pour le film ${movieId}:`, error);
     return null;
@@ -174,30 +184,102 @@ export const getMovieTrailers = async (movieId) => {
  * @param {number} year - Année de sortie du film
  * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
  */
+/**
+ * Recherche une bande-annonce sur YouTube pour un film donné
+ * @param {string} movieTitle - Titre du film
+ * @param {number} year - Année de sortie du film (optionnelle)
+ * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
+ */
+export const searchYouTubeTrailer = async (movieTitle, year = null) => {
+  try {
+    // Construire la requête de recherche
+    let searchQuery = `${movieTitle} bande annonce officielle`;
+    if (year) {
+      searchQuery += ` ${year}`;
+    }
+    
+    console.log(`Recherche YouTube pour: "${searchQuery}"`);
+    
+    // Faire la requête à l'API YouTube
+    const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
+      params: {
+        part: 'snippet',
+        maxResults: 5,
+        q: searchQuery,
+        type: 'video',
+        videoDefinition: 'high',
+        key: YOUTUBE_API_KEY
+      }
+    });
+    
+    // Vérifier si nous avons des résultats
+    if (response.data && response.data.items && response.data.items.length > 0) {
+      // Filtrer les résultats pour trouver la meilleure bande-annonce
+      const trailers = response.data.items.filter(item => {
+        const title = item.snippet.title.toLowerCase();
+        // Rechercher des mots clés pertinents dans le titre
+        return (
+          (title.includes('bande') && title.includes('annonce')) ||
+          title.includes('trailer') ||
+          title.includes('teaser') ||
+          title.includes('officiel') ||
+          title.includes('official')
+        );
+      });
+      
+      // Prendre la première bande-annonce filtrée ou le premier résultat si aucun filtre ne correspond
+      const bestTrailer = trailers.length > 0 ? trailers[0] : response.data.items[0];
+      
+      console.log(`Bande-annonce YouTube trouvée pour "${movieTitle}": ${bestTrailer.id.videoId}`);
+      return bestTrailer.id.videoId;
+    }
+    
+    console.log(`Aucune bande-annonce YouTube trouvée pour "${movieTitle}"`);
+    return null;
+  } catch (error) {
+    console.error(`Erreur lors de la recherche YouTube pour "${movieTitle}":`, error);
+    return null;
+  }
+};
+
+/**
+ * Recherche une bande-annonce pour un film en utilisant son titre et son année
+ * @param {string} title - Titre du film
+ * @param {number} year - Année de sortie du film
+ * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
+ */
 export const findTrailerByTitleAndYear = async (title, year) => {
   try {
-    
+    console.log(`Recherche de bande-annonce pour: ${title} (${year})`);
     
     // Étape 1: Trouver l'ID TMDB du film
     const movieId = await findMovieByTitleAndYear(title, year);
     
     if (!movieId) {
-      
-      return null;
+      console.log(`Film non trouvé sur TMDB: ${title} (${year})`);
+      // Si le film n'est pas trouvé sur TMDB, essayer directement sur YouTube
+      return await searchYouTubeTrailer(title, year);
     }
     
-    // Étape 2: Récupérer les bandes-annonces du film
+    // Étape 2: Récupérer les bandes-annonces du film depuis TMDB
     const trailerKey = await getMovieTrailers(movieId);
     
     if (trailerKey) {
-      
+      console.log(`Bande-annonce TMDB trouvée pour: ${title} (${year})`);
+      return trailerKey;
     } else {
-      
+      console.log(`Aucune bande-annonce TMDB pour: ${title} (${year}), recherche sur YouTube...`);
+      // Si aucune bande-annonce n'est trouvée sur TMDB, essayer sur YouTube
+      return await searchYouTubeTrailer(title, year);
     }
-    
-    return trailerKey;
   } catch (error) {
     console.error('Erreur lors de la recherche de bande-annonce:', error);
-    return null;
+    // En cas d'erreur, essayer quand même YouTube comme dernier recours
+    try {
+      return await searchYouTubeTrailer(title, year);
+    } catch (youtubeError) {
+      console.error('Erreur lors de la recherche YouTube:', youtubeError);
+      return null;
+    }
   }
 };
