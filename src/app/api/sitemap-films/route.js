@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/lib/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 
 /**
  * API endpoint pour récupérer les données des films pour le sitemap
@@ -7,7 +7,11 @@ import { createServerClient } from '@/lib/supabase/server';
  */
 export async function GET() {
   try {
-    const supabase = createServerClient();
+    // Créer un client Supabase côté serveur
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+    );
     
     // Récupérer tous les films avec les informations minimales nécessaires pour le sitemap
     const { data: films, error } = await supabase
