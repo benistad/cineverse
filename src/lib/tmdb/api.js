@@ -4,9 +4,9 @@ import axios from 'axios';
 
 // Configuration de l'API TMDB
 // Utilisation du token d'authentification pour les requêtes
-// Note: Ce token a été mis à jour le 23/05/2025
-// Utiliser directement le token de secours pour éviter les problèmes avec les variables d'environnement
-const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+// Note: Ce token a été mis à jour le 24/05/2025
+// Clé API: 0e1fc1d893511f80a0c6b4c4de161c51
+const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZTFmYzFkODkzNTExZjgwYTBjNmI0YzRkZTE2MWM1MSIsIm5iZiI6MTc0NjUxNTA1NC4yODE5OTk4LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Hj-9KXl-h5-7CtFhFSC6V4NJE__c1ozx5OnrETtCS9c';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
@@ -24,8 +24,8 @@ const tmdbApi = axios.create({
  */
 export const searchMovies = async (query, page = 1) => {
   try {
-    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-    const response = await axios.get('/api/tmdb/search/movie', {
+    // Appel direct à l'API TMDB
+    const response = await tmdbApi.get('/search/movie', {
       params: {
         query,
         language: 'fr-FR',
@@ -47,9 +47,9 @@ export const getMovieDetails = async (movieId) => {
   console.log(`Début de getMovieDetails pour le film ${movieId}`);
   try {
     // Récupérer les détails du film
-    console.log(`Appel au proxy API TMDB pour le film ${movieId}`);
-    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-    const response = await axios.get(`/api/tmdb/movie/${movieId}`, {
+    console.log(`Appel à l'API TMDB pour le film ${movieId}`);
+    // Appel direct à l'API TMDB
+    const response = await tmdbApi.get(`/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
         append_to_response: 'credits,videos',
@@ -61,8 +61,8 @@ export const getMovieDetails = async (movieId) => {
     // Récupérer toutes les images disponibles sans aucun filtre de langue
     console.log(`Récupération de toutes les images disponibles pour le film ${movieId}`);
     try {
-      // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-      const imagesResponse = await axios.get(`/api/tmdb/movie/${movieId}/images`);
+      // Appel direct à l'endpoint images sans paramètres de filtre pour obtenir toutes les images possibles
+      const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`);
       
       if (imagesResponse.data) {
         console.log(`Nombre total de backdrops: ${imagesResponse.data.backdrops?.length || 0}`);

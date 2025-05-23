@@ -3,9 +3,9 @@
 import axios from 'axios';
 
 // Configuration de l'API TMDB (reprise du fichier api.js)
-// Note: Ce token a été mis à jour le 23/05/2025
-// Utiliser directement le token de secours pour éviter les problèmes avec les variables d'environnement
-const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+// Note: Ce token a été mis à jour le 24/05/2025
+// Clé API: 0e1fc1d893511f80a0c6b4c4de161c51
+const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZTFmYzFkODkzNTExZjgwYTBjNmI0YzRkZTE2MWM1MSIsIm5iZiI6MTc0NjUxNTA1NC4yODE5OTk4LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Hj-9KXl-h5-7CtFhFSC6V4NJE__c1ozx5OnrETtCS9c';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 // Client Axios pour TMDB
@@ -41,8 +41,7 @@ export const getStreamingProviders = async (movieId) => {
     }
     
     console.log(`getStreamingProviders: Récupération des données pour le film ${movieId}`);
-    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-    const response = await axios.get(`/api/tmdb/movie/${movieId}/watch/providers`);
+    const response = await tmdbApi.get(`/movie/${movieId}/watch/providers`);
     
     console.log(`getStreamingProviders: Réponse reçue:`, response.data);
     

@@ -8,9 +8,9 @@ import { getTrailerKey } from './api';
 // La recherche se fait via une URL YouTube standard
 
 // Configuration de l'API TMDB (reprise du fichier api.js)
-// Note: Ce token a été mis à jour le 23/05/2025
-// Utiliser directement le token de secours pour éviter les problèmes avec les variables d'environnement
-const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+// Note: Ce token a été mis à jour le 24/05/2025
+// Clé API: 0e1fc1d893511f80a0c6b4c4de161c51
+const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZTFmYzFkODkzNTExZjgwYTBjNmI0YzRkZTE2MWM1MSIsIm5iZiI6MTc0NjUxNTA1NC4yODE5OTk4LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Hj-9KXl-h5-7CtFhFSC6V4NJE__c1ozx5OnrETtCS9c';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
 // Client Axios pour TMDB
@@ -30,8 +30,7 @@ const tmdbApi = axios.create({
  */
 export const findMovieByTitleAndYear = async (title, year) => {
   try {
-    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-    const response = await axios.get(`/api/tmdb/search/movie`, {
+    const response = await tmdbApi.get('/search/movie', {
       params: {
         query: title,
         primary_release_year: year,
@@ -64,8 +63,7 @@ export const getMovieTrailers = async (movieId) => {
   try {
     // IMPORTANT: D'abord récupérer TOUTES les bandes-annonces disponibles sans filtre de langue
     // Cela nous assure de ne manquer aucune bande-annonce, même si elle n'est disponible qu'en VO
-    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
-    const allVideosResponse = await axios.get(`/api/tmdb/movie/${movieId}/videos`);
+    const allVideosResponse = await tmdbApi.get(`/movie/${movieId}/videos`);
     const allVideos = allVideosResponse.data;
     
     // Vérifier si nous avons des vidéos, quelle que soit la langue
