@@ -168,32 +168,15 @@ export const getPopularMovies = async (page = 1) => {
 
 /**
  * Construction de l'URL d'une image
- * Utilise des placeholders locaux pour éviter les problèmes avec l'API TMDB
+ * Utilise les images TMDB quand c'est possible, avec des placeholders en cas d'erreur
  */
 export const getImageUrl = (path, size = 'w500') => {
-  // Vérifier si nous sommes dans la partie admin
-  const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
-  
   if (!path) {
-    // Retourner une image placeholder locale
+    // Retourner une image placeholder locale si aucun chemin n'est fourni
     return '/images/placeholder.jpg';
   }
   
-  // Si nous sommes dans la partie admin, utiliser des placeholders locaux
-  // pour éviter les problèmes avec l'API TMDB
-  if (isAdmin) {
-    // Utiliser un index déterministe basé sur le chemin de l'image pour éviter les changements aléatoires
-    // et garantir la cohérence visuelle
-    let placeholderNum = 1;
-    if (path) {
-      // Utiliser la somme des codes ASCII des 5 premiers caractères du chemin modulo 5
-      const pathSum = path.slice(0, 5).split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-      placeholderNum = (pathSum % 5) + 1;
-    }
-    return `/images/placeholders/movie-${placeholderNum}.jpg`;
-  }
-  
-  // Pour les autres parties du site, essayer d'utiliser l'API TMDB
+  // Pour toutes les parties du site, essayer d'utiliser l'API TMDB
   try {
     return `${TMDB_IMAGE_BASE_URL}/${size}${path}`;
   } catch (error) {

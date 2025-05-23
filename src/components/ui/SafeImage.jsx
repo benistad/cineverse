@@ -84,34 +84,24 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
   // Vérifier si nous sommes dans la partie admin
   const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
   
-  // Si nous sommes dans la partie admin, utiliser directement un élément img standard
-  // pour éviter les problèmes avec l'optimiseur d'images de Next.js
-  if (isAdmin && !error) {
-    // Générer un numéro fixe entre 1 et 5 pour les placeholders (évite les changements aléatoires)
-    const placeholderNum = ((width || 0) % 5) + 1; // Utilise width pour générer un nombre déterministe
-    const placeholderSrc = `/images/placeholders/movie-${placeholderNum}.jpg`;
-    
-    return (
-      <img
-        src={placeholderSrc}
-        alt={alt || 'Image'}
-        className={className}
-        style={{
-          width: fill ? '100%' : width,
-          height: fill ? '100%' : height,
-          objectFit: 'cover',
-          ...style
-        }}
-        {...props}
-      />
-    );
-  }
-  
   // Fonction de gestion d'erreur améliorée
   const handleImageError = () => {
-    // Si nous sommes dans la partie admin, utiliser directement une image placeholder
+    // Si nous sommes dans la partie admin, utiliser une image placeholder
     if (isAdmin) {
-      setError(true);
+      // Générer un numéro fixe entre 1 et 5 pour les placeholders (évite les changements aléatoires)
+      const placeholderNum = ((width || 0) % 5) + 1; // Utilise width pour générer un nombre déterministe
+      const placeholderSrc = `/images/placeholders/movie-${placeholderNum}.jpg`;
+      
+      // Utiliser directement l'élément img standard pour éviter les problèmes avec l'optimiseur d'images
+      const img = document.createElement('img');
+      img.onload = () => {
+        setImageSrc(placeholderSrc);
+        setHasError(true);
+      };
+      img.onerror = () => {
+        setError(true);
+      };
+      img.src = placeholderSrc;
       return;
     }
     
