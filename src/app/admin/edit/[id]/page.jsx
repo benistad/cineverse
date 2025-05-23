@@ -22,8 +22,10 @@ export default function EditPage() {
           return;
         }
         
-        // Note: Utilisation du token d'accès Bearer conformément aux recommandations de TMDB
-        const tmdbToken = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+        // Utiliser directement le token TMDB pour éviter les problèmes avec les variables d'environnement
+        const tmdbToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+        
+        console.log(`Tentative de récupération des détails du film ${movieId}...`);
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR&append_to_response=credits,videos`,
           {
@@ -33,12 +35,13 @@ export default function EditPage() {
             }
           }
         );
-        
+        console.log(`Détails du film ${movieId} récupérés avec succès`);
         setMovie(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des détails du film:', error);
         setError(error);
-        router.push('/not-found');
+        // Rediriger vers la page de recherche au lieu de not-found
+        router.push('/admin/search');
       } finally {
         setLoading(false);
       }
