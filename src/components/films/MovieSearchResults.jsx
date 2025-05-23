@@ -44,15 +44,31 @@ export default function MovieSearchResults({ movies, isLoading }) {
         <div key={movie.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <Link href={`/admin/edit/${movie.id}`}>
             <div className="relative h-64 w-full">
-              <SafeImage
-                src={movie.poster_path ? getImageUrl(movie.poster_path) : null}
-                alt={movie.title || 'Poster du film'}
-                fill
-                width={300}
-                height={450}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover"
-              />
+              {/* Utiliser une image standard pour la partie admin */}
+              {typeof window !== 'undefined' && window.location.pathname.includes('/admin') ? (
+                <img
+                  src={movie.poster_path 
+                    ? getImageUrl(movie.poster_path) 
+                    : `/images/placeholders/movie-${(movie.id % 5) + 1}.jpg`}
+                  alt={movie.title || 'Poster du film'}
+                  className="object-cover w-full h-full"
+                  onError={(e) => {
+                    // En cas d'erreur, utiliser un placeholder
+                    const placeholderNum = (movie.id % 5) + 1;
+                    e.target.src = `/images/placeholders/movie-${placeholderNum}.jpg`;
+                  }}
+                />
+              ) : (
+                <SafeImage
+                  src={movie.poster_path ? getImageUrl(movie.poster_path) : null}
+                  alt={movie.title || 'Poster du film'}
+                  fill
+                  width={300}
+                  height={450}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              )}
             </div>
             <div className="p-4">
               <h3 className="text-lg font-bold mb-1">{movie.title || 'Sans titre'}</h3>

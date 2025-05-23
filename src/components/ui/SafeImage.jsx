@@ -92,16 +92,27 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
       const placeholderNum = ((width || 0) % 5) + 1; // Utilise width pour générer un nombre déterministe
       const placeholderSrc = `/images/placeholders/movie-${placeholderNum}.jpg`;
       
-      // Utiliser directement l'élément img standard pour éviter les problèmes avec l'optimiseur d'images
-      const img = document.createElement('img');
-      img.onload = () => {
-        setImageSrc(placeholderSrc);
-        setHasError(true);
-      };
-      img.onerror = () => {
-        setError(true);
-      };
-      img.src = placeholderSrc;
+      // Remplacer directement l'image par le placeholder sans passer par Next.js Image
+      // Cela contourne les problèmes d'optimisation d'images sur le serveur
+      setTimeout(() => {
+        const imgElement = document.createElement('img');
+        imgElement.src = placeholderSrc;
+        imgElement.alt = alt || 'Image';
+        imgElement.className = className;
+        imgElement.style.width = fill ? '100%' : `${width}px`;
+        imgElement.style.height = fill ? '100%' : `${height}px`;
+        imgElement.style.objectFit = 'cover';
+        
+        // Appliquer les styles supplémentaires
+        Object.assign(imgElement.style, style);
+        
+        // Remplacer l'image actuelle par le placeholder
+        const currentImg = document.querySelector(`img[alt="${alt || 'Image'}"]`);
+        if (currentImg && currentImg.parentNode) {
+          currentImg.parentNode.replaceChild(imgElement, currentImg);
+        }
+      }, 0);
+      
       return;
     }
     
