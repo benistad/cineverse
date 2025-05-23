@@ -130,24 +130,38 @@ export default function SafeImage({ src, alt, fill = false, sizes, className = '
   
   // Fonction de gestion d'erreur améliorée pour les parties non-admin
   const handleImageError = () => {
-    
     // Pour les autres parties du site, essayer des tailles alternatives
-    if (!hasError && src && typeof src === 'string' && src.includes('image.tmdb.org/t/p/')) {
-      console.warn(`Tentative de récupération d'une taille alternative pour l'image TMDB: ${src}`);
+    if (!hasError && src && typeof src === 'string') {
+      console.warn(`Tentative de récupération d'une taille alternative pour l'image: ${src}`);
       
-      // Essayer avec une taille d'image plus petite
-      let newSrc;
-      if (src.includes('/w500/')) {
-        newSrc = src.replace('/w500/', '/w342/');
-      } else if (src.includes('/w1280/')) {
-        newSrc = src.replace('/w1280/', '/w780/');
-      } else if (src.includes('/original/')) {
-        newSrc = src.replace('/original/', '/w780/');
+      // Pour les images TMDB, essayer différentes tailles
+      if (src.includes('image.tmdb.org/t/p/')) {
+        // Essayer avec une taille d'image plus petite
+        let newSrc;
+        if (src.includes('/w500/')) {
+          newSrc = src.replace('/w500/', '/w342/');
+        } else if (src.includes('/w1280/')) {
+          newSrc = src.replace('/w1280/', '/w780/');
+        } else if (src.includes('/original/')) {
+          newSrc = src.replace('/original/', '/w780/');
+        } else if (src.includes('/w342/')) {
+          // Si w342 échoue, essayer w185
+          newSrc = src.replace('/w342/', '/w185/');
+        }
+        
+        if (newSrc && newSrc !== src) {
+          console.log('Tentative avec une taille d\'image alternative TMDB:', newSrc);
+          setImageSrc(newSrc);
+          setHasError(true);
+          return;
+        }
       }
       
-      if (newSrc && newSrc !== src) {
-        console.log('Tentative avec une taille d\'image alternative:', newSrc);
-        setImageSrc(newSrc);
+      // Pour les images avec un chemin relatif, vérifier si c'est un chemin TMDB sans le domaine
+      if (src.startsWith('/') && !src.startsWith('//') && !src.startsWith('/images/')) {
+        const tmdbSrc = `https://image.tmdb.org/t/p/w342${src}`;
+        console.log('Tentative avec URL TMDB complète:', tmdbSrc);
+        setImageSrc(tmdbSrc);
         setHasError(true);
         return;
       }
