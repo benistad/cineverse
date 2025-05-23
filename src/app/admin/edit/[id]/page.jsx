@@ -28,21 +28,14 @@ export default function EditPage() {
         
         console.log(`Tentative de récupération des détails du film ${movieId}...`);
         
-        // Appel direct à l'API TMDB avec le token d'authentification
-        // Utiliser directement le token d'accès TMDB pour éviter les problèmes avec les variables d'environnement
-        const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
-        console.log('Token TMDB utilisé:', TMDB_API_TOKEN ? 'Token valide' : 'Token manquant');
+        // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+        console.log(`Utilisation du proxy API TMDB pour le film ${movieId}...`);
         
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-          params: {
-            language: 'fr-FR',
-            append_to_response: 'credits,videos,images',
-          },
-          headers: {
-            Authorization: `Bearer ${TMDB_API_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        // Construire l'URL du proxy avec les paramètres nécessaires
+        const proxyUrl = `/api/tmdb/movie/${movieId}?language=fr-FR&append_to_response=credits,videos,images`;
+        
+        // Appel au proxy API
+        const response = await axios.get(proxyUrl);
         
         if (response.data) {
           console.log(`Détails du film ${movieId} récupérés avec succès`);

@@ -41,7 +41,8 @@ export const getStreamingProviders = async (movieId) => {
     }
     
     console.log(`getStreamingProviders: Récupération des données pour le film ${movieId}`);
-    const response = await tmdbApi.get(`/movie/${movieId}/watch/providers`);
+    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+    const response = await axios.get(`/api/tmdb/movie/${movieId}/watch/providers`);
     
     console.log(`getStreamingProviders: Réponse reçue:`, response.data);
     

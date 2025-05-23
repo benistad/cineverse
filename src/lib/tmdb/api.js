@@ -24,7 +24,8 @@ const tmdbApi = axios.create({
  */
 export const searchMovies = async (query, page = 1) => {
   try {
-    const response = await tmdbApi.get('/search/movie', {
+    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+    const response = await axios.get('/api/tmdb/search/movie', {
       params: {
         query,
         language: 'fr-FR',
@@ -46,8 +47,9 @@ export const getMovieDetails = async (movieId) => {
   console.log(`Début de getMovieDetails pour le film ${movieId}`);
   try {
     // Récupérer les détails du film
-    console.log(`Appel à l'API TMDB pour le film ${movieId}`);
-    const response = await tmdbApi.get(`/movie/${movieId}`, {
+    console.log(`Appel au proxy API TMDB pour le film ${movieId}`);
+    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+    const response = await axios.get(`/api/tmdb/movie/${movieId}`, {
       params: {
         language: 'fr-FR',
         append_to_response: 'credits,videos',
@@ -59,8 +61,8 @@ export const getMovieDetails = async (movieId) => {
     // Récupérer toutes les images disponibles sans aucun filtre de langue
     console.log(`Récupération de toutes les images disponibles pour le film ${movieId}`);
     try {
-      // Appel direct à l'endpoint images sans paramètres de filtre pour obtenir toutes les images possibles
-      const imagesResponse = await tmdbApi.get(`/movie/${movieId}/images`);
+      // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+      const imagesResponse = await axios.get(`/api/tmdb/movie/${movieId}/images`);
       
       if (imagesResponse.data) {
         console.log(`Nombre total de backdrops: ${imagesResponse.data.backdrops?.length || 0}`);

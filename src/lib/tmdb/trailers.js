@@ -30,7 +30,8 @@ const tmdbApi = axios.create({
  */
 export const findMovieByTitleAndYear = async (title, year) => {
   try {
-    const response = await tmdbApi.get('/search/movie', {
+    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+    const response = await axios.get(`/api/tmdb/search/movie`, {
       params: {
         query: title,
         primary_release_year: year,
@@ -63,7 +64,8 @@ export const getMovieTrailers = async (movieId) => {
   try {
     // IMPORTANT: D'abord récupérer TOUTES les bandes-annonces disponibles sans filtre de langue
     // Cela nous assure de ne manquer aucune bande-annonce, même si elle n'est disponible qu'en VO
-    const allVideosResponse = await tmdbApi.get(`/movie/${movieId}/videos`);
+    // Utiliser notre proxy API TMDB côté serveur pour éviter les problèmes d'authentification
+    const allVideosResponse = await axios.get(`/api/tmdb/movie/${movieId}/videos`);
     const allVideos = allVideosResponse.data;
     
     // Vérifier si nous avons des vidéos, quelle que soit la langue
