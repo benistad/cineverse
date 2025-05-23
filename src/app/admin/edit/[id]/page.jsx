@@ -29,7 +29,10 @@ export default function EditPage() {
         console.log(`Tentative de récupération des détails du film ${movieId}...`);
         
         // Appel direct à l'API TMDB avec le token d'authentification
-        const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN;
+        // Utiliser directement le token d'accès TMDB pour éviter les problèmes avec les variables d'environnement
+        const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
+        console.log('Token TMDB utilisé:', TMDB_API_TOKEN ? 'Token valide' : 'Token manquant');
+        
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
           params: {
             language: 'fr-FR',
