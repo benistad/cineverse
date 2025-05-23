@@ -166,23 +166,37 @@ export default function FilmPageBySlug() {
           {/* Affiche du film */}
           <div className="md:w-1/3 lg:w-1/4">
             <div className="relative h-[400px] md:h-full">
-              <SafeImage
-                src={
-                  // Priorité 1: poster_path (chemin TMDB)
-                  film.poster_path ? 
-                    getImageUrl(film.poster_path, 'w500') :
-                  // Priorité 2: poster_url (URL complète)
-                  film.poster_url ? 
-                    optimizePosterImage(film.poster_url) : 
-                    // Fallback: placeholder
-                    null
-                }
-                alt={`Affiche du film ${film.title}`}
-                fill
-                className="object-contain object-top"
-                sizes="(max-width: 768px) 100vw, 33vw"
-                priority
-              />
+              {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+              <div className="relative w-full h-full">
+                <img
+                  src={
+                    // Priorité 1: poster_path (chemin TMDB)
+                    film.poster_path ? 
+                      (film.poster_path.startsWith('/') ? 
+                        `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
+                        film.poster_path) :
+                    // Priorité 2: poster_url (URL complète)
+                    film.poster_url ? 
+                      film.poster_url : 
+                      // Fallback: placeholder
+                      '/images/placeholder.jpg'
+                  }
+                  alt={`Affiche du film ${film.title}`}
+                  className="absolute inset-0 w-full h-full object-contain object-top"
+                  loading="eager"
+                  onError={(e) => {
+                    // En cas d'erreur, essayer une taille plus petite
+                    if (e.target.src.includes('/w500/')) {
+                      e.target.src = e.target.src.replace('/w500/', '/w342/');
+                    } else if (e.target.src.includes('/w342/')) {
+                      e.target.src = e.target.src.replace('/w342/', '/w185/');
+                    } else {
+                      // Si toutes les tentatives échouent, utiliser un placeholder
+                      e.target.src = '/images/placeholder.jpg';
+                    }
+                  }}
+                />  
+              </div>
             </div>
           </div>
           

@@ -127,14 +127,28 @@ export default function SimilarFilms({ currentFilm }) {
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <div className="relative aspect-[2/3] w-full">
-              <SafeImage
-                src={optimizePosterImage(film.poster_url)}
+              {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+              <img
+                src={film.poster_url || film.poster_path ? 
+                  (film.poster_path && film.poster_path.startsWith('/') ? 
+                    `https://image.tmdb.org/t/p/w342${film.poster_path}` : 
+                    film.poster_url) : 
+                  '/images/placeholder.jpg'
+                }
                 alt={film.title}
-                fill
-                width={300}
-                height={450}
-                className="object-cover"
-                sizes="(max-width: 768px) 50vw, 25vw"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  // En cas d'erreur, essayer une taille plus petite
+                  if (e.target.src.includes('/w500/')) {
+                    e.target.src = e.target.src.replace('/w500/', '/w342/');
+                  } else if (e.target.src.includes('/w342/')) {
+                    e.target.src = e.target.src.replace('/w342/', '/w185/');
+                  } else {
+                    // Si toutes les tentatives échouent, utiliser un placeholder
+                    e.target.src = '/images/placeholder.jpg';
+                  }
+                }}
               />
             </div>
             <div className="p-3">

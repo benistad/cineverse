@@ -122,14 +122,23 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
       {groupedStaff.map((person) => (
         <div key={person.id || Math.random().toString(36).substring(7)} className="flex flex-col items-center">
           <div className="relative h-32 w-32 rounded-full overflow-hidden mb-2">
-            <SafeImage
-              src={person.photo_url}
+            {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+            <img
+              src={person.photo_url || '/images/placeholder.jpg'}
               alt={person.nom || 'Photo du staff'}
-              fill
-              width={128}
-              height={128}
-              sizes="128px"
-              className="object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                // En cas d'erreur, essayer une taille plus petite
+                if (e.target.src.includes('/w500/')) {
+                  e.target.src = e.target.src.replace('/w500/', '/w185/');
+                } else if (e.target.src.includes('/w185/')) {
+                  e.target.src = e.target.src.replace('/w185/', '/w92/');
+                } else {
+                  // Si toutes les tentatives échouent, utiliser un placeholder
+                  e.target.src = '/images/placeholder.jpg';
+                }
+              }}
             />
           </div>
           <h4 className="text-center font-medium">{person.nom || 'Inconnu'}</h4>
