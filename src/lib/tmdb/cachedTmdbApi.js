@@ -7,7 +7,8 @@ import { fetchWithCache } from '../utils/serverCache';
 
 // Configuration de base de l'API TMDB
 const TMDB_API_BASE_URL = 'https://api.themoviedb.org/3';
-const TMDB_API_KEY = process.env.TMDB_API_KEY;
+// Note: Ce token a été mis à jour le 23/05/2025
+const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
 
 // Durées de cache par type de requête (en millisecondes)
 const CACHE_TTL = {
@@ -30,7 +31,7 @@ const CACHE_TTL = {
 const defaultOptions = {
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${TMDB_API_KEY}`,
+    'Authorization': `Bearer ${TMDB_API_TOKEN}`,
   },
 };
 

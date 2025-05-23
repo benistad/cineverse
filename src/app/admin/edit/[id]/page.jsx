@@ -22,9 +22,16 @@ export default function EditPage() {
           return;
         }
         
-        const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+        // Note: Utilisation du token d'accès Bearer conformément aux recommandations de TMDB
+        const tmdbToken = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZDhjN2ZiN2JiNDU5NTVjMjJjY2YxY2YxYzY4MjNkYSIsInN1YiI6IjY4MTliNDZlMDk5YTZlM2ZmOTQ0M2Q3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.eSMJHsVUQDlz_ZYtgcYSHBOJ2Y-qNQKTgXMt3RjL9Gg';
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=fr-FR&append_to_response=credits,videos`
+          `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR&append_to_response=credits,videos`,
+          {
+            headers: {
+              Authorization: `Bearer ${tmdbToken}`,
+              'Content-Type': 'application/json'
+            }
+          }
         );
         
         setMovie(response.data);
