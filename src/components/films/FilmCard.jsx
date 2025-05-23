@@ -226,15 +226,28 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
         <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
-          <SafeImage
-            src={optimizePosterImage(film.poster_url)}
+          {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
+          <img
+            src={film.poster_url || film.poster_path ? 
+              (film.poster_path && film.poster_path.startsWith('/') ? 
+                `https://image.tmdb.org/t/p/w342${film.poster_path}` : 
+                film.poster_url) : 
+              '/images/placeholder.jpg'
+            }
             alt={film.title || 'Poster du film'}
-            fill
-            width={300}
-            height={450}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
-            priority={!!priority}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading={priority ? "eager" : "lazy"}
+            onError={(e) => {
+              // En cas d'erreur, essayer une taille plus petite
+              if (e.target.src.includes('/w500/')) {
+                e.target.src = e.target.src.replace('/w500/', '/w342/');
+              } else if (e.target.src.includes('/w342/')) {
+                e.target.src = e.target.src.replace('/w342/', '/w185/');
+              } else {
+                // Si toutes les tentatives échouent, utiliser un placeholder
+                e.target.src = '/images/placeholder.jpg';
+              }
+            }}
           />
         </div>
         
