@@ -6,7 +6,7 @@
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'),
   title: {
-    default: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+    default: 'MovieHunt',
     template: '%s | MovieHunt'
   },
   description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
@@ -42,20 +42,20 @@ export const metadata = {
     locale: 'fr_FR',
     url: '/',
     siteName: 'MovieHunt',
-    title: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+    title: 'MovieHunt',
     description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+        alt: 'MovieHunt',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MovieHunt - Trouvez votre prochain film coup de cœur.',
+    title: 'MovieHunt',
     description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: ['/images/og-image.jpg'],
   },
