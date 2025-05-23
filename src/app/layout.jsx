@@ -38,11 +38,7 @@ const Footer = dynamic(
   { ssr: false }
 );
 
-// Bouton d'ajout aux favoris
-const AddToFavoritesButton = dynamic(
-  () => import('@/components/ui/AddToFavoritesButton'),
-  { ssr: false }
-);
+// Bouton d'ajout aux favoris supprimé
 
 // Composants d'optimisation essentiels pour améliorer le Speed Index
 const MobilePerformanceOptimizer = dynamic(
@@ -151,7 +147,6 @@ export default function RootLayout({ children }) {
             {children}
           </main>
           <Footer />
-          <AddToFavoritesButton />
         </AuthProvider>
         <SpeedInsights />
         <MobilePerformanceOptimizer />
