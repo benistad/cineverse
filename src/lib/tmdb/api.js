@@ -182,8 +182,14 @@ export const getImageUrl = (path, size = 'w500') => {
   // Si nous sommes dans la partie admin, utiliser des placeholders locaux
   // pour éviter les problèmes avec l'API TMDB
   if (isAdmin) {
-    // Générer un numéro aléatoire entre 1 et 5 pour les placeholders
-    const placeholderNum = Math.floor(Math.random() * 5) + 1;
+    // Utiliser un index déterministe basé sur le chemin de l'image pour éviter les changements aléatoires
+    // et garantir la cohérence visuelle
+    let placeholderNum = 1;
+    if (path) {
+      // Utiliser la somme des codes ASCII des 5 premiers caractères du chemin modulo 5
+      const pathSum = path.slice(0, 5).split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+      placeholderNum = (pathSum % 5) + 1;
+    }
     return `/images/placeholders/movie-${placeholderNum}.jpg`;
   }
   
