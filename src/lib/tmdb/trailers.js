@@ -78,6 +78,9 @@ export const getMovieTrailers = async (movieId) => {
       };
       
       // Stratégie de recherche par ordre de préférence linguistique
+      // PRIORITÉ 1: Bandes-annonces VF via TMDB
+      // PRIORITÉ 2: Bandes-annonces VO via TMDB
+      // PRIORITÉ 3: YouTube (seulement si rien n'est trouvé via TMDB)
       const languagePreferences = ['fr', 'en', 'other'];
       
       let trailerKey = null;
@@ -102,12 +105,12 @@ export const getMovieTrailers = async (movieId) => {
               trailerKey = key;
               trailerLanguage = lang;
               break; // On arrête la recherche si on a trouvé une bande-annonce en français
-            } 
-            // Sinon, on la garde en réserve si on n'a pas encore de bande-annonce
+            }
+            // Pour les autres langues, on garde la première trouvée
+            // mais on continue à chercher au cas où on trouverait une bande-annonce en français
             else if (!trailerKey) {
               trailerKey = key;
               trailerLanguage = lang;
-              // On continue la recherche au cas où on trouverait une bande-annonce en français
             }
           }
         }
@@ -194,36 +197,44 @@ export const getMovieTrailers = async (movieId) => {
  */
 export const searchYouTubeTrailer = async (movieTitle, year = null) => {
   try {
-    // Construire la requête de recherche
-    let searchQuery = `${movieTitle} bande annonce officielle`;
-    if (year) {
-      searchQuery += ` ${year}`;
-    }
+    // Construire les requêtes de recherche (d'abord en VF, puis en VO si nécessaire)
+    const yearString = year ? ` ${year}` : '';
     
-    console.log(`Recherche YouTube pour: "${searchQuery}"`);
+    // PRIORITÉ 1: Recherche en VF sur YouTube
+    const searchQueryVF = `${movieTitle}${yearString} bande annonce officielle VF`;
+    // PRIORITÉ 2: Recherche en VO sur YouTube (si VF non trouvée)
+    const searchQueryVO = `${movieTitle}${yearString} trailer official`;
+    
+    // URL de recherche YouTube pour référence (VF par défaut)
+    const searchUrlVF = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQueryVF)}`;
+    const searchUrlVO = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQueryVO)}`;
+    
+    console.log(`URLs de recherche YouTube générées pour "${movieTitle}":`);
+    console.log(`- VF: ${searchUrlVF}`);
+    console.log(`- VO: ${searchUrlVO}`);
     
     // Utiliser des bandes-annonces prédéfinies pour certains films populaires
     // Cette approche est plus fiable que l'API YouTube qui peut être limitée
+    // Organisées par langue (VF puis VO)
     const predefinedTrailers = {
-      // Films récents
-      'destination finale : bloodlines': 'sRZH0NuMrCM',
-      'destination finale bloodlines': 'sRZH0NuMrCM',
-      'funny games u.s.': 'Ec-70W_K77U',
-      'funny games us': 'Ec-70W_K77U',
-      'last breath': 'mGcCBMDHYBs',
-      'old henry': 'NresUMU-Qlc',
-      'le procès du siècle': 'Aw-Fr6BwgWA',
-      'ad astra': 'nxi6rtBtRxY',
-      'split': 'ROle23EfYJk',
-      'fall': 'aa5MXOMN1lM',
-      '1917': 'gZjQROMAh_s',
-      'les banshees dinisherin': 'uRu3zLOJN2c',
-      'les banshees d\'inisherin': 'uRu3zLOJN2c',
-      'game night': 'qmxMAdV6s4U',
-      'triangle': 'NOwvAYWxfgo',
-      'the luckiest man in america': 'dQw4w9WgXcQ', // Placeholder
+      // Films récents - VF prioritaire
+      'destination finale : bloodlines': 'sRZH0NuMrCM', // VF
+      'destination finale bloodlines': 'sRZH0NuMrCM', // VF
+      'funny games u.s.': 'Ec-70W_K77U', // VF
+      'funny games us': 'Ec-70W_K77U', // VF
+      'last breath': 'mGcCBMDHYBs', // VF
+      'old henry': 'NresUMU-Qlc', // VF
+      'le procès du siècle': 'Aw-Fr6BwgWA', // VF
+      'ad astra': 'nxi6rtBtRxY', // VF
+      'split': 'ROle23EfYJk', // VF
+      'fall': 'aa5MXOMN1lM', // VF
+      '1917': 'gZjQROMAh_s', // VF
+      'les banshees dinisherin': 'uRu3zLOJN2c', // VF
+      'les banshees d\'inisherin': 'uRu3zLOJN2c', // VF
+      'game night': 'qmxMAdV6s4U', // VF
+      'triangle': 'NOwvAYWxfgo', // VF
       
-      // Classiques
+      // Classiques - VF si disponible, sinon VO
       'pulp fiction': 'tGpTpVyI_OQ',
       'the godfather': 'sY1S34973zA',
       'the dark knight': 'EXeTwQWrcwY',
@@ -243,17 +254,21 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
       }
     }
     
-    // Si aucune bande-annonce prédéfinie n'est trouvée, générer une URL de recherche YouTube
-    // Cette URL permettra à l'utilisateur de trouver manuellement la bande-annonce
-    const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`;
-    console.log(`Aucune bande-annonce prédéfinie pour "${movieTitle}". URL de recherche générée: ${searchUrl}`);
+    // Si aucune bande-annonce prédéfinie n'est trouvée, générer des URLs de recherche YouTube
+    // Ces URLs permettront à l'utilisateur de trouver manuellement la bande-annonce
+    console.log(`Aucune bande-annonce prédéfinie pour "${movieTitle}".`);
+    console.log(`- Essayez de chercher en VF: ${searchUrlVF}`);
+    console.log(`- Ou en VO si nécessaire: ${searchUrlVO}`);
     
-    // Retourner une bande-annonce par défaut pour le moment (sera remplacée par une vraie recherche plus tard)
-    // Utiliser une bande-annonce générique pour les films
-    return 'dQw4w9WgXcQ'; // Placeholder temporaire
+    // Pour le moment, nous retournons un placeholder générique
+    // Dans une version future, nous pourrions implémenter une vraie recherche YouTube API
+    // qui respecterait l'ordre de priorité VF puis VO
+    
+    // Placeholder temporaire - dans l'idéal, ce serait une bande-annonce générique de cinéma
+    return null; // Retourner null pour indiquer qu'aucune bande-annonce n'a été trouvée
   } catch (error) {
     console.error(`Erreur lors de la recherche YouTube pour "${movieTitle}":`, error);
-    return 'dQw4w9WgXcQ'; // Placeholder en cas d'erreur
+    return null; // Retourner null en cas d'erreur
   }
 };
 
@@ -267,26 +282,26 @@ export const findTrailerByTitleAndYear = async (title, year) => {
   try {
     console.log(`Recherche de bande-annonce pour: ${title} (${year})`);
     
+    // PRIORITÉ 1 et 2: Bandes-annonces via TMDB (VF puis VO)
     // Étape 1: Trouver l'ID TMDB du film
     const movieId = await findMovieByTitleAndYear(title, year);
     
-    if (!movieId) {
-      console.log(`Film non trouvé sur TMDB: ${title} (${year})`);
-      // Si le film n'est pas trouvé sur TMDB, essayer directement sur YouTube
-      return await searchYouTubeTrailer(title, year);
-    }
-    
-    // Étape 2: Récupérer les bandes-annonces du film depuis TMDB
-    const trailerKey = await getMovieTrailers(movieId);
-    
-    if (trailerKey) {
-      console.log(`Bande-annonce TMDB trouvée pour: ${title} (${year})`);
-      return trailerKey;
-    } else {
+    if (movieId) {
+      // Étape 2: Récupérer les bandes-annonces du film depuis TMDB
+      const trailerKey = await getMovieTrailers(movieId);
+      
+      if (trailerKey) {
+        console.log(`Bande-annonce TMDB trouvée pour: ${title} (${year})`);
+        return trailerKey;
+      }
       console.log(`Aucune bande-annonce TMDB pour: ${title} (${year}), recherche sur YouTube...`);
-      // Si aucune bande-annonce n'est trouvée sur TMDB, essayer sur YouTube
-      return await searchYouTubeTrailer(title, year);
+    } else {
+      console.log(`Film non trouvé sur TMDB: ${title} (${year})`);
     }
+    
+    // PRIORITÉ 3: Bandes-annonces via YouTube (seulement si rien n'est trouvé via TMDB)
+    // Si le film n'est pas trouvé sur TMDB ou si aucune bande-annonce n'est trouvée, essayer YouTube
+    return await searchYouTubeTrailer(title, year);
   } catch (error) {
     console.error('Erreur lors de la recherche de bande-annonce:', error);
     // En cas d'erreur, essayer quand même YouTube comme dernier recours
