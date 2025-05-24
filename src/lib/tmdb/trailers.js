@@ -128,6 +128,14 @@ export const getMovieTrailers = async (movieId) => {
         }
       }
       
+      // Cas spéciaux pour certains films qui nécessitent une bande-annonce VF spécifique
+      // Destination Finale : Bloodlines
+      if (movieId === 574475) {
+        console.log(`Film spécial détecté: Destination Finale : Bloodlines (ID: ${movieId})`);
+        console.log(`Utilisation de la bande-annonce VF officielle au lieu de la version VO`);
+        return '2Dk_tQvEe3o'; // Bande-annonce VF officielle de Warner Bros. France
+      }
+      
       // Vérifier si la bande-annonce est connue pour être privée ou indisponible
       // Cas spécifique pour le film 1BR et autres films avec des bandes-annonces privées
       if (trailerKey === 'dZw7LR0vNww' || (movieId === 627290 && trailerKey)) { // 627290 est l'ID TMDB de 1BR
@@ -218,8 +226,8 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
     // Organisées par langue (VF puis VO)
     const predefinedTrailers = {
       // Films récents - VF prioritaire
-      'destination finale : bloodlines': 'sRZH0NuMrCM', // VF
-      'destination finale bloodlines': 'sRZH0NuMrCM', // VF
+      'destination finale : bloodlines': '2Dk_tQvEe3o', // VF officielle de Warner Bros. France
+      'destination finale bloodlines': '2Dk_tQvEe3o', // VF officielle de Warner Bros. France
       'funny games u.s.': 'Ec-70W_K77U', // VF
       'funny games us': 'Ec-70W_K77U', // VF
       'last breath': 'mGcCBMDHYBs', // VF
@@ -263,7 +271,7 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
       normalizedTitle.includes('finaledestinationbloodlines')
     ) {
       console.log(`Correspondance spéciale trouvée pour Destination Finale: Bloodlines`);
-      return 'sRZH0NuMrCM'; // Bande-annonce VF
+      return '2Dk_tQvEe3o'; // Bande-annonce VF officielle de Warner Bros. France
     }
     
     // Recherche normale dans les bandes-annonces prédéfinies
