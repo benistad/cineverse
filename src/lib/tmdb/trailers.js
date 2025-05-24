@@ -246,9 +246,35 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
     };
     
     // Rechercher dans les bandes-annonces prédéfinies
-    const normalizedTitle = movieTitle.toLowerCase().trim();
+    // Normalisation plus agressive pour augmenter les chances de correspondance
+    const normalizedTitle = movieTitle.toLowerCase()
+      .trim()
+      .replace(/[\s:'-]/g, '') // Supprimer les espaces, deux-points, apostrophes et tirets
+      .replace(/\./g, '')       // Supprimer les points
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Supprimer les accents
+    
+    console.log(`Titre normalisé pour la recherche: "${normalizedTitle}"`);
+    
+    // Cas spécial pour "Destination Finale : Bloodlines"
+    if (
+      normalizedTitle.includes('destinationfinale') || 
+      normalizedTitle.includes('finaledestination') ||
+      normalizedTitle.includes('destinationfinalebloodlines') ||
+      normalizedTitle.includes('finaledestinationbloodlines')
+    ) {
+      console.log(`Correspondance spéciale trouvée pour Destination Finale: Bloodlines`);
+      return 'sRZH0NuMrCM'; // Bande-annonce VF
+    }
+    
+    // Recherche normale dans les bandes-annonces prédéfinies
     for (const [title, videoId] of Object.entries(predefinedTrailers)) {
-      if (normalizedTitle.includes(title) || title.includes(normalizedTitle)) {
+      const normalizedPredefinedTitle = title.toLowerCase()
+        .trim()
+        .replace(/[\s:'-]/g, '')
+        .replace(/\./g, '')
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      
+      if (normalizedTitle.includes(normalizedPredefinedTitle) || normalizedPredefinedTitle.includes(normalizedTitle)) {
         console.log(`Bande-annonce prédéfinie trouvée pour "${movieTitle}": ${videoId}`);
         return videoId;
       }
@@ -260,12 +286,10 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
     console.log(`- Essayez de chercher en VF: ${searchUrlVF}`);
     console.log(`- Ou en VO si nécessaire: ${searchUrlVO}`);
     
-    // Pour le moment, nous retournons un placeholder générique
+    // Pour le moment, nous retournons null pour indiquer qu'aucune bande-annonce n'a été trouvée
     // Dans une version future, nous pourrions implémenter une vraie recherche YouTube API
     // qui respecterait l'ordre de priorité VF puis VO
-    
-    // Placeholder temporaire - dans l'idéal, ce serait une bande-annonce générique de cinéma
-    return null; // Retourner null pour indiquer qu'aucune bande-annonce n'a été trouvée
+    return null;
   } catch (error) {
     console.error(`Erreur lors de la recherche YouTube pour "${movieTitle}":`, error);
     return null; // Retourner null en cas d'erreur
