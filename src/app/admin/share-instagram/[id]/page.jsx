@@ -5,7 +5,6 @@ import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { FiCopy, FiDownload, FiCheck, FiArrowLeft } from 'react-icons/fi';
 import Link from 'next/link';
-import Image from 'next/image';
 
 // Fonction pour préparer le texte à partager sur Instagram
 const prepareInstagramCaption = (film) => {
@@ -140,11 +139,10 @@ export default function ShareInstagramPage() {
             <div className="relative aspect-[2/3] w-full max-w-sm mx-auto mb-4 border rounded overflow-hidden">
               {film.poster_url && (
                 <>
-                  <Image
+                  <img
                     src={film.poster_url.startsWith('http') ? film.poster_url : `https://www.moviehunt.fr${film.poster_url}`}
                     alt={film.title}
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                   {film.is_hunted_by_moviehunt && (
                     <div className="absolute top-2 left-2 z-10">
@@ -154,23 +152,19 @@ export default function ShareInstagramPage() {
                           className="block transition-transform hover:scale-110"
                           title="En savoir plus sur Hunted by MovieHunt"
                         >
-                          <Image 
+                          <img 
                             src="/images/badges/hunted-badge.png" 
                             alt="Hunted by MovieHunt" 
-                            width={80} 
-                            height={80}
                             className="w-auto h-auto cursor-pointer" 
-                            style={{ transform: 'scale(0.6)' }}
+                            style={{ width: '48px', height: '48px' }}
                           />
                         </Link>
                       ) : (
-                        <Image 
+                        <img 
                           src="/images/badges/hunted-badge.png" 
                           alt="Hunted by MovieHunt" 
-                          width={80} 
-                          height={80}
                           className="w-auto h-auto" 
-                          style={{ transform: 'scale(0.6)' }}
+                          style={{ width: '48px', height: '48px' }}
                         />
                       )}
                     </div>
