@@ -12,6 +12,14 @@ const prepareInstagramCaption = (film) => {
   const genres = film.genres ? film.genres.split(',')[0] : '';
   const synopsis = film.synopsis || '';
   
+  // Hashtags de base
+  let hashtags = '#moviehunt #cinema #film #critique';
+  
+  // Ajouter le hashtag #HuntedbyMovieHunt pour les films qui ont le badge
+  if (film.is_hunted_by_moviehunt) {
+    hashtags += ' #HuntedbyMovieHunt';
+  }
+  
   return `🎥 ${film.title} ${year ? `(${year})` : ''}
 🔵 Note: ${film.note_sur_10}/10
 ${genres ? `🎬 Genre: ${genres}` : ''}
@@ -19,7 +27,7 @@ ${genres ? `🎬 Genre: ${genres}` : ''}
 
 👉 Voir plus sur MovieHunt: https://moviehunt.fr/films/${film.slug || film.id}
 
-#moviehunt #cinema #film #critique`;
+${hashtags}`;
 };
 
 export default function ShareInstagramPage() {
