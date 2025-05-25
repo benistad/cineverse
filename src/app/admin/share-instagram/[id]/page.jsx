@@ -156,7 +156,7 @@ export default function ShareInstagramPage() {
                             src="/images/badges/hunted-badge.png" 
                             alt="Hunted by MovieHunt" 
                             className="w-auto h-auto cursor-pointer" 
-                            style={{ width: '48px', height: '48px' }}
+                            style={{ width: '48px', height: 'auto' }}
                           />
                         </Link>
                       ) : (
@@ -164,7 +164,7 @@ export default function ShareInstagramPage() {
                           src="/images/badges/hunted-badge.png" 
                           alt="Hunted by MovieHunt" 
                           className="w-auto h-auto" 
-                          style={{ width: '48px', height: '48px' }}
+                          style={{ width: '48px', height: 'auto' }}
                         />
                       )}
                     </div>
