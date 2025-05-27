@@ -222,9 +222,8 @@ export default function FilmEditor({ movieDetails }) {
           ? movieDetails.title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-') 
           : 'film-sans-titre',
         synopsis: movieDetails.overview || '',
-        // Enregistrer l'URL complète pour assurer la compatibilité
+        // Enregistrer uniquement les URLs complètes pour assurer la compatibilité
         poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
-        poster_path: movieDetails.poster_path || null, // Enregistrer le chemin d'origine
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         // S'assurer que carousel_image_url est inclus, utiliser backdrop_url par défaut si non défini
         carousel_image_url: selectedCarouselImage || (movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null),
