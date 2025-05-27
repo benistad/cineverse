@@ -26,6 +26,7 @@ export default function FilmEditor({ movieDetails }) {
   const [isHiddenGem, setIsHiddenGem] = useState(false);
   const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
   const [existingFilmData, setExistingFilmData] = useState(null);
+  const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -215,7 +216,7 @@ export default function FilmEditor({ movieDetails }) {
       
       // Préparer les données du film avec vérification des valeurs nulles
       const filmData = {
-        tmdb_id: movieDetails.id,
+        tmdb_id: parseInt(movieDetails.id, 10), // S'assurer que tmdb_id est un nombre
         title: movieDetails.title || 'Sans titre',
         slug: movieDetails.title 
           ? movieDetails.title.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-') 
@@ -227,7 +228,11 @@ export default function FilmEditor({ movieDetails }) {
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         backdrop_path: movieDetails.backdrop_path || null, // Enregistrer le chemin d'origine
         // S'assurer que carousel_image_url est inclus, utiliser backdrop_url par défaut si non défini
-        carousel_image_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
+        carousel_image_url: selectedCarouselImage || (movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null),
+        // Vérifier que l'URL de l'image du carrousel est valide et pas trop longue
+        carousel_image_path: selectedCarouselImage ? 
+          (selectedCarouselImage.startsWith('/') ? selectedCarouselImage : null) : 
+          movieDetails.backdrop_path,
         note_sur_10: rating,
         youtube_trailer_key: trailerKey,
         // Ne mettre à jour date_ajout que pour les nouveaux films
@@ -283,22 +288,18 @@ export default function FilmEditor({ movieDetails }) {
       }, 2000);
     } catch (err) {
       console.error('Erreur lors de la sauvegarde:', err);
-      setError('Une erreur est survenue lors de la sauvegarde. Veuillez réessayer.');
+      // Afficher un message d'erreur plus détaillé si disponible
+      if (err.response && err.response.data) {
+        setError(`Erreur: ${err.response.data.message || err.message}. Veuillez réessayer.`);
+      } else if (err.message && err.message.includes('406')) {
+        setError('Erreur 406: Le format de la requête n\'est pas acceptable. Vérifiez les données du film, en particulier les URLs d\'images.');
+      } else {
+        setError(`Une erreur est survenue lors de la sauvegarde: ${err.message || 'Erreur inconnue'}. Veuillez réessayer.`);
+      }
     } finally {
       setIsSaving(false);
     }
   };
-
-  // Si les détails du film ne sont pas disponibles, afficher un message de chargement
-  if (!movieDetails) {
-    return (
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
