@@ -30,9 +30,10 @@ const SpeedInsights = dynamic(
 import JsonLdSchema from './components/JsonLdSchema';
 
 // Composant qui ramène la page en haut lors des changements de route
+// Utilisation de 'use client' pour indiquer que c'est un composant client
 const ScrollToTop = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // Nous n'utilisons plus useSearchParams() pour éviter l'erreur de déploiement
 
   useEffect(() => {
     // Remonter en haut de la page à chaque changement de route
@@ -41,7 +42,7 @@ const ScrollToTop = () => {
       left: 0,
       behavior: 'instant' // 'instant' pour un défilement immédiat sans animation
     });
-  }, [pathname, searchParams]); // Se déclenche à chaque changement d'URL ou de paramètres
+  }, [pathname]); // Se déclenche uniquement au changement d'URL
 
   return null; // Ce composant ne rend rien visuellement
 };
