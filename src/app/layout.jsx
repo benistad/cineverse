@@ -4,6 +4,9 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -25,6 +28,23 @@ const SpeedInsights = dynamic(
 );
 // dynamic est déjà importé plus haut
 import JsonLdSchema from './components/JsonLdSchema';
+
+// Composant qui ramène la page en haut lors des changements de route
+const ScrollToTop = () => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Remonter en haut de la page à chaque changement de route
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant' // 'instant' pour un défilement immédiat sans animation
+    });
+  }, [pathname, searchParams]); // Se déclenche à chaque changement d'URL ou de paramètres
+
+  return null; // Ce composant ne rend rien visuellement
+};
 
 // Importer les composants côté client avec 'use client'
 const ClientComponents = dynamic(
@@ -142,6 +162,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}
       >
         <AuthProvider>
+          <ScrollToTop />
           <Navbar />
           <main className="container mx-auto px-4 py-8">
             {children}
