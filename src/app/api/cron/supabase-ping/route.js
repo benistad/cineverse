@@ -30,7 +30,7 @@ async function pingSupabaseInstance(instance) {
     const supabase = createClient(instance.url, instance.key);
     
     // Faire une requête simple pour compter le nombre de films
-    const { count, error } = await supabase
+    const { error } = await supabase
       .from('films')
       .select('*', { count: 'exact', head: true });
     
