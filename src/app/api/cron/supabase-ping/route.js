@@ -29,10 +29,20 @@ async function pingSupabaseInstance(instance) {
   try {
     const supabase = createClient(instance.url, instance.key);
     
-    // Faire une requête simple pour compter le nombre de films
-    const { error } = await supabase
+    // Effectuer plusieurs requêtes pour garantir une activité substantielle
+    // 1. Compter le nombre de films
+    const { error: countError } = await supabase
       .from('films')
       .select('*', { count: 'exact', head: true });
+      
+    // 2. Récupérer quelques films (limite à 5)
+    const { error: selectError } = await supabase
+      .from('films')
+      .select('id, title')
+      .limit(5);
+      
+    // Combiner les erreurs potentielles
+    const error = countError || selectError;
     
     if (error) {
       console.error(`Erreur lors du ping de ${instance.name}:`, error);
