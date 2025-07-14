@@ -23,6 +23,8 @@ export default function FilmEditor({ movieDetails }) {
   const [multiRolePersons, setMultiRolePersons] = useState({});
   const [whyWatchEnabled, setWhyWatchEnabled] = useState(false);
   const [whyWatchContent, setWhyWatchContent] = useState('');
+  const [notLikedEnabled, setNotLikedEnabled] = useState(false);
+  const [notLikedContent, setNotLikedContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
   const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
   const [existingFilmData, setExistingFilmData] = useState(null);
@@ -89,6 +91,12 @@ export default function FilmEditor({ movieDetails }) {
             }
             if (existingFilm.why_watch_content) {
               setWhyWatchContent(existingFilm.why_watch_content);
+            }
+            if (existingFilm.not_liked_enabled !== undefined) {
+              setNotLikedEnabled(existingFilm.not_liked_enabled);
+            }
+            if (existingFilm.not_liked_content) {
+              setNotLikedContent(existingFilm.not_liked_content);
             }
             // Précharger l'état "Film méconnu à voir"
             if (existingFilm.is_hidden_gem !== undefined) {
@@ -235,6 +243,8 @@ export default function FilmEditor({ movieDetails }) {
         release_date: movieDetails.release_date || null,
         why_watch_enabled: whyWatchEnabled,
         why_watch_content: whyWatchEnabled ? whyWatchContent : null,
+        not_liked_enabled: notLikedEnabled,
+        not_liked_content: notLikedEnabled ? notLikedContent : null,
         is_hidden_gem: isHiddenGem,
         is_hunted_by_moviehunt: isHuntedByMovieHunt,
         // Ajouter les genres du film
@@ -414,6 +424,31 @@ export default function FilmEditor({ movieDetails }) {
                   value={whyWatchContent}
                   onChange={setWhyWatchContent}
                   placeholder="Expliquez pourquoi ce film mérite d'être vu..."
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Section "Ce que nous n'avons pas aimé" */}
+          <div className="mt-8 p-6 bg-white rounded-lg shadow">
+            <h3 className="text-xl font-semibold mb-4">Ce que nous n'avons pas aimé</h3>
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={notLikedEnabled}
+                  onChange={(e) => setNotLikedEnabled(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-red-600"
+                />
+                <span className="ml-2">Activer la section "Ce que nous n'avons pas aimé"</span>
+              </label>
+            </div>
+            {notLikedEnabled && (
+              <div className="mt-2">
+                <SimpleRichTextEditor
+                  value={notLikedContent}
+                  onChange={setNotLikedContent}
+                  placeholder="Indiquez ce qui vous a déplu ou les points faibles du film..."
                 />
               </div>
             )}
