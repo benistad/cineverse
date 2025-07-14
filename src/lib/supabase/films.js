@@ -303,8 +303,7 @@ export async function saveFilm(film) {
         // Vérifier si l'URL est valide
         try {
           new URL(cleanedFilm[field]);
-        } catch (e) {
-          console.warn(`${field} n'est pas une URL valide, nettoyage...`);
+        } catch {
           // Si l'URL commence par un slash, on suppose que c'est un chemin relatif
           if (cleanedFilm[field].startsWith('/')) {
             cleanedFilm[field] = `https://image.tmdb.org/t/p/original${cleanedFilm[field]}`;
@@ -427,7 +426,7 @@ export async function saveFilm(film) {
           let carouselUrl = cleanedFilmToSave.carousel_image_url;
           try {
             new URL(carouselUrl);
-          } catch (e) {
+          } catch {
             if (carouselUrl.startsWith('/')) {
               carouselUrl = `https://image.tmdb.org/t/p/original${carouselUrl}`;
             } else {
