@@ -289,22 +289,10 @@ export default function FilmPageBySlug() {
                     margin-bottom: 0.5rem;
                   }
                 `}</style>
-                <div className="text-sm sm:text-base text-gray-700 why-watch-content">
-                  {film.why_watch_content.split('\n').map((line, index) => {
-                    if (line.trim() === '') {
-                      return <br key={index} />;
-                    }
-                    if (line.trim().startsWith('• ')) {
-                      return (
-                        <p key={index} className="flex">
-                          <span className="mr-2">•</span>
-                          <span>{line.substring(2)}</span>
-                        </p>
-                      );
-                    }
-                    return <p key={index}>{line}</p>;
-                  })}
-                </div>
+                <div
+                  className="text-sm sm:text-base text-gray-700 why-watch-content"
+                  dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
+                />
               </div>
             )}
 
@@ -320,22 +308,10 @@ export default function FilmPageBySlug() {
                     margin-bottom: 0.5rem;
                   }
                 `}</style>
-                <div className="text-sm sm:text-base text-gray-700 not-liked-content">
-                  {film.not_liked_content.split('\n').map((line, index) => {
-                    if (line.trim() === '') {
-                      return <br key={index} />;
-                    }
-                    if (line.trim().startsWith('• ')) {
-                      return (
-                        <p key={index} className="flex">
-                          <span className="mr-2">•</span>
-                          <span>{line.substring(2)}</span>
-                        </p>
-                      );
-                    }
-                    return <p key={index}>{line}</p>;
-                  })}
-                </div>
+                <div
+                  className="text-sm sm:text-base text-gray-700 not-liked-content"
+                  dangerouslySetInnerHTML={{ __html: film.not_liked_content }}
+                />
               </div>
             )}
             
