@@ -353,6 +353,8 @@ export async function saveFilm(film) {
           youtube_trailer_key: filmToSave.youtube_trailer_key,
           why_watch_enabled: filmToSave.why_watch_enabled,
           why_watch_content: filmToSave.why_watch_content,
+          not_liked_enabled: filmToSave.not_liked_enabled,
+          not_liked_content: filmToSave.not_liked_content,
           is_hidden_gem: filmToSave.is_hidden_gem,
           is_hunted_by_moviehunt: filmToSave.is_hunted_by_moviehunt,
           genres: filmToSave.genres,
