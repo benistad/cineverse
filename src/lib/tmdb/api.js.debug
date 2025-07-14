@@ -1,0 +1,39 @@
+// Version de débogage pour afficher les valeurs des images
+console.log('API TMDB chargée');
+
+export const getImageUrl = (path, size = 'w500') => {
+  console.log(`getImageUrl appelé avec path=${path}, size=${size}`);
+  
+  // Détecter si nous sommes dans la partie admin (côté client uniquement)
+  const isAdmin = typeof window !== 'undefined' && window.location.pathname.includes('/admin');
+  console.log(`isAdmin: ${isAdmin}`);
+  
+  if (!path) {
+    console.log('Aucun chemin fourni, retour du placeholder');
+    // Utiliser des placeholders en ligne pour éviter les problèmes de fichiers locaux
+    // Ces placeholders sont disponibles publiquement et ne nécessitent pas d'authentification
+    if (isAdmin) {
+      const placeholderSizes = [300, 400, 500, 600, 700];
+      const placeholderNum = (size.charCodeAt(1) % 5);
+      const placeholderSize = placeholderSizes[placeholderNum] || 400;
+      const placeholderUrl = `https://placehold.co/${placeholderSize}x${placeholderSize * 1.5}/3498db/ffffff?text=Image+non+disponible`;
+      console.log(`Retour du placeholder admin: ${placeholderUrl}`);
+      return placeholderUrl;
+    }
+    console.log('Retour du placeholder public: /images/placeholder.jpg');
+    return '/images/placeholder.jpg';
+  }
+  
+  // S'assurer que le chemin commence par un slash
+  const formattedPath = path.startsWith('/') ? path : `/${path}`;
+  console.log(`Chemin formaté: ${formattedPath}`);
+  
+  // Construire l'URL complète pour l'API TMDB
+  const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
+  const imageUrl = `${TMDB_IMAGE_BASE_URL}/${size}${formattedPath}`;
+  
+  // Log pour débogage
+  console.log(`Construction de l'URL d'image: ${imageUrl} (admin: ${isAdmin})`); 
+  
+  return imageUrl;
+};
