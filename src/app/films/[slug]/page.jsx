@@ -307,6 +307,37 @@ export default function FilmPageBySlug() {
                 </div>
               </div>
             )}
+
+            {/* Section "Ce que nous n'avons pas aimé" */}
+            {film.not_liked_enabled && film.not_liked_content && (
+              <div className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-red-700">Ce que nous n'avons pas aimé</h2>
+                <style jsx>{`
+                  .not-liked-content {
+                    white-space: pre-wrap;
+                  }
+                  .not-liked-content p {
+                    margin-bottom: 0.5rem;
+                  }
+                `}</style>
+                <div className="text-sm sm:text-base text-gray-700 not-liked-content">
+                  {film.not_liked_content.split('\n').map((line, index) => {
+                    if (line.trim() === '') {
+                      return <br key={index} />;
+                    }
+                    if (line.trim().startsWith('• ')) {
+                      return (
+                        <p key={index} className="flex">
+                          <span className="mr-2">•</span>
+                          <span>{line.substring(2)}</span>
+                        </p>
+                      );
+                    }
+                    return <p key={index}>{line}</p>;
+                  })}
+                </div>
+              </div>
+            )}
             
             {(film.youtube_trailer_key || trailerKey) && (
               <div className="mb-4 sm:mb-6">
