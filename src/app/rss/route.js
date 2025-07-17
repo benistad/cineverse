@@ -22,7 +22,7 @@ export async function GET() {
   // Récupérer les films publiés (adapter la requête si besoin)
   const { data: films, error } = await supabase
     .from('films')
-    .select('id, slug, title, synopsis, date_ajout')
+    .select('id, slug, title, synopsis, date_ajout, poster_url, poster_path')
     .order('date_ajout', { ascending: false })
     .limit(30); // Limite à 30 films récents
 
@@ -31,13 +31,31 @@ export async function GET() {
   }
 
   const items = films
-    .map(film => `    <item>
+    .map(film => {
+      // Détermination de l'URL de l'image principale
+      let imageUrl = '';
+      if (film.poster_url) {
+        imageUrl = film.poster_url.startsWith('http') ? film.poster_url : `${SITE_URL}${film.poster_url}`;
+      } else if (film.poster_path) {
+        imageUrl = film.poster_path.startsWith('http')
+          ? film.poster_path
+          : `https://image.tmdb.org/t/p/w500${film.poster_path}`;
+      }
+      // Extraction du nom de fichier
+      let imageName = '';
+      if (imageUrl) {
+        const parts = imageUrl.split('/');
+        imageName = parts[parts.length - 1];
+      }
+      return `    <item>
       <title>${escapeXml(film.title)}</title>
       <link>${SITE_URL}/film/${film.slug}</link>
       <guid>${SITE_URL}/film/${film.slug}</guid>
       <pubDate>${new Date(film.date_ajout).toUTCString()}</pubDate>
       <description>${film.synopsis ? escapeXml(film.synopsis) : ''}</description>
-    </item>`) 
+      ${imageUrl ? `<image>\n        <name>${escapeXml(imageName)}</name>\n        <url>${escapeXml(imageUrl)}</url>\n      </image>` : ''}
+    </item>`;
+    })
     .join('\n');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
