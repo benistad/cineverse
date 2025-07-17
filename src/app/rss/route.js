@@ -27,19 +27,23 @@ export async function GET() {
     .limit(30); // Limite à 30 films récents
 
   if (error) {
+    console.error('Erreur Supabase lors de la récupération des films pour le RSS:', error);
     return new NextResponse('Erreur lors de la récupération des films', { status: 500 });
   }
 
   const items = films
     .map(film => {
+      try {
       // Détermination de l'URL de l'image principale
       let imageUrl = '';
-      if (film.poster_url) {
+      if (film.poster_url && typeof film.poster_url === 'string') {
         imageUrl = film.poster_url.startsWith('http') ? film.poster_url : `${SITE_URL}${film.poster_url}`;
-      } else if (film.poster_path) {
+      } else if (film.poster_path && typeof film.poster_path === 'string') {
         imageUrl = film.poster_path.startsWith('http')
           ? film.poster_path
           : `https://image.tmdb.org/t/p/w500${film.poster_path}`;
+      } else {
+        console.warn('Aucune image trouvée pour le film:', film.id, film.title, film.poster_url, film.poster_path);
       }
       // Extraction du nom de fichier
       let imageName = '';
@@ -55,10 +59,15 @@ export async function GET() {
       <description>${film.synopsis ? escapeXml(film.synopsis) : ''}</description>
       ${imageUrl ? `<image>\n        <name>${escapeXml(imageName)}</name>\n        <url>${escapeXml(imageUrl)}</url>\n      </image>` : ''}
     </item>`;
+      } catch (err) {
+        console.error('Erreur lors de la génération d\'un item RSS pour le film', film.id, film.title, err);
+        return '';
+      }
     })
     .join('\n');
 
-  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+  try {
+    const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
     <title>MovieHunt – Nouveaux films</title>
@@ -70,11 +79,15 @@ ${items}
   </channel>
 </rss>`;
 
-  return new NextResponse(rss, {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/rss+xml; charset=UTF-8',
-      'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1200',
-    },
-  });
+    return new NextResponse(rss, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/rss+xml; charset=UTF-8',
+        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1200',
+      },
+    });
+  } catch (err) {
+    console.error('Erreur lors de la génération globale du flux RSS:', err);
+    return new NextResponse('Erreur lors de la génération du flux RSS', { status: 500 });
+  }
 }
