@@ -22,7 +22,7 @@ export async function GET() {
   // Récupérer les films publiés (adapter la requête si besoin)
   const { data: films, error } = await supabase
     .from('films')
-    .select('id, slug, title, synopsis, date_ajout, poster_url, poster_path')
+    .select('id, slug, title, synopsis, date_ajout, poster_url')
     .order('date_ajout', { ascending: false })
     .limit(30); // Limite à 30 films récents
 
@@ -38,12 +38,8 @@ export async function GET() {
       let imageUrl = '';
       if (film.poster_url && typeof film.poster_url === 'string') {
         imageUrl = film.poster_url.startsWith('http') ? film.poster_url : `${SITE_URL}${film.poster_url}`;
-      } else if (film.poster_path && typeof film.poster_path === 'string') {
-        imageUrl = film.poster_path.startsWith('http')
-          ? film.poster_path
-          : `https://image.tmdb.org/t/p/w500${film.poster_path}`;
       } else {
-        console.warn('Aucune image trouvée pour le film:', film.id, film.title, film.poster_url, film.poster_path);
+        console.warn('Aucune image trouvée pour le film:', film.id, film.title, film.poster_url);
       }
       // Extraction du nom de fichier
       let imageName = '';
