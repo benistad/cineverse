@@ -77,7 +77,7 @@ export default function Navbar() {
               Accueil
             </Link>
             <Link 
-              href="/search" 
+              href="/advanced-search" 
               className={`px-3 py-2 rounded-md text-sm font-medium ${
                 pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
@@ -227,7 +227,7 @@ export default function Navbar() {
               <FiHome className="mr-2" /> Accueil
             </Link>
             <Link 
-              href="/search" 
+              href="/advanced-search" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
                 pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}

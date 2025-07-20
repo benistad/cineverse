@@ -28,7 +28,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/search" className="text-gray-400 hover:text-white flex items-center">
+                <Link href="/advanced-search" className="text-gray-400 hover:text-white flex items-center">
                   <FiSearch className="mr-2" /> Recherche
                 </Link>
               </li>
