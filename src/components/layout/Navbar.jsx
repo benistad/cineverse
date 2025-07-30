@@ -307,39 +307,50 @@ export default function Navbar() {
         <div className="md:hidden bg-gray-800 shadow-lg">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
             <Link href="/" className="flex items-center px-3 py-2 mb-2" onClick={() => setIsOpen(false)}>
-              <div className="relative w-6 h-6 mr-2">
-                <Image 
-                  src="/images/logo-mh.png" 
-                  alt="MovieHunt Logo" 
-                  width={24} 
-                  height={24} 
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              <span className="text-lg font-bold">MovieHunt</span>
-            </Link>
+  <div className="relative w-6 h-6 mr-2">
+    <Image 
+      src="/images/logo-mh.png" 
+      alt="MovieHunt Logo" 
+      width={24} 
+      height={24} 
+      className="object-contain"
+      priority
+    />
+  </div>
+  <span className="text-lg font-bold">MovieHunt</span>
+</Link>
             <Link 
-              href="/" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/' ? 'bg-gray-700' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FiHome className="mr-2" /> Accueil
-            </Link>
-            <Link 
-              href="/advanced-search" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FiFilter className="mr-2" /> Recherche Avancée
-            </Link>
+  href="/advanced-search" 
+  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+    pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+  }`}
+  onClick={() => setIsOpen(false)}
+>
+  <FiFilter className="mr-2" /> Recherche Avancée
+</Link>
             
             {/* Découvrir section dans le menu mobile */}
             <div className="px-3 py-2 font-medium text-gray-300 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
+            
+            <Link 
+  href="/all-films" 
+  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+    pathname === '/quel-film-regarder' ? 'bg-gray-700' : 'hover:bg-gray-700'
+  }`}
+  onClick={() => setIsOpen(false)}
+>
+  <FiHelpCircle className="mr-2" /> Quel film regarder ?
+</Link>
+            
+            <Link 
+              href="/huntedbymoviehunt" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiAward className="mr-2" /> Hunted by MovieHunt
+            </Link>
             
             <Link 
               href="/all-films" 
@@ -352,23 +363,13 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href="/quel-film-regarder" 
+              href="/annuaires" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/quel-film-regarder' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiHelpCircle className="mr-2" /> Quel film regarder ?
-            </Link>
-            
-            <Link 
-              href="/huntedbymoviehunt" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FiAward className="mr-2" /> Hunted by MovieHunt
+              <FiLink className="mr-2" /> Annuaires
             </Link>
             
             {!loading && user && (
@@ -381,24 +382,6 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                 >
                   <FiFilm className="mr-2" /> Dashboard
-                </Link>
-                <Link 
-                  href="/admin/search" 
-                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                    pathname === '/admin/search' ? 'bg-gray-700' : 'hover:bg-gray-700'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <FiSearch className="mr-2" /> Recherche Avancée
-                </Link>
-                <Link 
-                  href="/annuaires" 
-                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                    pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <FiLink className="mr-2" /> Annuaires
                 </Link>
                 <button
                   onClick={() => {
