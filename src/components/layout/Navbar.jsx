@@ -65,6 +65,108 @@ export default function Navbar() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex md:items-center md:space-x-4">
+  {/* Accueil */}
+  <Link 
+    href="/" 
+    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+  >
+    <span className="flex items-center whitespace-nowrap">
+      <FiHome className="mr-1" /> Accueil
+    </span>
+  </Link>
+  {/* Recherche Avancée */}
+  <Link 
+    href="/advanced-search" 
+    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+  >
+    <span className="flex items-center whitespace-nowrap">
+      <FiFilter className="mr-1" /> Recherche Avancée
+    </span>
+  </Link>
+  {/* Tous les films */}
+  <Link 
+    href="/all-films" 
+    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/all-films' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+  >
+    <span className="flex items-center whitespace-nowrap">
+      <FiFilm className="mr-1" /> Tous les films
+    </span>
+  </Link>
+  {/* Découvrir dropdown */}
+  <div className="relative" ref={discoverMenuRef}>
+    <button
+      onClick={toggleDiscoverMenu}
+      className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
+        pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+      }`}
+    >
+      <FiCompass className="mr-1" /> Découvrir
+      <FiChevronDown className={`ml-1 transition-transform ${isDiscoverOpen ? 'rotate-180' : ''}`} />
+    </button>
+    {isDiscoverOpen && (
+      <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-50">
+        <div className="py-1" role="menu" aria-orientation="vertical">
+          <Link 
+            href="/quel-film-regarder" 
+            className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${pathname === '/quel-film-regarder' ? 'bg-gray-700' : ''}`}
+            onClick={() => setIsDiscoverOpen(false)}
+          >
+            <FiHelpCircle className="mr-2" /> Quel film regarder ?
+          </Link>
+          <Link 
+            href="/huntedbymoviehunt" 
+            className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : ''}`}
+            onClick={() => setIsDiscoverOpen(false)}
+          >
+            <FiAward className="mr-2" /> Hunted by MovieHunt
+          </Link>
+        </div>
+      </div>
+    )}
+  </div>
+  {/* Annuaires */}
+  <Link 
+    href="/annuaires" 
+    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+  >
+    <span className="flex items-center whitespace-nowrap">
+      <FiLink className="mr-1" /> Annuaires
+    </span>
+  </Link>
+  {/* Admin/Dashboard/Déconnexion */}
+  {!loading && user && (
+    <>
+      <Link 
+        href="/admin/dashboard" 
+        className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/admin/dashboard' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+      >
+        <span className="flex items-center whitespace-nowrap">
+          <FiFilm className="mr-1" /> Dashboard
+        </span>
+      </Link>
+      <button
+        onClick={handleLogout}
+        className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+      >
+        <span className="flex items-center whitespace-nowrap">
+          <FiLogOut className="mr-1" /> Déconnexion
+        </span>
+      </button>
+    </>
+  )}
+  {!loading && !user && isAdmin && (
+    <Link 
+      href="/admin" 
+      className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+    >
+      Connexion
+    </Link>
+  )}
+  {/* Barre de recherche à droite */}
+  <div className="ml-4 w-64">
+    <SearchBar />
+  </div>
+
             <div className="mr-4 w-64">
               <SearchBar />
             </div>
