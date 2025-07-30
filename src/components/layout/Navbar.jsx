@@ -61,6 +61,11 @@ export default function Navbar() {
               </div>
               <span className="text-lg sm:text-xl font-bold">MovieHunt</span>
             </Link>
+
+            {/* Champ de recherche à côté du logo */}
+            <div className="ml-6 w-72 hidden md:block">
+              <SearchBar />
+            </div>
           </div>
 
           {/* Desktop menu */}
@@ -153,10 +158,7 @@ export default function Navbar() {
                 Connexion
               </Link>
             )}
-            {/* Barre de recherche à droite */}
-            <div className="ml-4 w-64">
-              <SearchBar />
-            </div>
+
           </div>
 
           {/* Mobile menu button */}
