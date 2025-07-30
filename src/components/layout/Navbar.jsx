@@ -84,7 +84,7 @@ export default function Navbar() {
             >
               <span className="flex items-center">
                 <FiFilter className="mr-1" />
-                Recherche
+                Recherche Avancée
               </span>
             </Link>
             
@@ -155,7 +155,7 @@ export default function Navbar() {
                     pathname === '/admin/search' ? 'bg-gray-700' : 'hover:bg-gray-700'
                   }`}
                 >
-                  Rechercher
+                  Recherche Avancée
                 </Link>
                 <Link 
                   href="/annuaires" 
@@ -233,7 +233,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiFilter className="mr-2" /> Recherche
+              <FiFilter className="mr-2" /> Recherche Avancée
             </Link>
             
             {/* Découvrir section dans le menu mobile */}
@@ -287,7 +287,7 @@ export default function Navbar() {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  <FiSearch className="mr-2" /> Rechercher
+                  <FiSearch className="mr-2" /> Recherche Avancée
                 </Link>
                 <Link 
                   href="/annuaires" 
