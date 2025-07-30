@@ -47,7 +47,7 @@ export default function Navbar() {
     <nav className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between h-14 sm:h-16">
-          <div className="flex items-center">
+          <div className="flex items-center space-x-6">
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
               <div className="relative w-6 h-6 sm:w-8 sm:h-8">
                 <Image 
@@ -61,15 +61,13 @@ export default function Navbar() {
               </div>
               <span className="text-lg sm:text-xl font-bold">MovieHunt</span>
             </Link>
-
-            {/* Champ de recherche à côté du logo */}
-            <div className="ml-6 w-72 hidden md:block">
+            <div className="w-72 hidden md:block">
               <SearchBar />
             </div>
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {/* Recherche Avancée */}
             <Link 
               href="/advanced-search" 
