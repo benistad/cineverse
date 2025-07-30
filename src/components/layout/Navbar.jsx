@@ -82,7 +82,7 @@ export default function Navbar() {
                 pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
             >
-              <span className="flex items-center">
+              <span className="flex items-center whitespace-nowrap">
                 <FiFilter className="mr-1" />
                 Recherche Avancée
               </span>
@@ -163,7 +163,7 @@ export default function Navbar() {
                     pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
                   }`}
                 >
-                  <span className="flex items-center">
+                  <span className="flex items-center whitespace-nowrap">
                     <FiLink className="mr-1" />
                     Annuaires
                   </span>
