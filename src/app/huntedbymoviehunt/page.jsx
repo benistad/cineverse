@@ -72,7 +72,7 @@ export default function HuntedByMovieHuntPage() {
           Vous retrouverez ce badge sur les affiches des films directement sur notre site :
         </p>
         <div className="flex justify-center mb-4">
-          <Link href="/" className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+          <Link href="/advanced-search?hunted=true" className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Voir les films Hunted <FiArrowRight className="ml-2" />
           </Link>
         </div>
