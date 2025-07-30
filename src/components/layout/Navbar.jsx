@@ -66,14 +66,7 @@ export default function Navbar() {
           {/* Desktop menu */}
           <div className="hidden md:flex md:items-center md:space-x-4">
   {/* Accueil */}
-  <Link 
-    href="/" 
-    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
-  >
-    <span className="flex items-center whitespace-nowrap">
-      <FiHome className="mr-1" /> Accueil
-    </span>
-  </Link>
+  
   {/* Recherche Avancée */}
   <Link 
     href="/advanced-search" 
