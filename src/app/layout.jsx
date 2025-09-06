@@ -67,11 +67,6 @@ const MobilePerformanceOptimizer = dynamic(
   { ssr: false }
 );
 
-// Composant Cabin Analytics avec exclusion de la partie admin
-const CabinAnalytics = dynamic(
-  () => import('@/components/analytics/CabinAnalytics'),
-  { ssr: false }
-);
 // Suppression de tous les autres composants d'optimisation avancés
 
 // Désactiver les autres composants d'optimisation qui pourraient causer des problèmes
@@ -180,7 +175,6 @@ export default function RootLayout({ children }) {
         <MobilePerformanceOptimizer />
         <JsonLdSchema />
         <ClientComponents />
-        <CabinAnalytics />
         {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
         {/* <ImageOptimizer /> */}
         {/* <SpeedIndexOptimizer /> */}
@@ -189,6 +183,23 @@ export default function RootLayout({ children }) {
         {/* <DataPreloader /> */}
         {/* <ServiceWorkerRegistration /> */}
         {/* <SmartImagePreloader /> */}
+        
+        {/* Cabin Analytics - Script conditionnel pour exclure les pages admin */}
+        <Script
+          id="cabin-analytics-conditional"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Charger Cabin Analytics uniquement si pas sur une page admin
+              if (!window.location.pathname.startsWith('/admin')) {
+                const script = document.createElement('script');
+                script.src = 'https://scripts.withcabin.com/hello.js';
+                script.async = true;
+                document.head.appendChild(script);
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );
