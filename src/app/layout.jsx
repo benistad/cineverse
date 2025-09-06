@@ -159,6 +159,24 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        
+        {/* Cabin Analytics - Implémentation selon la documentation officielle Next.js */}
+        <Script
+          id="cabin-analytics-conditional"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Charger Cabin Analytics uniquement si pas sur une page admin
+              if (!window.location.pathname.startsWith('/admin')) {
+                const script = document.createElement('script');
+                script.src = 'https://scripts.withcabin.com/hello.js';
+                script.async = true;
+                script.defer = true;
+                document.head.appendChild(script);
+              }
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}
@@ -183,23 +201,6 @@ export default function RootLayout({ children }) {
         {/* <DataPreloader /> */}
         {/* <ServiceWorkerRegistration /> */}
         {/* <SmartImagePreloader /> */}
-        
-        {/* Cabin Analytics - Script conditionnel pour exclure les pages admin */}
-        <Script
-          id="cabin-analytics-conditional"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Charger Cabin Analytics uniquement si pas sur une page admin
-              if (!window.location.pathname.startsWith('/admin')) {
-                const script = document.createElement('script');
-                script.src = 'https://scripts.withcabin.com/hello.js';
-                script.async = true;
-                document.head.appendChild(script);
-              }
-            `,
-          }}
-        />
       </body>
     </html>
   );
