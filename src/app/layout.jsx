@@ -66,6 +66,12 @@ const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
   { ssr: false }
 );
+
+// Composant Cabin Analytics avec exclusion de la partie admin
+const CabinAnalytics = dynamic(
+  () => import('@/components/analytics/CabinAnalytics'),
+  { ssr: false }
+);
 // Suppression de tous les autres composants d'optimisation avancés
 
 // Désactiver les autres composants d'optimisation qui pourraient causer des problèmes
@@ -174,6 +180,7 @@ export default function RootLayout({ children }) {
         <MobilePerformanceOptimizer />
         <JsonLdSchema />
         <ClientComponents />
+        <CabinAnalytics />
         {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
         {/* <ImageOptimizer /> */}
         {/* <SpeedIndexOptimizer /> */}
