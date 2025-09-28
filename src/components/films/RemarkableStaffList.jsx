@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import { getImageUrl } from '@/lib/tmdb/api';
-import { getSupabaseClient } from '@/lib/supabase/config';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
   const [staff, setStaff] = useState(initialStaff || []);
@@ -43,11 +43,12 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
     async function fetchStaff() {
       try {
         setLoading(true);
-        const supabase = getSupabaseClient();
+        setError(null);
         
-        if (!supabase) {
-          throw new Error('Client Supabase non initialisé');
-        }
+        const supabase = createBrowserClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        );
 
         const { data, error } = await supabase
           .from('remarkable_staff')
@@ -105,6 +106,9 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
     return (
       <div className="text-center py-4">
         <p className="text-red-500">Erreur lors du chargement du staff.</p>
+        {process.env.NODE_ENV === 'development' && (
+          <p className="text-xs text-gray-500 mt-2">{error.message}</p>
+        )}
       </div>
     );
   }
