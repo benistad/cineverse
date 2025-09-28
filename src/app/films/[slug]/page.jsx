@@ -160,7 +160,7 @@ export default function FilmPageBySlug() {
   }
   
   return (
-    <div className="container mx-auto px-4 py-8 space-y-6">
+    <article className="container mx-auto px-4 py-8 space-y-6" itemScope itemType="https://schema.org/Movie">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           {/* Affiche du film */}
@@ -184,6 +184,7 @@ export default function FilmPageBySlug() {
                   alt={`Affiche du film ${film.title}`}
                   className="absolute inset-0 w-full h-full object-contain object-top"
                   loading="eager"
+                  itemProp="image"
                   onError={(e) => {
                     // En cas d'erreur, essayer une taille plus petite
                     if (e.target.src.includes('/w500/')) {
@@ -203,7 +204,7 @@ export default function FilmPageBySlug() {
           {/* Informations du film */}
           <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-2xl sm:text-3xl font-bold">{film.title}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold" itemProp="name">{film.title}</h1>
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
                   {typeof Link !== 'undefined' ? (
@@ -235,12 +236,12 @@ export default function FilmPageBySlug() {
             
             <div className="flex flex-wrap items-center mb-4 text-gray-700">
               {film.release_date && (
-                <span className="mr-3">
+                <span className="mr-3" itemProp="datePublished">
                   {new Date(film.release_date).getFullYear()}
                 </span>
               )}
               {film.genres && (
-                <span>
+                <span itemProp="genre">
                   {film.genres}
                 </span>
               )}
@@ -258,9 +259,9 @@ export default function FilmPageBySlug() {
             
             <div className="flex items-center mb-4">
               <span className="font-semibold mr-2">Note:</span>
-              <span className="flex items-center">
+              <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
                 <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                {film.note_sur_10}/10
+                <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
               </span>
             </div>
             
@@ -273,13 +274,13 @@ export default function FilmPageBySlug() {
               />
             )}
             
-            <div className="mb-4">
+            <section className="mb-4">
               <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
-              <p className="text-sm sm:text-base text-gray-700">{film.synopsis || 'Aucun synopsis disponible.'}</p>
-            </div>
+              <p className="text-sm sm:text-base text-gray-700" itemProp="description">{film.synopsis || 'Aucun synopsis disponible.'}</p>
+            </section>
             
             {film.why_watch_enabled && film.why_watch_content && (
-              <div className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
+              <section className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
                 <style jsx>{`
                   .why-watch-content {
@@ -293,12 +294,12 @@ export default function FilmPageBySlug() {
                   className="text-sm sm:text-base text-gray-700 why-watch-content"
                   dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
                 />
-              </div>
+              </section>
             )}
 
             {/* Section "Ce que nous n'avons pas aimé" */}
             {film.not_liked_enabled && film.not_liked_content && (
-              <div className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
+              <section className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-red-700">Ce que nous n'avons pas aimé</h2>
                 <style jsx>{`
                   .not-liked-content {
@@ -312,11 +313,11 @@ export default function FilmPageBySlug() {
                   className="text-sm sm:text-base text-gray-700 not-liked-content"
                   dangerouslySetInnerHTML={{ __html: film.not_liked_content }}
                 />
-              </div>
+              </section>
             )}
             
             {(film.youtube_trailer_key || trailerKey) && (
-              <div className="mb-4 sm:mb-6">
+              <section className="mb-4 sm:mb-6">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
                 <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
                   <YouTube 
@@ -340,7 +341,7 @@ export default function FilmPageBySlug() {
                     }}
                   />
                 </div>
-              </div>
+              </section>
             )}
             
             {searchingTrailer && (
@@ -352,18 +353,18 @@ export default function FilmPageBySlug() {
         </div>
       </div>
       
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">MovieHunt's Picks</h2>
+      <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Équipe technique remarquable</h2>
         <RemarkableStaffList filmId={film.id} />
-      </div>
+      </section>
       
       {/* Films similaires pour la navigation interne et le SEO */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
+      <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
         <SimilarFilms currentFilm={film} />
-      </div>
+      </section>
       
       {/* Schéma structuré pour les moteurs de recherche */}
       <MovieSchema film={film} />
-    </div>
+    </article>
   );
 }

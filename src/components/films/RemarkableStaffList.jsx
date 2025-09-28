@@ -141,10 +141,10 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
               }}
             />
           </div>
-          <h4 className="text-center font-medium">{person.nom || 'Inconnu'}</h4>
+          <h3 className="text-center font-medium">{person.nom || 'Inconnu'}</h3>
           <div className="text-center text-sm text-gray-600">
             {person.roles.map((role, index) => (
-              <p key={index}>{role}</p>
+              <h4 key={index} className="font-normal text-sm">{role}</h4>
             ))}
           </div>
         </div>
