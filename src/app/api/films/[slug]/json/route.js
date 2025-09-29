@@ -21,15 +21,7 @@ export async function GET(request, { params }) {
     // Récupérer le film par son slug
     const { data: film, error } = await supabase
       .from('films')
-      .select(`
-        *,
-        remarkable_staff (
-          id,
-          nom,
-          role,
-          photo_url
-        )
-      `)
+      .select('*')
       .eq('slug', slug)
       .single();
 
@@ -39,15 +31,7 @@ export async function GET(request, { params }) {
       
       const { data: filmByTitle, error: titleError } = await supabase
         .from('films')
-        .select(`
-          *,
-          remarkable_staff (
-            id,
-            nom,
-            role,
-            photo_url
-          )
-        `)
+        .select('*')
         .ilike('title', `%${normalizedSlug}%`)
         .limit(1);
 
