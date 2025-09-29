@@ -23,34 +23,45 @@ curl http://localhost:3000/api/films/deepwater
 **Structure de la réponse (succès) :**
 ```json
 {
-  "id": 123,
-  "title": "Deepwater",
-  "slug": "deepwater",
-  "synopsis": "Synopsis du film...",
-  "note_sur_10": 8.5,
-  "release_date": "2023-01-01",
-  "genres": "Action, Thriller",
-  "poster_path": "/path/to/poster.jpg",
-  "poster_url": "https://image.tmdb.org/t/p/w500/poster.jpg",
-  "tmdb_id": 456789,
-  "youtube_trailer_key": "abc123",
-  "why_watch_enabled": true,
-  "why_watch_content": "Contenu HTML...",
-  "not_liked_enabled": false,
-  "not_liked_content": null,
-  "is_hunted_by_moviehunt": true,
-  "is_hidden_gem": false,
-  "date_ajout": "2023-12-01T10:00:00Z",
-  "remarkable_staff": [
+  "title": "Heretic",
+  "slug": "heretic",
+  "score": 6,
+  "hunted": false,
+  "sections": [
     {
-      "id": 1,
-      "nom": "Christopher Nolan",
-      "role": "Réalisateur",
-      "photo_url": "https://image.tmdb.org/t/p/w185/photo.jpg"
+      "heading": "Pourquoi le voir ?",
+      "content": "• La performance de Hugh Grant dans un rôle inhabituel\n• L'histoire"
+    },
+    {
+      "heading": "Notre avis",
+      "content": "Contenu de la critique..."
+    },
+    {
+      "heading": "Casting",
+      "content": "Hugh Grant (Acteur), Sophie Thatcher (Actrice)"
     }
-  ]
+  ],
+  "genres": [
+    "Horreur",
+    "Thriller"
+  ],
+  "year": 2024
 }
 ```
+
+**Champs optionnels :**
+- `genres` : Array des genres (omis si aucun genre)
+- `year` : Année de sortie (omis si date inconnue)
+- `runtime` : Durée en minutes (non implémenté actuellement)
+
+**Sections disponibles :**
+- **"Pourquoi le voir ?"** : Contenu éditorial sur les points forts
+- **"Notre avis"** : Critique ou points négatifs
+- **"Casting"** : Équipe technique remarquable (format: "Nom (Rôle)")
+
+**Champ `hunted` :**
+- `true` si le film a le badge "Hunted by MovieHunt"
+- `false` sinon
 
 **Structure de la réponse (erreur) :**
 ```json
@@ -111,9 +122,15 @@ def get_film_data(slug):
         return None
 
 # Utilisation
-film = get_film_data("deepwater")
+film = get_film_data("heretic")
 if film:
     print(f"Titre: {film['title']}")
-    print(f"Note: {film['note_sur_10']}/10")
-    print(f"Synopsis: {film['synopsis']}")
+    print(f"Note: {film['score']}/10")
+    print(f"Hunted: {film['hunted']}")
+    print(f"Genres: {', '.join(film.get('genres', []))}")
+    
+    # Parcourir les sections
+    for section in film['sections']:
+        print(f"\n{section['heading']}:")
+        print(section['content'])
 ```

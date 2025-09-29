@@ -7,6 +7,85 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 // Utiliser la clé publique pour l'accès en lecture seule
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// Fonction pour nettoyer le HTML et extraire le texte
+function stripHtml(html) {
+  if (!html) return '';
+  return html
+    .replace(/<[^>]*>/g, '') // Supprimer les balises HTML
+    .replace(/&nbsp;/g, ' ') // Remplacer les espaces insécables
+    .replace(/&amp;/g, '&')  // Décoder les entités HTML
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim();
+}
+
+// Fonction pour transformer les données du film au format demandé
+function transformFilmData(film, remarkableStaff = []) {
+  const sections = [];
+  
+  // Section "Pourquoi le voir ?" 
+  if (film.why_watch_enabled && film.why_watch_content) {
+    sections.push({
+      heading: "Pourquoi le voir ?",
+      content: stripHtml(film.why_watch_content)
+    });
+  }
+  
+  // Section "Notre avis" (ce qu'on n'a pas aimé)
+  if (film.not_liked_enabled && film.not_liked_content) {
+    sections.push({
+      heading: "Notre avis",
+      content: stripHtml(film.not_liked_content)
+    });
+  }
+  
+  // Section "Casting" si on a du staff remarquable
+  if (remarkableStaff && remarkableStaff.length > 0) {
+    const castingText = remarkableStaff
+      .map(person => `${person.nom} (${person.role})`)
+      .join(', ');
+    
+    sections.push({
+      heading: "Casting",
+      content: castingText
+    });
+  }
+  
+  // Préparer les genres comme array
+  let genresArray = [];
+  if (film.genres) {
+    genresArray = film.genres.split(',').map(genre => genre.trim());
+  }
+  
+  // Extraire l'année de release_date
+  let year = null;
+  if (film.release_date) {
+    year = new Date(film.release_date).getFullYear();
+  }
+  
+  // Construire l'objet de réponse
+  const response = {
+    title: film.title,
+    slug: film.slug,
+    score: film.note_sur_10,
+    hunted: Boolean(film.is_hunted_by_moviehunt),
+    sections: sections
+  };
+  
+  // Ajouter les champs optionnels seulement s'ils existent
+  if (genresArray.length > 0) {
+    response.genres = genresArray;
+  }
+  
+  if (year) {
+    response.year = year;
+  }
+  
+  return response;
+}
+
 export async function GET(request, { params }) {
   try {
     const { slug } = params;
@@ -19,7 +98,7 @@ export async function GET(request, { params }) {
     }
 
     // Récupérer le film par son slug
-    const { data: film, error } = await supabase
+    let { data: film, error } = await supabase
       .from('films')
       .select('*')
       .eq('slug', slug)
@@ -42,17 +121,20 @@ export async function GET(request, { params }) {
         );
       }
 
-      // Retourner le premier film trouvé
-      return NextResponse.json(filmByTitle[0], {
-        headers: {
-          'Cache-Control': 'public, max-age=3600', // Cache 1 heure
-          'Content-Type': 'application/json',
-        },
-      });
+      // Utiliser le premier film trouvé
+      film = filmByTitle[0];
     }
+    
+    // Récupérer le staff remarquable séparément
+    const { data: remarkableStaff } = await supabase
+      .from('remarkable_staff')
+      .select('nom, role')
+      .eq('film_id', film.id);
 
-    // Retourner le film trouvé par slug
-    return NextResponse.json(film, {
+    // Transformer les données au format demandé
+    const transformedData = transformFilmData(film, remarkableStaff);
+
+    return NextResponse.json(transformedData, {
       headers: {
         'Cache-Control': 'public, max-age=3600', // Cache 1 heure
         'Content-Type': 'application/json',
