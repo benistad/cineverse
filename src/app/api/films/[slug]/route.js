@@ -71,6 +71,7 @@ function transformFilmData(film, remarkableStaff = []) {
     slug: film.slug,
     score: film.note_sur_10,
     hunted: Boolean(film.is_hunted_by_moviehunt),
+    hidden_gem: Boolean(film.is_hidden_gem),
     sections: sections
   };
   

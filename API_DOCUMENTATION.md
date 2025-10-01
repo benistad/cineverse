@@ -27,6 +27,7 @@ curl http://localhost:3000/api/films/deepwater
   "slug": "heretic",
   "score": 6,
   "hunted": false,
+  "hidden_gem": false,
   "sections": [
     {
       "heading": "Pourquoi le voir ?",
@@ -49,6 +50,14 @@ curl http://localhost:3000/api/films/deepwater
 }
 ```
 
+**Champs obligatoires :**
+- `title` : Titre du film
+- `slug` : Identifiant URL-friendly
+- `score` : Note sur 10
+- `hunted` : Badge "Hunted by MovieHunt" (true/false)
+- `hidden_gem` : Film méconnu à découvrir (true/false)
+- `sections` : Array des sections de contenu
+
 **Champs optionnels :**
 - `genres` : Array des genres (omis si aucun genre)
 - `year` : Année de sortie (omis si date inconnue)
@@ -59,9 +68,9 @@ curl http://localhost:3000/api/films/deepwater
 - **"Notre avis"** : Critique ou points négatifs
 - **"Casting"** : Équipe technique remarquable (format: "Nom (Rôle)")
 
-**Champ `hunted` :**
-- `true` si le film a le badge "Hunted by MovieHunt"
-- `false` sinon
+**Badges spéciaux :**
+- **`hunted`** : `true` si le film a le badge "Hunted by MovieHunt" (films exceptionnels)
+- **`hidden_gem`** : `true` si le film fait partie des perles rares méconnues
 
 **Structure de la réponse (erreur) :**
 ```json
