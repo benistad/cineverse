@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList } from 'react-icons/fi';
+import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -71,6 +71,11 @@ export default function Footer() {
               <li>
                 <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white">
                   Recommandations de films
+                </Link>
+              </li>
+              <li>
+                <Link href="/comment-nous-travaillons" className="text-gray-400 hover:text-white flex items-center">
+                  <FiInfo className="mr-2" /> Comment nous travaillons
                 </Link>
               </li>
             </ul>

@@ -32,7 +32,7 @@ module.exports = {
     }
     
     // Pages de catégories importantes
-    if (path === '/top-rated' || path === '/hidden-gems') {
+    if (path === '/top-rated' || path === '/hidden-gems' || path === '/quel-film-regarder' || path === '/comment-nous-travaillons') {
       return {
         loc: path,
         changefreq: 'daily',
