@@ -349,6 +349,7 @@ export async function saveFilm(film) {
           synopsis: filmToSave.synopsis,
           poster_url: filmToSave.poster_url,
           backdrop_url: filmToSave.backdrop_url,
+          carousel_image_url: filmToSave.carousel_image_url,
           note_sur_10: filmToSave.note_sur_10,
           youtube_trailer_key: filmToSave.youtube_trailer_key,
           why_watch_enabled: filmToSave.why_watch_enabled,
@@ -357,6 +358,7 @@ export async function saveFilm(film) {
           not_liked_content: filmToSave.not_liked_content,
           is_hidden_gem: filmToSave.is_hidden_gem,
           is_hunted_by_moviehunt: filmToSave.is_hunted_by_moviehunt,
+          blog_article_url: filmToSave.blog_article_url,
           genres: filmToSave.genres,
           release_date: filmToSave.release_date
         };
