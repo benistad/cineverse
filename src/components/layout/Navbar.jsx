@@ -91,7 +91,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDiscoverMenu}
                 className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' ? 'bg-gray-700' : 'hover:bg-gray-700'
                 }`}
               >
                 <FiCompass className="mr-1" /> Découvrir
@@ -113,6 +113,13 @@ export default function Navbar() {
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiAward className="mr-2" /> Hunted by MovieHunt
+                    </Link>
+                    <Link 
+                      href="/comment-nous-travaillons" 
+                      className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${pathname === '/comment-nous-travaillons' ? 'bg-gray-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiInfo className="mr-2" /> Comment nous travaillons
                     </Link>
                   </div>
                 </div>
@@ -211,6 +218,16 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <FiAward className="mr-2" /> Hunted by MovieHunt
+            </Link>
+            
+            <Link 
+              href="/comment-nous-travaillons" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/comment-nous-travaillons' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiInfo className="mr-2" /> Comment nous travaillons
             </Link>
             
             <Link 
