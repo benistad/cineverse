@@ -270,7 +270,10 @@ export default function FilmPageBySlug() {
                   href={film.blog_article_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
+                  className="inline-flex items-center px-4 py-2 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
+                  style={{ backgroundColor: '#DC2625' }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B91C1C'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DC2625'}
                 >
                   <svg 
                     className="w-4 h-4 mr-2" 
