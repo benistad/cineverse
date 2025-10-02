@@ -29,6 +29,8 @@ export default function FilmEditor({ movieDetails }) {
   const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
   const [existingFilmData, setExistingFilmData] = useState(null);
   const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
+  const [hasBlogArticle, setHasBlogArticle] = useState(false);
+  const [blogArticleUrl, setBlogArticleUrl] = useState('');
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -109,6 +111,11 @@ export default function FilmEditor({ movieDetails }) {
               console.log('is_hunted_by_moviehunt défini, valeur:', existingFilm.is_hunted_by_moviehunt);
             } else {
               console.log('is_hunted_by_moviehunt non défini dans les données du film');
+            }
+            // Précharger l'article de blog
+            if (existingFilm.blog_article_url) {
+              setHasBlogArticle(true);
+              setBlogArticleUrl(existingFilm.blog_article_url);
             }
             // Précharger les MovieHunt's Picks
             if (existingFilm.remarkable_staff && existingFilm.remarkable_staff.length > 0) {
@@ -247,6 +254,7 @@ export default function FilmEditor({ movieDetails }) {
         not_liked_content: notLikedEnabled ? notLikedContent : null,
         is_hidden_gem: isHiddenGem,
         is_hunted_by_moviehunt: isHuntedByMovieHunt,
+        blog_article_url: hasBlogArticle ? blogArticleUrl : null,
         // Ajouter les genres du film
         genres: movieDetails.genres ? movieDetails.genres.map(genre => genre.name).join(', ') : null,
       };
@@ -416,6 +424,33 @@ export default function FilmEditor({ movieDetails }) {
                 <span className="ml-2">Hunted by MovieHunt</span>
               </label>
               <p className="text-sm text-gray-500 mt-1 ml-7">Un badge "Hunted" sera affiché sur l'affiche du film.</p>
+            </div>
+            
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={hasBlogArticle}
+                  onChange={(e) => setHasBlogArticle(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-green-600"
+                />
+                <span className="ml-2">Article sur le blog</span>
+              </label>
+              <p className="text-sm text-gray-500 mt-1 ml-7">Un bouton "Lire la critique sur le blog" sera affiché sur la page du film.</p>
+              {hasBlogArticle && (
+                <div className="mt-3 ml-7">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    URL de l'article
+                  </label>
+                  <input
+                    type="url"
+                    value={blogArticleUrl}
+                    onChange={(e) => setBlogArticleUrl(e.target.value)}
+                    placeholder="https://votre-blog.com/article-du-film"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                </div>
+              )}
             </div>
             
             {whyWatchEnabled && (

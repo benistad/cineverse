@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiLink } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -118,15 +118,6 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            {/* Annuaires */}
-            <Link 
-              href="/annuaires" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
-            >
-              <span className="flex items-center whitespace-nowrap">
-                <FiLink className="mr-1" /> Annuaires
-              </span>
-            </Link>
             {/* Admin/Dashboard/Déconnexion */}
             {!loading && user && (
               <>
@@ -230,16 +221,6 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <FiFilm className="mr-2" /> Tous les films
-            </Link>
-            
-            <Link 
-              href="/annuaires" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/annuaires' ? 'bg-gray-700' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FiLink className="mr-2" /> Annuaires
             </Link>
             
             {!loading && user && (
