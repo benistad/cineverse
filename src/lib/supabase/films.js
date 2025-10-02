@@ -349,7 +349,6 @@ export async function saveFilm(film) {
           synopsis: filmToSave.synopsis,
           poster_url: filmToSave.poster_url,
           backdrop_url: filmToSave.backdrop_url,
-          carousel_image_url: filmToSave.carousel_image_url,
           note_sur_10: filmToSave.note_sur_10,
           youtube_trailer_key: filmToSave.youtube_trailer_key,
           why_watch_enabled: filmToSave.why_watch_enabled,
