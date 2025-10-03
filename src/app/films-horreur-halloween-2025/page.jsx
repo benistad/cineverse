@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FiGhost, FiFilm, FiAward } from 'react-icons/fi';
+import { FiMoon, FiFilm, FiAward } from 'react-icons/fi';
 
 export default function FilmsHorreurHalloween2025() {
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
@@ -301,7 +301,7 @@ export default function FilmsHorreurHalloween2025() {
             <div className="space-y-6">
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3 flex items-center">
-                  <FiGhost className="mr-2 text-orange-600" />
+                  <FiMoon className="mr-2 text-orange-600" />
                   🔥 Quel est le film d&apos;horreur le plus effrayant de cette sélection ?
                 </h3>
                 <p className="text-base leading-relaxed">

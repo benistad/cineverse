@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiGhost } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -112,7 +112,7 @@ export default function Navbar() {
                       className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${pathname === '/films-horreur-halloween-2025' ? 'bg-gray-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiGhost className="mr-2" /> Films Halloween 2025
+                      <FiMoon className="mr-2" /> Films Halloween 2025
                     </Link>
                     <Link 
                       href="/huntedbymoviehunt" 
@@ -224,7 +224,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiGhost className="mr-2" /> Films Halloween 2025
+              <FiMoon className="mr-2" /> Films Halloween 2025
             </Link>
             
             <Link 
