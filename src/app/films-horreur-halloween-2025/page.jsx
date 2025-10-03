@@ -72,9 +72,9 @@ export default function FilmsHorreurHalloween2025() {
       poster: "https://image.tmdb.org/t/p/w500/iEWwj63EB1bsKhZTkuVDGBiKjNa.jpg"
     },
     {
-      title: "Until Dawn",
+      title: "Until Dawn : La Mort sans fin",
       note: "6/10",
-      slug: "until-dawn",
+      slug: "until-dawn-la-mort-sans-fin",
       emoji: "🩸",
       category: "Les sensations fortes",
       description: "Inspiré de l'univers vidéoludique, ce film mise sur l'immersion et la tension. Une expérience efficace pour ceux qui aiment se sentir au cœur de l'action.",
