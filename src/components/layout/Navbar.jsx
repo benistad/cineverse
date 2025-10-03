@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiGhost } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -91,7 +91,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDiscoverMenu}
                 className={`px-3 py-2 rounded-md text-sm font-medium flex items-center ${
-                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' ? 'bg-gray-700' : 'hover:bg-gray-700'
                 }`}
               >
                 <FiCompass className="mr-1" /> Découvrir
@@ -106,6 +106,13 @@ export default function Navbar() {
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiHelpCircle className="mr-2" /> Quel film regarder ?
+                    </Link>
+                    <Link 
+                      href="/films-horreur-halloween-2025" 
+                      className={`block px-4 py-2 text-sm text-white hover:bg-gray-700 flex items-center ${pathname === '/films-horreur-halloween-2025' ? 'bg-gray-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiGhost className="mr-2" /> Films Halloween 2025
                     </Link>
                     <Link 
                       href="/huntedbymoviehunt" 
@@ -201,13 +208,23 @@ export default function Navbar() {
             <div className="px-3 py-2 font-medium text-gray-300 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
             
             <Link 
-              href="/all-films" 
+              href="/quel-film-regarder" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
                 pathname === '/quel-film-regarder' ? 'bg-gray-700' : 'hover:bg-gray-700'
               }`}
               onClick={() => setIsOpen(false)}
             >
               <FiHelpCircle className="mr-2" /> Quel film regarder ?
+            </Link>
+            
+            <Link 
+              href="/films-horreur-halloween-2025" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
+                pathname === '/films-horreur-halloween-2025' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiGhost className="mr-2" /> Films Halloween 2025
             </Link>
             
             <Link 

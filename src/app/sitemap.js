@@ -52,6 +52,12 @@ export default async function sitemap() {
       changeFrequency: 'yearly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/films-horreur-halloween-2025`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.9,
+    },
   ];
   
   try {
