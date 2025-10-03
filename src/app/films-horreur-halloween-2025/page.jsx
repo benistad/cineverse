@@ -60,7 +60,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "👻",
       category: "Le coup de maître",
       description: "Si vous cherchez un film qui vous laisse sans voix, Funny Games US est incontournable. Brutal, dérangeant et sans concession, il bouleverse tous les codes du cinéma d'horreur. Avec sa note parfaite de 10/10, c'est le choix ultime pour un Halloween qui reste gravé dans la mémoire.",
-      poster: "https://image.tmdb.org/t/p/w500/lEU4SSSJkXQPRO1bT0Z7RBuFLNW.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/nWd7wpRM40YEG1C4PuyCIT2SiEa.jpg"
     },
     {
       title: "Destination Finale : Bloodlines",
@@ -88,16 +88,16 @@ export default function FilmsHorreurHalloween2025() {
       category: "La révélation Hunted",
       description: "Dans une ambiance suffocante et dérangeante, Heretic s'impose comme l'une des découvertes marquantes de ces dernières années. Assez audacieux pour obtenir le badge HuntedByMovieHunt, ce film mérite une place de choix dans votre soirée d'horreur.",
       hunted: true,
-      poster: "https://image.tmdb.org/t/p/w500/wK0eSZdDs9RhJPLqGPQPqEKqMOw.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/qcRQkVjP6Zdr4EkHevfqjVEk9KQ.jpg"
     },
     {
       title: "1BR : The Apartment",
       note: "6/10",
-      slug: "1br",
+      slug: "1br-the-apartment",
       emoji: "🏢",
       category: "Les cauchemars psychologiques",
       description: "Un thriller glaçant sur la vie en communauté, où la promesse d'un nouveau départ vire au cauchemar sectaire.",
-      poster: "https://image.tmdb.org/t/p/w500/kBdKfKOKzSCogYmDTELxNlvYlXy.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/aLnGUlGbjWX4dodNt2LMEqNfemE.jpg"
     },
     {
       title: "Triangle",
@@ -115,16 +115,16 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🪐",
       category: "L'étrangeté inquiétante",
       description: "Avec son décor de banlieue parfaite mais étouffante, Vivarium explore la prison de la normalité. Noté 5/10, il divise, mais laisse une impression durable.",
-      poster: "https://image.tmdb.org/t/p/w500/myf3qzyhMA0WfLjFbvWYGEkLVYz.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/2SAH6napkUWibaAJ4oXr8dAVTIm.jpg"
     },
     {
       title: "Barbarian",
       note: "5/10",
-      slug: "barbarian",
+      slug: "barbare",
       emoji: "🏚️",
       category: "Les secrets cachés",
       description: "Un film qui commence comme un simple cauchemar de location Airbnb, avant de basculer dans l'horreur la plus imprévisible.",
-      poster: "https://image.tmdb.org/t/p/w500/idT5mnqPcJgotJEOKo4TuBx1Vvg.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/rJS3o7TgR0pvdtD045kQJQpHXMd.jpg"
     },
     {
       title: "Blood Star",
@@ -133,7 +133,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🏚️",
       category: "Les secrets cachés",
       description: "Moins connu, mais marquant par son atmosphère viscérale et sa brutalité. Un choix audacieux pour les amateurs de sensations fortes.",
-      poster: "https://image.tmdb.org/t/p/w500/7yyOUsMTz8FqJLJqJLC3fHZJqRy.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/91iWyahJbZsHvXL5MbAIx1w0Tjx.jpg"
     },
     {
       title: "Night of the Hunted",
