@@ -69,7 +69,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🩸",
       category: "Les sensations fortes",
       description: "Un retour réussi de la saga culte, avec toujours cette mécanique implacable où le destin frappe de manière inventive et sanglante.",
-      poster: "https://image.tmdb.org/t/p/w500/iEWwj63EB1bsKhZTkuVDGBiKjNa.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/4uI8C2zcfLWRhZDBgd0oTlZjV9j.jpg"
     },
     {
       title: "Until Dawn : La Mort sans fin",
@@ -78,7 +78,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🩸",
       category: "Les sensations fortes",
       description: "Inspiré de l'univers vidéoludique, ce film mise sur l'immersion et la tension. Une expérience efficace pour ceux qui aiment se sentir au cœur de l'action.",
-      poster: "https://image.tmdb.org/t/p/w500/bRNbHiKPPGdVGZdDFJxfe5gWqzp.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/lCdHBrSdJG7G7Anx2wcfaMER8Pd.jpg"
     },
     {
       title: "Heretic",
@@ -106,7 +106,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🏢",
       category: "Les cauchemars psychologiques",
       description: "Un jeu terrifiant avec le temps et la boucle infernale, idéal pour ceux qui aiment les récits qui se dérobent sous leurs pieds.",
-      poster: "https://image.tmdb.org/t/p/w500/uHF9FdJJTWWNzIJPrR4qJNLqLxH.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/6U3nSrd6uaP0uubsoau1RKToQGR.jpg"
     },
     {
       title: "Vivarium",
@@ -142,7 +142,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🎯",
       category: "La tension pure",
       description: "Un huis clos à ciel ouvert où chaque instant compte. Avec son intensité et son rythme sec, Night of the Hunted est le film parfait pour maintenir l'adrénaline jusqu'au bout de la nuit.",
-      poster: "https://image.tmdb.org/t/p/w500/pDJSlGzHPLK7i6gfFDvdLJmRvhG.jpg"
+      poster: "https://image.tmdb.org/t/p/w500/tfNFmBGBVF1biwOTBgFONAeCaDZ.jpg"
     }
   ];
 
