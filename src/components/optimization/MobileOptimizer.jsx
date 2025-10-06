@@ -45,23 +45,8 @@ export default function MobileOptimizer() {
     `;
     document.head.appendChild(touchStyle);
     
-    // Précharger les ressources critiques
-    const preloadResources = [
-      // Précharger le script principal
-      { rel: 'preload', href: '/main.js', as: 'script' },
-      // Précharger le CSS principal
-      { rel: 'preload', href: '/main.css', as: 'style' }
-    ];
-    
-    preloadResources.forEach(resource => {
-      if (!document.querySelector(`link[rel="${resource.rel}"][href="${resource.href}"]`)) {
-        const link = document.createElement('link');
-        link.rel = resource.rel;
-        link.href = resource.href;
-        link.as = resource.as;
-        document.head.appendChild(link);
-      }
-    });
+    // Préchargement des ressources critiques désactivé
+    // (les fichiers main.js et main.css n'existent pas dans Next.js)
     
     // Optimiser la navigation pour les mobiles (prefetch)
     document.querySelectorAll('a[href^="/"]').forEach(link => {

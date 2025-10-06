@@ -52,6 +52,20 @@ export default function OptimizedFilmCarousel({
     }
   }, [visibleCount]);
   
+  // Calculer le nombre maximum d'index (mémorisé pour éviter les calculs inutiles)
+  // IMPORTANT: Les hooks doivent être appelés AVANT tout return conditionnel
+  const maxIndex = useMemo(() => Math.max(0, (films?.length || 0) - visibleCards), [films?.length, visibleCards]);
+  
+  // Déterminer quels films afficher (mémorisé pour éviter les calculs inutiles)
+  const displayedFilms = useMemo(() => {
+    if (!films || films.length === 0) return [];
+    const result = [];
+    for (let i = currentIndex; i < currentIndex + visibleCards && i < films.length; i++) {
+      result.push(films[i]);
+    }
+    return result;
+  }, [films, currentIndex, visibleCards]);
+  
   // Vérifier s'il y a des films à afficher
   if (!films || films.length === 0) {
     return (
@@ -60,9 +74,6 @@ export default function OptimizedFilmCarousel({
       </div>
     );
   }
-  
-  // Calculer le nombre maximum d'index (mémorisé pour éviter les calculs inutiles)
-  const maxIndex = useMemo(() => Math.max(0, films.length - visibleCards), [films.length, visibleCards]);
   
   // Fonction pour passer à la carte précédente
   const prevCard = () => {
@@ -91,15 +102,6 @@ export default function OptimizedFilmCarousel({
     trackMouse: false,
     delta: 10,
   });
-  
-  // Déterminer quels films afficher (mémorisé pour éviter les calculs inutiles)
-  const displayedFilms = useMemo(() => {
-    const result = [];
-    for (let i = currentIndex; i < currentIndex + visibleCards && i < films.length; i++) {
-      result.push(films[i]);
-    }
-    return result;
-  }, [films, currentIndex, visibleCards]);
 
   return (
     <div className="space-y-4">

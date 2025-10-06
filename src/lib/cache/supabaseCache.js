@@ -37,12 +37,16 @@ class SupabaseCache {
     if (timestamp && now - timestamp < this.defaultTTL) {
       const cachedData = this.cache.get(key);
       if (cachedData) {
-        console.log(`[Cache HIT] ${key}`);
+        if (process.env.NODE_ENV === 'development') {
+          console.log(`[Cache HIT] ${key}`);
+        }
         return cachedData;
       }
     }
 
-    console.log(`[Cache MISS] ${key}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Cache MISS] ${key}`);
+    }
     return null;
   }
 
@@ -52,7 +56,9 @@ class SupabaseCache {
   set(key, value) {
     this.cache.set(key, value);
     this.timestamps.set(key, Date.now());
-    console.log(`[Cache SET] ${key}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Cache SET] ${key}`);
+    }
   }
 
   /**
@@ -61,7 +67,9 @@ class SupabaseCache {
   invalidate(key) {
     this.cache.delete(key);
     this.timestamps.delete(key);
-    console.log(`[Cache INVALIDATE] ${key}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Cache INVALIDATE] ${key}`);
+    }
   }
 
   /**
@@ -75,7 +83,9 @@ class SupabaseCache {
       }
     }
     keysToDelete.forEach(key => this.invalidate(key));
-    console.log(`[Cache INVALIDATE PATTERN] ${pattern} (${keysToDelete.length} entries)`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[Cache INVALIDATE PATTERN] ${pattern} (${keysToDelete.length} entries)`);
+    }
   }
 
   /**
@@ -84,7 +94,9 @@ class SupabaseCache {
   clear() {
     this.cache.clear();
     this.timestamps.clear();
-    console.log('[Cache CLEAR] All cache cleared');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Cache CLEAR] All cache cleared');
+    }
   }
 
   /**
