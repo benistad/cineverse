@@ -10,6 +10,10 @@ import FilmTrailer from '@/components/films/FilmTrailer';
 import FilmPoster from '@/components/films/FilmPoster';
 import BlogArticleLink from '@/components/films/BlogArticleLink';
 
+// Configuration pour le revalidation (ISR)
+export const revalidate = 3600; // Revalider toutes les heures
+export const dynamic = 'force-dynamic'; // Forcer le rendu dynamique
+
 // Fonction pour récupérer le film côté serveur
 async function getFilm(slug) {
   const supabase = createClient(
