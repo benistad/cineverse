@@ -3,7 +3,8 @@
  * Les données sont conservées pendant la session du navigateur
  */
 
-const CACHE_PREFIX = 'moviehunt_';
+const CACHE_VERSION = 'v2_'; // Incrémenter pour forcer le rechargement du cache
+const CACHE_PREFIX = 'moviehunt_' + CACHE_VERSION;
 
 export const clientCache = {
   /**
