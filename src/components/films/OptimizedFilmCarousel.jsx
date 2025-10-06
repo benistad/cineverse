@@ -66,15 +66,6 @@ export default function OptimizedFilmCarousel({
     return result;
   }, [films, currentIndex, visibleCards]);
   
-  // Vérifier s'il y a des films à afficher
-  if (!films || films.length === 0) {
-    return (
-      <div className="text-center py-10 bg-white rounded-lg shadow">
-        <p className="text-gray-500">Aucun film disponible pour le moment.</p>
-      </div>
-    );
-  }
-  
   // Fonction pour passer à la carte précédente
   const prevCard = () => {
     if (currentIndex > 0) {
@@ -89,11 +80,8 @@ export default function OptimizedFilmCarousel({
     }
   };
   
-  // Vérifier si les boutons de navigation doivent être affichés
-  const canGoLeft = currentIndex > 0;
-  const canGoRight = currentIndex < maxIndex;
-  
   // Configuration des gestionnaires de swipe
+  // IMPORTANT: useSwipeable doit être appelé AVANT tout return conditionnel
   const swipeHandlers = useSwipeable({
     onSwipedLeft: nextCard,  // Swipe vers la gauche -> carte suivante
     onSwipedRight: prevCard, // Swipe vers la droite -> carte précédente
@@ -102,6 +90,19 @@ export default function OptimizedFilmCarousel({
     trackMouse: false,
     delta: 10,
   });
+  
+  // Vérifier si les boutons de navigation doivent être affichés
+  const canGoLeft = currentIndex > 0;
+  const canGoRight = currentIndex < maxIndex;
+  
+  // Vérifier s'il y a des films à afficher
+  if (!films || films.length === 0) {
+    return (
+      <div className="text-center py-10 bg-white rounded-lg shadow">
+        <p className="text-gray-500">Aucun film disponible pour le moment.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
