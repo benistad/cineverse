@@ -2,12 +2,12 @@
  * Métadonnées optimisées pour la page "Quel film regarder ?"
  */
 export const metadata = {
-  title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
-  description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
-  keywords: 'quel film regarder, film à voir ce soir, idée film, suggestion film, recommandation film, meilleur film à voir, film à ne pas manquer',
+  title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies | MovieHunt',
+  description: 'Vous cherchez quel film regarder ce soir ? Découvrez notre sélection de pépites méconnues, notées et recommandées par MovieHunt. Films à voir selon votre humeur, vos envies ou vos émotions du moment.',
+  keywords: 'quel film regarder, film à voir ce soir, idée film, trouver un bon film, recommandations de films, liste de films conseillés, film à regarder, quoi regarder ce soir, meilleur film à voir, pépites méconnues',
   openGraph: {
-    title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
-    description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
+    title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies | MovieHunt',
+    description: 'Vous cherchez quel film regarder ce soir ? Découvrez notre sélection de pépites méconnues, notées et recommandées par MovieHunt. Films à voir selon votre humeur, vos envies ou vos émotions du moment.',
     url: 'https://moviehunt.fr/quel-film-regarder',
     images: [
       {
@@ -22,8 +22,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quel film regarder ce soir ? | Recommandations personnalisées sur MovieHunt',
-    description: 'En panne d\'inspiration ? Découvrez chaque semaine une sélection de films triés sur le volet. Explorez des pépites méconnues notées et analysées par MovieHunt.',
+    title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies | MovieHunt',
+    description: 'Vous cherchez quel film regarder ce soir ? Découvrez notre sélection de pépites méconnues, notées et recommandées par MovieHunt. Films à voir selon votre humeur, vos envies ou vos émotions du moment.',
     images: ['/images/og-image.jpg'],
     site: '@moviehuntfr',
   },

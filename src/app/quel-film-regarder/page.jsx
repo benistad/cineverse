@@ -16,7 +16,7 @@ export default function QuelFilmRegarder() {
         "name": "Quel film regarder ce soir ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Découvrez notre sélection personnalisée des meilleurs films à voir ce soir : Fall (2022) pour un film haletant, Split (2016) pour un jeu d'acteur hors du commun, 1917 (2019) pour une fresque historique, Les Banshees d'Inisherin (2022) pour un drame touchant, et Game Night (2018) pour une soirée détente."
+          "text": "Découvrez notre sélection personnalisée des meilleurs films à voir ce soir : Fall (2022) pour un film haletant, Split (2016) pour un jeu d'acteur hors du commun, 1917 (2019) pour une fresque historique, Les Banshees d'Inisherin (2022) pour un drame touchant, et Game Night (2018) pour une soirée détente. Notre liste de films conseillés est mise à jour chaque semaine."
         }
       },
       {
@@ -24,7 +24,7 @@ export default function QuelFilmRegarder() {
         "name": "Comment trouver un bon film à regarder ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour trouver un bon film à regarder, consultez les recommandations personnalisées de MovieHunt qui propose des films triés sur le volet selon différentes catégories : films à voir ce soir, idées de films pour une soirée en couple, recommandations de films par genre, ou encore des pépites méconnues notées et analysées par nos experts."
+          "text": "Pour trouver un bon film à regarder, consultez les recommandations de films personnalisées de MovieHunt qui propose des films triés sur le volet selon différentes catégories : films à voir ce soir, idées de films à voir pour une soirée en couple, recommandations de films par genre, ou encore des pépites méconnues notées et analysées par nos experts. Chaque film est accompagné d'une critique sincère et d'une note sur 10."
         }
       },
       {
@@ -32,7 +32,23 @@ export default function QuelFilmRegarder() {
         "name": "Quels sont les meilleurs films à voir en 2025 ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour une expérience cinématographique optimale en 2025, nous recommandons des films comme Interstellar pour la science-fiction, Knock at the Cabin pour un thriller psychologique, et The Beekeeper pour l'action. Consultez notre guide complet pour plus de suggestions selon votre humeur."
+          "text": "Pour une expérience cinématographique optimale en 2025, nous recommandons des films comme Ad Astra pour la science-fiction à la photographie mémorable, Funny Games U.S. pour un thriller psychologique, Last Breath pour une histoire vraie incroyable, Le Procès du siècle pour un film de procès politique, et Old Henry pour un western palpitant. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Où trouver des idées de films à regarder ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MovieHunt.fr est votre destination pour trouver des idées de films à regarder. Nous proposons une sélection de films à voir triée sur le volet, avec des recommandations personnalisées selon vos envies : films haletants, drames touchants, comédies rythmées, ou pépites méconnues. Chaque film est noté, analysé et accompagné d'une critique détaillée pour vous aider à décider quoi regarder ce soir."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment MovieHunt choisit ses recommandations de films ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MovieHunt sélectionne ses recommandations de films grâce à une équipe de passionnés de cinéma qui analyse chaque semaine les sorties et les pépites méconnues. Chaque film à regarder est noté sur 10 avec une critique sincère et personnelle, sans influence des studios ou distributeurs. Nous mettons en avant les films à voir absolument, signalons les films à éviter, et dénichons des pépites exceptionnelles que vous auriez pu manquer."
         }
       }
     ]
@@ -55,19 +71,30 @@ export default function QuelFilmRegarder() {
             </div>
           </header>
         
+          {/* Bloc de mise à jour */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+            <p className="text-sm text-blue-800 font-medium">
+              🆕 <strong>Dernière mise à jour : octobre 2025</strong> — De nouveaux films ajoutés chaque semaine !
+            </p>
+          </div>
+
           <div className="mb-8">
             <p className="text-lg">
               <strong>Vous ne savez pas quel film regarder ce soir ?</strong> Vous n&apos;êtes pas seul. C&apos;est LA question que tout cinéphile se pose régulièrement. En panne d&apos;inspiration pour trouver un film à voir, vous êtes au bon endroit !
             </p>
             
             <p className="text-lg">
-              Heureusement, <strong>MovieHunt.fr</strong> est là pour vous aider à décider quel film regarder avec des recommandations personnalisées. Nos films sont notés, analysés et choisis avec soin, pour vous faire passer un excellent moment, que vous cherchiez des idées de films à regarder en couple, entre amis ou en solo.
+              Heureusement, <strong>MovieHunt.fr</strong> est là pour vous aider à décider quel film regarder avec des <strong>recommandations de films</strong> personnalisées. Nos films sont notés, analysés et choisis avec soin, pour vous faire passer un excellent moment, que vous cherchiez des <strong>idées de films à voir</strong> en couple, entre amis ou en solo.
+            </p>
+            
+            <p className="text-lg">
+              Vous trouverez ici une <strong>liste de films conseillés</strong>, qu&apos;il s&apos;agisse d&apos;un thriller, d&apos;un drame ou d&apos;une comédie. Notre objectif : vous aider à <strong>trouver un bon film à regarder</strong> sans passer des heures à chercher.
             </p>
             
             <h2 className="text-2xl font-bold mt-6 mb-4">Notre sélection personnalisée</h2>
             
             <p className="text-lg mb-4">
-              Vous cherchez quoi regarder ce soir ? Voici notre sélection de films triés sur le volet pour vous aider à trouver le film parfait pour votre soirée :
+              Vous cherchez <strong>quoi regarder ce soir</strong> ? Voici notre sélection de films triés sur le volet pour vous aider à trouver le <strong>film à regarder</strong> parfait pour votre soirée :
             </p>
           </div>
           
@@ -339,7 +366,7 @@ export default function QuelFilmRegarder() {
                 Vous vous demandez <strong>quel film regarder</strong> parmi les milliers disponibles ? Notre équipe de passionnés de cinéma analyse chaque semaine les sorties pour vous proposer des <strong>recommandations de films</strong> personnalisées.
               </p>
               <p className="mb-4">
-                Chaque film sur MovieHunt.fr est noté sur 10 et accompagné d&apos;une recommandation claire pour vous aider à décider quoi voir ce soir :
+                Chaque film sur MovieHunt.fr est noté sur 10 et accompagné d&apos;une recommandation claire pour vous aider à décider quoi voir ce soir. Tous les films de cette sélection sont notés et analysés dans notre <Link href="/all-films" className="text-blue-600 hover:text-blue-800 font-semibold">catalogue complet</Link>, avec le badge <Link href="/huntedbymoviehunt" className="text-blue-600 hover:text-blue-800 font-semibold">Hunted by MovieHunt</Link> pour les plus marquants.
               </p>
               <ul className="list-none pl-0">
                 <li className="mb-2 flex items-start">
@@ -367,7 +394,7 @@ export default function QuelFilmRegarder() {
               </p>
               <ul className="list-none pl-0">
                 <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs.
+                  <span className="mr-2">•</span> <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs. Découvrez <Link href="/comment-nous-travaillons" className="text-blue-600 hover:text-blue-800">comment nous travaillons</Link>.
                 </li>
                 <li className="mb-3 flex items-start">
                   <span className="mr-2">•</span> <strong>Une sélection de films à voir</strong> qui sort des sentiers battus, avec des pépites que vous ne verrez pas partout.
@@ -394,7 +421,7 @@ export default function QuelFilmRegarder() {
               </p>
               
               <p className="mb-4">
-                Que vous cherchiez des <strong>films à voir en couple</strong>, des <strong>recommandations de films</strong> pour une soirée entre amis, ou simplement <strong>trouver un bon film</strong> pour vous détendre, notre sélection personnalisée saura vous inspirer.
+                Que vous cherchiez des <strong>films à voir en couple</strong>, des <strong>recommandations de films</strong> pour une soirée entre amis, ou simplement <strong>trouver un bon film</strong> pour vous détendre, notre <strong>liste de films conseillés</strong> saura vous inspirer.
               </p>
               
               <p className="text-center text-xl font-semibold mt-6">
