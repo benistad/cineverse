@@ -120,15 +120,6 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://image.tmdb.org" />
         
-        {/* Préchargement des fonts critiques pour réduire le TTI */}
-        <link 
-          rel="preload" 
-          href="https://fonts.gstatic.com/s/geistsans/v1/6xKwdSBYKcSV-LCoeQqfX1RYOo3qPZYslS8W3w.woff2" 
-          as="font" 
-          type="font/woff2" 
-          crossOrigin="anonymous"
-        />
-        
         {/* Le titre est géré par les métadonnées de chaque page */}
         <meta name="description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
