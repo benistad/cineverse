@@ -5,10 +5,17 @@ import YouTube from 'react-youtube';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 
 export default function FilmTrailer({ film, initialTrailerKey }) {
-  const [trailerKey, setTrailerKey] = useState(initialTrailerKey);
+  // Utiliser la clé du film en priorité (données fraîches), puis initialTrailerKey (SSR)
+  const [trailerKey, setTrailerKey] = useState(film.youtube_trailer_key || initialTrailerKey);
   const [searchingTrailer, setSearchingTrailer] = useState(false);
 
   useEffect(() => {
+    // Mettre à jour si la clé du film change
+    if (film.youtube_trailer_key && film.youtube_trailer_key !== trailerKey) {
+      setTrailerKey(film.youtube_trailer_key);
+      return;
+    }
+    
     // Si on a déjà une clé de trailer, pas besoin de chercher
     if (trailerKey) return;
 
