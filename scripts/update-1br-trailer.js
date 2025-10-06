@@ -2,10 +2,14 @@ const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config({ path: '.env.local' });
 
 async function updateTrailer() {
+  // Utiliser l'URL de production
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ynumbbsdniheeqktblyq.supabase.co';
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    supabaseUrl,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
+  
+  console.log('Connexion à:', supabaseUrl);
 
   console.log('Mise à jour de la bande-annonce pour 1BR: The Apartment...');
 
