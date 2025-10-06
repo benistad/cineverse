@@ -5,8 +5,13 @@ import YouTube from 'react-youtube';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 
 export default function FilmTrailer({ film, initialTrailerKey }) {
+  // Fix temporaire pour 1BR: forcer la bonne clé YouTube
+  const correctTrailerKey = film.slug === '1br-the-apartment' 
+    ? 'IGzb01GrsxQ' 
+    : (film.youtube_trailer_key || initialTrailerKey);
+  
   // Utiliser la clé du film en priorité (données fraîches), puis initialTrailerKey (SSR)
-  const [trailerKey, setTrailerKey] = useState(film.youtube_trailer_key || initialTrailerKey);
+  const [trailerKey, setTrailerKey] = useState(correctTrailerKey);
   const [searchingTrailer, setSearchingTrailer] = useState(false);
 
   useEffect(() => {
