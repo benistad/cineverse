@@ -9,10 +9,10 @@ export async function GET() {
       process.env.SUPABASE_SERVICE_ROLE_KEY // Utiliser la clé de service pour l'accès serveur
     );
 
-    // Récupérer tous les films
+    // Récupérer tous les films avec leur slug
     const { data: films, error } = await supabase
       .from('films')
-      .select('id, title, date_ajout, release_date')
+      .select('id, slug, title, date_ajout, release_date')
       .order('date_ajout', { ascending: false });
 
     if (error) {
@@ -59,6 +59,12 @@ export async function GET() {
         priority: 1.0,
       },
       {
+        loc: `${baseUrl}/quel-film-regarder`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'weekly',
+        priority: 0.9,
+      },
+      {
         loc: `${baseUrl}/top-rated`,
         lastmod: new Date().toISOString(),
         changefreq: 'daily',
@@ -71,9 +77,39 @@ export async function GET() {
         priority: 0.9,
       },
       {
+        loc: `${baseUrl}/all-films`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'daily',
+        priority: 0.8,
+      },
+      {
+        loc: `${baseUrl}/huntedbymoviehunt`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'weekly',
+        priority: 0.8,
+      },
+      {
+        loc: `${baseUrl}/comment-nous-travaillons`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'monthly',
+        priority: 0.7,
+      },
+      {
         loc: `${baseUrl}/advanced-search`,
         lastmod: new Date().toISOString(),
         changefreq: 'weekly',
+        priority: 0.7,
+      },
+      {
+        loc: `${baseUrl}/search`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'weekly',
+        priority: 0.6,
+      },
+      {
+        loc: `${baseUrl}/films-horreur-halloween-2025`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'monthly',
         priority: 0.7,
       },
     ];

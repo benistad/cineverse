@@ -7,20 +7,43 @@ module.exports = {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/debug-dates/'],
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel'],
       },
     ],
     additionalSitemaps: [
       `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/server-sitemap.xml`,
     ],
   },
-  exclude: ['/admin/*', '/api/*', '/debug-dates/*'],
+  exclude: [
+    '/admin*', 
+    '/api*', 
+    '/debug-dates*',
+    '/test-carousel*',
+    '/icon.png',
+    '/robots.txt',
+    '/sitemap.xml',
+    '/sitemap-0.xml',
+    '/_not-found'
+  ],
   changefreq: 'daily',
   priority: 0.7,
   sitemapSize: 5000,
   generateIndexSitemap: true,
   // Configuration pour les pages prioritaires
   transform: async (config, path) => {
+    // Exclure les pages admin, api, debug et test
+    if (
+      path.startsWith('/admin') || 
+      path.startsWith('/api') || 
+      path.startsWith('/debug') ||
+      path.startsWith('/test-carousel') ||
+      path.includes('icon.png') ||
+      path.includes('robots.txt') ||
+      path.includes('sitemap')
+    ) {
+      return null; // Exclure cette page
+    }
+    
     // Donner une priorité plus élevée aux pages principales et aux pages de films
     if (path === '/') {
       return {

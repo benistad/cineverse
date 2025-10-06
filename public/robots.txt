@@ -4,6 +4,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /debug-dates/
+Disallow: /test-carousel
 
 # Host
 Host: https://www.moviehunt.fr
