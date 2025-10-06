@@ -281,12 +281,32 @@ export default function FilmsHorreurHalloween2025() {
               
               <div className="mt-6 text-center">
                 <Link 
-                  href="/all-films" 
+                  href="/advanced-search?genres=Horreur" 
                   className="inline-flex items-center px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors"
                 >
-                  <FiFilm className="mr-2" /> Découvrez toutes nos critiques de films d&apos;horreur
+                  <FiFilm className="mr-2" /> Découvrez tous nos films d&apos;horreur
                 </Link>
               </div>
+            </div>
+          </section>
+          
+          <hr className="my-8 border-gray-300" />
+          
+          {/* Section Quel film regarder */}
+          <section className="mb-8">
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
+              <h2 className="text-2xl font-bold text-blue-900 mb-3">
+                🎬 Vous ne savez pas quel film regarder ce soir ?
+              </h2>
+              <p className="text-gray-800 mb-4 leading-relaxed">
+                Au-delà de l&apos;horreur, découvrez notre sélection variée de <strong>pépites méconnues</strong> pour tous les goûts : comédies noires, westerns surprenants, thrillers fascinants et bien plus encore. Chaque film est noté, analysé et recommandé par MovieHunt.
+              </p>
+              <Link 
+                href="/quel-film-regarder" 
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+              >
+                🎬 Découvrez notre guide "Quel film regarder ce soir ?" →
+              </Link>
             </div>
           </section>
           
