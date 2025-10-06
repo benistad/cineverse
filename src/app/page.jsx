@@ -16,6 +16,7 @@ import OptimizedFilmCarousel from '@/components/films/OptimizedFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 import OptimizedFeaturedCarousel from '@/components/home/OptimizedFeaturedCarousel';
+import { clientCache } from '@/lib/cache/clientCache';
 
 export default function Home() {
   const [recentFilms, setRecentFilms] = useState([]);
@@ -53,44 +54,72 @@ export default function Home() {
     }
   };
 
-  // Charger les données initiales
+  // Charger les données initiales avec lazy load progressif et cache pour améliorer le TTI
   useEffect(() => {
     async function fetchFilms() {
       try {
+        // PHASE 1: Vérifier le cache puis charger les films récents
         setLoading(true);
         
-        // Charger toutes les données en parallèle pour améliorer les performances
-        const [
-          recent,
-          topRated,
-          topRatedCount,
-          gems,
-          hiddenGemsCount,
-          paginatedResult
-        ] = await Promise.all([
-          getRecentlyRatedFilms(8),
-          getTopRatedFilms(10),
-          getTopRatedFilmsCount(),
-          getHiddenGems(8),
-          getHiddenGemsCount(),
-          getPaginatedFilms(1, filmsPerPage)
-        ]);
+        // Essayer de récupérer depuis le cache
+        const cachedRecent = clientCache.get('recent_films');
+        if (cachedRecent) {
+          setRecentFilms(cachedRecent);
+          setLoading(false); // ✅ Page interactive immédiatement avec le cache
+        } else {
+          const recent = await getRecentlyRatedFilms(8);
+          setRecentFilms(recent);
+          clientCache.set('recent_films', recent, 300000); // Cache 5 minutes
+          setLoading(false); // ✅ Page interactive maintenant
+        }
         
-        // Mettre à jour l'état avec les résultats
-        setRecentFilms(recent);
-        setTopRatedFilms(topRated);
-        setTopRatedFilmsCount(topRatedCount);
-        setHiddenGems(gems);
-        setHiddenGemsCount(hiddenGemsCount);
+        // PHASE 2: Charger les autres sections en arrière-plan (non bloquant)
+        // Vérifier le cache pour chaque section
+        const cachedTopRated = clientCache.get('top_rated_films');
+        const cachedTopRatedCount = clientCache.get('top_rated_count');
+        const cachedGems = clientCache.get('hidden_gems');
+        const cachedGemsCount = clientCache.get('hidden_gems_count');
+        const cachedPaginated = clientCache.get('paginated_films_1');
         
-        // Mettre à jour les films paginés
-        if (paginatedResult) {
-          setAllFilms(paginatedResult.films || []);
-          setTotalFilmsCount(paginatedResult.totalCount || 0);
+        if (cachedTopRated && cachedTopRatedCount && cachedGems && cachedGemsCount && cachedPaginated) {
+          // Tout est en cache, utiliser les données
+          setTopRatedFilms(cachedTopRated);
+          setTopRatedFilmsCount(cachedTopRatedCount);
+          setHiddenGems(cachedGems);
+          setHiddenGemsCount(cachedGemsCount);
+          setAllFilms(cachedPaginated.films || []);
+          setTotalFilmsCount(cachedPaginated.totalCount || 0);
+        } else {
+          // Charger depuis l'API et mettre en cache
+          Promise.all([
+            getTopRatedFilms(10),
+            getTopRatedFilmsCount(),
+            getHiddenGems(8),
+            getHiddenGemsCount(),
+            getPaginatedFilms(1, filmsPerPage)
+          ]).then(([topRated, topRatedCount, gems, hiddenGemsCount, paginatedResult]) => {
+            setTopRatedFilms(topRated);
+            setTopRatedFilmsCount(topRatedCount);
+            setHiddenGems(gems);
+            setHiddenGemsCount(hiddenGemsCount);
+            
+            // Mettre en cache
+            clientCache.set('top_rated_films', topRated, 300000);
+            clientCache.set('top_rated_count', topRatedCount, 300000);
+            clientCache.set('hidden_gems', gems, 300000);
+            clientCache.set('hidden_gems_count', hiddenGemsCount, 300000);
+            
+            if (paginatedResult) {
+              setAllFilms(paginatedResult.films || []);
+              setTotalFilmsCount(paginatedResult.totalCount || 0);
+              clientCache.set('paginated_films_1', paginatedResult, 300000);
+            }
+          }).catch(error => {
+            console.error('Erreur lors de la récupération des sections secondaires:', error);
+          });
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des films:', error);
-      } finally {
+        console.error('Erreur lors de la récupération des films récents:', error);
         setLoading(false);
       }
     }

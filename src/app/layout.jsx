@@ -1,9 +1,5 @@
 'use client';
 
-// Importer les styles slick-carousel globalement pour éviter les requêtes multiples
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
