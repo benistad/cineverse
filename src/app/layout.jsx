@@ -11,56 +11,69 @@ import Script from "next/script";
 // Importation avec gestion d'erreur pour éviter les erreurs console
 import dynamic from 'next/dynamic';
 
-// Chargement conditionnel de SpeedInsights pour éviter les erreurs console
+// Chargement optimisé de SpeedInsights avec loading state
 const SpeedInsights = dynamic(
   () => import('@vercel/speed-insights/next')
     .then(mod => mod.SpeedInsights)
     .catch((error) => {
       console.warn('SpeedInsights non chargé:', error?.message || 'Erreur inconnue');
-      // Retourner un composant vide en cas d'erreur
       return () => null;
     }),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => null // Pas de spinner, chargement silencieux
+  }
 );
-// dynamic est déjà importé plus haut
-import JsonLdSchema from './components/JsonLdSchema';
+
+// JsonLdSchema chargé dynamiquement (non critique pour TTI)
+const JsonLdSchema = dynamic(
+  () => import('./components/JsonLdSchema'),
+  { 
+    ssr: false,
+    loading: () => null
+  }
+);
 
 // Composant qui ramène la page en haut lors des changements de route
-// Utilisation de 'use client' pour indiquer que c'est un composant client
 const ScrollToTop = () => {
   const pathname = usePathname();
-  // Nous n'utilisons plus useSearchParams() pour éviter l'erreur de déploiement
 
   useEffect(() => {
-    // Remonter en haut de la page à chaque changement de route
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'instant' // 'instant' pour un défilement immédiat sans animation
+      behavior: 'instant'
     });
-  }, [pathname]); // Se déclenche uniquement au changement d'URL
+  }, [pathname]);
 
-  return null; // Ce composant ne rend rien visuellement
+  return null;
 };
 
-// Importer les composants côté client avec 'use client'
+// ClientComponents chargé après l'interactivité
 const ClientComponents = dynamic(
   () => import('@/components/ClientComponents'),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => null
+  }
 );
 
-// Composant Footer
+// Footer chargé après l'interactivité (non critique)
 const Footer = dynamic(
   () => import('@/components/layout/Footer'),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => null
+  }
 );
 
-// Bouton d'ajout aux favoris supprimé
-
-// Composants d'optimisation essentiels pour améliorer le Speed Index
+// MobilePerformanceOptimizer chargé uniquement sur mobile
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => null
+  }
 );
 
 // Suppression de tous les autres composants d'optimisation avancés
@@ -106,6 +119,15 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://image.tmdb.org" />
+        
+        {/* Préchargement des fonts critiques pour réduire le TTI */}
+        <link 
+          rel="preload" 
+          href="https://fonts.gstatic.com/s/geistsans/v1/6xKwdSBYKcSV-LCoeQqfX1RYOo3qPZYslS8W3w.woff2" 
+          as="font" 
+          type="font/woff2" 
+          crossOrigin="anonymous"
+        />
         
         {/* Le titre est géré par les métadonnées de chaque page */}
         <meta name="description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />

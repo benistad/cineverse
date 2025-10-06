@@ -68,13 +68,32 @@ export default function OptimizedFeaturedCarousel() {
     return '/images/placeholder.jpg';
   };
 
-  // Fonction pour charger les films en vedette
+  // Fonction pour charger les films en vedette avec cache
   const loadTopRatedFilms = async () => {
     try {
+      // Vérifier le cache d'abord (si disponible)
+      if (typeof window !== 'undefined') {
+        const { clientCache } = await import('@/lib/cache/clientCache');
+        const cachedFilms = clientCache.get('featured_films');
+        
+        if (cachedFilms && cachedFilms.length > 0) {
+          setFilms(cachedFilms);
+          setLoading(false);
+          return; // Utiliser le cache
+        }
+      }
+      
+      // Sinon, charger depuis l'API
       const topFilms = await getFeaturedFilms(5, 6);
       
       if (topFilms && topFilms.length > 0) {
         setFilms(topFilms);
+        
+        // Mettre en cache
+        if (typeof window !== 'undefined') {
+          const { clientCache } = await import('@/lib/cache/clientCache');
+          clientCache.set('featured_films', topFilms, 600000); // Cache 10 minutes
+        }
       } else {
         console.warn('Aucun film n\'a été récupéré pour le carrousel');
       }
@@ -187,9 +206,10 @@ export default function OptimizedFeaturedCarousel() {
                   alt={film.title}
                   fill
                   priority={index === 0} // Priorité haute pour la première image uniquement
-                  sizes="100vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
                   className="object-cover"
-                  quality={85}
+                  quality={index === 0 ? 90 : 80} // Qualité supérieure pour la première image (LCP)
+                  loading={index === 0 ? "eager" : "lazy"} // Eager pour la première, lazy pour les autres
                 />
                 
                 {/* Overlay pour améliorer la lisibilité du texte */}
