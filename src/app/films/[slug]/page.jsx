@@ -1,213 +1,90 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { createBrowserClient } from '@supabase/ssr';
-import SafeImage from '@/components/ui/SafeImage';
+import { createClient } from '@supabase/supabase-js';
 import RatingIcon from '@/components/ui/RatingIcon';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
-import YouTube from 'react-youtube';
-import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
-import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
-import { getImageUrl } from '@/lib/tmdb/api';
+import FilmTrailer from '@/components/films/FilmTrailer';
+import FilmPoster from '@/components/films/FilmPoster';
+import BlogArticleLink from '@/components/films/BlogArticleLink';
 
-export default function FilmPageBySlug() {
-  const params = useParams();
-  const router = useRouter();
-  const { slug } = params;
+// Fonction pour récupérer le film côté serveur
+async function getFilm(slug) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
   
-  const [film, setFilm] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [trailerKey, setTrailerKey] = useState(null);
-  const [searchingTrailer, setSearchingTrailer] = useState(false);
+  // Rechercher le film par son slug
+  const { data, error } = await supabase
+    .from('films')
+    .select('*')
+    .eq('slug', slug)
+    .single();
   
-  useEffect(() => {
-    async function fetchFilmBySlug() {
-      if (!slug) return;
-      
-      try {
-        setLoading(true);
-        
-        const supabase = createBrowserClient(
-          process.env.NEXT_PUBLIC_SUPABASE_URL,
-          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-        );
-        
-        // Rechercher le film par son slug
-        const { data, error } = await supabase
-          .from('films')
-          .select('*')
-          .eq('slug', slug)
-          .single();
-        
-        if (error || !data) {
-          console.error('Erreur lors de la récupération du film par slug:', error);
-          
-          // Si le slug n'existe pas, essayons de trouver le film par son titre
-          // et créer le slug à la volée
-          const normalizedSlug = slug.replace(/-/g, ' ').toLowerCase();
-          
-          const { data: filmByTitle, error: titleError } = await supabase
-            .from('films')
-            .select('*')
-            .ilike('title', `%${normalizedSlug}%`)
-            .order('date_ajout', { ascending: false })
-            .limit(1);
-          
-          if (titleError || !filmByTitle || filmByTitle.length === 0) {
-            console.error('Film non trouvé:', titleError);
-            router.push('/not-found');
-            return;
-          }
-          
-          // Utiliser le premier film trouvé
-          const foundFilm = filmByTitle[0];
-          
-          // Créer un slug pour ce film et le mettre à jour dans la base de données
-          const newSlug = foundFilm.title
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/--+/g, '-');
-          
-          // Mettre à jour le film avec le nouveau slug
-          const { error: updateError } = await supabase
-            .from('films')
-            .update({ slug: newSlug })
-            .eq('id', foundFilm.id);
-          
-          if (updateError) {
-            console.error('Erreur lors de la mise à jour du slug:', updateError);
-          }
-          
-          // Rediriger vers l'URL avec le slug correct
-          router.push(`/films/${newSlug}`);
-          return;
-        }
-        
-        setFilm(data);
-        
-        // Définir les métadonnées SEO dynamiques
-        const releaseYear = data.release_date ? new Date(data.release_date).getFullYear() : '';
-        const yearText = releaseYear ? ` (${releaseYear})` : '';
-        
-        // Mettre à jour le titre de la page
-        document.title = `${data.title}${yearText} - Critique et avis | MovieHunt`;
-        
-        // Mettre à jour la meta description
-        let metaDescription = document.querySelector('meta[name="description"]');
-        if (!metaDescription) {
-          metaDescription = document.createElement('meta');
-          metaDescription.name = 'description';
-          document.head.appendChild(metaDescription);
-        }
-        
-        // Créer une description optimisée
-        const synopsis = data.synopsis ? data.synopsis.substring(0, 150) + '...' : '';
-        const rating = data.note_sur_10 ? `Note : ${data.note_sur_10}/10. ` : '';
-        metaDescription.content = `${rating}${synopsis} Découvrez notre critique complète, le casting et où regarder ${data.title} en streaming.`;
-        
-        // Mettre à jour les Open Graph tags
-        let ogTitle = document.querySelector('meta[property="og:title"]');
-        if (!ogTitle) {
-          ogTitle = document.createElement('meta');
-          ogTitle.setAttribute('property', 'og:title');
-          document.head.appendChild(ogTitle);
-        }
-        ogTitle.content = `${data.title}${yearText} | MovieHunt`;
-        
-        let ogDescription = document.querySelector('meta[property="og:description"]');
-        if (!ogDescription) {
-          ogDescription = document.createElement('meta');
-          ogDescription.setAttribute('property', 'og:description');
-          document.head.appendChild(ogDescription);
-        }
-        ogDescription.content = metaDescription.content;
-        
-        // Mettre à jour l'image Open Graph si disponible
-        if (data.poster_path) {
-          let ogImage = document.querySelector('meta[property="og:image"]');
-          if (!ogImage) {
-            ogImage = document.createElement('meta');
-            ogImage.setAttribute('property', 'og:image');
-            document.head.appendChild(ogImage);
-          }
-          const imageUrl = data.poster_path.startsWith('/') 
-            ? `https://image.tmdb.org/t/p/w500${data.poster_path}` 
-            : data.poster_path;
-          ogImage.content = imageUrl;
-        }
-        
-        // Gestion de la bande-annonce
-        const shouldSearchTrailer = !data.youtube_trailer_key || data.tmdb_id;
-        
-        if (shouldSearchTrailer) {
-          setSearchingTrailer(true);
-          
-          try {
-            const releaseYear = data.release_date ? new Date(data.release_date).getFullYear() : null;
-            let foundTrailerKey = null;
-            
-            if (data.tmdb_id) {
-              const { getMovieTrailers } = await import('@/lib/tmdb/trailers');
-              foundTrailerKey = await getMovieTrailers(data.tmdb_id);
-            }
-            
-            if (!foundTrailerKey) {
-              foundTrailerKey = await findTrailerByTitleAndYear(data.title, releaseYear);
-            }
-            
-            if (foundTrailerKey) {
-              setTrailerKey(foundTrailerKey);
-              
-              if (foundTrailerKey !== data.youtube_trailer_key) {
-                await fetch(`/api/films/${data.id}/trailer`, {
-                  method: 'PUT',
-                  body: JSON.stringify({ trailerKey: foundTrailerKey }),
-                });
-              }
-            }
-          } catch (error) {
-            console.error('Erreur lors de la recherche de la bande-annonce:', error);
-          } finally {
-            setSearchingTrailer(false);
-          }
-        } else {
-          setTrailerKey(data.youtube_trailer_key);
-        }
-      } catch (error) {
-        console.error('Erreur:', error);
-        router.push('/not-found');
-      } finally {
-        setLoading(false);
-      }
+  if (error || !data) {
+    // Si le slug n'existe pas, essayer de trouver le film par son titre
+    const normalizedSlug = slug.replace(/-/g, ' ').toLowerCase();
+    
+    const { data: filmByTitle, error: titleError } = await supabase
+      .from('films')
+      .select('*')
+      .ilike('title', `%${normalizedSlug}%`)
+      .order('date_ajout', { ascending: false })
+      .limit(1);
+    
+    if (titleError || !filmByTitle || filmByTitle.length === 0) {
+      return null;
     }
     
-    fetchFilmBySlug();
-  }, [slug, router]);
-  
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-        </div>
-      </div>
-    );
+    return filmByTitle[0];
   }
   
+  return data;
+}
+
+// Générer les métadonnées dynamiques
+export async function generateMetadata({ params }) {
+  const film = await getFilm(params.slug);
+  
   if (!film) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-50 p-4 rounded-md">
-          <p className="text-red-500">Film non trouvé.</p>
-        </div>
-      </div>
-    );
+    return {
+      title: 'Film non trouvé | MovieHunt',
+    };
+  }
+  
+  const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : '';
+  const yearText = releaseYear ? ` (${releaseYear})` : '';
+  const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + '...' : '';
+  const rating = film.note_sur_10 ? `Note : ${film.note_sur_10}/10. ` : '';
+  
+  return {
+    title: `${film.title}${yearText} - Critique et avis | MovieHunt`,
+    description: `${rating}${synopsis} Découvrez notre critique complète, le casting et où regarder ${film.title} en streaming.`,
+    openGraph: {
+      title: `${film.title}${yearText} | MovieHunt`,
+      description: `${rating}${synopsis}`,
+      images: film.poster_path ? [
+        {
+          url: film.poster_path.startsWith('/') 
+            ? `https://image.tmdb.org/t/p/w500${film.poster_path}` 
+            : film.poster_path,
+          width: 500,
+          height: 750,
+          alt: `Affiche du film ${film.title}`,
+        }
+      ] : [],
+    },
+  };
+}
+
+export default async function FilmPage({ params }) {
+  const film = await getFilm(params.slug);
+  
+  if (!film) {
+    notFound();
   }
   
   return (
@@ -217,37 +94,8 @@ export default function FilmPageBySlug() {
           {/* Affiche du film */}
           <div className="md:w-1/3 lg:w-1/4">
             <div className="relative h-[400px] md:h-full">
-              {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
               <div className="relative w-full h-full">
-                <img
-                  src={
-                    // Priorité 1: poster_path (chemin TMDB)
-                    film.poster_path ? 
-                      (film.poster_path.startsWith('/') ? 
-                        `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
-                        film.poster_path) :
-                    // Priorité 2: poster_url (URL complète)
-                    film.poster_url ? 
-                      film.poster_url : 
-                      // Fallback: placeholder
-                      '/images/placeholder.jpg'
-                  }
-                  alt={`Affiche du film ${film.title}`}
-                  className="absolute inset-0 w-full h-full object-contain object-top"
-                  loading="eager"
-                  itemProp="image"
-                  onError={(e) => {
-                    // En cas d'erreur, essayer une taille plus petite
-                    if (e.target.src.includes('/w500/')) {
-                      e.target.src = e.target.src.replace('/w500/', '/w342/');
-                    } else if (e.target.src.includes('/w342/')) {
-                      e.target.src = e.target.src.replace('/w342/', '/w185/');
-                    } else {
-                      // Si toutes les tentatives échouent, utiliser un placeholder
-                      e.target.src = '/images/placeholder.jpg';
-                    }
-                  }}
-                />  
+                <FilmPoster film={film} />
               </div>
             </div>
           </div>
@@ -258,29 +106,19 @@ export default function FilmPageBySlug() {
               <h1 className="text-2xl sm:text-3xl font-bold" itemProp="name">{film.title}</h1>
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
-                  {typeof Link !== 'undefined' ? (
-                    <Link 
-                      href="/huntedbymoviehunt" 
-                      className="block transition-transform hover:scale-110"
-                      title="En savoir plus sur Hunted by MovieHunt"
-                    >
-                      <img 
-                        src="/images/badges/hunted-badge.png" 
-                        alt="Hunted by MovieHunt" 
-                        width={115} 
-                        height={115}
-                        className="drop-shadow-md cursor-pointer"
-                      />
-                    </Link>
-                  ) : (
+                  <Link 
+                    href="/huntedbymoviehunt" 
+                    className="block transition-transform hover:scale-110"
+                    title="En savoir plus sur Hunted by MovieHunt"
+                  >
                     <img 
                       src="/images/badges/hunted-badge.png" 
                       alt="Hunted by MovieHunt" 
                       width={115} 
                       height={115}
-                      className="drop-shadow-md"
+                      className="drop-shadow-md cursor-pointer"
                     />
-                  )}
+                  </Link>
                 </div>
               )}
             </div>
@@ -317,30 +155,7 @@ export default function FilmPageBySlug() {
                 </span>
               </div>
               {film.blog_article_url && (
-                <a
-                  href={film.blog_article_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-2 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md"
-                  style={{ backgroundColor: '#DC2625' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B91C1C'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DC2625'}
-                >
-                  <svg 
-                    className="w-4 h-4 mr-2" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" 
-                    />
-                  </svg>
-                  Lire la critique sur le blog
-                </a>
+                <BlogArticleLink url={film.blog_article_url} />
               )}
             </div>
             
@@ -361,16 +176,8 @@ export default function FilmPageBySlug() {
             {film.why_watch_enabled && film.why_watch_content && (
               <section className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
-                <style jsx>{`
-                  .why-watch-content {
-                    white-space: pre-wrap;
-                  }
-                  .why-watch-content p {
-                    margin-bottom: 0.5rem;
-                  }
-                `}</style>
                 <div
-                  className="text-sm sm:text-base text-gray-700 why-watch-content"
+                  className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
                   dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
                 />
               </section>
@@ -380,54 +187,15 @@ export default function FilmPageBySlug() {
             {film.not_liked_enabled && film.not_liked_content && (
               <section className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
                 <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-red-700">Ce que nous n'avons pas aimé</h2>
-                <style jsx>{`
-                  .not-liked-content {
-                    white-space: pre-wrap;
-                  }
-                  .not-liked-content p {
-                    margin-bottom: 0.5rem;
-                  }
-                `}</style>
                 <div
-                  className="text-sm sm:text-base text-gray-700 not-liked-content"
+                  className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
                   dangerouslySetInnerHTML={{ __html: film.not_liked_content }}
                 />
               </section>
             )}
             
-            {(film.youtube_trailer_key || trailerKey) && (
-              <section className="mb-4 sm:mb-6">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
-                <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
-                  <YouTube 
-                    videoId={film.youtube_trailer_key || trailerKey} 
-                    className="absolute top-0 left-0 w-full h-full" 
-                    opts={{
-                      width: '100%',
-                      height: '100%',
-                      playerVars: {
-                        // https://developers.google.com/youtube/player_parameters
-                        autoplay: 0,
-                        modestbranding: 1,
-                        rel: 0,
-                        showinfo: 0,
-                        playsinline: 1, // Important pour iOS
-                      },
-                    }}
-                    onReady={(event) => {
-                      // Événement déclenché lorsque le lecteur est prêt
-                      // Vous pouvez ajouter des actions personnalisées ici si nécessaire
-                    }}
-                  />
-                </div>
-              </section>
-            )}
-            
-            {searchingTrailer && (
-              <div className="mb-6">
-                <p className="text-gray-500 italic">Recherche d'une bande-annonce...</p>
-              </div>
-            )}
+            {/* Bande-annonce (composant client) */}
+            <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
           </div>
         </div>
       </div>
