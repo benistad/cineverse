@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon, FiBookOpen } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 
 export default function Navbar() {
@@ -48,6 +48,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between h-14 sm:h-16">
           <div className="flex items-center space-x-6">
+            <a 
+              href="https://www.moviehunt-blog.fr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hidden md:flex items-center"
+            >
+              <FiBookOpen className="mr-1" /> Blog
+            </a>
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
               <div className="relative w-6 h-6 sm:w-8 sm:h-8">
                 <Image 
@@ -194,6 +202,15 @@ export default function Navbar() {
               </div>
               <span className="text-lg font-bold">MovieHunt</span>
             </Link>
+            <a 
+              href="https://www.moviehunt-blog.fr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiBookOpen className="mr-2" /> Blog
+            </a>
             <Link 
               href="/advanced-search" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
