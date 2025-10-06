@@ -378,18 +378,22 @@ export default function QuelFilmRegarder() {
                 Quand vous cherchez <strong>des idées de films à regarder</strong>, MovieHunt se distingue par :
               </p>
               <ul className="list-none pl-0">
-                <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs.{' '}
+                <li className="mb-3">
+                  <span className="mr-2">•</span>
+                  <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs.{' '}
                   <Link href="/comment-nous-travaillons" className="text-blue-600 hover:text-blue-800">Découvrez comment nous travaillons</Link>.
                 </li>
-                <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Une sélection de films à voir</strong> qui sort des sentiers battus, avec des pépites que vous ne verrez pas partout.
+                <li className="mb-3">
+                  <span className="mr-2">•</span>
+                  <strong>Une sélection de films à voir</strong> qui sort des sentiers battus, avec des pépites que vous ne verrez pas partout.
                 </li>
-                <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Des recommandations personnalisées</strong> selon vos goûts et vos envies du moment.
+                <li className="mb-3">
+                  <span className="mr-2">•</span>
+                  <strong>Des recommandations personnalisées</strong> selon vos goûts et vos envies du moment.
                 </li>
-                <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Des mises à jour hebdomadaires</strong> pour toujours vous proposer de nouvelles idées de films à voir.
+                <li className="mb-3">
+                  <span className="mr-2">•</span>
+                  <strong>Des mises à jour hebdomadaires</strong> pour toujours vous proposer de nouvelles idées de films à voir.
                 </li>
               </ul>
             </div>
