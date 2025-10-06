@@ -74,7 +74,7 @@ export default function QuelFilmRegarder() {
           {/* Bloc de mise à jour */}
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
             <p className="text-sm text-blue-800 font-medium">
-              🆕 <strong>Dernière mise à jour : octobre 2025</strong> — De nouveaux films ajoutés chaque semaine !
+              🆕 <strong>Dernière mise à jour : octobre 2025</strong>
             </p>
           </div>
 
@@ -90,6 +90,17 @@ export default function QuelFilmRegarder() {
             <p className="text-lg">
               Vous trouverez ici une <strong>liste de films conseillés</strong>, qu&apos;il s&apos;agisse d&apos;un thriller, d&apos;un drame ou d&apos;une comédie. Notre objectif : vous aider à <strong>trouver un bon film à regarder</strong> sans passer des heures à chercher.
             </p>
+            
+            {/* Section Halloween */}
+            <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-6 rounded-lg">
+              <h3 className="text-xl font-bold text-orange-900 mb-3">🎃 Spécial Halloween 2025</h3>
+              <p className="text-gray-800 mb-3">
+                Vous cherchez des <strong>films d&apos;horreur pour Halloween</strong> ? Découvrez notre sélection de 10 films terrifiants parfaits pour une soirée frissons !
+              </p>
+              <Link href="/films-horreur-halloween-2025" className="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold">
+                👻 Voir notre sélection Halloween 2025 →
+              </Link>
+            </div>
             
             <h2 className="text-2xl font-bold mt-6 mb-4">Notre sélection personnalisée</h2>
             
