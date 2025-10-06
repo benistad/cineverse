@@ -106,6 +106,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
+        {/* Préconnexion aux domaines critiques pour améliorer le LCP */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://image.tmdb.org" />
+        
         {/* Le titre est géré par les métadonnées de chaque page */}
         <meta name="description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -142,14 +147,14 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
         {/* La balise canonique est gérée par le composant MetaTags pour chaque page */}
         
-        {/* Google tag (gtag.js) - Implémentation directe de la balise fournie par Google */}
+        {/* Google tag (gtag.js) - Chargé après le LCP pour ne pas bloquer le rendu */}
         <Script
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-TB25P4NBF2"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -160,10 +165,10 @@ export default function RootLayout({ children }) {
           }}
         />
         
-        {/* Cabin Analytics - Implémentation selon la documentation officielle Next.js */}
+        {/* Cabin Analytics - Chargé après le LCP */}
         <Script
           id="cabin-analytics-conditional"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               // Charger Cabin Analytics uniquement si pas sur une page admin

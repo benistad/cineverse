@@ -10,6 +10,10 @@ const nextConfig = {
     // Configurer les tailles d'écran et d'image pour correspondre à l'audience
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Désactiver la génération de placeholder pour améliorer le LCP
+    dangerouslyAllowSVG: false,
+    // Qualité optimisée pour le LCP (85% au lieu de 80% pour les images priority)
+    // La qualité par défaut reste à 80% pour les autres images
   },
   // Ajouter des règles de transpilation pour les modules qui utilisent ESM
   transpilePackages: ['react-youtube'],

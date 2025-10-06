@@ -15,6 +15,7 @@ import {
 import OptimizedFilmCarousel from '@/components/films/OptimizedFilmCarousel';
 import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
+// CHANGEMENT: Utiliser le carrousel optimisé pour le LCP
 import OptimizedFeaturedCarousel from '@/components/home/OptimizedFeaturedCarousel';
 
 export default function Home() {
@@ -33,10 +34,8 @@ export default function Home() {
 
   // Fonction pour charger les films paginés
   const loadPaginatedFilms = async (page) => {
-    // Mettre à jour la page courante immédiatement pour éviter les sauts
     setCurrentPage(page);
     
-    // Utiliser un délai court pour éviter le flash de l'état de chargement
     const loadingTimeout = setTimeout(() => {
       setLoadingPagination(true);
     }, 100);
@@ -59,7 +58,8 @@ export default function Home() {
       try {
         setLoading(true);
         
-        // Charger toutes les données en parallèle pour améliorer les performances
+        // OPTIMISATION: Charger uniquement les données critiques en premier
+        // Le carrousel se charge de manière autonome
         const [
           recent,
           topRated,
@@ -76,14 +76,12 @@ export default function Home() {
           getPaginatedFilms(1, filmsPerPage)
         ]);
         
-        // Mettre à jour l'état avec les résultats
         setRecentFilms(recent);
         setTopRatedFilms(topRated);
         setTopRatedFilmsCount(topRatedCount);
         setHiddenGems(gems);
         setHiddenGemsCount(hiddenGemsCount);
         
-        // Mettre à jour les films paginés
         if (paginatedResult) {
           setAllFilms(paginatedResult.films || []);
           setTotalFilmsCount(paginatedResult.totalCount || 0);
@@ -98,19 +96,13 @@ export default function Home() {
     fetchFilms();
   }, [filmsPerPage]);
   
-  // Calculer le nombre total de pages
   const totalPages = Math.ceil(totalFilmsCount / filmsPerPage);
   
-  // Gérer le changement de page
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      // Empêcher le comportement par défaut du navigateur qui pourrait causer un défilement
-      // Spécifiquement important pour Safari
       loadPaginatedFilms(newPage);
       
-      // Assurer que la page reste à la même position
       setTimeout(() => {
-        // Annuler tout défilement qui pourrait se produire
         window.scrollTo(window.scrollX, window.scrollY);
       }, 0);
     }
@@ -124,34 +116,33 @@ export default function Home() {
         itemType="https://schema.org/WebPage"
         aria-labelledby="idee-de-film-quel-film-regarder"
       >
-  <h1 
-    className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900" 
-    id="idee-de-film-quel-film-regarder" 
-    aria-label="Idée de film : quel film regarder ? Trouvez l'inspiration sur Movie Hunt"
-    itemScope itemProp="headline"
-  >
-    <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
-    <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
-  </h1>
-  <div className="flex justify-center my-1">
-    <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
-  </div>
-  <div className="mt-3 mb-2">
-    <Link 
-      href="/quel-film-regarder" 
-      className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
-      style={{ backgroundColor: '#4A68D9' }}
-    >
-      Découvrir nos suggestions de films
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-      </svg>
-    </Link>
-  </div>
+        <h1 
+          className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-1 text-gray-900" 
+          id="idee-de-film-quel-film-regarder" 
+          aria-label="Idée de film : quel film regarder ? Trouvez l'inspiration sur Movie Hunt"
+          itemScope itemProp="headline"
+        >
+          <span className="text-blue-600 font-black">Idée de film</span> : <span className="text-blue-600 font-black">quel film regarder</span> ?<br />
+          <span className="text-gray-800 font-semibold text-lg sm:text-xl md:text-2xl">Trouvez l'inspiration sur <span className="text-blue-600 font-black">Movie Hunt</span></span>
+        </h1>
+        <div className="flex justify-center my-1">
+          <span className="inline-block w-24 h-1 rounded bg-blue-200"></span>
+        </div>
+        <div className="mt-3 mb-2">
+          <Link 
+            href="/quel-film-regarder" 
+            className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
+            style={{ backgroundColor: '#4A68D9' }}
+          >
+            Découvrir nos suggestions de films
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </Link>
+        </div>
+      </section>
 
-</section>
-      
-      {/* Carrousel des films à la une - Optimisé pour le LCP */}
+      {/* OPTIMISATION: Carrousel optimisé pour le LCP */}
       <section>
         <OptimizedFeaturedCarousel />
       </section>
