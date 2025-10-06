@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
 export default function SwiperCarousel() {
+  // IMPORTANT: Tous les hooks doivent être déclarés AVANT tout return conditionnel
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
