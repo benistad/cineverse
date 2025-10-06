@@ -27,19 +27,19 @@ function getWatchTypeText(type) {
 function ProviderItem({ provider }) {
   return (
     <div 
-      className="flex flex-col items-center w-16 mr-4 mb-3"
+      className="flex flex-col items-center w-20 mr-3 mb-3"
       title={provider.provider_name}
     >
-      <div className="relative w-10 h-10 rounded-lg overflow-hidden mx-auto">
+      <div className="relative w-12 h-12 rounded-lg overflow-hidden mx-auto mb-1">
         <Image
           src={`/api/image-proxy?url=${encodeURIComponent(optimizeLogoImage(`https://image.tmdb.org/t/p/original${provider.logo_path}`))}`}
           alt={provider.provider_name}
           fill
           className="object-contain"
-          sizes="40px"
+          sizes="48px"
         />
       </div>
-      <span className="text-[10px] mt-1 text-center break-words line-clamp-2 h-8 overflow-hidden">{provider.provider_name}</span>
+      <span className="text-xs text-center break-words leading-tight">{provider.provider_name}</span>
     </div>
   );
 }
