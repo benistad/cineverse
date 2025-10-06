@@ -1,6 +1,7 @@
 'use client';
 
 import { createBrowserClient } from '@supabase/ssr';
+import { withCache } from '@/lib/cache/supabaseCache';
 
 // Création du client Supabase côté client
 const getSupabaseClient = () => {
@@ -683,40 +684,42 @@ export async function getHiddenGems(limit = 8) {
  * @returns {Array} - Liste des films récupérés
  */
 export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = null) {
-  try {
-    console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp || 'non spécifié'})...`);
-    
-    const supabase = getSupabaseClient();
-    
-    // Requête simple sans options de cache qui ne sont pas supportées
-    const { data, error } = await supabase
-      .from('films')
-      .select('*')
-      .gte('note_sur_10', minRating)
-      .order('date_ajout', { ascending: false })
-      .limit(limit);
+  return withCache('getFeaturedFilms', { limit, minRating }, async () => {
+    try {
+      console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp || 'non spécifié'})...`);
+      
+      const supabase = getSupabaseClient();
+      
+      // Requête simple sans options de cache qui ne sont pas supportées
+      const { data, error } = await supabase
+        .from('films')
+        .select('*')
+        .gte('note_sur_10', minRating)
+        .order('date_ajout', { ascending: false })
+        .limit(limit);
 
-    if (error) {
-      console.error('Erreur lors de la récupération des films en vedette:', error);
-      throw error;
+      if (error) {
+        console.error('Erreur lors de la récupération des films en vedette:', error);
+        throw error;
+      }
+      
+      console.log(`${data ? data.length : 0} films en vedette récupérés`);
+      
+      // Vérifier si les films ont des images de carrousel
+      if (data && data.length > 0) {
+        data.forEach(film => {
+          console.log(`Film: ${film.title}, ID: ${film.id}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
+        });
+      } else {
+        console.log('Aucun film récupéré');
+      }
+      
+      return data || [];
+    } catch (error) {
+      console.error('Erreur lors de la récupération des films bien notés:', error);
+      return [];
     }
-    
-    console.log(`${data ? data.length : 0} films en vedette récupérés`);
-    
-    // Vérifier si les films ont des images de carrousel
-    if (data && data.length > 0) {
-      data.forEach(film => {
-        console.log(`Film: ${film.title}, ID: ${film.id}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
-      });
-    } else {
-      console.log('Aucun film récupéré');
-    }
-    
-    return data || [];
-  } catch (error) {
-    console.error('Erreur lors de la récupération des films bien notés:', error);
-    return [];
-  }
+  });
 }
 
 /**
