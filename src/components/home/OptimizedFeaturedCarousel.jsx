@@ -199,7 +199,7 @@ export default function OptimizedFeaturedCarousel() {
           
           return (
             <SwiperSlide key={film.id}>
-              <div className="relative h-[250px] sm:h-[300px] md:h-[500px] bg-gray-800" style={{ aspectRatio: '16/9' }}>
+              <div className="relative h-[250px] sm:h-[300px] md:h-[500px] bg-gray-800">
                 {/* Image optimisée avec Next.js Image */}
                 <Image
                   src={imageUrl}
