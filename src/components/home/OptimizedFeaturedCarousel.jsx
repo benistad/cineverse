@@ -199,7 +199,7 @@ export default function OptimizedFeaturedCarousel() {
           
           return (
             <SwiperSlide key={film.id}>
-              <div className="relative h-[250px] sm:h-[300px] md:h-[500px] bg-gray-800">
+              <div className="relative h-[250px] sm:h-[300px] md:h-[500px] bg-gray-800" style={{ aspectRatio: '16/9' }}>
                 {/* Image optimisée avec Next.js Image */}
                 <Image
                   src={imageUrl}
@@ -210,6 +210,7 @@ export default function OptimizedFeaturedCarousel() {
                   className="object-cover"
                   quality={index === 0 ? 90 : 80} // Qualité supérieure pour la première image (LCP)
                   loading={index === 0 ? "eager" : "lazy"} // Eager pour la première, lazy pour les autres
+                  style={{ objectFit: 'cover' }} // Éviter le CLS
                 />
                 
                 {/* Overlay pour améliorer la lisibilité du texte */}

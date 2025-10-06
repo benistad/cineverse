@@ -19,6 +19,18 @@ import OptimizedFeaturedCarousel from '@/components/home/OptimizedFeaturedCarous
 import { clientCache } from '@/lib/cache/clientCache';
 
 export default function Home() {
+  // Définir les métadonnées SEO
+  useEffect(() => {
+    document.title = 'MovieHunt : idées de films - Quel film regarder ?';
+    
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.content = 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.';
+  }, []);
   const [recentFilms, setRecentFilms] = useState([]);
   const [topRatedFilms, setTopRatedFilms] = useState([]);
   const [hiddenGems, setHiddenGems] = useState([]);

@@ -230,20 +230,22 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           <img
             src={film.poster_url || film.poster_path ? 
               (film.poster_path && film.poster_path.startsWith('/') ? 
-                `https://image.tmdb.org/t/p/w342${film.poster_path}` : 
-                film.poster_url) : 
+                `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
+                (film.poster_path || film.poster_url)) :
               '/images/placeholder.jpg'
             }
-            alt={film.title || 'Poster du film'}
-            className="absolute inset-0 w-full h-full object-cover"
+            alt={`Affiche du film ${film.title}`}
+            className="w-full h-full object-cover"
             loading={priority ? "eager" : "lazy"}
+            width="500"
+            height="750"
+            style={{ aspectRatio: '2/3' }}
             onError={(e) => {
               // En cas d'erreur, essayer une taille plus petite
               if (e.target.src.includes('/w500/')) {
                 e.target.src = e.target.src.replace('/w500/', '/w342/');
               } else if (e.target.src.includes('/w342/')) {
                 e.target.src = e.target.src.replace('/w342/', '/w185/');
-              } else {
                 // Si toutes les tentatives échouent, utiliser un placeholder
                 e.target.src = '/images/placeholder.jpg';
               }
