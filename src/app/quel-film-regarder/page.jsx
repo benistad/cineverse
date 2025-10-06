@@ -394,7 +394,8 @@ export default function QuelFilmRegarder() {
               </p>
               <ul className="list-none pl-0">
                 <li className="mb-3 flex items-start">
-                  <span className="mr-2">•</span> <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs. Découvrez <Link href="/comment-nous-travaillons" className="text-blue-600 hover:text-blue-800">comment nous travaillons</Link>.
+                  <span className="mr-2">•</span> <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs.{' '}
+                  <Link href="/comment-nous-travaillons" className="text-blue-600 hover:text-blue-800">Découvrez comment nous travaillons</Link>.
                 </li>
                 <li className="mb-3 flex items-start">
                   <span className="mr-2">•</span> <strong>Une sélection de films à voir</strong> qui sort des sentiers battus, avec des pépites que vous ne verrez pas partout.
