@@ -91,6 +91,57 @@ export default function FilmPageBySlug() {
         
         setFilm(data);
         
+        // Définir les métadonnées SEO dynamiques
+        const releaseYear = data.release_date ? new Date(data.release_date).getFullYear() : '';
+        const yearText = releaseYear ? ` (${releaseYear})` : '';
+        
+        // Mettre à jour le titre de la page
+        document.title = `${data.title}${yearText} - Critique et avis | MovieHunt`;
+        
+        // Mettre à jour la meta description
+        let metaDescription = document.querySelector('meta[name="description"]');
+        if (!metaDescription) {
+          metaDescription = document.createElement('meta');
+          metaDescription.name = 'description';
+          document.head.appendChild(metaDescription);
+        }
+        
+        // Créer une description optimisée
+        const synopsis = data.synopsis ? data.synopsis.substring(0, 150) + '...' : '';
+        const rating = data.note_sur_10 ? `Note : ${data.note_sur_10}/10. ` : '';
+        metaDescription.content = `${rating}${synopsis} Découvrez notre critique complète, le casting et où regarder ${data.title} en streaming.`;
+        
+        // Mettre à jour les Open Graph tags
+        let ogTitle = document.querySelector('meta[property="og:title"]');
+        if (!ogTitle) {
+          ogTitle = document.createElement('meta');
+          ogTitle.setAttribute('property', 'og:title');
+          document.head.appendChild(ogTitle);
+        }
+        ogTitle.content = `${data.title}${yearText} | MovieHunt`;
+        
+        let ogDescription = document.querySelector('meta[property="og:description"]');
+        if (!ogDescription) {
+          ogDescription = document.createElement('meta');
+          ogDescription.setAttribute('property', 'og:description');
+          document.head.appendChild(ogDescription);
+        }
+        ogDescription.content = metaDescription.content;
+        
+        // Mettre à jour l'image Open Graph si disponible
+        if (data.poster_path) {
+          let ogImage = document.querySelector('meta[property="og:image"]');
+          if (!ogImage) {
+            ogImage = document.createElement('meta');
+            ogImage.setAttribute('property', 'og:image');
+            document.head.appendChild(ogImage);
+          }
+          const imageUrl = data.poster_path.startsWith('/') 
+            ? `https://image.tmdb.org/t/p/w500${data.poster_path}` 
+            : data.poster_path;
+          ogImage.content = imageUrl;
+        }
+        
         // Gestion de la bande-annonce
         const shouldSearchTrailer = !data.youtube_trailer_key || data.tmdb_id;
         

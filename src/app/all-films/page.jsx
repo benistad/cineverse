@@ -11,6 +11,20 @@ export default function AllFilmsPage() {
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
+  // Définir les métadonnées SEO
+  useEffect(() => {
+    document.title = 'Tous les films notés et recommandés | MovieHunt';
+    
+    // Mettre à jour la meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.content = 'Découvrez tous les films notés et recommandés par MovieHunt. Une sélection complète de films avec notes, critiques et recommandations pour savoir quel film regarder.';
+  }, []);
+
   useEffect(() => {
     async function fetchAllFilms() {
       try {
