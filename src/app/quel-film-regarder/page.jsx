@@ -16,7 +16,7 @@ export default function QuelFilmRegarder() {
         "name": "Quel film regarder ce soir ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Découvrez notre sélection personnalisée des meilleurs films à voir ce soir : Fall (2022) pour un film haletant, Split (2016) pour un jeu d'acteur hors du commun, 1917 (2019) pour une fresque historique, Les Banshees d'Inisherin (2022) pour un drame touchant, et Game Night (2018) pour une soirée détente. Notre liste de films conseillés est mise à jour chaque semaine."
+          "text": "Découvrez notre sélection de pépites méconnues à voir ce soir : Greedy People (2024) pour une comédie noire surprenante, Old Henry (2021) pour un western avec un twist inattendu, Tetris (2023) pour une histoire vraie fascinante, Dom Hemingway (2013) pour une performance d'acteur mémorable, et Irresistible (2020) pour une comédie politique intelligente. Notre liste de films conseillés est mise à jour chaque semaine."
         }
       },
       {
@@ -29,10 +29,10 @@ export default function QuelFilmRegarder() {
       },
       {
         "@type": "Question",
-        "name": "Quels sont les meilleurs films à voir en 2025 ?",
+        "name": "Quels sont les meilleurs films méconnus à voir en 2025 ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour une expérience cinématographique optimale en 2025, nous recommandons des films comme Ad Astra pour la science-fiction à la photographie mémorable, Funny Games U.S. pour un thriller psychologique, Last Breath pour une histoire vraie incroyable, Le Procès du siècle pour un film de procès politique, et Old Henry pour un western palpitant. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
+          "text": "Pour découvrir des pépites méconnues en 2025, nous recommandons Greedy People pour une comédie noire avec Joseph Gordon-Levitt, Old Henry pour un western surprenant avec Tim Blake Nelson, Tetris pour l'histoire vraie fascinante du jeu vidéo avec Taron Egerton, Dom Hemingway pour une performance explosive de Jude Law, et Irresistible pour une satire politique brillante. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
         }
       },
       {
@@ -102,24 +102,21 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 1 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🔥 Pour un film haletant et intense :</h2>
+            <h2 className="text-2xl font-bold">🎭 Pour une comédie noire surprenante :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/fall">
+                <Link href="/films/greedy-people">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
                     <img 
-                      src="https://image.tmdb.org/t/p/w342/9f5sIJEgvUpFv0ozfA6TurG4j22.jpg" 
-                      alt="Affiche du film Fall" 
+                      src="https://image.tmdb.org/t/p/w342/qkmFPxiawqjGhxuC3HvN9sVuJbD.jpg" 
+                      alt="Affiche du film Greedy People" 
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="eager"
                       onError={(e) => {
-                        // En cas d'erreur, essayer une taille plus petite
                         if (e.target.src.includes('/w342/')) {
                           e.target.src = e.target.src.replace('/w342/', '/w185/');
                         } else {
-                          // Si toutes les tentatives échouent, utiliser un placeholder
                           e.target.src = '/images/placeholder.jpg';
                         }
                       }}
@@ -128,11 +125,11 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Fall (2022)</h3>
+                <h3 className="text-xl font-semibold">🎥 Greedy People (2024)</h3>
                 <p className="my-3">
-                  Deux amies se retrouvent piégées en haut d&apos;une tour de plus de 600 mètres. Tension maximale, vertige garanti.
+                  Un meurtre, un million de dollars, et une série de décisions catastrophiques dans une petite ville paisible. Joseph Gordon-Levitt brille dans cette comédie noire pleine de rebondissements.
                 </p>
-                <Link href="/films/fall" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/greedy-people" className="inline-flex items-center text-blue-600 hover:text-blue-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -143,24 +140,21 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 2 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🤚 Pour un jeu d'acteur hors du commun :</h2>
+            <h2 className="text-2xl font-bold">🤠 Pour un western avec un twist inattendu :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/split">
+                <Link href="/films/old-henry">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
                     <img 
-                      src="https://image.tmdb.org/t/p/w342/lli31lYTFpvxVBeFHWoe5PMfW5s.jpg" 
-                      alt="Affiche du film Split" 
+                      src="https://image.tmdb.org/t/p/w342/eE1SL0QoDsvAMqQly56IkRtlN1W.jpg" 
+                      alt="Affiche du film Old Henry" 
                       className="absolute inset-0 w-full h-full object-cover"
-                      loading="eager"
+                      loading="lazy"
                       onError={(e) => {
-                        // En cas d'erreur, essayer une taille plus petite
                         if (e.target.src.includes('/w342/')) {
                           e.target.src = e.target.src.replace('/w342/', '/w185/');
                         } else {
-                          // Si toutes les tentatives échouent, utiliser un placeholder
                           e.target.src = '/images/placeholder.jpg';
                         }
                       }}
@@ -169,11 +163,11 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Split (2016)</h3>
+                <h3 className="text-xl font-semibold">🎥 Old Henry (2021)</h3>
                 <p className="my-3">
-                  James McAvoy incarne un homme aux personnalités multiples dans ce thriller signé M. Night Shyamalan. Sa performance exceptionnelle lui permet d'incarner plus de 20 personnalités différentes avec une précision stupéfiante.
+                  Un fermier veuf accueille un homme blessé avec une sacoche pleine d&apos;argent. Ce western intimiste cache un secret qui va tout changer. Tim Blake Nelson est magistral dans ce film qui revisite le genre avec intelligence.
                 </p>
-                <Link href="/films/split" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/old-henry" className="inline-flex items-center text-blue-600 hover:text-blue-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -184,24 +178,21 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 3 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🎬 Pour une fresque historique spectaculaire :</h2>
+            <h2 className="text-2xl font-bold">🎮 Pour une histoire vraie fascinante :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/1917">
+                <Link href="/films/tetris">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
                     <img 
-                      src="https://image.tmdb.org/t/p/w342/AuGiPiGMYMkSosOJ3BQjDEAiwtO.jpg" 
-                      alt="Affiche du film 1917" 
+                      src="https://image.tmdb.org/t/p/w342/obdw3SyT4TnCQIWHndOX7NQsdpj.jpg" 
+                      alt="Affiche du film Tetris" 
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
-                        // En cas d'erreur, essayer une taille plus petite
                         if (e.target.src.includes('/w342/')) {
                           e.target.src = e.target.src.replace('/w342/', '/w185/');
                         } else {
-                          // Si toutes les tentatives échouent, utiliser un placeholder
                           e.target.src = '/images/placeholder.jpg';
                         }
                       }}
@@ -210,11 +201,11 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 1917 (2019)</h3>
+                <h3 className="text-xl font-semibold">🎥 Tetris (2023)</h3>
                 <p className="my-3">
-                  Un chef-d&apos;œuvre de Sam Mendes filmé en un faux plan-séquence. Immersion totale dans les tranchées de la Première Guerre mondiale.
+                  L&apos;incroyable histoire vraie derrière le jeu vidéo le plus populaire au monde. Un thriller haletant sur fond de Guerre froide avec Taron Egerton, entre espionnage et négociations impossibles en URSS.
                 </p>
-                <Link href="/films/1917" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/tetris" className="inline-flex items-center text-blue-600 hover:text-blue-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -225,24 +216,21 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 4 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🎭 Pour un choc émotionnel et social :</h2>
+            <h2 className="text-2xl font-bold">🎬 Pour une performance d'acteur mémorable :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/les-banshees-dinisherin">
+                <Link href="/films/dom-hemingway">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
                     <img 
-                      src="https://image.tmdb.org/t/p/w342/5Y0AINkH7xDqmuxJXUQdPbtyrub.jpg" 
-                      alt="Affiche du film Les Banshees d'Inisherin" 
+                      src="https://image.tmdb.org/t/p/w342/QQqo4TybGj5WpJvqVdkpJdoqWk.jpg" 
+                      alt="Affiche du film Dom Hemingway" 
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
-                        // En cas d'erreur, essayer une taille plus petite
                         if (e.target.src.includes('/w342/')) {
                           e.target.src = e.target.src.replace('/w342/', '/w185/');
                         } else {
-                          // Si toutes les tentatives échouent, utiliser un placeholder
                           e.target.src = '/images/placeholder.jpg';
                         }
                       }}
@@ -251,11 +239,11 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Les Banshees d&apos;Inisherin (2022)</h3>
+                <h3 className="text-xl font-semibold">🎥 Dom Hemingway (2013)</h3>
                 <p className="my-3">
-                  Quand une amitié s&apos;effondre sur une île irlandaise, tout bascule. Un drame touchant, étrange et poétique.
+                  Après 12 ans de prison, un perceur de coffres-forts légendaire revient à Londres pour récupérer son dû. Jude Law est explosif dans cette comédie noire britannique décalée et savoureuse.
                 </p>
-                <Link href="/films/les-banshees-dinisherin" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/dom-hemingway" className="inline-flex items-center text-blue-600 hover:text-blue-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -266,24 +254,21 @@ export default function QuelFilmRegarder() {
           
           {/* Recommandation 5 */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🍿 Pour une soirée détente avec un twist :</h2>
+            <h2 className="text-2xl font-bold">🗳️ Pour une comédie politique intelligente :</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
               <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/game-night">
+                <Link href="/films/irresistible">
                   <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
                     <img 
-                      src="https://image.tmdb.org/t/p/w342/85R8LMyn9f2Lev2YPBF8Nughrkv.jpg" 
-                      alt="Affiche du film Game Night" 
+                      src="https://image.tmdb.org/t/p/w342/vhN1GXEQFnmypQ6tqJfZS5DuIJh.jpg" 
+                      alt="Affiche du film Irresistible" 
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
-                        // En cas d'erreur, essayer une taille plus petite
                         if (e.target.src.includes('/w342/')) {
                           e.target.src = e.target.src.replace('/w342/', '/w185/');
                         } else {
-                          // Si toutes les tentatives échouent, utiliser un placeholder
                           e.target.src = '/images/placeholder.jpg';
                         }
                       }}
@@ -292,11 +277,11 @@ export default function QuelFilmRegarder() {
                 </Link>
               </div>
               <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Game Night (2018)</h3>
+                <h3 className="text-xl font-semibold">🎥 Irresistible (2020)</h3>
                 <p className="my-3">
-                  Un jeu entre amis qui tourne à la catastrophe. Drôle, rythmé, surprenant.
+                  Un consultant politique démocrate aide un colonel à la retraite dans une élection locale. Une satire mordante du système électoral américain avec un twist final brillant qui change tout.
                 </p>
-                <Link href="/films/game-night" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/irresistible" className="inline-flex items-center text-blue-600 hover:text-blue-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
