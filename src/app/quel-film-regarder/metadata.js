@@ -11,7 +11,7 @@ export const metadata = {
     url: 'https://moviehunt.fr/quel-film-regarder',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: 'https://www.moviehunt.fr/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Quel film regarder ce soir ? Guide des films à voir | MovieHunt',
@@ -24,7 +24,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies | MovieHunt',
     description: 'Vous cherchez quel film regarder ce soir ? Découvrez notre sélection de pépites méconnues, notées et recommandées par MovieHunt. Films à voir selon votre humeur, vos envies ou vos émotions du moment.',
-    images: ['/images/og-image.jpg'],
+    images: ['https://www.moviehunt.fr/images/og-image.jpg'],
     site: '@moviehuntfr',
   },
   alternates: {

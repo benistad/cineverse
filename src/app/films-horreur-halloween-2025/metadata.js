@@ -11,7 +11,7 @@ export const metadata = {
     url: 'https://www.moviehunt.fr/films-horreur-halloween-2025',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: 'https://www.moviehunt.fr/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Films d\'horreur pour Halloween 2025 | MovieHunt',
@@ -24,7 +24,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Films d\'horreur pour Halloween 2025 : Sélection terrifiante',
     description: 'Découvrez notre sélection de films d\'horreur pour Halloween 2025 sur MovieHunt',
-    images: ['/images/og-image.jpg'],
+    images: ['https://www.moviehunt.fr/images/og-image.jpg'],
     site: '@moviehuntfr',
   },
   alternates: {
