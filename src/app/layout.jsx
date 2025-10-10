@@ -135,14 +135,22 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         <meta property="og:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
         <meta property="og:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
-        <meta property="og:image" content="/images/og-image.jpg" />
+        <meta property="og:image" content="https://www.moviehunt.fr/images/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="MovieHunt - Découvrez votre prochain film coup de cœur" />
+        <meta property="og:site_name" content="MovieHunt" />
+        <meta property="og:locale" content="fr_FR" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@MovieHunt" />
+        <meta name="twitter:creator" content="@MovieHunt" />
         <meta name="twitter:url" content={process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'} />
         <meta name="twitter:title" content="MovieHunt - Trouvez votre prochain film coup de cœur" />
         <meta name="twitter:description" content="Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus." />
-        <meta name="twitter:image" content="/images/og-image.jpg" />
+        <meta name="twitter:image" content="https://www.moviehunt.fr/images/og-image.jpg" />
+        <meta name="twitter:image:alt" content="MovieHunt - Découvrez votre prochain film coup de cœur" />
         
         {/* Favicons et icônes pour différentes plateformes */}
         <link rel="icon" href="/favicon.ico" sizes="any" />

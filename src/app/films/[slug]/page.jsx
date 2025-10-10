@@ -64,22 +64,38 @@ export async function generateMetadata({ params }) {
   const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + '...' : '';
   const rating = film.note_sur_10 ? `Note : ${film.note_sur_10}/10. ` : '';
   
+  const imageUrl = film.poster_path 
+    ? (film.poster_path.startsWith('/') 
+        ? `https://image.tmdb.org/t/p/w780${film.poster_path}` 
+        : film.poster_path)
+    : 'https://www.moviehunt.fr/images/og-image.jpg';
+  
   return {
     title: `${film.title}${yearText} - Critique et avis | MovieHunt`,
     description: `${rating}${synopsis} Découvrez notre critique complète, le casting et où regarder ${film.title} en streaming.`,
     openGraph: {
       title: `${film.title}${yearText} | MovieHunt`,
       description: `${rating}${synopsis}`,
-      images: film.poster_path ? [
+      type: 'video.movie',
+      siteName: 'MovieHunt',
+      locale: 'fr_FR',
+      url: `https://www.moviehunt.fr/films/${params.slug}`,
+      images: [
         {
-          url: film.poster_path.startsWith('/') 
-            ? `https://image.tmdb.org/t/p/w500${film.poster_path}` 
-            : film.poster_path,
-          width: 500,
-          height: 750,
+          url: imageUrl,
+          width: 780,
+          height: 1170,
           alt: `Affiche du film ${film.title}`,
         }
-      ] : [],
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@MovieHunt',
+      creator: '@MovieHunt',
+      title: `${film.title}${yearText} | MovieHunt`,
+      description: `${rating}${synopsis}`,
+      images: [imageUrl],
     },
   };
 }
