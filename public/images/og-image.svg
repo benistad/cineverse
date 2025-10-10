@@ -1,0 +1,35 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond dégradé -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fond -->
+  <rect width="1200" height="630" fill="url(#grad)"/>
+  
+  <!-- Logo/Titre MovieHunt -->
+  <text x="600" y="220" font-family="Arial, sans-serif" font-size="80" font-weight="900" fill="#4A68D9" text-anchor="middle">
+    MovieHunt
+  </text>
+  
+  <!-- Sous-titre -->
+  <text x="600" y="320" font-family="Arial, sans-serif" font-size="40" font-weight="600" fill="#ffffff" text-anchor="middle">
+    Découvrez votre prochain film
+  </text>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="40" font-weight="600" fill="#ffffff" text-anchor="middle">
+    coup de cœur
+  </text>
+  
+  <!-- Description -->
+  <text x="600" y="460" font-family="Arial, sans-serif" font-size="24" fill="#94a3b8" text-anchor="middle">
+    Notes, critiques et recommandations de films
+  </text>
+  
+  <!-- URL -->
+  <text x="600" y="570" font-family="Arial, sans-serif" font-size="20" fill="#64748b" text-anchor="middle">
+    www.moviehunt.fr
+  </text>
+</svg>
