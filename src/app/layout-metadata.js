@@ -1,20 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ClientLayout from "./ClientLayout";
+/**
+ * Métadonnées pour le layout principal
+ * Ce fichier est importé par layout.jsx pour fournir les métadonnées SSR
+ */
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// Export des métadonnées pour le SSR
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'),
   title: {
@@ -75,13 +63,3 @@ export const metadata = {
     canonical: '/',
   },
 };
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}>
-        <ClientLayout>{children}</ClientLayout>
-      </body>
-    </html>
-  );
-}
