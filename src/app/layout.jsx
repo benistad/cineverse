@@ -29,16 +29,17 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: '/',
+    url: 'https://www.moviehunt.fr',
     siteName: 'MovieHunt',
     title: 'MovieHunt - Trouvez votre prochain film coup de cœur',
     description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: [
       {
-        url: 'https://www.moviehunt.fr/images/og-image.jpg',
+        url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'MovieHunt - Découvrez votre prochain film coup de cœur',
+        type: 'image/jpeg',
       },
     ],
   },
