@@ -35,7 +35,7 @@ export const metadata = {
     description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/api/og-image',
         width: 1200,
         height: 630,
         alt: 'MovieHunt - Découvrez votre prochain film coup de cœur',
@@ -49,7 +49,7 @@ export const metadata = {
     creator: '@MovieHunt',
     title: 'MovieHunt - Trouvez votre prochain film coup de cœur',
     description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
-    images: ['https://www.moviehunt.fr/images/og-image.jpg'],
+    images: ['https://www.moviehunt.fr/api/og-image'],
   },
   robots: {
     index: true,
