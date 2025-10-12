@@ -25,7 +25,8 @@ export default function RatingIcon({ rating, className = '', size = 40 }) {
         width: size, 
         height: size,
         backgroundColor: bgColor,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+        border: '2px solid #FEBE29'
       }}
     >
       <span 

@@ -212,13 +212,9 @@ export default function Home() {
       <section>
         <div className="mb-6 px-4">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🎬</span>
-              <h2 className="text-2xl md:text-3xl font-bold text-indigo-800">À la une</h2>
-            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-indigo-800">À la une</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-indigo-300 to-transparent"></div>
           </div>
-          <p className="text-gray-600 mt-2 text-sm md:text-base">Les films qui font l'actualité</p>
         </div>
         <OptimizedFeaturedCarousel />
       </section>
