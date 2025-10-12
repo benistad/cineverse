@@ -193,7 +193,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl relative h-full flex flex-col">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:scale-102 hover:shadow-xl relative h-full flex flex-col group">
       {/* Boutons d'action (en dehors du lien principal) */}
       {isAdmin && showAdminControls && (
         <>
@@ -253,9 +253,9 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           />
         </div>
         
-        <div className="p-3 sm:p-4 flex-grow">
+        <div className="p-4 flex-grow">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-base sm:text-lg font-bold line-clamp-1">{film.title || 'Sans titre'}</h3>
+            <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{film.title || 'Sans titre'}</h3>
             {film.is_hunted_by_moviehunt && (
               typeof Link !== 'undefined' ? (
                 <Link 
@@ -282,12 +282,12 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
               )
             )}
           </div>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">
+          <p className="text-sm text-gray-500 mb-2">
             {extractYear(film.release_date) || extractYear(film.date_ajout)}
-            {film.genres && <span> • <span className="line-clamp-1">{film.genres}</span></span>}
+            {film.genres && <span> • {film.genres.split(',')[0]}</span>}
           </p>
-          <p className="text-xs sm:text-sm text-gray-700 line-clamp-2 sm:line-clamp-3">
-            {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 60 : 100)}
+          <p className="text-sm text-gray-700 line-clamp-2">
+            {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 80 : 120)}
           </p>
         </div>
       </Link>
