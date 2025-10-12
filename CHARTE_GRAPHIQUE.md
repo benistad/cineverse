@@ -10,8 +10,10 @@
 
 #### Navigation
 - **Logo** : `text-2xl` (24px) - Bold (700)
-- **Liens de navigation** : `text-sm` (14px) - Medium (500)
+- **Liens de navigation** : `text-base` (16px) - Regular (400)
+- **Icônes de navigation** : `w-5 h-5` (20px)
 - **Dropdown menu** : `text-sm` (14px) - Regular (400)
+- **Espacement entre liens** : `space-x-8` (32px)
 
 #### Hero Section
 - **Titre principal (H1)** : `text-5xl md:text-6xl` (48px / 60px) - ExtraBold (800)
