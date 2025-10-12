@@ -44,29 +44,28 @@ export default function TopRatedFilms() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-6 py-12">
       {/* Préchargement des images critiques */}
       <PreloadCriticalImages imagePaths={criticalImagePaths} />
       
-      <div className="flex items-center mb-6">
-        <Link href="/" className="flex items-center text-blue-600 hover:text-blue-800 mr-4">
-          <FiArrowLeft className="mr-2" />
+      <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
+        <div className="flex items-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">Films les mieux notés</h1>
+          {!loading && !error && films.length > 0 && (
+            <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
+              {films.length}
+            </span>
+          )}
+        </div>
+        <Link href="/" className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors group font-medium">
+          <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" />
           Retour à l'accueil
         </Link>
       </div>
       
-      <div className="flex items-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold">Films les mieux notés</h1>
-        {!loading && !error && films.length > 0 && (
-          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-            {films.length}
-          </span>
-        )}
-      </div>
-      
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
         </div>
       ) : error ? (
         <div className="bg-red-50 p-4 rounded-md">

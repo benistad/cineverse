@@ -43,19 +43,19 @@ export default function AllFilmsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="container mx-auto px-6 py-12">
+      <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
         <div className="flex items-center">
-          <h1 className="text-3xl font-bold">Tous les films</h1>
-          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">Tous les films</h1>
+          <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
             {totalCount}
           </span>
         </div>
         <Link 
           href="/" 
-          className="text-blue-600 hover:text-blue-800 transition-colors flex items-center"
+          className="text-indigo-600 hover:text-indigo-800 transition-colors flex items-center group font-medium"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
           </svg>
           Retour à l'accueil
@@ -64,7 +64,7 @@ export default function AllFilmsPage() {
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
         </div>
       ) : films.length > 0 ? (
         <FilmGrid films={films} />
