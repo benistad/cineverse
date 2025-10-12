@@ -108,7 +108,7 @@ export default async function FilmPage({ params }) {
   }
   
   return (
-    <article className="container mx-auto px-4 py-8 space-y-6" itemScope itemType="https://schema.org/Movie">
+    <article className="container mx-auto px-6 py-12 space-y-6" itemScope itemType="https://schema.org/Movie">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           {/* Affiche du film */}
@@ -194,8 +194,8 @@ export default async function FilmPage({ params }) {
             </section>
             
             {film.why_watch_enabled && film.why_watch_content && (
-              <section className="mb-4 bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-blue-800">Pourquoi regarder ce film ?</h2>
+              <section className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-lg border-l-4 border-indigo-600">
+                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-indigo-800">Pourquoi regarder ce film ?</h2>
                 <div
                   className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
                   dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
