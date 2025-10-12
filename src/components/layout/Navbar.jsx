@@ -47,7 +47,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-4">
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2 group">
               <div className="relative w-6 h-6 sm:w-8 sm:h-8">
                 <Image 
@@ -61,6 +61,15 @@ export default function Navbar() {
               </div>
               <span className="text-2xl font-bold text-indigo-700">MovieHunt</span>
             </Link>
+            {/* Blog */}
+            <a 
+              href="https://www.moviehunt-blog.fr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-indigo-700 transition-colors duration-200 hidden md:flex items-center group"
+            >
+              <FiBookOpen className="mr-1 group-hover:scale-110 transition-transform" /> Blog
+            </a>
             <div className="w-72 hidden md:block">
               <SearchBar />
             </div>
@@ -68,15 +77,6 @@ export default function Navbar() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex md:items-center md:space-x-6">
-            {/* Blog */}
-            <a 
-              href="https://www.moviehunt-blog.fr/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group"
-            >
-              <FiBookOpen className="mr-1 group-hover:scale-110 transition-transform" /> Blog
-            </a>
             {/* Recherche Avancée */}
             <Link 
               href="/advanced-search" 
