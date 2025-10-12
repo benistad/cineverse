@@ -267,18 +267,24 @@ export default function Home() {
 
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
-        <div className="flex items-center mb-6">
-          <h2 className="text-3xl font-bold">Tous les films</h2>
-          <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
-            {totalFilmsCount}
-          </span>
-          <Link 
-            href="/all-films" 
-            className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
-            style={{ backgroundColor: '#4A68D9' }}
-          >
-            Voir tous les films
-          </Link>
+        <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">Tous les films</h2>
+              <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
+                {totalFilmsCount}
+              </span>
+            </div>
+            <Link 
+              href="/all-films" 
+              className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group"
+            >
+              Voir tous les films
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Link>
+          </div>
         </div>
         {loading ? (
           <div className="flex justify-center items-center h-64">
