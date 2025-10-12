@@ -44,9 +44,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
+    <nav className="bg-white shadow-lg sticky top-0 z-50 py-4">
+      <div className="container mx-auto px-6">
+        <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex-shrink-0 flex items-center space-x-2 group">
               <div className="relative w-6 h-6 sm:w-8 sm:h-8">
