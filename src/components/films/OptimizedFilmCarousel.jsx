@@ -105,15 +105,18 @@ export default function OptimizedFilmCarousel({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Titre, compteur et boutons de navigation */}
-      <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-3">
+      <div className="flex justify-between items-center border-b border-gray-200 pb-4">
+        <div className="flex items-center space-x-4">
           <div className="flex items-center">
-            <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 relative">
+              {title}
+              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
+            </h2>
             {/* Compteur de films - n'affiche que si showCount est true */}
             {showCount && (
-              <span className="ml-3 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-medium">
+              <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
                 {totalCount !== undefined ? totalCount : films.length}
               </span>
             )}
@@ -123,10 +126,12 @@ export default function OptimizedFilmCarousel({
           {showAllLink && showAllText && (
             <a 
               href={showAllLink} 
-              className="ml-4 px-4 py-2 rounded-md text-white text-sm font-medium"
-              style={{ backgroundColor: '#4A68D9' }}
+              className="hidden sm:inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
             >
               {showAllText}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </a>
           )}
         </div>
