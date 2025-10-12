@@ -168,24 +168,23 @@ export default function Home() {
       >
         <div className="relative max-w-4xl mx-auto text-center">
           <h1 
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight" 
+            className="text-5xl md:text-6xl font-extrabold mb-4 leading-tight" 
             id="moviehunt-hero-title" 
             itemProp="headline"
           >
-            <span className="text-[#3B4A9A]">MovieHunt: </span>
-            <span className="text-[#F59E0B]">idées de films</span>
+            <span className="text-indigo-800">MovieHunt: </span>
+            <span className="text-amber-500">idées de films</span>
           </h1>
           
           <h2 
-            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6"
-            style={{ color: '#3B4A9A' }}
+            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
             itemProp="description"
           >
             Quel film regarder ?
           </h2>
           
           <p 
-            className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
           >
             Votre compagnon ultime pour des idées de films, des perles rares et des recommandations sur mesure.
           </p>
@@ -193,7 +192,7 @@ export default function Home() {
           <div className="flex justify-center">
             <Link 
               href="/quel-film-regarder" 
-              className="inline-flex items-center px-8 py-4 bg-[#5B6FD8] hover:bg-[#4A5EC7] text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 rounded-full bg-indigo-600 text-white text-lg font-semibold shadow-lg hover:bg-indigo-700 transform hover:scale-105 transition-all duration-300 ease-in-out"
             >
               Trouver mon film
               <svg 

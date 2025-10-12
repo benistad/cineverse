@@ -178,7 +178,7 @@ export default function Navbar() {
             <SearchBar mobile={true} />
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-1.5 sm:p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+              className="inline-flex items-center justify-center p-1.5 sm:p-2 rounded-md text-gray-600 hover:text-indigo-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               {isOpen ? <FiX className="h-5 w-5 sm:h-6 sm:w-6" /> : <FiMenu className="h-5 w-5 sm:h-6 sm:w-6" />}
             </button>
@@ -188,7 +188,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-gray-800 shadow-lg">
+        <div className="md:hidden bg-white shadow-lg border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[calc(100vh-3.5rem)] overflow-y-auto">
             <Link href="/" className="flex items-center px-3 py-2 mb-2" onClick={() => setIsOpen(false)}>
               <div className="relative w-6 h-6 mr-2">
@@ -201,21 +201,21 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              <span className="text-lg font-bold">MovieHunt</span>
+              <span className="text-lg font-bold text-indigo-700">MovieHunt</span>
             </Link>
             <a 
               href="https://www.moviehunt-blog.fr/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
               onClick={() => setIsOpen(false)}
             >
               <FiBookOpen className="mr-2" /> Blog
             </a>
             <Link 
               href="/advanced-search" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/search' || pathname === '/advanced-search' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/search' || pathname === '/advanced-search' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -223,12 +223,12 @@ export default function Navbar() {
             </Link>
             
             {/* Découvrir section dans le menu mobile */}
-            <div className="px-3 py-2 font-medium text-gray-300 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
+            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
             
             <Link 
               href="/quel-film-regarder" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/quel-film-regarder' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -237,8 +237,8 @@ export default function Navbar() {
             
             <Link 
               href="/films-horreur-halloween-2025" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/films-horreur-halloween-2025' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -247,8 +247,8 @@ export default function Navbar() {
             
             <Link 
               href="/huntedbymoviehunt" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/huntedbymoviehunt' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -257,8 +257,8 @@ export default function Navbar() {
             
             <Link 
               href="/comment-nous-travaillons" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/comment-nous-travaillons' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -267,8 +267,8 @@ export default function Navbar() {
             
             <Link 
               href="/all-films" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                pathname === '/all-films' ? 'bg-gray-700' : 'hover:bg-gray-700'
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/all-films' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -279,8 +279,8 @@ export default function Navbar() {
               <>
                 <Link 
                   href="/admin/dashboard" 
-                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium ${
-                    pathname === '/admin/dashboard' ? 'bg-gray-700' : 'hover:bg-gray-700'
+                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                    pathname === '/admin/dashboard' ? 'bg-indigo-50 text-indigo-700' : ''
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -291,7 +291,7 @@ export default function Navbar() {
                     handleLogout();
                     setIsOpen(false);
                   }}
-                  className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+                  className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                 >
                   <FiLogOut className="mr-2" /> Déconnexion
                 </button>
@@ -301,7 +301,7 @@ export default function Navbar() {
             {!loading && !user && isAdmin && (
               <Link 
                 href="/admin" 
-                className="flex items-center px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                 onClick={() => setIsOpen(false)}
               >
                 Connexion

@@ -63,7 +63,7 @@ export default function SearchBar({ className = '', mobile = false }) {
           <button
             type="button"
             onClick={handleSearchIconClick}
-            className="search-icon p-2 text-white hover:text-blue-300 transition-colors"
+            className="search-icon p-2 text-gray-600 hover:text-indigo-700 transition-colors"
             aria-label="Rechercher"
           >
             <FiSearch size={20} />
@@ -112,16 +112,16 @@ export default function SearchBar({ className = '', mobile = false }) {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Rechercher un film..."
-              className="py-2 pl-10 pr-10 bg-gray-800 text-white rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="py-2 pl-10 pr-4 bg-gray-100 text-gray-800 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-300"
             />
             <div className="absolute left-3 text-gray-400">
-              <FiSearch size={18} />
+              <FiSearch size={20} />
             </div>
             {searchTerm && (
               <button 
                 type="button" 
                 onClick={clearSearch}
-                className="absolute right-3 text-gray-400 hover:text-white"
+                className="absolute right-3 text-gray-400 hover:text-gray-600"
               >
                 <FiX size={18} />
               </button>

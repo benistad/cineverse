@@ -110,9 +110,8 @@ export default function OptimizedFilmCarousel({
       <div className="flex justify-between items-center border-b border-gray-200 pb-4">
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 relative">
+            <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">
               {title}
-              <span className="absolute -bottom-2 left-0 w-12 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></span>
             </h2>
             {/* Compteur de films - n'affiche que si showCount est true */}
             {showCount && (
@@ -126,10 +125,10 @@ export default function OptimizedFilmCarousel({
           {showAllLink && showAllText && (
             <a 
               href={showAllLink} 
-              className="hidden sm:inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+              className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group"
             >
               {showAllText}
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </a>

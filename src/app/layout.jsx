@@ -1,17 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ["latin"],
   display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
+  variable: "--font-poppins",
 });
 
 // Export des métadonnées pour le SSR
@@ -80,7 +75,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50`}>
+      <body className={`${poppins.variable} font-sans antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100`}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
