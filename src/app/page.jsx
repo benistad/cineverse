@@ -182,17 +182,22 @@ export default function Home() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               MovieHunt
             </span>
-            <br />
-            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold">
-              Découvrez votre prochain film
+            <span className="text-white text-2xl sm:text-3xl md:text-4xl font-bold block mt-2">
+              : idées de films
             </span>
           </h1>
           
-          <p 
-            className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+          <h2 
+            className="text-2xl sm:text-3xl md:text-4xl text-white font-bold mb-6"
             itemProp="description"
           >
-            Votre compagnon ultime pour des idées de films, des perles rares et des recommandations sur mesure.
+            Quel film regarder ?
+          </h2>
+          
+          <p 
+            className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
+          >
+            Votre compagnon ultime pour des perles rares et des recommandations sur mesure.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
