@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo } from 'react-icons/fi';
+import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
