@@ -50,7 +50,7 @@ export default function MovieSearchResults({ movies, isLoading }) {
                   src={movie.poster_path 
                     ? getImageUrl(movie.poster_path) 
                     : `https://placehold.co/400x600/3498db/ffffff?text=${encodeURIComponent(movie.title || 'Film')}`}
-                  alt={movie.title || 'Poster du film'}
+                  alt={`Affiche du film ${movie.title || 'sans titre'}`}
                   className="object-cover w-full h-full"
                   onError={(e) => {
                     // En cas d'erreur, utiliser un placeholder en ligne
@@ -63,7 +63,7 @@ export default function MovieSearchResults({ movies, isLoading }) {
               ) : (
                 <SafeImage
                   src={movie.poster_path ? getImageUrl(movie.poster_path) : null}
-                  alt={movie.title || 'Poster du film'}
+                  alt={`Affiche du film ${movie.title || 'sans titre'}`}
                   fill
                   width={300}
                   height={450}

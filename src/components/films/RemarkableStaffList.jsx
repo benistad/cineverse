@@ -129,7 +129,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
             {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
             <img
               src={person.photo_url || '/images/placeholder.jpg'}
-              alt={person.nom || 'Photo du staff'}
+              alt={`Photo de ${person.nom || 'membre de l\'équipe'}${person.roles && person.roles.length > 0 ? ` - ${person.roles[0]}` : ''}`}
               className="absolute inset-0 w-full h-full object-cover"
               loading="lazy"
               onError={(e) => {

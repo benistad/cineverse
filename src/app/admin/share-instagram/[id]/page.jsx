@@ -149,7 +149,7 @@ export default function ShareInstagramPage() {
                 <>
                   <img
                     src={film.poster_url.startsWith('http') ? film.poster_url : `https://www.moviehunt.fr${film.poster_url}`}
-                    alt={film.title}
+                    alt={`Affiche du film ${film.title}`}
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   {film.is_hunted_by_moviehunt && (

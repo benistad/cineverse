@@ -203,7 +203,7 @@ export default function OptimizedFeaturedCarousel() {
                 {/* Image optimisée avec Next.js Image */}
                 <Image
                   src={imageUrl}
-                  alt={film.title}
+                  alt={`Image du film ${film.title}`}
                   fill
                   priority={index === 0} // Priorité haute pour la première image uniquement
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"

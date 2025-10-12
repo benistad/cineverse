@@ -161,7 +161,7 @@ export default function BasicCarousel() {
                       ? optimizeBackdropImage(currentFilm.backdrop_url)
                       : optimizePosterImage(currentFilm.poster_url)
                 }
-                alt={currentFilm.title}
+                alt={`Image du film ${currentFilm.title}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"

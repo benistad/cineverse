@@ -135,7 +135,7 @@ export default function SimilarFilms({ currentFilm }) {
                     film.poster_url) : 
                   '/images/placeholder.jpg'
                 }
-                alt={film.title}
+                alt={`Affiche du film ${film.title}`}
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 onError={(e) => {

@@ -33,7 +33,7 @@ function ProviderItem({ provider }) {
       <div className="relative w-12 h-12 rounded-lg overflow-hidden mx-auto mb-1">
         <Image
           src={`/api/image-proxy?url=${encodeURIComponent(optimizeLogoImage(`https://image.tmdb.org/t/p/original${provider.logo_path}`))}`}
-          alt={provider.provider_name}
+          alt={`Logo ${provider.provider_name} - Disponible en streaming`}
           fill
           className="object-contain"
           sizes="48px"
