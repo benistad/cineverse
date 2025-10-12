@@ -57,14 +57,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
           return false;
         }}
         disabled={currentPage === 1}
-        className={`p-1 sm:p-2 rounded-full flex items-center justify-center ${
+        className={`p-2 rounded-lg flex items-center justify-center transition-colors ${
           currentPage === 1
-            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            : 'bg-blue-600 text-white hover:bg-blue-700'
+            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-300'
         }`}
         aria-label="Page précédente"
       >
-        <FiChevronLeft size={16} className="sm:w-5 sm:h-5" />
+        <FiChevronLeft size={18} />
       </button>
       
       {/* Numéros de page */}
@@ -81,10 +81,10 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
                 onPageChange(page);
                 return false;
               }}
-              className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base ${
+              className={`min-w-[40px] h-10 px-3 rounded-lg flex items-center justify-center text-base font-medium transition-colors ${
                 currentPage === page
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-300'
               }`}
             >
               {page}
@@ -103,14 +103,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
           return false;
         }}
         disabled={currentPage === totalPages}
-        className={`p-1 sm:p-2 rounded-full flex items-center justify-center ${
+        className={`p-2 rounded-lg flex items-center justify-center transition-colors ${
           currentPage === totalPages
-            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            : 'bg-blue-600 text-white hover:bg-blue-700'
+            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+            : 'bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-300'
         }`}
         aria-label="Page suivante"
       >
-        <FiChevronRight size={16} className="sm:w-5 sm:h-5" />
+        <FiChevronRight size={18} />
       </button>
     </div>
   );
