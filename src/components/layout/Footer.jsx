@@ -78,6 +78,11 @@ export default function Footer() {
                   <FiInfo className="mr-2" /> Comment nous travaillons
                 </Link>
               </li>
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-white flex items-center">
+                  <FiMail className="mr-2" /> Contact
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
