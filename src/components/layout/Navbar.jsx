@@ -59,7 +59,7 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              <span className="text-lg sm:text-2xl font-bold text-indigo-700">MovieHunt</span>
+              <span className="text-2xl font-bold text-indigo-700">MovieHunt</span>
             </Link>
             <div className="w-72 hidden md:block">
               <SearchBar />
