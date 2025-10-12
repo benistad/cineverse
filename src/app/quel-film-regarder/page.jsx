@@ -62,18 +62,18 @@ export default function QuelFilmRegarder() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-6 py-12">
         <article className="prose prose-lg max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm">
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4" id="quel-film-regarder">🎬 Quel film regarder ce soir ?</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-indigo-800" id="quel-film-regarder">🎬 Quel film regarder ce soir ?</h1>
             <div className="flex justify-center">
-              <span className="inline-block w-32 h-1 rounded bg-blue-500 mb-4"></span>
+              <span className="inline-block w-32 h-1 rounded bg-gradient-to-r from-indigo-600 to-purple-600 mb-4"></span>
             </div>
           </header>
         
           {/* Bloc de mise à jour */}
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
-            <p className="text-sm text-blue-800 font-medium">
+          <div className="bg-indigo-50 border-l-4 border-indigo-600 p-4 mb-6 rounded">
+            <p className="text-sm text-indigo-800 font-medium">
               🆕 <strong>Dernière mise à jour : octobre 2025</strong>
             </p>
           </div>
@@ -140,7 +140,7 @@ export default function QuelFilmRegarder() {
                 <p className="my-3">
                   Un meurtre, un million de dollars, et une série de décisions catastrophiques dans une petite ville paisible. Joseph Gordon-Levitt brille dans cette comédie noire pleine de rebondissements.
                 </p>
-                <Link href="/films/greedy-people" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/greedy-people" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -178,7 +178,7 @@ export default function QuelFilmRegarder() {
                 <p className="my-3">
                   Un fermier veuf accueille un homme blessé avec une sacoche pleine d&apos;argent. Ce western intimiste cache un secret qui va tout changer. Tim Blake Nelson est magistral dans ce film qui revisite le genre avec intelligence.
                 </p>
-                <Link href="/films/old-henry" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/old-henry" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -216,7 +216,7 @@ export default function QuelFilmRegarder() {
                 <p className="my-3">
                   L&apos;incroyable histoire vraie derrière le jeu vidéo le plus populaire au monde. Un thriller haletant sur fond de Guerre froide avec Taron Egerton, entre espionnage et négociations impossibles en URSS.
                 </p>
-                <Link href="/films/tetris" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/tetris" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -254,7 +254,7 @@ export default function QuelFilmRegarder() {
                 <p className="my-3">
                   Après 12 ans de prison, un perceur de coffres-forts légendaire revient à Londres pour récupérer son dû. Jude Law est explosif dans cette comédie noire britannique décalée et savoureuse.
                 </p>
-                <Link href="/films/dom-hemingway" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/dom-hemingway" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -292,7 +292,7 @@ export default function QuelFilmRegarder() {
                 <p className="my-3">
                   Un consultant politique démocrate aide un colonel à la retraite dans une élection locale. Une satire mordante du système électoral américain avec un twist final brillant qui change tout.
                 </p>
-                <Link href="/films/irresistible" className="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <Link href="/films/irresistible" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
                   👉 Voir la fiche sur MovieHunt
                 </Link>
               </div>
@@ -311,7 +311,7 @@ export default function QuelFilmRegarder() {
               <div className="overflow-x-auto">
                 <table className="min-w-full bg-white">
                   <thead>
-                    <tr className="bg-blue-100">
+                    <tr className="bg-indigo-50">
                       <th className="py-2 px-4 border-b text-left">Humeur / Envie</th>
                       <th className="py-2 px-4 border-b text-left">Film à découvrir</th>
                     </tr>
@@ -320,31 +320,31 @@ export default function QuelFilmRegarder() {
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Science-fiction à la photographie mémorable</td>
                       <td className="py-2 px-4 border-b">
-                        <Link href="/films/ad-astra" className="text-blue-600 hover:text-blue-800">Ad Astra</Link>
+                        <Link href="/films/ad-astra" className="text-indigo-600 hover:text-indigo-800">Ad Astra</Link>
                       </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Thriller psychologique</td>
                       <td className="py-2 px-4 border-b">
-                        <Link href="/films/funny-games-us" className="text-blue-600 hover:text-blue-800">Funny Games U.S.</Link>
+                        <Link href="/films/funny-games-us" className="text-indigo-600 hover:text-indigo-800">Funny Games U.S.</Link>
                       </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Histoire vraie incroyable</td>
                       <td className="py-2 px-4 border-b">
-                        <Link href="/films/last-breath" className="text-blue-600 hover:text-blue-800">Last Breath</Link>
+                        <Link href="/films/last-breath" className="text-indigo-600 hover:text-indigo-800">Last Breath</Link>
                       </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Film de procès ou politique</td>
                       <td className="py-2 px-4 border-b">
-                        <Link href="/films/le-proces-du-siecle" className="text-blue-600 hover:text-blue-800">Le Procès du siècle</Link>
+                        <Link href="/films/le-proces-du-siecle" className="text-indigo-600 hover:text-indigo-800">Le Procès du siècle</Link>
                       </td>
                     </tr>
                     <tr>
                       <td className="py-2 px-4 border-b font-medium">Western Palpitant</td>
                       <td className="py-2 px-4 border-b">
-                        <Link href="/films/old-henry" className="text-blue-600 hover:text-blue-800">Old Henry</Link>
+                        <Link href="/films/old-henry" className="text-indigo-600 hover:text-indigo-800">Old Henry</Link>
                       </td>
                     </tr>
                   </tbody>
@@ -362,7 +362,7 @@ export default function QuelFilmRegarder() {
                 Vous vous demandez <strong>quel film regarder</strong> parmi les milliers disponibles ? Notre équipe de passionnés de cinéma analyse chaque semaine les sorties pour vous proposer des <strong>recommandations de films</strong> personnalisées.
               </p>
               <p className="mb-4">
-                Chaque film sur MovieHunt.fr est noté sur 10 et accompagné d&apos;une recommandation claire pour vous aider à décider quoi voir ce soir. Tous les films de cette sélection sont notés et analysés dans notre <Link href="/all-films" className="text-blue-600 hover:text-blue-800 font-semibold">catalogue complet</Link>, avec le badge <Link href="/huntedbymoviehunt" className="text-blue-600 hover:text-blue-800 font-semibold">Hunted by MovieHunt</Link> pour les plus marquants.
+                Chaque film sur MovieHunt.fr est noté sur 10 et accompagné d&apos;une recommandation claire pour vous aider à décider quoi voir ce soir. Tous les films de cette sélection sont notés et analysés dans notre <Link href="/all-films" className="text-indigo-600 hover:text-indigo-800 font-semibold">catalogue complet</Link>, avec le badge <Link href="/huntedbymoviehunt" className="text-indigo-600 hover:text-indigo-800 font-semibold">Hunted by MovieHunt</Link> pour les plus marquants.
               </p>
               <ul className="list-none pl-0">
                 <li className="mb-2 flex items-start">
@@ -392,7 +392,7 @@ export default function QuelFilmRegarder() {
                 <li className="mb-3">
                   <span className="mr-2">•</span>
                   <strong>Des critiques sincères et personnelles</strong> : nous ne sommes pas influencés par les studios ou les distributeurs.{' '}
-                  <Link href="/comment-nous-travaillons" className="text-blue-600 hover:text-blue-800">Découvrez comment nous travaillons</Link>.
+                  <Link href="/comment-nous-travaillons" className="text-indigo-600 hover:text-indigo-800">Découvrez comment nous travaillons</Link>.
                 </li>
                 <li className="mb-3">
                   <span className="mr-2">•</span>
