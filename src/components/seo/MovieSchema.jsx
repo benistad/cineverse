@@ -42,14 +42,6 @@ export default function MovieSchema({ film }) {
     countryOfOrigin: film.country_of_origin || 'FR',
     inLanguage: film.original_language || 'fr',
     duration: film.runtime ? `PT${film.runtime}M` : undefined, // Format ISO 8601 pour la durée
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: film.note_sur_10,
-      bestRating: '10',
-      worstRating: '0',
-      ratingCount: '1',
-      reviewCount: '1'
-    },
     review: {
       '@type': 'Review',
       reviewRating: {
