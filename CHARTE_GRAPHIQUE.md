@@ -47,10 +47,10 @@
   - Usage : Titres principaux (H1, H2)
   - Tailwind : `text-indigo-800`
 
-#### Orange/Amber (Accent)
-- **amber-500** : `#F59E0B`
-  - Usage : Mots-clés importants, accents
-  - Tailwind : `text-amber-500`
+#### Orange (Accent)
+- **Orange MovieHunt** : `#FEBE29`
+  - Usage : Mots-clés importants, accents, éléments de marque
+  - CSS : `color: #FEBE29` ou `var(--color-orange-accent)`
 
 ### Couleurs de texte
 
@@ -267,7 +267,7 @@ transition-all duration-300
 ### Ordre d'importance des couleurs
 1. **Indigo-800** : Titres principaux
 2. **Indigo-600/700** : Actions principales (boutons, liens)
-3. **Amber-500** : Accents et mots-clés
+3. **Orange #FEBE29** : Accents et mots-clés importants
 4. **Gray-600/700** : Texte secondaire
 5. **Gray-400** : Icônes et éléments désactivés
 

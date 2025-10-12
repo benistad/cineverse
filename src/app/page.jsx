@@ -173,7 +173,7 @@ export default function Home() {
             itemProp="headline"
           >
             <span className="text-indigo-800">MovieHunt: </span>
-            <span className="text-amber-500">idées de films</span>
+            <span style={{ color: '#FEBE29' }}>idées de films</span>
           </h1>
           
           <h2 
