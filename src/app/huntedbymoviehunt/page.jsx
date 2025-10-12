@@ -8,7 +8,7 @@ import { FaInstagram, FaTwitter } from 'react-icons/fa';
 
 export default function HuntedByMovieHuntPage() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-6 py-12 max-w-4xl">
       <div className="text-center mb-8">
         <div className="flex justify-center mb-6">
           <Image 
@@ -19,7 +19,7 @@ export default function HuntedByMovieHuntPage() {
             className="w-auto h-auto"
           />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">Hunted by MovieHunt</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-indigo-800">Hunted by MovieHunt</h1>
         <p className="text-xl text-gray-600 italic">Les Films Qu'il Ne Faut Surtout Pas Rater</p>
       </div>
       
@@ -32,7 +32,7 @@ export default function HuntedByMovieHuntPage() {
         </p>
       </div>
       
-      <div className="bg-blue-50 rounded-lg shadow-md p-6 mb-8">
+      <div className="bg-indigo-50 rounded-lg shadow-md p-6 mb-8">
         <h2 className="text-2xl font-bold mb-4">🔥 Qu'est-ce que le badge #HuntedbyMovieHunt ?</h2>
         <div className="flex flex-col md:flex-row items-center gap-6">
           <div className="md:w-1/3 flex justify-center">
@@ -72,7 +72,7 @@ export default function HuntedByMovieHuntPage() {
           Vous retrouverez ce badge sur les affiches des films directement sur notre site :
         </p>
         <div className="flex justify-center mb-4">
-          <Link href="/advanced-search?hunted=true" className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+          <Link href="/advanced-search?hunted=true" className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Voir les films Hunted <FiArrowRight className="ml-2" />
           </Link>
         </div>
@@ -83,7 +83,7 @@ export default function HuntedByMovieHuntPage() {
           <a href="https://instagram.com/explore/tags/huntedbymoviehunt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-2 px-4 rounded-lg">
             <FaInstagram className="mr-2" /> Instagram
           </a>
-          <a href="https://twitter.com/hashtag/huntedbymoviehunt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg">
+          <a href="https://twitter.com/hashtag/huntedbymoviehunt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg">
             <FaTwitter className="mr-2" /> Twitter
           </a>
         </div>
@@ -94,10 +94,10 @@ export default function HuntedByMovieHuntPage() {
         <div className="bg-white p-4 rounded-lg mb-4">
           <p className="mb-2 font-medium">Vous cherchez une idée de film originale ?</p>
           <p className="mb-2 font-medium">Vous hésitez sur quel film regarder ce soir ?</p>
-          <p className="font-bold text-blue-600">Faites confiance au badge Hunted : un gage de qualité, d'émotion et de surprise.</p>
+          <p className="font-bold text-indigo-600">Faites confiance au badge Hunted : un gage de qualité, d'émotion et de surprise.</p>
         </div>
         <p className="text-center text-lg font-bold">
-          📌 Rendez-vous sur <a href="https://www.moviehunt.fr" className="text-blue-600 hover:underline">www.moviehunt.fr</a> et laissez-vous guider par la chasse aux chefs-d'œuvre.
+          📌 Rendez-vous sur <a href="https://www.moviehunt.fr" className="text-indigo-600 hover:underline">www.moviehunt.fr</a> et laissez-vous guider par la chasse aux chefs-d'œuvre.
         </p>
       </div>
       

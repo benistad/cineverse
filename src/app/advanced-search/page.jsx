@@ -282,8 +282,8 @@ function AdvancedSearch() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Recherche avancée</h1>
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-indigo-800">Recherche avancée</h1>
       
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Panneau de filtres */}
@@ -316,7 +316,7 @@ function AdvancedSearch() {
               <div className="mt-2">
                 <button
                   onClick={toggleHuntedByMovieHunt}
-                  className={`px-4 py-2 rounded-lg flex items-center ${isHuntedByMovieHunt ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                  className={`px-4 py-2 rounded-lg flex items-center ${isHuntedByMovieHunt ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
                 >
                   <span className="mr-2">{isHuntedByMovieHunt ? '✓' : ''}</span>
                   Afficher uniquement les films Hunted
@@ -346,7 +346,7 @@ function AdvancedSearch() {
                     onClick={() => toggleGenre(genre)}
                     className={`px-3 py-1 text-sm rounded-full ${
                       selectedGenres.includes(genre)
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-indigo-600 text-white'
                         : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                     }`}
                   >
@@ -375,7 +375,7 @@ function AdvancedSearch() {
                     onClick={() => toggleRating(rating)}
                     className={`w-10 h-10 flex items-center justify-center rounded-full ${
                       selectedRatings.includes(rating)
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-indigo-600 text-white'
                         : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                     }`}
                   >
@@ -400,7 +400,7 @@ function AdvancedSearch() {
               <div className="mt-2 max-h-60 overflow-y-auto">
                 {loadingYears ? (
                   <div className="flex justify-center items-center py-4">
-                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+                    <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-indigo-600"></div>
                   </div>
                 ) : availableYears.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -410,7 +410,7 @@ function AdvancedSearch() {
                         onClick={() => toggleYear(year)}
                         className={`px-2 py-1 text-sm rounded ${
                           selectedYears.includes(year)
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-indigo-600 text-white'
                             : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                         }`}
                       >
@@ -436,7 +436,7 @@ function AdvancedSearch() {
         <div className="lg:w-3/4">
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
             </div>
           ) : (
             <>
@@ -482,10 +482,10 @@ function AdvancedSearch() {
 export default function AdvancedSearchPage() {
   return (
     <Suspense fallback={
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Recherche avancée</h1>
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-indigo-800">Recherche avancée</h1>
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
         </div>
       </div>
     }>
