@@ -31,10 +31,13 @@ Redesigner le site MovieHunt avec un design moderne inspiré de la maquette Rede
 - [ ] Films les mieux notés
 - [ ] Films méconnus
 
-### Phase 4 : Cartes de films
-- [ ] Nouveau design des cartes
-- [ ] Hover effects élégants
-- [ ] Informations plus visibles
+### Phase 3 : Cartes de films ✅
+- [x] Nouveau design des cartes (rounded-xl)
+- [x] Hover effects élégants (scale-102)
+- [x] Informations plus visibles
+- [x] Titre avec hover indigo
+- [x] Meilleur espacement
+- [x] Notre système de notation préservé
 
 ### Phase 5 : Footer
 - [ ] Section CTA "Prêt pour votre prochaine soirée ciné ?"
