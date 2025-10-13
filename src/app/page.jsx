@@ -177,7 +177,7 @@ export default function Home() {
           </h1>
           
           <h2 
-            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
+            className="text-2xl md:text-3xl font-bold text-gray-700 mb-8 max-w-2xl mx-auto"
             itemProp="description"
           >
             Quel film regarder ?
