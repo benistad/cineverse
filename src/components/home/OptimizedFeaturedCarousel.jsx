@@ -113,7 +113,7 @@ export default function OptimizedFeaturedCarousel() {
   // Afficher un message de chargement pendant la récupération des films
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-lg p-8 text-center h-[250px] sm:h-[300px] md:h-[500px] flex items-center justify-center">
+      <div className="bg-gray-800 rounded-lg p-8 text-center h-[320px] sm:h-[370px] md:h-[570px] flex items-center justify-center">
         <div className="text-white">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
           <p className="mt-4">Chargement des films en vedette...</p>
@@ -199,7 +199,7 @@ export default function OptimizedFeaturedCarousel() {
           
           return (
             <SwiperSlide key={film.id}>
-              <div className="relative h-[250px] sm:h-[300px] md:h-[500px] bg-gray-800">
+              <div className="relative h-[320px] sm:h-[370px] md:h-[570px] bg-gray-800">
                 {/* Image optimisée avec Next.js Image */}
                 <Image
                   src={imageUrl}
