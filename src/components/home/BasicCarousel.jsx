@@ -141,7 +141,7 @@ export default function BasicCarousel() {
       </button>
       
       {/* Carrousel */}
-      <div className="relative h-[250px] sm:h-[300px] md:h-[500px] rounded-lg overflow-hidden">
+      <div className="relative h-[320px] sm:h-[370px] md:h-[570px] rounded-lg overflow-hidden">
         {/* Image d'arrière-plan */}
         <div className="absolute inset-0 bg-gray-800">
           {currentFilm && (
