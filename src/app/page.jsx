@@ -212,7 +212,7 @@ export default function Home() {
       <section>
         <div className="mb-6 px-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl md:text-3xl font-bold text-indigo-800">À la une</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">À la une</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-indigo-300 to-transparent"></div>
           </div>
         </div>
