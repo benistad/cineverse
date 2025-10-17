@@ -101,66 +101,56 @@ const MobilePerformanceOptimizer = dynamic(
 export default function ClientLayout({ children }) {
   return (
     <>
-      <head>
-        {/* Préconnexion aux domaines critiques pour améliorer le LCP */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://image.tmdb.org" />
-        
-        {/* Métadonnées de base gérées par le layout serveur */}
-        {/* Les métadonnées OG, Twitter, favicons sont maintenant dans layout.jsx */}
-        
-        {/* Google tag (gtag.js) - Chargé après le LCP pour ne pas bloquer le rendu */}
-        <Script
-          strategy="lazyOnload"
-          src="https://www.googletagmanager.com/gtag/js?id=G-TB25P4NBF2"
-        />
-        <Script
-          id="google-analytics"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-TB25P4NBF2');
-            `,
-          }}
-        />
-        
-        {/* Microsoft Clarity Analytics */}
-        <Script
-          id="microsoft-clarity"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "tndhq5pobe");
-            `,
-          }}
-        />
-        
-        {/* Cabin Analytics - Chargé après le LCP */}
-        <Script
-          id="cabin-analytics-conditional"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Charger Cabin Analytics uniquement si pas sur une page admin
-              if (!window.location.pathname.startsWith('/admin')) {
-                const script = document.createElement('script');
-                script.src = 'https://scripts.withcabin.com/hello.js';
-                script.async = true;
-                script.defer = true;
-                document.head.appendChild(script);
-              }
-            `,
-          }}
-        />
-      </head>
+      {/* Google tag (gtag.js) - Chargé après le LCP pour ne pas bloquer le rendu */}
+      <Script
+        strategy="lazyOnload"
+        src="https://www.googletagmanager.com/gtag/js?id=G-TB25P4NBF2"
+      />
+      <Script
+        id="google-analytics"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-TB25P4NBF2');
+          `,
+        }}
+      />
+      
+      {/* Microsoft Clarity Analytics */}
+      <Script
+        id="microsoft-clarity"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "tndhq5pobe");
+          `,
+        }}
+      />
+      
+      {/* Cabin Analytics - Chargé après le LCP */}
+      <Script
+        id="cabin-analytics-conditional"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
+            // Charger Cabin Analytics uniquement si pas sur une page admin
+            if (!window.location.pathname.startsWith('/admin')) {
+              const script = document.createElement('script');
+              script.src = 'https://scripts.withcabin.com/hello.js';
+              script.async = true;
+              script.defer = true;
+              document.head.appendChild(script);
+            }
+          `,
+        }}
+      />
       
       <LanguageProvider>
         <AuthProvider>
