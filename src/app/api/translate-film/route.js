@@ -6,6 +6,7 @@
 
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { prepareTextForTranslation, postProcessTranslation } from '@/lib/translation/glossary';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -51,9 +52,6 @@ async function translateWithDeepL(text, context = 'general') {
   if (!text || text.trim() === '' || !DEEPL_API_KEY) {
     return text;
   }
-
-  // Import dynamique du glossaire
-  const { prepareTextForTranslation, postProcessTranslation } = await import('@/lib/translation/glossary');
 
   try {
     // Préparer le texte avec le glossaire
