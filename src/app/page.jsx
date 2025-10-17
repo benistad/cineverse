@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { applyTranslationsToFilms } from '@/lib/translation/client';
 import { 
   getPaginatedFilms
 } from '@/lib/supabase/films';
@@ -21,6 +23,7 @@ import { clientCache } from '@/lib/cache/clientCache';
 
 export default function Home() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   
   // Définir les métadonnées SEO
   useEffect(() => {
@@ -47,6 +50,33 @@ export default function Home() {
   const [loadingPagination, setLoadingPagination] = useState(false);
   
   const filmsPerPage = 8;
+
+  // Appliquer les traductions quand la langue change
+  useEffect(() => {
+    async function applyTranslations() {
+      if (locale === 'en') {
+        // Appliquer les traductions aux films déjà chargés
+        if (recentFilms.length > 0) {
+          const translated = await applyTranslationsToFilms(recentFilms, locale);
+          setRecentFilms(translated);
+        }
+        if (topRatedFilms.length > 0) {
+          const translated = await applyTranslationsToFilms(topRatedFilms, locale);
+          setTopRatedFilms(translated);
+        }
+        if (hiddenGems.length > 0) {
+          const translated = await applyTranslationsToFilms(hiddenGems, locale);
+          setHiddenGems(translated);
+        }
+        if (allFilms.length > 0) {
+          const translated = await applyTranslationsToFilms(allFilms, locale);
+          setAllFilms(translated);
+        }
+      }
+    }
+    
+    applyTranslations();
+  }, [locale]); // Se déclenche quand la langue change
 
   // Fonction pour charger les films paginés
   const loadPaginatedFilms = async (page) => {

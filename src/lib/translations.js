@@ -11,51 +11,49 @@ export async function getCurrentLocale() {
 }
 
 /**
- * Récupère un film avec ses traductions
+ * Récupère un film avec sa traduction
  * @param {string} filmId - ID du film
- * @param {string} locale - Langue souhaitée (fr ou en)
- * @returns {Promise<Object>} Film avec traductions appliquées
+ * @param {string} locale - Locale (fr ou en)
+ * @returns {Promise<Object>} Film avec traduction si disponible
  */
-export async function getFilmWithTranslation(filmId, locale = null) {
+export async function getFilmWithTranslation(filmId, locale = 'fr') {
   const supabase = await createClient();
-  const currentLocale = locale || await getCurrentLocale();
-
+  
   // Récupérer le film
-  const { data: film, error: filmError } = await supabase
+  const { data: film, error } = await supabase
     .from('films')
     .select('*')
     .eq('id', filmId)
     .single();
-
-  if (filmError || !film) {
+  
+  if (error || !film) {
     return null;
   }
-
-  // Si la langue est le français, retourner directement le film
-  if (currentLocale === 'fr') {
+  
+  // Si la locale est 'fr', retourner directement le film
+  if (locale === 'fr') {
     return film;
   }
-
-  // Récupérer la traduction
+  
+  // Sinon, récupérer la traduction
   const { data: translation } = await supabase
     .from('film_translations')
     .select('*')
     .eq('film_id', filmId)
-    .eq('locale', currentLocale)
+    .eq('locale', locale)
     .single();
-
-  // Appliquer la traduction si elle existe
+  
+  // Fusionner le film avec sa traduction
   if (translation) {
     return {
       ...film,
       title: translation.title || film.title,
       synopsis: translation.synopsis || film.synopsis,
       why_watch_content: translation.why_watch_content || film.why_watch_content,
-      what_we_didnt_like: translation.what_we_didnt_like || film.what_we_didnt_like,
-      _translation: translation, // Garder la traduction originale pour référence
+      what_we_didnt_like: translation.what_we_didnt_like || film.what_we_didnt_like
     };
   }
-
+  
   return film;
 }
 
