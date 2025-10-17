@@ -54,29 +54,28 @@ export default function Home() {
   // Appliquer les traductions quand la langue change
   useEffect(() => {
     async function applyTranslations() {
-      if (locale === 'en') {
-        // Appliquer les traductions aux films déjà chargés
-        if (recentFilms.length > 0) {
-          const translated = await applyTranslationsToFilms(recentFilms, locale);
-          setRecentFilms(translated);
-        }
-        if (topRatedFilms.length > 0) {
-          const translated = await applyTranslationsToFilms(topRatedFilms, locale);
-          setTopRatedFilms(translated);
-        }
-        if (hiddenGems.length > 0) {
-          const translated = await applyTranslationsToFilms(hiddenGems, locale);
-          setHiddenGems(translated);
-        }
-        if (allFilms.length > 0) {
-          const translated = await applyTranslationsToFilms(allFilms, locale);
-          setAllFilms(translated);
-        }
+      // Appliquer les traductions uniquement si on a des films et qu'on est en anglais
+      if (locale === 'en' && (recentFilms.length > 0 || topRatedFilms.length > 0 || hiddenGems.length > 0 || allFilms.length > 0)) {
+        console.log('🌍 Applying translations to films...');
+        
+        const [translatedRecent, translatedTopRated, translatedGems, translatedAll] = await Promise.all([
+          recentFilms.length > 0 ? applyTranslationsToFilms(recentFilms, locale) : [],
+          topRatedFilms.length > 0 ? applyTranslationsToFilms(topRatedFilms, locale) : [],
+          hiddenGems.length > 0 ? applyTranslationsToFilms(hiddenGems, locale) : [],
+          allFilms.length > 0 ? applyTranslationsToFilms(allFilms, locale) : []
+        ]);
+        
+        if (translatedRecent.length > 0) setRecentFilms(translatedRecent);
+        if (translatedTopRated.length > 0) setTopRatedFilms(translatedTopRated);
+        if (translatedGems.length > 0) setHiddenGems(translatedGems);
+        if (translatedAll.length > 0) setAllFilms(translatedAll);
+        
+        console.log('✅ Translations applied');
       }
     }
     
     applyTranslations();
-  }, [locale]); // Se déclenche quand la langue change
+  }, [locale, recentFilms.length, topRatedFilms.length, hiddenGems.length, allFilms.length]); // Se déclenche quand la langue change ou quand les films sont chargés
 
   // Fonction pour charger les films paginés
   const loadPaginatedFilms = async (page) => {

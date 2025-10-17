@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
 import RatingIcon from '@/components/ui/RatingIcon';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import StreamingProviders from '@/components/films/StreamingProviders';
@@ -21,12 +22,19 @@ async function getFilm(slug) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
   
+  // Récupérer la locale depuis les cookies
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE');
+  const locale = localeCookie?.value || 'fr';
+  
   // Rechercher le film par son slug
   const { data, error } = await supabase
     .from('films')
     .select('*')
     .eq('slug', slug)
     .single();
+  
+  let film = null;
   
   if (error || !data) {
     // Si le slug n'existe pas, essayer de trouver le film par son titre
@@ -43,10 +51,31 @@ async function getFilm(slug) {
       return null;
     }
     
-    return filmByTitle[0];
+    film = filmByTitle[0];
+  } else {
+    film = data;
   }
   
-  return data;
+  // Si la locale est 'en', récupérer et appliquer les traductions
+  if (locale === 'en' && film) {
+    const { data: translation } = await supabase
+      .from('film_translations')
+      .select('*')
+      .eq('film_id', film.id)
+      .eq('locale', 'en')
+      .single();
+    
+    if (translation) {
+      film = {
+        ...film,
+        title: translation.title || film.title,
+        synopsis: translation.synopsis || film.synopsis,
+        why_watch_content: translation.why_watch_content || film.why_watch_content
+      };
+    }
+  }
+  
+  return film;
 }
 
 // Générer les métadonnées dynamiques
