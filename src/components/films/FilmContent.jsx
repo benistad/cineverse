@@ -12,14 +12,17 @@ import FilmTrailer from '@/components/films/FilmTrailer';
 export default function FilmContent({ film: initialFilm }) {
   const { t, locale } = useTranslations();
   const [film, setFilm] = useState(initialFilm);
+  const [isClient, setIsClient] = useState(false);
 
-  // Mettre à jour le film quand initialFilm change
+  // Marquer qu'on est côté client
   useEffect(() => {
-    setFilm(initialFilm);
-  }, [initialFilm]);
+    setIsClient(true);
+  }, []);
 
   // Charger les traductions quand la locale change
   useEffect(() => {
+    if (!isClient) return;
+    
     async function loadTranslation() {
       if (locale === 'en' && initialFilm?.id) {
         const supabase = createBrowserClient(
@@ -40,8 +43,6 @@ export default function FilmContent({ film: initialFilm }) {
             synopsis: translation.synopsis || initialFilm.synopsis,
             why_watch_content: translation.why_watch_content || initialFilm.why_watch_content
           });
-        } else {
-          setFilm(initialFilm);
         }
       } else {
         setFilm(initialFilm);
@@ -49,7 +50,7 @@ export default function FilmContent({ film: initialFilm }) {
     }
 
     loadTranslation();
-  }, [locale, initialFilm?.id]); // Utiliser l'ID au lieu de l'objet complet
+  }, [locale, initialFilm?.id, isClient]);
 
   return (
     <>
@@ -59,12 +60,12 @@ export default function FilmContent({ film: initialFilm }) {
           {t('film.synopsis')}
         </h2>
         <p className="text-sm sm:text-base text-gray-700" itemProp="description">
-          {film.synopsis || t('filmCard.noSynopsis')}
+          {film?.synopsis || t('filmCard.noSynopsis')}
         </p>
       </section>
 
       {/* Pourquoi regarder ce film */}
-      {film.why_watch_enabled && film.why_watch_content && (
+      {film?.why_watch_enabled && film?.why_watch_content && (
         <section className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-lg border-l-4 border-indigo-600">
           <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-indigo-800">
             {t('film.whyWatch')}
@@ -72,19 +73,22 @@ export default function FilmContent({ film: initialFilm }) {
           <div
             className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
             dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
+            suppressHydrationWarning
           />
         </section>
       )}
 
       {/* Blog article link */}
-      {film.blog_article_url && (
+      {film?.blog_article_url && (
         <section className="mb-4">
           <BlogArticleLink url={film.blog_article_url} />
         </section>
       )}
 
       {/* Bande-annonce */}
-      <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
+      {film?.youtube_trailer_key && (
+        <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
+      )}
     </>
   );
 }
