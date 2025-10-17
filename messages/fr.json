@@ -15,10 +15,19 @@
   "home": {
     "title": "Découvrez les meilleurs films à regarder",
     "subtitle": "Des critiques authentiques, des recommandations personnalisées",
-    "recentlyRated": "Films récemment notés",
+    "heroTitle": "MovieHunt: idées de films",
+    "heroSubtitle": "Quel film regarder ?",
+    "heroDescription": "Votre compagnon ultime pour des idées de films, des perles rares et des recommandations sur mesure.",
+    "findMyFilm": "Trouver mon film",
+    "featured": "À la une",
+    "recentlyRated": "Derniers films notés",
     "topRated": "Films les mieux notés",
     "hiddenGems": "Films méconnus à voir",
-    "viewAll": "Voir tous les films"
+    "allFilms": "Tous les films",
+    "viewAll": "Voir tous les films",
+    "noFilms": "Aucun film disponible pour le moment.",
+    "metaTitle": "MovieHunt : idées de films - Quel film regarder ?",
+    "metaDescription": "Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus."
   },
   "film": {
     "rating": "Note",

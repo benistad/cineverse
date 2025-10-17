@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTranslations } from '@/hooks/useTranslations';
 import { 
   getPaginatedFilms
 } from '@/lib/supabase/films';
@@ -19,9 +20,11 @@ import OptimizedFeaturedCarousel from '@/components/home/OptimizedFeaturedCarous
 import { clientCache } from '@/lib/cache/clientCache';
 
 export default function Home() {
+  const { t } = useTranslations();
+  
   // Définir les métadonnées SEO
   useEffect(() => {
-    document.title = 'MovieHunt : idées de films - Quel film regarder ?';
+    document.title = t('home.metaTitle');
     
     let metaDescription = document.querySelector('meta[name="description"]');
     if (!metaDescription) {
@@ -29,8 +32,9 @@ export default function Home() {
       metaDescription.name = 'description';
       document.head.appendChild(metaDescription);
     }
-    metaDescription.content = 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.';
-  }, []);
+    metaDescription.content = t('home.metaDescription');
+  }, [t]);
+  
   const [recentFilms, setRecentFilms] = useState([]);
   const [topRatedFilms, setTopRatedFilms] = useState([]);
   const [hiddenGems, setHiddenGems] = useState([]);
@@ -173,20 +177,20 @@ export default function Home() {
             itemProp="headline"
           >
             <span className="text-indigo-800">MovieHunt: </span>
-            <span style={{ color: '#FEBE29' }}>idées de films</span>
+            <span style={{ color: '#FEBE29' }}>{t('home.heroTitle').split(': ')[1]}</span>
           </h1>
           
           <h2 
             className="text-2xl md:text-3xl font-bold text-gray-700 mb-8 max-w-2xl mx-auto"
             itemProp="description"
           >
-            Quel film regarder ?
+            {t('home.heroSubtitle')}
           </h2>
           
           <p 
             className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
           >
-            Votre compagnon ultime pour des idées de films, des perles rares et des recommandations sur mesure.
+            {t('home.heroDescription')}
           </p>
 
           <div className="flex justify-center">
@@ -194,7 +198,7 @@ export default function Home() {
               href="/quel-film-regarder" 
               className="inline-flex items-center px-8 py-4 rounded-full bg-indigo-600 text-white text-lg font-semibold shadow-lg hover:bg-indigo-700 transform hover:scale-105 transition-all duration-300 ease-in-out"
             >
-              Trouver mon film
+              {t('home.findMyFilm')}
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-5 w-5 ml-2" 
@@ -212,7 +216,7 @@ export default function Home() {
       <section>
         <div className="mb-6 px-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">À la une</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('home.featured')}</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-indigo-300 to-transparent"></div>
           </div>
         </div>
@@ -228,7 +232,7 @@ export default function Home() {
         ) : (
           <OptimizedFilmCarousel 
             films={recentFilms} 
-            title="Derniers films notés" 
+            title={t('home.recentlyRated')} 
             visibleCount={4}
             showCount={false}
           />
@@ -244,10 +248,10 @@ export default function Home() {
         ) : (
           <OptimizedFilmCarousel 
             films={topRatedFilms} 
-            title="Films les mieux notés" 
+            title={t('home.topRated')} 
             visibleCount={4} 
             showAllLink="/top-rated"
-            showAllText="Voir tous les films"
+            showAllText={t('home.viewAll')}
             totalCount={topRatedFilmsCount}
           />
         )}
@@ -262,10 +266,10 @@ export default function Home() {
         ) : hiddenGems.length > 0 ? (
           <OptimizedFilmCarousel 
             films={hiddenGems} 
-            title="Films méconnus à voir" 
+            title={t('home.hiddenGems')} 
             visibleCount={4} 
             showAllLink="/hidden-gems"
-            showAllText="Voir tous les films"
+            showAllText={t('home.viewAll')}
             totalCount={hiddenGemsCount}
           />
         ) : null}
@@ -276,7 +280,7 @@ export default function Home() {
         <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">Tous les films</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('home.allFilms')}</h2>
               <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
                 {totalFilmsCount}
               </span>
@@ -285,7 +289,7 @@ export default function Home() {
               href="/all-films" 
               className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group"
             >
-              Voir tous les films
+              {t('home.viewAll')}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
@@ -313,7 +317,7 @@ export default function Home() {
               </>
             ) : (
               <div className="text-center py-10 bg-white rounded-lg shadow">
-                <p className="text-gray-500">Aucun film disponible pour le moment.</p>
+                <p className="text-gray-500">{t('home.noFilms')}</p>
               </div>
             )}
           </>

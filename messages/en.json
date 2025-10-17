@@ -15,10 +15,19 @@
   "home": {
     "title": "Discover the Best Films to Watch",
     "subtitle": "Authentic reviews, personalized recommendations",
+    "heroTitle": "MovieHunt: film ideas",
+    "heroSubtitle": "What film to watch?",
+    "heroDescription": "Your ultimate companion for film ideas, hidden gems and personalized recommendations.",
+    "findMyFilm": "Find my film",
+    "featured": "Featured",
     "recentlyRated": "Recently Rated Films",
     "topRated": "Top Rated Films",
     "hiddenGems": "Hidden Gems to Watch",
-    "viewAll": "View All Films"
+    "allFilms": "All Films",
+    "viewAll": "View All Films",
+    "noFilms": "No films available at the moment.",
+    "metaTitle": "MovieHunt: film ideas - What film to watch?",
+    "metaDescription": "Movie Hunt is the site to know what film to watch and discover hidden gems. Film ratings, recommendations, remarkable cast, availability on French streaming platforms and more."
   },
   "film": {
     "rating": "Rating",
