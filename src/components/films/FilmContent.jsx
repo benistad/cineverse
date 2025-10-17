@@ -1,9 +1,10 @@
 'use client';
 
 import { useTranslations } from '@/hooks/useTranslations';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
+import BlogArticleLink from '@/components/films/BlogArticleLink';
+import FilmTrailer from '@/components/films/FilmTrailer';
 
 /**
  * Composant client pour afficher le contenu traduit d'un film
@@ -68,6 +69,16 @@ export default function FilmContent({ film: initialFilm }) {
           />
         </section>
       )}
+
+      {/* Blog article link */}
+      {film.blog_article_url && (
+        <section className="mb-4">
+          <BlogArticleLink url={film.blog_article_url} />
+        </section>
+      )}
+
+      {/* Bande-annonce */}
+      <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
     </>
   );
 }

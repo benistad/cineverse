@@ -6,9 +6,7 @@ import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
-import FilmTrailer from '@/components/films/FilmTrailer';
 import FilmPoster from '@/components/films/FilmPoster';
-import BlogArticleLink from '@/components/films/BlogArticleLink';
 import FilmContent from '@/components/films/FilmContent';
 import { AddedOnLabel, GenreLabel, RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
 
@@ -194,18 +192,8 @@ export default async function FilmPage({ params }) {
               />
             )}
             
-            {/* Contenu traduit du film */}
+            {/* Contenu traduit du film (inclut synopsis, pourquoi regarder, blog link, trailer) */}
             <FilmContent film={film} />
-            
-            {/* Blog article link */}
-            {film.blog_article_url && (
-              <section className="mb-4">
-                <BlogArticleLink url={film.blog_article_url} />
-              </section>
-            )}
-            
-            {/* Bande-annonce (composant client) */}
-            <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
             
             {/* Section "Ce que nous n'avons pas aimé" */}
             {film.not_liked_enabled && film.not_liked_content && (
