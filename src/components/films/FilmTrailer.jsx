@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function FilmTrailer({ film, initialTrailerKey }) {
+  const { locale } = useLanguage();
+  
   // Fix temporaire pour 1BR: forcer la bonne clé YouTube
-  const correctTrailerKey = film.slug === '1br-the-apartment' 
+  const correctTrailerKey = film?.slug === '1br-the-apartment' 
     ? 'IGzb01GrsxQ' 
-    : (film.youtube_trailer_key || initialTrailerKey);
+    : (film?.youtube_trailer_key || initialTrailerKey);
   
   // Utiliser la clé du film en priorité (données fraîches), puis initialTrailerKey (SSR)
   const [trailerKey, setTrailerKey] = useState(correctTrailerKey);
@@ -16,7 +19,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
 
   useEffect(() => {
     // Mettre à jour si la clé du film change
-    if (film.youtube_trailer_key && film.youtube_trailer_key !== trailerKey) {
+    if (film?.youtube_trailer_key && film.youtube_trailer_key !== trailerKey) {
       setTrailerKey(film.youtube_trailer_key);
       return;
     }
@@ -25,7 +28,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
     if (trailerKey) return;
 
     // Chercher une bande-annonce si nécessaire
-    const shouldSearchTrailer = !film.youtube_trailer_key && film.tmdb_id;
+    const shouldSearchTrailer = !film?.youtube_trailer_key && film?.tmdb_id;
     
     if (shouldSearchTrailer) {
       setSearchingTrailer(true);
@@ -37,11 +40,12 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
           
           if (film.tmdb_id) {
             const { getMovieTrailers } = await import('@/lib/tmdb/trailers');
-            foundTrailerKey = await getMovieTrailers(film.tmdb_id);
+            // Passer la locale pour récupérer la bonne langue
+            foundTrailerKey = await getMovieTrailers(film.tmdb_id, locale);
           }
           
           if (!foundTrailerKey) {
-            foundTrailerKey = await findTrailerByTitleAndYear(film.title, releaseYear);
+            foundTrailerKey = await findTrailerByTitleAndYear(film.title, releaseYear, locale);
           }
           
           if (foundTrailerKey) {
@@ -64,7 +68,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
       
       searchTrailer();
     }
-  }, [film, trailerKey]);
+  }, [film, trailerKey, locale]);
 
   if (searchingTrailer) {
     return (

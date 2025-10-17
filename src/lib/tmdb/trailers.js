@@ -57,9 +57,10 @@ export const findMovieByTitleAndYear = async (title, year) => {
  * Recherche exhaustive dans toutes les langues disponibles
  * Gère les cas où les vidéos sont privées ou indisponibles
  * @param {number} movieId - ID TMDB du film
+ * @param {string} locale - Locale actuelle ('fr' ou 'en')
  * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
  */
-export const getMovieTrailers = async (movieId) => {
+export const getMovieTrailers = async (movieId, locale = 'fr') => {
   try {
     // IMPORTANT: D'abord récupérer TOUTES les bandes-annonces disponibles sans filtre de langue
     // Cela nous assure de ne manquer aucune bande-annonce, même si elle n'est disponible qu'en VO
@@ -77,11 +78,10 @@ export const getMovieTrailers = async (movieId) => {
         'other': allVideos.results.filter(v => v.iso_639_1 !== 'fr' && v.iso_639_1 !== 'en')
       };
       
-      // Stratégie de recherche par ordre de préférence linguistique
-      // PRIORITÉ 1: Bandes-annonces VF via TMDB
-      // PRIORITÉ 2: Bandes-annonces VO via TMDB
-      // PRIORITÉ 3: YouTube (seulement si rien n'est trouvé via TMDB)
-      const languagePreferences = ['fr', 'en', 'other'];
+      // Stratégie de recherche par ordre de préférence linguistique selon la locale
+      // Si locale = 'fr': PRIORITÉ 1: VF, PRIORITÉ 2: VO
+      // Si locale = 'en': PRIORITÉ 1: VO, PRIORITÉ 2: VF
+      const languagePreferences = locale === 'en' ? ['en', 'fr', 'other'] : ['fr', 'en', 'other'];
       
       let trailerKey = null;
       let trailerLanguage = null;
@@ -201,25 +201,31 @@ export const getMovieTrailers = async (movieId) => {
  * Recherche une bande-annonce sur YouTube pour un film donné
  * @param {string} movieTitle - Titre du film
  * @param {number} year - Année de sortie du film (optionnelle)
+ * @param {string} locale - Locale actuelle ('fr' ou 'en')
  * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
  */
-export const searchYouTubeTrailer = async (movieTitle, year = null) => {
+export const searchYouTubeTrailer = async (movieTitle, year = null, locale = 'fr') => {
   try {
-    // Construire les requêtes de recherche (d'abord en VF, puis en VO si nécessaire)
+    // Construire les requêtes de recherche selon la locale
     const yearString = year ? ` ${year}` : '';
     
-    // PRIORITÉ 1: Recherche en VF sur YouTube
+    // Si locale = 'fr': PRIORITÉ 1: VF, PRIORITÉ 2: VO
+    // Si locale = 'en': PRIORITÉ 1: VO, PRIORITÉ 2: VF
     const searchQueryVF = `${movieTitle}${yearString} bande annonce officielle VF`;
-    // PRIORITÉ 2: Recherche en VO sur YouTube (si VF non trouvée)
     const searchQueryVO = `${movieTitle}${yearString} trailer official`;
     
-    // URL de recherche YouTube pour référence (VF par défaut)
+    // URL de recherche YouTube pour référence
     const searchUrlVF = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQueryVF)}`;
     const searchUrlVO = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQueryVO)}`;
     
-    console.log(`URLs de recherche YouTube générées pour "${movieTitle}":`);
-    console.log(`- VF: ${searchUrlVF}`);
-    console.log(`- VO: ${searchUrlVO}`);
+    console.log(`URLs de recherche YouTube générées pour "${movieTitle}" (locale: ${locale}):`);
+    if (locale === 'fr') {
+      console.log(`- PRIORITÉ 1 (VF): ${searchUrlVF}`);
+      console.log(`- PRIORITÉ 2 (VO): ${searchUrlVO}`);
+    } else {
+      console.log(`- PRIORITÉ 1 (VO): ${searchUrlVO}`);
+      console.log(`- PRIORITÉ 2 (VF): ${searchUrlVF}`);
+    }
     
     // Utiliser des bandes-annonces prédéfinies pour certains films populaires
     // Cette approche est plus fiable que l'API YouTube qui peut être limitée
@@ -308,22 +314,23 @@ export const searchYouTubeTrailer = async (movieTitle, year = null) => {
  * Recherche une bande-annonce pour un film en utilisant son titre et son année
  * @param {string} title - Titre du film
  * @param {number} year - Année de sortie du film
+ * @param {string} locale - Locale actuelle ('fr' ou 'en')
  * @returns {Promise<string|null>} - Clé YouTube de la bande-annonce ou null si non trouvée
  */
-export const findTrailerByTitleAndYear = async (title, year) => {
+export const findTrailerByTitleAndYear = async (title, year, locale = 'fr') => {
   try {
-    console.log(`Recherche de bande-annonce pour: ${title} (${year})`);
+    console.log(`Recherche de bande-annonce pour: ${title} (${year}) en ${locale}`);
     
-    // PRIORITÉ 1 et 2: Bandes-annonces via TMDB (VF puis VO)
+    // PRIORITÉ 1 et 2: Bandes-annonces via TMDB (VF puis VO selon locale)
     // Étape 1: Trouver l'ID TMDB du film
     const movieId = await findMovieByTitleAndYear(title, year);
     
     if (movieId) {
-      // Étape 2: Récupérer les bandes-annonces du film depuis TMDB
-      const trailerKey = await getMovieTrailers(movieId);
+      // Étape 2: Récupérer les bandes-annonces du film depuis TMDB avec la locale
+      const trailerKey = await getMovieTrailers(movieId, locale);
       
       if (trailerKey) {
-        console.log(`Bande-annonce TMDB trouvée pour: ${title} (${year})`);
+        console.log(`Bande-annonce TMDB trouvée pour: ${title} (${year}) en ${locale}`);
         return trailerKey;
       }
       console.log(`Aucune bande-annonce TMDB pour: ${title} (${year}), recherche sur YouTube...`);
@@ -333,12 +340,12 @@ export const findTrailerByTitleAndYear = async (title, year) => {
     
     // PRIORITÉ 3: Bandes-annonces via YouTube (seulement si rien n'est trouvé via TMDB)
     // Si le film n'est pas trouvé sur TMDB ou si aucune bande-annonce n'est trouvée, essayer YouTube
-    return await searchYouTubeTrailer(title, year);
+    return await searchYouTubeTrailer(title, year, locale);
   } catch (error) {
     console.error('Erreur lors de la recherche de bande-annonce:', error);
     // En cas d'erreur, essayer quand même YouTube comme dernier recours
     try {
-      return await searchYouTubeTrailer(title, year);
+      return await searchYouTubeTrailer(title, year, locale);
     } catch (youtubeError) {
       console.error('Erreur lors de la recherche YouTube:', youtubeError);
       return null;

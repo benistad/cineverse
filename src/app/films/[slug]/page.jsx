@@ -189,12 +189,15 @@ export default async function FilmPage({ params }) {
             {/* Contenu traduit du film (inclut synopsis, pourquoi regarder, blog link, trailer) */}
             <FilmContent film={{
               id: film.id,
+              slug: film.slug,
               title: film.title,
               synopsis: film.synopsis,
               why_watch_enabled: film.why_watch_enabled,
               why_watch_content: film.why_watch_content,
               blog_article_url: film.blog_article_url,
-              youtube_trailer_key: film.youtube_trailer_key
+              youtube_trailer_key: film.youtube_trailer_key,
+              tmdb_id: film.tmdb_id,
+              release_date: film.release_date
             }} />
             
             {/* Section "Ce que nous n'avons pas aimé" */}
