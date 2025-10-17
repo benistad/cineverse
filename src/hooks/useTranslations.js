@@ -21,6 +21,9 @@ export function useTranslations() {
   const [currentMessages, setCurrentMessages] = useState(messages[locale] || messages.fr);
 
   useEffect(() => {
+    console.log('useTranslations - Locale changée vers:', locale);
+    console.log('Messages disponibles:', Object.keys(messages));
+    console.log('Messages chargés pour', locale, ':', messages[locale] ? 'OK' : 'MANQUANT');
     setCurrentMessages(messages[locale] || messages.fr);
   }, [locale]);
 

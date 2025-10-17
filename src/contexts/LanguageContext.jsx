@@ -6,18 +6,34 @@ import { useRouter, usePathname } from 'next/navigation';
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children, initialLocale = 'fr' }) {
-  const [locale, setLocale] = useState(initialLocale);
+  // Initialiser avec le cookie si disponible
+  const getInitialLocale = () => {
+    if (typeof window !== 'undefined') {
+      const cookieLocale = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('NEXT_LOCALE='))
+        ?.split('=')[1];
+      console.log('Cookie locale trouvé:', cookieLocale);
+      return cookieLocale || initialLocale;
+    }
+    return initialLocale;
+  };
+
+  const [locale, setLocale] = useState(getInitialLocale);
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    // Récupérer la langue depuis le cookie
+    // Vérifier à nouveau le cookie au montage
     const cookieLocale = document.cookie
       .split('; ')
       .find(row => row.startsWith('NEXT_LOCALE='))
       ?.split('=')[1];
     
+    console.log('useEffect - Cookie locale:', cookieLocale, 'Locale actuelle:', locale);
+    
     if (cookieLocale && cookieLocale !== locale) {
+      console.log('Mise à jour de la locale vers:', cookieLocale);
       setLocale(cookieLocale);
     }
   }, []);
@@ -27,8 +43,8 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
     setLocale(newLocale);
     
-    // Recharger la page pour appliquer la nouvelle langue
-    router.refresh();
+    // Recharger complètement la page pour appliquer la nouvelle langue
+    window.location.reload();
   };
 
   return (
