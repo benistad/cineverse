@@ -11,6 +11,7 @@ import FilmContent from '@/components/films/FilmContent';
 import BlogArticleLink from '@/components/films/BlogArticleLink';
 import FilmTrailer from '@/components/films/FilmTrailer';
 import FilmMetadata from '@/components/films/FilmMetadata';
+import FilmHeader from '@/components/films/FilmHeader';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -149,18 +150,11 @@ export default async function FilmPage({ params }) {
               )}
             </div>
             
-            <div className="flex flex-wrap items-center mb-4 text-gray-700">
-              {film.release_date && (
-                <span className="mr-3" itemProp="datePublished">
-                  {new Date(film.release_date).getFullYear()}
-                </span>
-              )}
-              {film.genres && (
-                <span itemProp="genre">
-                  {film.genres}
-                </span>
-              )}
-            </div>
+            <FilmHeader 
+              releaseDate={film.release_date}
+              genres={film.genres}
+              filmId={film.id}
+            />
             
             <FilmMetadata 
               dateAjout={film.date_ajout}
