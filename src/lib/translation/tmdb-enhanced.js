@@ -38,9 +38,13 @@ async function getTmdbDataInEnglish(tmdbId) {
 
     const data = await response.json();
     
+    // Récupérer les genres en anglais
+    const genres = data.genres ? data.genres.map(g => g.name).join(', ') : '';
+    
     return {
       title: data.original_title || data.title,
-      synopsis: data.overview || ''
+      synopsis: data.overview || '',
+      genres: genres
     };
   } catch (error) {
     console.error('Error fetching TMDB data:', error);
@@ -98,7 +102,8 @@ export async function translateFilmEnhanced(film) {
   const translations = {
     title: '',
     synopsis: '',
-    why_watch_content: ''
+    why_watch_content: '',
+    genres: ''
   };
 
   try {
@@ -109,7 +114,8 @@ export async function translateFilmEnhanced(film) {
       if (tmdbData) {
         translations.title = tmdbData.title || film.title;
         translations.synopsis = tmdbData.synopsis || '';
-        console.log(`  ✅ TMDB: Got title and synopsis`);
+        translations.genres = tmdbData.genres || '';
+        console.log(`  ✅ TMDB: Got title, synopsis and genres`);
       }
     }
 

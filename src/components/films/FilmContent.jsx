@@ -39,7 +39,8 @@ export default function FilmContent({ film: initialFilm }) {
           setFilm({
             ...initialFilm,
             synopsis: translation.synopsis || initialFilm.synopsis,
-            why_watch_content: translation.why_watch_content || initialFilm.why_watch_content
+            why_watch_content: translation.why_watch_content || initialFilm.why_watch_content,
+            genres: translation.genres || initialFilm.genres
           });
         }
       } else {
