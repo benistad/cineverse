@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
-import { FiPlus, FiSearch, FiRefreshCw, FiDatabase } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiRefreshCw, FiDatabase, FiGlobe } from 'react-icons/fi';
 
 export default function DashboardPage() {
   const [films, setFilms] = useState([]);
@@ -43,12 +43,19 @@ export default function DashboardPage() {
           </p>
         </div>
         
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <Link
             href="/admin/search"
             className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
           >
             <FiSearch /> Rechercher un film
+          </Link>
+          <Link
+            href="/admin/translations"
+            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+            title="Traduire les films en anglais"
+          >
+            <FiGlobe /> Traductions
           </Link>
           <Link
             href="/admin/update-films"
