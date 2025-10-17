@@ -171,12 +171,17 @@ export default async function FilmPage({ params }) {
               </p>
             )}
             
-            <div className="flex items-center mb-4">
-              <span className="font-semibold mr-2">Note:</span>
-              <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
-                <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
-              </span>
+            <div className="flex flex-wrap items-center gap-4 mb-4">
+              <div className="flex items-center">
+                <span className="font-semibold mr-2">Note:</span>
+                <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
+                  <RatingIcon rating={film.note_sur_10} className="mr-2" />
+                  <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
+                </span>
+              </div>
+              {film.blog_article_url && (
+                <BlogArticleLink url={film.blog_article_url} />
+              )}
             </div>
             
             {/* Plateformes de streaming */}
@@ -204,13 +209,6 @@ export default async function FilmPage({ params }) {
                   className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
                   dangerouslySetInnerHTML={{ __html: film.not_liked_content }}
                 />
-              </section>
-            )}
-            
-            {/* Lien blog */}
-            {film.blog_article_url && (
-              <section className="mb-4">
-                <BlogArticleLink url={film.blog_article_url} />
               </section>
             )}
             
