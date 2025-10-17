@@ -8,7 +8,6 @@ import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
 import FilmPoster from '@/components/films/FilmPoster';
 import FilmContent from '@/components/films/FilmContent';
-import { RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -208,15 +207,12 @@ export default async function FilmPage({ params }) {
                 />
               </section>
             )}
-            
-            {/* Bande-annonce (composant client) */}
-            <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
           </div>
         </div>
       </div>
       
       <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <RemarkableStaffTitle />
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Équipe technique remarquable</h2>
         <RemarkableStaffList filmId={film.id} />
       </section>
       
