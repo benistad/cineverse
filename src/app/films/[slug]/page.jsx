@@ -8,6 +8,8 @@ import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
 import FilmPoster from '@/components/films/FilmPoster';
 import FilmContent from '@/components/films/FilmContent';
+import BlogArticleLink from '@/components/films/BlogArticleLink';
+import FilmTrailer from '@/components/films/FilmTrailer';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -186,18 +188,12 @@ export default async function FilmPage({ params }) {
               />
             )}
             
-            {/* Contenu traduit du film (inclut synopsis, pourquoi regarder, blog link, trailer) */}
+            {/* Contenu traduit du film (synopsis, pourquoi regarder) */}
             <FilmContent film={{
               id: film.id,
-              slug: film.slug,
-              title: film.title,
               synopsis: film.synopsis,
               why_watch_enabled: film.why_watch_enabled,
-              why_watch_content: film.why_watch_content,
-              blog_article_url: film.blog_article_url,
-              youtube_trailer_key: film.youtube_trailer_key,
-              tmdb_id: film.tmdb_id,
-              release_date: film.release_date
+              why_watch_content: film.why_watch_content
             }} />
             
             {/* Section "Ce que nous n'avons pas aimé" */}
@@ -210,6 +206,23 @@ export default async function FilmPage({ params }) {
                 />
               </section>
             )}
+            
+            {/* Lien blog */}
+            {film.blog_article_url && (
+              <section className="mb-4">
+                <BlogArticleLink url={film.blog_article_url} />
+              </section>
+            )}
+            
+            {/* Bande-annonce */}
+            <FilmTrailer film={{
+              id: film.id,
+              slug: film.slug,
+              title: film.title,
+              youtube_trailer_key: film.youtube_trailer_key,
+              tmdb_id: film.tmdb_id,
+              release_date: film.release_date
+            }} initialTrailerKey={film.youtube_trailer_key} />
           </div>
         </div>
       </div>
