@@ -76,14 +76,42 @@ async function getTmdbDataInEnglish(tmdbId) {
 }
 
 /**
- * Traduit avec DeepL
+ * Glossaire cinéma (copie simplifiée pour CommonJS)
  */
-async function translateWithDeepL(text) {
+const CINEMA_GLOSSARY = {
+  'Pour la réalisation': 'For its direction',
+  'pour la réalisation': 'for its direction',
+  'Pour la photographie': 'For its cinematography',
+  'pour la photographie': 'for its cinematography',
+  'Pour la mise en scène': 'For its staging',
+  'pour la mise en scène': 'for its staging',
+  'Pour le montage': 'For its editing',
+  'pour le montage': 'for its editing',
+  'Pour la bande originale': 'For its soundtrack',
+  'pour la bande originale': 'for its soundtrack',
+};
+
+function applyGlossary(text) {
+  if (!text) return text;
+  let result = text;
+  for (const [fr, en] of Object.entries(CINEMA_GLOSSARY)) {
+    result = result.replace(new RegExp(fr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), en);
+  }
+  return result;
+}
+
+/**
+ * Traduit avec DeepL (avec glossaire)
+ */
+async function translateWithDeepL(text, context = 'general') {
   if (!text || text.trim() === '' || !DEEPL_API_KEY) {
     return text;
   }
 
-  stats.deepLCharacters += text.length;
+  // Appliquer le glossaire avant traduction
+  const preparedText = context === 'why_watch' ? applyGlossary(text) : text;
+  
+  stats.deepLCharacters += preparedText.length;
 
   try {
     const response = await fetch(DEEPL_API_URL, {
@@ -93,7 +121,7 @@ async function translateWithDeepL(text) {
       },
       body: new URLSearchParams({
         auth_key: DEEPL_API_KEY,
-        text: text,
+        text: preparedText,
         source_lang: 'FR',
         target_lang: 'EN-US',
         formality: 'default',
@@ -138,14 +166,14 @@ async function translateFilmEnhanced(film) {
 
   // 2. Fallback sur DeepL si nécessaire
   if (!usedTMDB) {
-    translations.title = await translateWithDeepL(film.title);
-    translations.synopsis = await translateWithDeepL(film.synopsis || '');
+    translations.title = await translateWithDeepL(film.title, 'title');
+    translations.synopsis = await translateWithDeepL(film.synopsis || '', 'synopsis');
     stats.fromDeepL++;
   }
 
-  // 3. Toujours traduire le contenu custom avec DeepL
+  // 3. Toujours traduire le contenu custom avec DeepL (avec glossaire)
   if (film.why_watch_content) {
-    translations.why_watch_content = await translateWithDeepL(film.why_watch_content);
+    translations.why_watch_content = await translateWithDeepL(film.why_watch_content, 'why_watch');
   }
 
   return { translations, usedTMDB };

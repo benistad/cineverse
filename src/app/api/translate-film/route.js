@@ -45,14 +45,20 @@ async function getTmdbDataInEnglish(tmdbId) {
 }
 
 /**
- * Traduit avec DeepL
+ * Traduit avec DeepL en appliquant le glossaire
  */
-async function translateWithDeepL(text) {
+async function translateWithDeepL(text, context = 'general') {
   if (!text || text.trim() === '' || !DEEPL_API_KEY) {
     return text;
   }
 
+  // Import dynamique du glossaire
+  const { prepareTextForTranslation, postProcessTranslation } = await import('@/lib/translation/glossary');
+
   try {
+    // Préparer le texte avec le glossaire
+    const preparedText = prepareTextForTranslation(text, context);
+    
     const response = await fetch(DEEPL_API_URL, {
       method: 'POST',
       headers: {
@@ -60,7 +66,7 @@ async function translateWithDeepL(text) {
       },
       body: new URLSearchParams({
         auth_key: DEEPL_API_KEY,
-        text: text,
+        text: preparedText,
         source_lang: 'FR',
         target_lang: 'EN-US',
         formality: 'default',
@@ -71,7 +77,10 @@ async function translateWithDeepL(text) {
     if (!response.ok) return text;
 
     const data = await response.json();
-    return data.translations[0].text;
+    const translatedText = data.translations[0].text;
+    
+    // Appliquer les corrections post-traduction
+    return postProcessTranslation(translatedText, context);
   } catch (error) {
     console.error('Error translating with DeepL:', error);
     return text;
@@ -129,15 +138,15 @@ export async function POST(request) {
 
     // 3. Fallback sur DeepL si nécessaire
     if (!translations.title) {
-      translations.title = await translateWithDeepL(film.title);
-      translations.synopsis = await translateWithDeepL(film.synopsis || '');
+      translations.title = await translateWithDeepL(film.title, 'title');
+      translations.synopsis = await translateWithDeepL(film.synopsis || '', 'synopsis');
       console.log(`  ⚡ DeepL: Translated title and synopsis`);
     }
 
-    // 4. Toujours traduire le contenu custom avec DeepL
+    // 4. Toujours traduire le contenu custom avec DeepL (avec glossaire)
     if (film.why_watch_content) {
-      translations.why_watch_content = await translateWithDeepL(film.why_watch_content);
-      console.log(`  ⚡ DeepL: Translated why_watch_content`);
+      translations.why_watch_content = await translateWithDeepL(film.why_watch_content, 'why_watch');
+      console.log(`  ⚡ DeepL: Translated why_watch_content (with glossary)`);
     }
 
     // 5. Sauvegarder les traductions
