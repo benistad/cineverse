@@ -6,7 +6,7 @@ import { useTranslations } from '@/hooks/useTranslations';
  * Composant client pour afficher le contenu traduit d'un film
  */
 export default function FilmContent({ film }) {
-  const t = useTranslations();
+  const { t } = useTranslations();
 
   return (
     <>
