@@ -143,6 +143,16 @@ export default function FilmsHorreurHalloween2025() {
       category: "La tension pure",
       description: "Un huis clos à ciel ouvert où chaque instant compte. Avec son intensité et son rythme sec, Night of the Hunted est le film parfait pour maintenir l'adrénaline jusqu'au bout de la nuit.",
       poster: "https://image.tmdb.org/t/p/w500/tfNFmBGBVF1biwOTBgFONAeCaDZ.jpg"
+    },
+    {
+      title: "Vicious",
+      note: "5/10",
+      slug: "vicious",
+      emoji: "🎁",
+      category: "Film Bonus",
+      description: "Un thriller horrifique qui joue avec vos peurs intérieures. Polly reçoit une mystérieuse boîte accompagnée d'une consigne étrange : y placer une chose dont elle a besoin, une chose qu'elle déteste et une chose qu'elle aime. Ce rituel se transforme vite en cauchemar où elle doit affronter les ténèbres, non seulement autour d'elle, mais aussi en elle.",
+      poster: "https://image.tmdb.org/t/p/w500/rCJGmMXuEpQyLwiVGK6hZjdLPjg.jpg",
+      bonus: true
     }
   ];
 
@@ -215,6 +225,11 @@ export default function FilmsHorreurHalloween2025() {
                       {film.hunted && (
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">
                           <FiAward className="mr-1" /> Hunted
+                        </span>
+                      )}
+                      {film.bonus && (
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
+                          🎁 BONUS
                         </span>
                       )}
                     </div>
