@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
 import RatingIcon from '@/components/ui/RatingIcon';
 import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import StreamingProviders from '@/components/films/StreamingProviders';
@@ -68,11 +69,47 @@ export async function generateMetadata({ params }) {
       title: 'Film non trouvé | MovieHunt',
     };
   }
+
+  // Détecter la locale depuis les cookies
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE');
+  const locale = localeCookie?.value || 'fr';
   
+  // Récupérer la traduction si locale = EN
+  let translation = null;
+  if (locale === 'en') {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    const { data } = await supabase
+      .from('film_translations')
+      .select('*')
+      .eq('film_id', film.id)
+      .eq('locale', 'en')
+      .single();
+    
+    translation = data;
+  }
+
+  // Utiliser la traduction si disponible
+  const title = translation?.title || film.title;
+  const synopsis = translation?.synopsis || film.synopsis || '';
   const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : '';
   const yearText = releaseYear ? ` (${releaseYear})` : '';
-  const synopsis = film.synopsis ? film.synopsis.substring(0, 150) + '...' : '';
-  const rating = film.note_sur_10 ? `Note : ${film.note_sur_10}/10. ` : '';
+  const synopsisShort = synopsis ? synopsis.substring(0, 150) + '...' : '';
+  
+  // Textes selon la locale
+  const isEnglish = locale === 'en';
+  const ratingLabel = isEnglish ? 'Rating' : 'Note';
+  const rating = film.note_sur_10 ? `${ratingLabel}: ${film.note_sur_10}/10. ` : '';
+  const metaTitle = isEnglish 
+    ? `${title}${yearText} - Review and Rating | MovieHunt`
+    : `${title}${yearText} - Critique et avis | MovieHunt`;
+  const metaDescription = isEnglish
+    ? `${rating}${synopsisShort} Discover our complete review, cast and where to watch ${title} streaming.`
+    : `${rating}${synopsisShort} Découvrez notre critique complète, le casting et où regarder ${title} en streaming.`;
   
   const imageUrl = film.poster_path 
     ? (film.poster_path.startsWith('/') 
@@ -80,24 +117,38 @@ export async function generateMetadata({ params }) {
         : film.poster_path)
     : 'https://www.moviehunt.fr/images/og-image.jpg';
   
+  const imageAlt = isEnglish ? `${title} poster` : `Affiche du film ${title}`;
+  const ogLocale = isEnglish ? 'en_US' : 'fr_FR';
+  const canonicalUrl = isEnglish 
+    ? `https://www.moviehunt.fr/en/films/${params.slug}`
+    : `https://www.moviehunt.fr/films/${params.slug}`;
+  
   return {
-    title: `${film.title}${yearText} - Critique et avis | MovieHunt`,
-    description: `${rating}${synopsis} Découvrez notre critique complète, le casting et où regarder ${film.title} en streaming.`,
+    title: metaTitle,
+    description: metaDescription,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        'fr': `https://www.moviehunt.fr/films/${params.slug}`,
+        'en': `https://www.moviehunt.fr/en/films/${params.slug}`,
+        'x-default': `https://www.moviehunt.fr/films/${params.slug}`
+      }
+    },
     openGraph: {
-      title: `${film.title}${yearText} | MovieHunt`,
-      description: `${rating}${synopsis}`,
+      title: `${title}${yearText} | MovieHunt`,
+      description: `${rating}${synopsisShort}`,
       type: 'video.movie',
       siteName: 'MovieHunt',
-      locale: 'fr_FR',
-      url: `https://www.moviehunt.fr/films/${params.slug}`,
+      locale: ogLocale,
+      url: canonicalUrl,
       images: [
         {
           url: imageUrl,
           width: 780,
           height: 1170,
-          alt: `Affiche du film ${film.title}`,
+          alt: imageAlt,
         }
-      ],
+      ]
     },
     twitter: {
       card: 'summary_large_image',
