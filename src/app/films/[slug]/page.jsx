@@ -14,6 +14,7 @@ import FilmMetadata from '@/components/films/FilmMetadata';
 import FilmHeader from '@/components/films/FilmHeader';
 import FilmTitle from '@/components/films/FilmTitle';
 import { RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
+import NotLikedSection from '@/components/films/NotLikedSection';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -195,14 +196,8 @@ export default async function FilmPage({ params }) {
             }} />
             
             {/* Section "Ce que nous n'avons pas aimé" */}
-            {film.not_liked_enabled && film.not_liked_content && (
-              <section className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-red-700">Ce que nous n'avons pas aimé</h2>
-                <div
-                  className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
-                  dangerouslySetInnerHTML={{ __html: film.not_liked_content }}
-                />
-              </section>
+            {film.not_liked_enabled && (
+              <NotLikedSection content={film.not_liked_content} />
             )}
             
             {/* Bande-annonce */}
