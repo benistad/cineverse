@@ -7,6 +7,8 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon, FiBookOpen } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
+import LanguageSelector from '@/components/LanguageSelector';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +17,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
   const { user, loading, signOut } = useAuth();
+  const { t } = useTranslations();
 
   const handleLogout = async () => {
     await signOut();
@@ -68,7 +71,7 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-indigo-700 transition-colors duration-200 hidden md:flex items-center group"
             >
-              <FiBookOpen className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> Blog
+              <FiBookOpen className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> {t('nav.blog')}
             </a>
             <div className="w-72 hidden md:block">
               <SearchBar />
@@ -83,7 +86,7 @@ export default function Navbar() {
               className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group ${pathname === '/advanced-search' ? 'text-indigo-700' : ''}`}
             >
               <span className="flex items-center whitespace-nowrap">
-                <FiFilter className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> Recherche Avancée
+                <FiFilter className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> {t('nav.advancedSearch')}
               </span>
             </Link>
             {/* Tous les films */}
@@ -92,7 +95,7 @@ export default function Navbar() {
               className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group ${pathname === '/all-films' ? 'text-indigo-700' : ''}`}
             >
               <span className="flex items-center whitespace-nowrap">
-                <FiFilm className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> Tous les films
+                <FiFilm className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> {t('nav.allFilms')}
               </span>
             </Link>
             {/* Découvrir dropdown */}
@@ -103,7 +106,7 @@ export default function Navbar() {
                   pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' ? 'text-indigo-700' : ''
                 }`}
               >
-                <FiCompass className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> Découvrir
+                <FiCompass className="w-5 h-5 mr-1 group-hover:scale-110 transition-transform" /> {t('nav.discover')}
                 <FiChevronDown className={`ml-1 transition-transform ${isDiscoverOpen ? 'rotate-180' : ''}`} />
               </button>
               {isDiscoverOpen && (
@@ -114,33 +117,35 @@ export default function Navbar() {
                       className={`block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiHelpCircle className="mr-2" /> Quel film regarder ?
+                      <FiHelpCircle className="mr-2" /> {t('nav.whatToWatch')}
                     </Link>
                     <Link 
                       href="/films-horreur-halloween-2025" 
                       className={`block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiMoon className="mr-2" /> Films Halloween 2025
+                      <FiMoon className="mr-2" /> {t('nav.halloween')}
                     </Link>
                     <Link 
                       href="/huntedbymoviehunt" 
                       className={`block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiAward className="mr-2" /> Hunted by MovieHunt
+                      <FiAward className="mr-2" /> {t('nav.hunted')}
                     </Link>
                     <Link 
                       href="/comment-nous-travaillons" 
                       className={`block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiInfo className="mr-2" /> Comment nous travaillons
+                      <FiInfo className="mr-2" /> {t('nav.howWeWork')}
                     </Link>
                   </div>
                 </div>
               )}
             </div>
+            {/* Sélecteur de langue */}
+            <LanguageSelector />
             {/* Admin/Dashboard/Déconnexion */}
             {!loading && user && (
               <>
@@ -149,7 +154,7 @@ export default function Navbar() {
                   className={`text-gray-600 hover:text-indigo-700 transition-colors ${pathname === '/admin/dashboard' ? 'text-indigo-700' : ''}`}
                 >
                   <span className="flex items-center whitespace-nowrap">
-                    <FiFilm className="mr-1" /> Dashboard
+                    <FiFilm className="mr-1" /> {t('nav.dashboard')}
                   </span>
                 </Link>
                 <button
@@ -157,7 +162,7 @@ export default function Navbar() {
                   className="text-gray-600 hover:text-indigo-700 transition-colors"
                 >
                   <span className="flex items-center whitespace-nowrap">
-                    <FiLogOut className="mr-1" /> Déconnexion
+                    <FiLogOut className="mr-1" /> {t('nav.logout')}
                   </span>
                 </button>
               </>
@@ -167,7 +172,7 @@ export default function Navbar() {
                 href="/admin" 
                 className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
               >
-                Connexion
+                {t('nav.login')}
               </Link>
             )}
 
@@ -210,7 +215,7 @@ export default function Navbar() {
               className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
               onClick={() => setIsOpen(false)}
             >
-              <FiBookOpen className="mr-2" /> Blog
+              <FiBookOpen className="mr-2" /> {t('nav.blog')}
             </a>
             <Link 
               href="/advanced-search" 
@@ -219,11 +224,11 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiFilter className="mr-2" /> Recherche Avancée
+              <FiFilter className="mr-2" /> {t('nav.advancedSearch')}
             </Link>
             
             {/* Découvrir section dans le menu mobile */}
-            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">Découvrir</div>
+            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">{t('nav.discover')}</div>
             
             <Link 
               href="/quel-film-regarder" 
@@ -232,7 +237,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiHelpCircle className="mr-2" /> Quel film regarder ?
+              <FiHelpCircle className="mr-2" /> {t('nav.whatToWatch')}
             </Link>
             
             <Link 
@@ -242,7 +247,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiMoon className="mr-2" /> Films Halloween 2025
+              <FiMoon className="mr-2" /> {t('nav.halloween')}
             </Link>
             
             <Link 
@@ -252,7 +257,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiAward className="mr-2" /> Hunted by MovieHunt
+              <FiAward className="mr-2" /> {t('nav.hunted')}
             </Link>
             
             <Link 
@@ -262,7 +267,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiInfo className="mr-2" /> Comment nous travaillons
+              <FiInfo className="mr-2" /> {t('nav.howWeWork')}
             </Link>
             
             <Link 
@@ -272,8 +277,13 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiFilm className="mr-2" /> Tous les films
+              <FiFilm className="mr-2" /> {t('nav.allFilms')}
             </Link>
+            
+            {/* Sélecteur de langue mobile */}
+            <div className="px-3 py-2 mt-2 border-t border-gray-200">
+              <LanguageSelector />
+            </div>
             
             {!loading && user && (
               <>
@@ -284,7 +294,7 @@ export default function Navbar() {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  <FiFilm className="mr-2" /> Dashboard
+                  <FiFilm className="mr-2" /> {t('nav.dashboard')}
                 </Link>
                 <button
                   onClick={() => {
@@ -293,7 +303,7 @@ export default function Navbar() {
                   }}
                   className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                 >
-                  <FiLogOut className="mr-2" /> Déconnexion
+                  <FiLogOut className="mr-2" /> {t('nav.logout')}
                 </button>
               </>
             )}
@@ -304,7 +314,7 @@ export default function Navbar() {
                 className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
                 onClick={() => setIsOpen(false)}
               >
-                Connexion
+                {t('nav.login')}
               </Link>
             )}
           </div>

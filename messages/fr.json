@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "blog": "Blog",
+    "advancedSearch": "Recherche Avancée",
+    "allFilms": "Tous les films",
+    "discover": "Découvrir",
+    "whatToWatch": "Quel film regarder ?",
+    "halloween": "Films Halloween 2025",
+    "hunted": "Hunted by MovieHunt",
+    "howWeWork": "Comment nous travaillons",
+    "dashboard": "Dashboard",
+    "logout": "Déconnexion",
+    "login": "Connexion"
+  },
+  "home": {
+    "title": "Découvrez les meilleurs films à regarder",
+    "subtitle": "Des critiques authentiques, des recommandations personnalisées",
+    "recentlyRated": "Films récemment notés",
+    "topRated": "Films les mieux notés",
+    "hiddenGems": "Films méconnus à voir",
+    "viewAll": "Voir tous les films"
+  },
+  "film": {
+    "rating": "Note",
+    "synopsis": "Synopsis",
+    "whyWatch": "Pourquoi regarder ce film ?",
+    "whatWeDidntLike": "Ce qu'on n'a pas aimé",
+    "trailer": "Bande-annonce",
+    "remarkableStaff": "Équipe technique remarquable",
+    "similarFilms": "Films similaires",
+    "whereToWatch": "Où regarder en France",
+    "addedOn": "Date d'ajout",
+    "genre": "Genre",
+    "releaseDate": "Date de sortie",
+    "readReview": "Lire la critique sur le blog"
+  },
+  "search": {
+    "placeholder": "Rechercher un film...",
+    "noResults": "Aucun résultat trouvé",
+    "filters": "Filtres",
+    "sortBy": "Trier par",
+    "genre": "Genre",
+    "year": "Année",
+    "rating": "Note"
+  },
+  "footer": {
+    "about": "À propos",
+    "contact": "Contact",
+    "privacy": "Confidentialité",
+    "terms": "Conditions d'utilisation"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "notFound": "Page non trouvée",
+    "backHome": "Retour à l'accueil"
+  }
+}

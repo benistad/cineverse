@@ -151,7 +151,7 @@ export default function FilmsHorreurHalloween2025() {
       emoji: "🎁",
       category: "Film Bonus",
       description: "Un thriller horrifique qui joue avec vos peurs intérieures. Polly reçoit une mystérieuse boîte accompagnée d'une consigne étrange : y placer une chose dont elle a besoin, une chose qu'elle déteste et une chose qu'elle aime. Ce rituel se transforme vite en cauchemar où elle doit affronter les ténèbres, non seulement autour d'elle, mais aussi en elle.",
-      poster: "https://image.tmdb.org/t/p/w500/rCJGmMXuEpQyLwiVGK6hZjdLPjg.jpg",
+      poster: "https://image.tmdb.org/t/p/w500/7IntLBzQbsJisbZvaSsNLHoZKRS.jpg",
       bonus: true
     }
   ];

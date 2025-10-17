@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import Navbar from "@/components/layout/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Script from "next/script";
 // Importation avec gestion d'erreur pour éviter les erreurs console
 import dynamic from 'next/dynamic';
@@ -161,14 +162,16 @@ export default function ClientLayout({ children }) {
         />
       </head>
       
-      <AuthProvider>
-        <ScrollToTop />
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">
-          {children}
-        </main>
-        <Footer />
-      </AuthProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <ScrollToTop />
+          <Navbar />
+          <main className="container mx-auto px-4 py-8">
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
+      </LanguageProvider>
       <SpeedInsights />
       <MobilePerformanceOptimizer />
       <JsonLdSchema />

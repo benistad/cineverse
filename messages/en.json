@@ -1,0 +1,58 @@
+{
+  "nav": {
+    "blog": "Blog",
+    "advancedSearch": "Advanced Search",
+    "allFilms": "All Films",
+    "discover": "Discover",
+    "whatToWatch": "What to Watch?",
+    "halloween": "Halloween Films 2025",
+    "hunted": "Hunted by MovieHunt",
+    "howWeWork": "How We Work",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "home": {
+    "title": "Discover the Best Films to Watch",
+    "subtitle": "Authentic reviews, personalized recommendations",
+    "recentlyRated": "Recently Rated Films",
+    "topRated": "Top Rated Films",
+    "hiddenGems": "Hidden Gems to Watch",
+    "viewAll": "View All Films"
+  },
+  "film": {
+    "rating": "Rating",
+    "synopsis": "Synopsis",
+    "whyWatch": "Why Watch This Film?",
+    "whatWeDidntLike": "What We Didn't Like",
+    "trailer": "Trailer",
+    "remarkableStaff": "Remarkable Crew",
+    "similarFilms": "Similar Films",
+    "whereToWatch": "Where to Watch in France",
+    "addedOn": "Added on",
+    "genre": "Genre",
+    "releaseDate": "Release Date",
+    "readReview": "Read the review on our blog"
+  },
+  "search": {
+    "placeholder": "Search for a film...",
+    "noResults": "No results found",
+    "filters": "Filters",
+    "sortBy": "Sort by",
+    "genre": "Genre",
+    "year": "Year",
+    "rating": "Rating"
+  },
+  "footer": {
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms of Use"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Page not found",
+    "backHome": "Back to home"
+  }
+}

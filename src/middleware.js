@@ -3,8 +3,52 @@ import { NextResponse } from 'next/server';
 // Middleware de cache désactivé pour résoudre les problèmes de performance
 // import { cacheMiddleware } from './middleware/cacheMiddleware';
 
+const locales = ['fr', 'en'];
+const defaultLocale = 'fr';
+
+function getLocale(request) {
+  // 1. Vérifier le cookie
+  const localeCookie = request.cookies.get('NEXT_LOCALE');
+  if (localeCookie && locales.includes(localeCookie.value)) {
+    return localeCookie.value;
+  }
+
+  // 2. Vérifier l'en-tête Accept-Language
+  const acceptLanguage = request.headers.get('accept-language');
+  if (acceptLanguage) {
+    const languages = acceptLanguage.split(',').map(lang => {
+      const [code] = lang.trim().split(';');
+      return code.split('-')[0];
+    });
+    
+    for (const lang of languages) {
+      if (locales.includes(lang)) {
+        return lang;
+      }
+    }
+  }
+
+  return defaultLocale;
+}
+
 export async function middleware(request) {
   const url = new URL(request.url);
+  
+  // Gestion de la langue pour toutes les routes (sauf admin et API)
+  if (!url.pathname.startsWith('/admin') && !url.pathname.startsWith('/api') && !url.pathname.startsWith('/_next')) {
+    const locale = getLocale(request);
+    const response = NextResponse.next();
+    
+    // Définir le cookie de langue si nécessaire
+    if (!request.cookies.get('NEXT_LOCALE') || request.cookies.get('NEXT_LOCALE').value !== locale) {
+      response.cookies.set('NEXT_LOCALE', locale, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365, // 1 an
+      });
+    }
+    
+    return response;
+  }
   
   // Appliquer uniquement le middleware d'authentification pour les routes admin
   if (url.pathname.startsWith('/admin')) {
@@ -64,7 +108,9 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    // Routes d'administration uniquement
-    '/admin/:path*'
+    // Routes d'administration
+    '/admin/:path*',
+    // Routes publiques pour la gestion de la langue
+    '/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)' 
   ],
 };
