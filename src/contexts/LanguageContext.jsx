@@ -13,7 +13,6 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
         .split('; ')
         .find(row => row.startsWith('NEXT_LOCALE='))
         ?.split('=')[1];
-      console.log('Cookie locale trouvé:', cookieLocale);
       return cookieLocale || initialLocale;
     }
     return initialLocale;
@@ -30,10 +29,7 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       .find(row => row.startsWith('NEXT_LOCALE='))
       ?.split('=')[1];
     
-    console.log('useEffect - Cookie locale:', cookieLocale, 'Locale actuelle:', locale);
-    
     if (cookieLocale && cookieLocale !== locale) {
-      console.log('Mise à jour de la locale vers:', cookieLocale);
       setLocale(cookieLocale);
     }
   }, []);
