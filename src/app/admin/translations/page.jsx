@@ -94,6 +94,42 @@ export default function TranslationsPage() {
     }
   };
 
+  const autoTranslate = async () => {
+    if (!selectedFilm) return;
+
+    try {
+      setSaving(true);
+      setMessage({ type: 'info', text: 'Traduction automatique en cours...' });
+
+      const response = await fetch('/api/translate-film', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filmId: selectedFilm.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la traduction automatique');
+      }
+
+      const data = await response.json();
+
+      // Charger la traduction générée
+      await loadTranslation(selectedFilm);
+
+      setMessage({ type: 'success', text: '✨ Traduction automatique réussie ! (TMDB + DeepL)' });
+      
+      // Recharger la liste des films
+      await loadFilms();
+    } catch (error) {
+      console.error('Error auto-translating:', error);
+      setMessage({ type: 'error', text: 'Erreur lors de la traduction automatique' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const saveTranslation = async () => {
     if (!selectedFilm) return;
 
@@ -247,6 +283,24 @@ export default function TranslationsPage() {
                 </div>
 
                 <div className="flex space-x-3 pt-4">
+                  <button
+                    onClick={autoTranslate}
+                    disabled={saving}
+                    className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    title="Traduction automatique via TMDB + DeepL"
+                  >
+                    {saving ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Traduction...
+                      </>
+                    ) : (
+                      <>
+                        <FiGlobe className="mr-2" />
+                        ✨ Auto-traduire
+                      </>
+                    )}
+                  </button>
                   <button
                     onClick={saveTranslation}
                     disabled={saving}
