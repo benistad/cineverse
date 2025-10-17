@@ -195,6 +195,7 @@ export default async function FilmPage({ params }) {
             {/* Contenu traduit du film (inclut synopsis, pourquoi regarder, blog link, trailer) */}
             <FilmContent film={{
               id: film.id,
+              title: film.title,
               synopsis: film.synopsis,
               why_watch_enabled: film.why_watch_enabled,
               why_watch_content: film.why_watch_content,
