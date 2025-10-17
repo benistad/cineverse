@@ -193,7 +193,14 @@ export default async function FilmPage({ params }) {
             )}
             
             {/* Contenu traduit du film (inclut synopsis, pourquoi regarder, blog link, trailer) */}
-            <FilmContent film={film} />
+            <FilmContent film={{
+              id: film.id,
+              synopsis: film.synopsis,
+              why_watch_enabled: film.why_watch_enabled,
+              why_watch_content: film.why_watch_content,
+              blog_article_url: film.blog_article_url,
+              youtube_trailer_key: film.youtube_trailer_key
+            }} />
             
             {/* Section "Ce que nous n'avons pas aimé" */}
             {film.not_liked_enabled && film.not_liked_content && (
