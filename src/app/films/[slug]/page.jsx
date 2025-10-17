@@ -8,7 +8,7 @@ import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
 import FilmPoster from '@/components/films/FilmPoster';
 import FilmContent from '@/components/films/FilmContent';
-import { AddedOnLabel, GenreLabel, RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
+import { RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -161,26 +161,21 @@ export default async function FilmPage({ params }) {
             </div>
             
             <p className="text-gray-600 mb-2">
-              <AddedOnLabel /> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
+              <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
             </p>
             
             {film.genres && (
               <p className="text-gray-600 mb-2">
-                <GenreLabel /> {film.genres}
+                <span className="font-semibold">Genre:</span> {film.genres}
               </p>
             )}
             
-            <div className="flex flex-wrap items-center gap-4 mb-4">
-              <div className="flex items-center">
-                <span className="font-semibold mr-2">Note:</span>
-                <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
-                  <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                  <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
-                </span>
-              </div>
-              {film.blog_article_url && (
-                <BlogArticleLink url={film.blog_article_url} />
-              )}
+            <div className="flex items-center mb-4">
+              <span className="font-semibold mr-2">Note:</span>
+              <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
+                <RatingIcon rating={film.note_sur_10} className="mr-2" />
+                <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
+              </span>
             </div>
             
             {/* Plateformes de streaming */}
