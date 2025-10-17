@@ -13,9 +13,15 @@ export default function FilmContent({ film: initialFilm }) {
   const { t, locale } = useTranslations();
   const [film, setFilm] = useState(initialFilm);
 
+  // Mettre à jour le film quand initialFilm change
+  useEffect(() => {
+    setFilm(initialFilm);
+  }, [initialFilm]);
+
+  // Charger les traductions quand la locale change
   useEffect(() => {
     async function loadTranslation() {
-      if (locale === 'en' && initialFilm.id) {
+      if (locale === 'en' && initialFilm?.id) {
         const supabase = createBrowserClient(
           process.env.NEXT_PUBLIC_SUPABASE_URL,
           process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -43,7 +49,7 @@ export default function FilmContent({ film: initialFilm }) {
     }
 
     loadTranslation();
-  }, [locale, initialFilm]);
+  }, [locale, initialFilm?.id]); // Utiliser l'ID au lieu de l'objet complet
 
   return (
     <>
