@@ -1,9 +1,9 @@
-import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
+import FilmPage from '@/app/films/[slug]/page';
 
 /**
  * Page anglaise pour les films
- * Redirige vers la page française avec la locale EN définie
+ * Affiche le même contenu que la page française mais avec locale EN
  */
 export default async function EnglishFilmPage({ params }) {
   // Définir la locale EN dans les cookies
@@ -13,8 +13,9 @@ export default async function EnglishFilmPage({ params }) {
     maxAge: 365 * 24 * 60 * 60, // 1 an
   });
 
-  // Rediriger vers la page française (qui affichera le contenu en anglais)
-  redirect(`/films/${params.slug}`);
+  // Afficher la même page que la version française
+  // Le contenu sera en anglais grâce au cookie NEXT_LOCALE=en
+  return <FilmPage params={params} />;
 }
 
 // Générer les métadonnées pour le SEO
