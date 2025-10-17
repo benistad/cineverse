@@ -1,7 +1,7 @@
 -- Table pour stocker les traductions des films
 CREATE TABLE IF NOT EXISTS film_translations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  film_id VARCHAR NOT NULL REFERENCES films(id) ON DELETE CASCADE,
+  film_id UUID NOT NULL REFERENCES films(id) ON DELETE CASCADE,
   locale VARCHAR(5) NOT NULL CHECK (locale IN ('fr', 'en')),
   title VARCHAR,
   synopsis TEXT,

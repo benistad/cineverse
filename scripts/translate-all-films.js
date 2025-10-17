@@ -3,12 +3,93 @@
  * Usage: node scripts/translate-all-films.js
  */
 
-import { createClient } from '@supabase/supabase-js';
-import { translateFilmContent, isDeepLConfigured, estimateCharacterCount } from '../src/lib/translation/deepl.js';
-import dotenv from 'dotenv';
+const { createClient } = require('@supabase/supabase-js');
+const dotenv = require('dotenv');
+const fetch = require('node-fetch');
 
 // Charger les variables d'environnement
 dotenv.config({ path: '.env.local' });
+
+// Fonction de traduction DeepL (copie de deepl.js pour CommonJS)
+const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
+const DEEPL_API_URL = 'https://api-free.deepl.com/v2/translate';
+
+async function translateText(text) {
+  if (!text || text.trim() === '') {
+    return '';
+  }
+
+  if (!DEEPL_API_KEY) {
+    console.warn('DeepL API key not configured. Skipping translation.');
+    return text;
+  }
+
+  try {
+    const response = await fetch(DEEPL_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        auth_key: DEEPL_API_KEY,
+        text: text,
+        source_lang: 'FR',
+        target_lang: 'EN-US',
+        formality: 'default',
+        preserve_formatting: '1'
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('DeepL API error:', error);
+      return text;
+    }
+
+    const data = await response.json();
+    return data.translations[0].text;
+  } catch (error) {
+    console.error('Error translating text:', error);
+    return text;
+  }
+}
+
+async function translateFilmContent(film) {
+  console.log(`Translating film: ${film.title}`);
+
+  try {
+    const [
+      translatedTitle,
+      translatedSynopsis,
+      translatedWhyWatch
+    ] = await Promise.all([
+      translateText(film.title || ''),
+      translateText(film.synopsis || ''),
+      translateText(film.why_watch_content || '')
+    ]);
+
+    return {
+      title: translatedTitle,
+      synopsis: translatedSynopsis,
+      why_watch_content: translatedWhyWatch
+    };
+  } catch (error) {
+    console.error(`Error translating film ${film.id}:`, error);
+    throw error;
+  }
+}
+
+function isDeepLConfigured() {
+  return !!DEEPL_API_KEY;
+}
+
+function estimateCharacterCount(film) {
+  let count = 0;
+  if (film.title) count += film.title.length;
+  if (film.synopsis) count += film.synopsis.length;
+  if (film.why_watch_content) count += film.why_watch_content.length;
+  return count;
+}
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -34,7 +115,7 @@ async function translateAllFilms() {
     console.log('📥 Fetching all films from database...');
     const { data: films, error: fetchError } = await supabase
       .from('films')
-      .select('id, title, synopsis, why_watch_content, what_we_didnt_like')
+      .select('id, title, synopsis, why_watch_content')
       .order('date_ajout', { ascending: false });
 
     if (fetchError) {
