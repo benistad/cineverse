@@ -163,8 +163,11 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
   );
 };
 
-export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
+export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false, translation = null }) {
   const { t } = useTranslations();
+  
+  // Utiliser le titre traduit si disponible
+  const displayTitle = translation?.title || film.title;
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
   const pathname = usePathname();
   const isAdmin = pathname?.includes('/admin');
@@ -257,7 +260,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         
         <div className="p-4 flex-grow">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{film.title || t('filmCard.noTitle')}</h3>
+            <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{displayTitle || t('filmCard.noTitle')}</h3>
             {film.is_hunted_by_moviehunt && (
               typeof Link !== 'undefined' ? (
                 <Link 

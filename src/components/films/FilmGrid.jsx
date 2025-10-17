@@ -1,8 +1,12 @@
 'use client';
 
 import FilmCard from './FilmCard';
+import { useFilmTranslations } from '@/hooks/useFilmTranslations';
 
 export default function FilmGrid({ films, showRating = true, showAdminControls = false }) {
+  // Charger les traductions pour tous les films en une seule requête
+  const { translations } = useFilmTranslations(films);
+
   // Vérifier si films est défini et est un tableau
   if (!films || !Array.isArray(films) || films.length === 0) {
     return (
@@ -19,7 +23,8 @@ export default function FilmGrid({ films, showRating = true, showAdminControls =
           key={film.id || Math.random().toString(36).substring(7)} 
           film={film} 
           showRating={showRating} 
-          showAdminControls={showAdminControls} 
+          showAdminControls={showAdminControls}
+          translation={translations[film.id]}
         />
       ))}
     </div>

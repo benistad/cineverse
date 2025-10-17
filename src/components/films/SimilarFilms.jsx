@@ -7,11 +7,15 @@ import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useFilmTranslations } from '@/hooks/useFilmTranslations';
 
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslations();
+  
+  // Charger les traductions pour les films similaires
+  const { translations } = useFilmTranslations(similarFilms);
   
   useEffect(() => {
     async function fetchSimilarFilms() {
@@ -152,7 +156,9 @@ export default function SimilarFilms({ currentFilm }) {
               />
             </div>
             <div className="p-3">
-              <h3 className="font-semibold text-sm md:text-base line-clamp-1">{film.title}</h3>
+              <h3 className="font-semibold text-sm md:text-base line-clamp-1">
+                {translations[film.id]?.title || film.title}
+              </h3>
               <div className="flex items-center mt-1">
                 <RatingIcon rating={film.note_sur_10} size={16} />
                 <span className="ml-1 text-sm" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
