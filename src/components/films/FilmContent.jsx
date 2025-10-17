@@ -1,12 +1,48 @@
 'use client';
 
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useState, useEffect } from 'react';
+import { createBrowserClient } from '@supabase/ssr';
 
 /**
  * Composant client pour afficher le contenu traduit d'un film
  */
-export default function FilmContent({ film }) {
-  const { t } = useTranslations();
+export default function FilmContent({ film: initialFilm }) {
+  const { t, locale } = useTranslations();
+  const [film, setFilm] = useState(initialFilm);
+
+  useEffect(() => {
+    async function loadTranslation() {
+      if (locale === 'en' && initialFilm.id) {
+        const supabase = createBrowserClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        );
+
+        const { data: translation } = await supabase
+          .from('film_translations')
+          .select('*')
+          .eq('film_id', initialFilm.id)
+          .eq('locale', 'en')
+          .single();
+
+        if (translation) {
+          setFilm({
+            ...initialFilm,
+            synopsis: translation.synopsis || initialFilm.synopsis,
+            why_watch_content: translation.why_watch_content || initialFilm.why_watch_content
+          });
+        } else {
+          setFilm(initialFilm);
+        }
+      } else {
+        setFilm(initialFilm);
+      }
+    }
+
+    loadTranslation();
+  }, [locale, initialFilm]);
 
   return (
     <>
