@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 import { findTrailerByTitleAndYear } from '@/lib/tmdb/trailers';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function FilmTrailer({ film, initialTrailerKey }) {
   const { locale } = useLanguage();
+  const { t } = useTranslations();
   
   // Fix temporaire pour 1BR: forcer la bonne clé YouTube
   const correctTrailerKey = film?.slug === '1br-the-apartment' 
@@ -73,7 +75,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
   if (searchingTrailer) {
     return (
       <section className="mb-4 sm:mb-6">
-        <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
+        <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">{t('film.trailer')}</h2>
         <p className="text-gray-500 italic">Recherche d'une bande-annonce...</p>
       </section>
     );
@@ -85,7 +87,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
 
   return (
     <section className="mb-4 sm:mb-6">
-      <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Bande-annonce</h2>
+      <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">{t('film.trailer')}</h2>
       <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
         <YouTube 
           videoId={trailerKey} 

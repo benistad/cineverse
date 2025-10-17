@@ -12,6 +12,8 @@ import BlogArticleLink from '@/components/films/BlogArticleLink';
 import FilmTrailer from '@/components/films/FilmTrailer';
 import FilmMetadata from '@/components/films/FilmMetadata';
 import FilmHeader from '@/components/films/FilmHeader';
+import FilmTitle from '@/components/films/FilmTitle';
+import { RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -130,7 +132,7 @@ export default async function FilmPage({ params }) {
           {/* Informations du film */}
           <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-2xl sm:text-3xl font-bold" itemProp="name">{film.title}</h1>
+              <FilmTitle title={film.title} filmId={film.id} />
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
                   <Link 
@@ -217,7 +219,7 @@ export default async function FilmPage({ params }) {
       </div>
       
       <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Équipe technique remarquable</h2>
+        <RemarkableStaffTitle />
         <RemarkableStaffList filmId={film.id} />
       </section>
       
