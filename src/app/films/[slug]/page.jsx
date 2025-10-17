@@ -10,6 +10,8 @@ import MovieSchema from '@/components/seo/MovieSchema';
 import FilmTrailer from '@/components/films/FilmTrailer';
 import FilmPoster from '@/components/films/FilmPoster';
 import BlogArticleLink from '@/components/films/BlogArticleLink';
+import FilmContent from '@/components/films/FilmContent';
+import { AddedOnLabel, GenreLabel, RemarkableStaffTitle } from '@/components/films/FilmSectionTitles';
 
 // Configuration pour le revalidation (ISR)
 export const revalidate = 3600; // Revalider toutes les heures
@@ -186,12 +188,12 @@ export default async function FilmPage({ params }) {
             </div>
             
             <p className="text-gray-600 mb-2">
-              <span className="font-semibold">Date d'ajout:</span> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
+              <AddedOnLabel /> {new Date(film.date_ajout).toLocaleDateString('fr-FR')}
             </p>
             
             {film.genres && (
               <p className="text-gray-600 mb-2">
-                <span className="font-semibold">Genre:</span> {film.genres}
+                <GenreLabel /> {film.genres}
               </p>
             )}
             
@@ -217,21 +219,19 @@ export default async function FilmPage({ params }) {
               />
             )}
             
-            <section className="mb-4">
-              <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Synopsis</h2>
-              <p className="text-sm sm:text-base text-gray-700" itemProp="description">{film.synopsis || 'Aucun synopsis disponible.'}</p>
-            </section>
+            {/* Contenu traduit du film */}
+            <FilmContent film={film} />
             
-            {film.why_watch_enabled && film.why_watch_content && (
-              <section className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-lg border-l-4 border-indigo-600">
-                <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-indigo-800">Pourquoi regarder ce film ?</h2>
-                <div
-                  className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
-                  dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
-                />
+            {/* Blog article link */}
+            {film.blog_article_url && (
+              <section className="mb-4">
+                <BlogArticleLink url={film.blog_article_url} />
               </section>
             )}
-
+            
+            {/* Bande-annonce (composant client) */}
+            <FilmTrailer film={film} initialTrailerKey={film.youtube_trailer_key} />
+            
             {/* Section "Ce que nous n'avons pas aimé" */}
             {film.not_liked_enabled && film.not_liked_content && (
               <section className="mb-4 bg-red-50 p-3 sm:p-4 rounded-lg border-l-4 border-red-400">
@@ -250,7 +250,7 @@ export default async function FilmPage({ params }) {
       </div>
       
       <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Équipe technique remarquable</h2>
+        <RemarkableStaffTitle />
         <RemarkableStaffList filmId={film.id} />
       </section>
       

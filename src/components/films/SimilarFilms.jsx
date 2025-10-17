@@ -6,10 +6,12 @@ import Link from 'next/link';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations();
   
   useEffect(() => {
     async function fetchSimilarFilms() {
@@ -102,7 +104,7 @@ export default function SimilarFilms({ currentFilm }) {
   if (loading) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Films similaires</h2>
+        <h2 className="text-xl font-bold mb-4">{t('film.similarFilms')}</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-gray-200 animate-pulse h-64 rounded-lg"></div>
@@ -112,13 +114,11 @@ export default function SimilarFilms({ currentFilm }) {
     );
   }
   
-  if (similarFilms.length === 0) {
-    return null; // Ne rien afficher s'il n'y a pas de films similaires
-  }
+  if (similarFilms.length === 0) return null;
   
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold mb-4">Films similaires que vous pourriez aimer</h2>
+      <h2 className="text-xl font-bold mb-4">{t('film.similarFilms')}</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {similarFilms.map(film => (
           <Link 
