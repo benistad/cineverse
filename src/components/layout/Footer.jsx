@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Footer() {
+  const { t } = useTranslations();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,74 +15,72 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">MovieHunt</h3>
             <p className="text-gray-400 text-sm">
-              Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. 
-              Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes 
-              de streaming françaises et encore plus.
+              {t('footer.description')}
             </p>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Navigation</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.navigation')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-gray-400 hover:text-white flex items-center">
-                  <FiHome className="mr-2" /> Accueil
+                  <FiHome className="mr-2" /> {t('footer.home')}
                 </Link>
               </li>
               <li>
                 <Link href="/advanced-search" className="text-gray-400 hover:text-white flex items-center">
-                  <FiSearch className="mr-2" /> Recherche
+                  <FiSearch className="mr-2" /> {t('footer.search')}
                 </Link>
               </li>
               <li>
                 <Link href="/all-films" className="text-gray-400 hover:text-white flex items-center">
-                  <FiFilm className="mr-2" /> Tous les films
+                  <FiFilm className="mr-2" /> {t('footer.allFilms')}
                 </Link>
               </li>
               <li>
                 <Link href="/films-index" className="text-gray-400 hover:text-white flex items-center">
-                  <FiList className="mr-2" /> Index des films
+                  <FiList className="mr-2" /> {t('footer.filmsIndex')}
                 </Link>
               </li>
               <li>
                 <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white flex items-center">
-                  <FiHelpCircle className="mr-2" /> Quel film regarder ?
+                  <FiHelpCircle className="mr-2" /> {t('footer.whatToWatch')}
                 </Link>
               </li>
               <li>
                 <Link href="/huntedbymoviehunt" className="text-gray-400 hover:text-white flex items-center">
-                  <FiAward className="mr-2" /> Hunted by MovieHunt
+                  <FiAward className="mr-2" /> {t('footer.hunted')}
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">Liens utiles</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.usefulLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/films-index" className="text-gray-400 hover:text-white">
-                  Index complet des films
+                  {t('footer.completeIndex')}
                 </Link>
               </li>
               <li>
                 <Link href="/all-films" className="text-gray-400 hover:text-white">
-                  Catalogue de films
+                  {t('footer.filmCatalog')}
                 </Link>
               </li>
               <li>
                 <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white">
-                  Recommandations de films
+                  {t('footer.recommendations')}
                 </Link>
               </li>
               <li>
                 <Link href="/comment-nous-travaillons" className="text-gray-400 hover:text-white flex items-center">
-                  <FiInfo className="mr-2" /> Comment nous travaillons
+                  <FiInfo className="mr-2" /> {t('footer.howWeWork')}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-gray-400 hover:text-white flex items-center">
-                  <FiMail className="mr-2" /> Contact
+                  <FiMail className="mr-2" /> {t('footer.contact')}
                 </Link>
               </li>
             </ul>
@@ -90,10 +90,10 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <div>
             <p className="text-gray-400 text-sm">
-              © {currentYear} MovieHunt. Tous droits réservés.
+              © {currentYear} MovieHunt. {t('footer.rights')}
             </p>
             <p className="text-gray-400 text-xs mt-1">
-              Ce site utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.
+              {t('footer.tmdbDisclaimer')}
               <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer" className="ml-1 hover:text-white">
                 The Movie Database
               </a>

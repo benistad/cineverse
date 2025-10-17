@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { FiEdit, FiInstagram } from 'react-icons/fi';
 import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
+import { useTranslations } from '@/hooks/useTranslations';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -163,6 +164,7 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
 };
 
 export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
+  const { t } = useTranslations();
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
   const pathname = usePathname();
   const isAdmin = pathname?.includes('/admin');
@@ -186,7 +188,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
     return (
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <div className="p-3 sm:p-4 flex-grow">
-          <p className="text-red-500">Données du film non disponibles</p>
+          <p className="text-red-500">{t('filmCard.unavailable')}</p>
         </div>
       </div>
     );
@@ -255,14 +257,14 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         
         <div className="p-4 flex-grow">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{film.title || 'Sans titre'}</h3>
+            <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{film.title || t('filmCard.noTitle')}</h3>
             {film.is_hunted_by_moviehunt && (
               typeof Link !== 'undefined' ? (
                 <Link 
                   href="/huntedbymoviehunt" 
                   onClick={(e) => e.stopPropagation()} 
                   className="flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
-                  title="En savoir plus sur Hunted by MovieHunt"
+                  title={t('filmCard.learnMoreHunted')}
                 >
                   <Image 
                     src="/images/badges/hunted-badge.png" 
@@ -287,7 +289,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
             {film.genres && <span> • {film.genres.split(',')[0]}</span>}
           </p>
           <p className="text-sm text-gray-700 line-clamp-2">
-            {truncateText(film.synopsis || 'Aucun synopsis disponible.', windowWidth < 640 ? 80 : 120)}
+            {truncateText(film.synopsis || t('filmCard.noSynopsis'), windowWidth < 640 ? 80 : 120)}
           </p>
         </div>
       </Link>

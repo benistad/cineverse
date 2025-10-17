@@ -52,16 +52,38 @@
     "year": "Year",
     "rating": "Rating"
   },
+  "filmCard": {
+    "noTitle": "No title",
+    "noSynopsis": "No synopsis available.",
+    "unavailable": "Film data unavailable",
+    "learnMoreHunted": "Learn more about Hunted by MovieHunt"
+  },
   "footer": {
     "about": "About",
     "contact": "Contact",
     "privacy": "Privacy",
-    "terms": "Terms of Use"
+    "terms": "Terms of Use",
+    "description": "Movie Hunt is the site to know what film to watch and discover hidden gems. Film ratings, recommendations, remarkable cast, availability on French streaming platforms and more.",
+    "navigation": "Navigation",
+    "home": "Home",
+    "search": "Search",
+    "allFilms": "All Films",
+    "filmsIndex": "Films Index",
+    "whatToWatch": "What to Watch?",
+    "hunted": "Hunted by MovieHunt",
+    "usefulLinks": "Useful Links",
+    "completeIndex": "Complete films index",
+    "filmCatalog": "Film catalog",
+    "recommendations": "Film recommendations",
+    "howWeWork": "How We Work",
+    "rights": "All rights reserved.",
+    "tmdbDisclaimer": "This site uses the TMDB API but is not endorsed or certified by TMDB."
   },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
     "notFound": "Page not found",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "year": "Year"
   }
 }

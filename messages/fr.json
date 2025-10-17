@@ -52,16 +52,38 @@
     "year": "Année",
     "rating": "Note"
   },
+  "filmCard": {
+    "noTitle": "Sans titre",
+    "noSynopsis": "Aucun synopsis disponible.",
+    "unavailable": "Données du film non disponibles",
+    "learnMoreHunted": "En savoir plus sur Hunted by MovieHunt"
+  },
   "footer": {
     "about": "À propos",
     "contact": "Contact",
     "privacy": "Confidentialité",
-    "terms": "Conditions d'utilisation"
+    "terms": "Conditions d'utilisation",
+    "description": "Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.",
+    "navigation": "Navigation",
+    "home": "Accueil",
+    "search": "Recherche",
+    "allFilms": "Tous les films",
+    "filmsIndex": "Index des films",
+    "whatToWatch": "Quel film regarder ?",
+    "hunted": "Hunted by MovieHunt",
+    "usefulLinks": "Liens utiles",
+    "completeIndex": "Index complet des films",
+    "filmCatalog": "Catalogue de films",
+    "recommendations": "Recommandations de films",
+    "howWeWork": "Comment nous travaillons",
+    "rights": "Tous droits réservés.",
+    "tmdbDisclaimer": "Ce site utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB."
   },
   "common": {
     "loading": "Chargement...",
     "error": "Une erreur est survenue",
     "notFound": "Page non trouvée",
-    "backHome": "Retour à l'accueil"
+    "backHome": "Retour à l'accueil",
+    "year": "Année"
   }
 }
