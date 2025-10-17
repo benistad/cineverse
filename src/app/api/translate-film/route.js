@@ -80,7 +80,7 @@ async function translateWithDeepL(text, context = 'general') {
     const translatedText = data.translations[0].text;
     
     // Appliquer les corrections post-traduction
-    return postProcessTranslation(translatedText, context);
+    return postProcessTranslation(translatedText);
   } catch (error) {
     console.error('Error translating with DeepL:', error);
     return text;

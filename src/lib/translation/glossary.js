@@ -157,10 +157,9 @@ export function prepareTextForTranslation(text, context = 'general') {
 /**
  * Traite le texte après traduction DeepL
  * @param {string} text - Texte traduit
- * @param {string} context - Type de contenu
  * @returns {string} Texte finalisé
  */
-export function postProcessTranslation(text, context = 'general') {
+export function postProcessTranslation(text) {
   if (!text) return text;
   
   let processedText = text;
