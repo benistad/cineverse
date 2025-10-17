@@ -11,7 +11,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const t = useTranslations();
+  const { t } = useTranslations();
   
   useEffect(() => {
     async function fetchSimilarFilms() {
