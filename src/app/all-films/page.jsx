@@ -11,6 +11,7 @@ import { useTranslations } from '@/hooks/useTranslations';
 export default function AllFilmsPage() {
   const { t } = useTranslations();
   const [films, setFilms] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
