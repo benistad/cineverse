@@ -61,8 +61,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "10/10",
       slug: "funny-games-us",
       emoji: "👻",
-      category: "Le coup de maître",
-      description: "Si vous cherchez un film qui vous laisse sans voix, Funny Games US est incontournable. Brutal, dérangeant et sans concession, il bouleverse tous les codes du cinéma d'horreur. Avec sa note parfaite de 10/10, c'est le choix ultime pour un Halloween qui reste gravé dans la mémoire.",
+      translationKey: "funnyGames",
       poster: "https://image.tmdb.org/t/p/w500/nWd7wpRM40YEG1C4PuyCIT2SiEa.jpg"
     },
     {
@@ -70,8 +69,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "7/10",
       slug: "destination-finale-bloodlines",
       emoji: "🩸",
-      category: "Les sensations fortes",
-      description: "Un retour réussi de la saga culte, avec toujours cette mécanique implacable où le destin frappe de manière inventive et sanglante.",
+      translationKey: "destinationFinale",
       poster: "https://image.tmdb.org/t/p/w500/4uI8C2zcfLWRhZDBgd0oTlZjV9j.jpg"
     },
     {
@@ -79,8 +77,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "6/10",
       slug: "until-dawn-la-mort-sans-fin",
       emoji: "🩸",
-      category: "Les sensations fortes",
-      description: "Inspiré de l'univers vidéoludique, ce film mise sur l'immersion et la tension. Une expérience efficace pour ceux qui aiment se sentir au cœur de l'action.",
+      translationKey: "untilDawn",
       poster: "https://image.tmdb.org/t/p/w500/lCdHBrSdJG7G7Anx2wcfaMER8Pd.jpg"
     },
     {
@@ -88,8 +85,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "6/10",
       slug: "heretic",
       emoji: "🔥",
-      category: "La révélation Hunted",
-      description: "Dans une ambiance suffocante et dérangeante, Heretic s'impose comme l'une des découvertes marquantes de ces dernières années. Assez audacieux pour obtenir le badge HuntedByMovieHunt, ce film mérite une place de choix dans votre soirée d'horreur.",
+      translationKey: "heretic",
       hunted: true,
       poster: "https://image.tmdb.org/t/p/w500/qcRQkVjP6Zdr4EkHevfqjVEk9KQ.jpg"
     },
@@ -98,8 +94,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "6/10",
       slug: "1br-the-apartment",
       emoji: "🏢",
-      category: "Les cauchemars psychologiques",
-      description: "Un thriller glaçant sur la vie en communauté, où la promesse d'un nouveau départ vire au cauchemar sectaire.",
+      translationKey: "1br",
       poster: "https://image.tmdb.org/t/p/w500/aLnGUlGbjWX4dodNt2LMEqNfemE.jpg"
     },
     {
@@ -107,8 +102,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "6/10",
       slug: "triangle",
       emoji: "🏢",
-      category: "Les cauchemars psychologiques",
-      description: "Un jeu terrifiant avec le temps et la boucle infernale, idéal pour ceux qui aiment les récits qui se dérobent sous leurs pieds.",
+      translationKey: "triangle",
       poster: "https://image.tmdb.org/t/p/w500/6U3nSrd6uaP0uubsoau1RKToQGR.jpg"
     },
     {
@@ -116,8 +110,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "5/10",
       slug: "vivarium",
       emoji: "🪐",
-      category: "L'étrangeté inquiétante",
-      description: "Avec son décor de banlieue parfaite mais étouffante, Vivarium explore la prison de la normalité. Noté 5/10, il divise, mais laisse une impression durable.",
+      translationKey: "vivarium",
       poster: "https://image.tmdb.org/t/p/w500/2SAH6napkUWibaAJ4oXr8dAVTIm.jpg"
     },
     {
@@ -125,8 +118,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "5/10",
       slug: "barbare",
       emoji: "🏚️",
-      category: "Les secrets cachés",
-      description: "Un film qui commence comme un simple cauchemar de location Airbnb, avant de basculer dans l'horreur la plus imprévisible.",
+      translationKey: "barbarian",
       poster: "https://image.tmdb.org/t/p/w500/rJS3o7TgR0pvdtD045kQJQpHXMd.jpg"
     },
     {
@@ -134,8 +126,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "5/10",
       slug: "blood-star",
       emoji: "🏚️",
-      category: "Les secrets cachés",
-      description: "Moins connu, mais marquant par son atmosphère viscérale et sa brutalité. Un choix audacieux pour les amateurs de sensations fortes.",
+      translationKey: "bloodStar",
       poster: "https://image.tmdb.org/t/p/w500/91iWyahJbZsHvXL5MbAIx1w0Tjx.jpg"
     },
     {
@@ -143,8 +134,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "5/10",
       slug: "night-of-the-hunted",
       emoji: "🎯",
-      category: "La tension pure",
-      description: "Un huis clos à ciel ouvert où chaque instant compte. Avec son intensité et son rythme sec, Night of the Hunted est le film parfait pour maintenir l'adrénaline jusqu'au bout de la nuit.",
+      translationKey: "nightOfTheHunted",
       poster: "https://image.tmdb.org/t/p/w500/tfNFmBGBVF1biwOTBgFONAeCaDZ.jpg"
     },
     {
@@ -152,8 +142,7 @@ export default function FilmsHorreurHalloween2025() {
       note: "5/10",
       slug: "vicious",
       emoji: "🎁",
-      category: "Film Bonus",
-      description: "Un thriller horrifique qui joue avec vos peurs intérieures. Polly reçoit une mystérieuse boîte accompagnée d'une consigne étrange : y placer une chose dont elle a besoin, une chose qu'elle déteste et une chose qu'elle aime. Ce rituel se transforme vite en cauchemar où elle doit affronter les ténèbres, non seulement autour d'elle, mais aussi en elle.",
+      translationKey: "vicious",
       poster: "https://image.tmdb.org/t/p/w500/7IntLBzQbsJisbZvaSsNLHoZKRS.jpg",
       bonus: true
     }
@@ -199,7 +188,7 @@ export default function FilmsHorreurHalloween2025() {
             <div key={film.slug}>
               <section className="mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                  {film.emoji} {film.category} : {film.title} ({film.note})
+                  {film.emoji} {t(`halloween.films.${film.translationKey}.category`)} : {film.title} ({film.note})
                 </h2>
                 
                 <div className="bg-gray-50 p-6 rounded-lg shadow-sm flex flex-col md:flex-row gap-6">
@@ -237,7 +226,7 @@ export default function FilmsHorreurHalloween2025() {
                       )}
                     </div>
                     <p className="text-base leading-relaxed mb-4">
-                      {film.description}
+                      {t(`halloween.films.${film.translationKey}.description`)}
                     </p>
                     <Link 
                       href={`/films/${film.slug}`} 
@@ -340,46 +329,46 @@ export default function FilmsHorreurHalloween2025() {
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3 flex items-center">
                   <FiMoon className="mr-2 text-orange-600" />
-                  🔥 Quel est le film d&apos;horreur le plus effrayant de cette sélection ?
+                  🔥 {t('halloween.faq.q1')}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  Sans hésiter, <strong>Funny Games US</strong>, noté <strong>10/10</strong> sur MovieHunt, est le film le plus marquant. Sa mise en scène implacable et son réalisme dérangeant en font une expérience terrifiante, idéale pour Halloween.
+                  {t('halloween.faq.a1')}
                 </p>
               </div>
               
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">
-                  🎬 Quels films originaux regarder pour Halloween 2025 ?
+                  🎬 {t('halloween.faq.q2')}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  Si vous voulez sortir des sentiers battus, optez pour <strong>Heretic</strong> (badge HuntedByMovieHunt) ou <strong>1BR : The Apartment</strong>. Ces films ne sont pas de simples divertissements horrifiques : ils plongent dans des thématiques psychologiques et sociales qui laissent une trace durable.
+                  {t('halloween.faq.a2')}
                 </p>
               </div>
               
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">
-                  👻 Quelle est la meilleure idée de film à voir entre amis pour Halloween ?
+                  👻 {t('halloween.faq.q3')}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  <strong>Destination Finale : Bloodlines</strong> et <strong>Until Dawn</strong> sont parfaits à plusieurs : spectaculaires, rythmés et bourrés de scènes qui font sursauter. Ils garantissent une ambiance fun et effrayante.
+                  {t('halloween.faq.a3')}
                 </p>
               </div>
               
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">
-                  🕯️ Existe-t-il une liste de films d&apos;horreur méconnus à découvrir ?
+                  🕯️ {t('halloween.faq.q4')}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  Oui ! Sur <strong>MovieHunt.fr</strong>, nous mettons en avant des films moins connus mais fascinants, comme <strong>Triangle</strong>, <strong>Vivarium</strong> ou encore <strong>Blood Star</strong>. Ces choix originaux sont parfaits pour surprendre vos invités le soir d&apos;Halloween.
+                  {t('halloween.faq.a4')}
                 </p>
               </div>
               
               <div className="bg-gray-50 p-6 rounded-lg">
                 <h3 className="text-xl font-bold mb-3">
-                  🎃 Où trouver des critiques détaillées de films d&apos;horreur ?
+                  🎃 {t('halloween.faq.q5')}
                 </h3>
                 <p className="text-base leading-relaxed">
-                  Toutes nos critiques de films d&apos;horreur sont disponibles sur <strong>MovieHunt.fr</strong>. Chaque film est visionné en version originale et évalué selon des critères précis (réalisation, scénario, jeu des acteurs, photographie, musique et impact émotionnel).
+                  {t('halloween.faq.a5')}
                 </p>
               </div>
             </div>

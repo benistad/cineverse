@@ -138,6 +138,64 @@
     "ourSelection": "Our selection of 10 horror films for Halloween 2025",
     "seeReview": "See the full review on MovieHunt",
     "backHome": "← Back to home",
+    "films": {
+      "funnyGames": {
+        "category": "The Masterpiece",
+        "description": "If you're looking for a film that leaves you speechless, Funny Games US is essential. Brutal, disturbing and uncompromising, it upends all horror cinema codes. With its perfect 10/10 rating, it's the ultimate choice for a Halloween that stays etched in memory."
+      },
+      "destinationFinale": {
+        "category": "The Thrills",
+        "description": "A successful return of the cult saga, with that relentless mechanism where fate strikes in inventive and bloody ways."
+      },
+      "untilDawn": {
+        "category": "The Thrills",
+        "description": "Inspired by the video game universe, this film focuses on immersion and tension. An effective experience for those who like to feel at the heart of the action."
+      },
+      "heretic": {
+        "category": "The Hunted Revelation",
+        "description": "In a suffocating and disturbing atmosphere, Heretic stands out as one of the most striking discoveries in recent years. Bold enough to earn the HuntedByMovieHunt badge, this film deserves a prime spot in your horror evening."
+      },
+      "1br": {
+        "category": "Psychological Nightmares",
+        "description": "A chilling thriller about community living, where the promise of a fresh start turns into a sectarian nightmare."
+      },
+      "triangle": {
+        "category": "Psychological Nightmares",
+        "description": "A terrifying game with time and the infernal loop, ideal for those who love stories that slip from under their feet."
+      },
+      "vivarium": {
+        "category": "Disturbing Strangeness",
+        "description": "With its perfect but suffocating suburban setting, Vivarium explores the prison of normality. Rated 5/10, it divides, but leaves a lasting impression."
+      },
+      "barbarian": {
+        "category": "Hidden Secrets",
+        "description": "A film that starts as a simple Airbnb rental nightmare, before plunging into the most unpredictable horror."
+      },
+      "bloodStar": {
+        "category": "Hidden Secrets",
+        "description": "Less known, but striking in its visceral atmosphere and brutality. A bold choice for thrill-seekers."
+      },
+      "nightOfTheHunted": {
+        "category": "Pure Tension",
+        "description": "An open-air locked room where every moment counts. With its intensity and sharp pace, Night of the Hunted is the perfect film to keep the adrenaline going until the end of the night."
+      },
+      "vicious": {
+        "category": "Bonus Film",
+        "description": "A horror thriller that plays with your inner fears. Polly receives a mysterious box with a strange instruction: place something she needs, something she hates, and something she loves. This ritual quickly turns into a nightmare where she must face the darkness, not only around her, but also within her."
+      }
+    },
+    "faq": {
+      "q1": "What is the scariest horror film in this selection?",
+      "a1": "Without hesitation, Funny Games US, rated 10/10 on MovieHunt, is the most striking film. Its relentless direction and disturbing realism make it a terrifying experience, ideal for Halloween.",
+      "q2": "What original films to watch for Halloween 2025?",
+      "a2": "If you want to go off the beaten path, opt for Heretic (HuntedByMovieHunt badge) or 1BR: The Apartment. These films are not simple horror entertainment: they delve into psychological and social themes that leave a lasting mark.",
+      "q3": "What's the best film idea to watch with friends for Halloween?",
+      "a3": "Final Destination: Bloodlines and Until Dawn are perfect for groups: spectacular, fast-paced and packed with jump scares. They guarantee a fun and scary atmosphere.",
+      "q4": "Is there a list of lesser-known horror films to discover?",
+      "a4": "Yes! On MovieHunt.fr, we highlight lesser-known but fascinating films, like Triangle, Vivarium or Blood Star. These original choices are perfect for surprising your guests on Halloween night.",
+      "q5": "Where to find detailed horror film reviews?",
+      "a5": "All our horror film reviews are available on MovieHunt.fr. Each film is watched in original version and evaluated according to precise criteria (direction, screenplay, acting, cinematography, music and emotional impact)."
+    },
     "metaTitle": "Horror Films for Halloween 2025 | MovieHunt",
     "metaDescription": "Discover our selection of the best horror films to watch for Halloween 2025. Terrifying films, psychological thrillers and cult classics."
   },
