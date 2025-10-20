@@ -4,8 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import SafeImage from '@/components/ui/SafeImage';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function QuelFilmRegarder() {
+  const { t } = useTranslations();
+  
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
   const jsonLd = {
     "@context": "https://schema.org",
@@ -65,7 +68,7 @@ export default function QuelFilmRegarder() {
       <div className="container mx-auto px-6 py-12">
         <article className="prose prose-lg max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm">
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-indigo-800" id="quel-film-regarder">🎬 Quel film regarder ce soir ?</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-indigo-800" id="quel-film-regarder">{t('whatToWatch.title')}</h1>
             <div className="flex justify-center">
               <span className="inline-block w-32 h-1 rounded bg-gradient-to-r from-indigo-600 to-purple-600 mb-4"></span>
             </div>
@@ -74,38 +77,38 @@ export default function QuelFilmRegarder() {
           {/* Bloc de mise à jour */}
           <div className="bg-indigo-50 border-l-4 border-indigo-600 p-4 mb-6 rounded">
             <p className="text-sm text-indigo-800 font-medium">
-              🆕 <strong>Dernière mise à jour : octobre 2025</strong>
+              <strong>{t('whatToWatch.lastUpdate')}</strong>
             </p>
           </div>
 
           <div className="mb-8">
             <p className="text-lg">
-              <strong>Vous ne savez pas quel film regarder ce soir ?</strong> Vous n&apos;êtes pas seul. C&apos;est LA question que tout cinéphile se pose régulièrement. En panne d&apos;inspiration pour trouver un film à voir, vous êtes au bon endroit !
+              {t('whatToWatch.intro1')}
             </p>
             
             <p className="text-lg">
-              Heureusement, <strong>MovieHunt.fr</strong> est là pour vous aider à décider quel film regarder avec des <strong>recommandations de films</strong> personnalisées. Nos films sont notés, analysés et choisis avec soin, pour vous faire passer un excellent moment, que vous cherchiez des <strong>idées de films à voir</strong> en couple, entre amis ou en solo.
+              {t('whatToWatch.intro2')}
             </p>
             
             <p className="text-lg">
-              Vous trouverez ici une <strong>liste de films conseillés</strong>, qu&apos;il s&apos;agisse d&apos;un thriller, d&apos;un drame ou d&apos;une comédie. Notre objectif : vous aider à <strong>trouver un bon film à regarder</strong> sans passer des heures à chercher.
+              {t('whatToWatch.intro3')}
             </p>
             
             {/* Section Halloween */}
             <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-6 rounded-lg">
-              <h3 className="text-xl font-bold text-orange-900 mb-3">🎃 Spécial Halloween 2025</h3>
+              <h3 className="text-xl font-bold text-orange-900 mb-3">{t('whatToWatch.halloweenTitle')}</h3>
               <p className="text-gray-800 mb-3">
-                Vous cherchez des <strong>films d&apos;horreur pour Halloween</strong> ? Découvrez notre sélection de 10 films terrifiants parfaits pour une soirée frissons !
+                {t('whatToWatch.halloweenText')}
               </p>
               <Link href="/films-horreur-halloween-2025" className="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold">
-                👻 Voir notre sélection Halloween 2025 →
+                {t('whatToWatch.halloweenLink')}
               </Link>
             </div>
             
-            <h2 className="text-2xl font-bold mt-6 mb-4">Notre sélection personnalisée</h2>
+            <h2 className="text-2xl font-bold mt-6 mb-4">{t('whatToWatch.personalizedSelection')}</h2>
             
             <p className="text-lg mb-4">
-              Vous cherchez <strong>quoi regarder ce soir</strong> ? Voici notre sélection de films triés sur le volet pour vous aider à trouver le <strong>film à regarder</strong> parfait pour votre soirée :
+              {t('whatToWatch.selectionIntro')}
             </p>
           </div>
           
@@ -141,7 +144,7 @@ export default function QuelFilmRegarder() {
                   Un meurtre, un million de dollars, et une série de décisions catastrophiques dans une petite ville paisible. Joseph Gordon-Levitt brille dans cette comédie noire pleine de rebondissements.
                 </p>
                 <Link href="/films/greedy-people" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  👉 Voir la fiche sur MovieHunt
+                  {t('whatToWatch.seeOnMovieHunt')}
                 </Link>
               </div>
             </div>
@@ -179,7 +182,7 @@ export default function QuelFilmRegarder() {
                   Un fermier veuf accueille un homme blessé avec une sacoche pleine d&apos;argent. Ce western intimiste cache un secret qui va tout changer. Tim Blake Nelson est magistral dans ce film qui revisite le genre avec intelligence.
                 </p>
                 <Link href="/films/old-henry" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  👉 Voir la fiche sur MovieHunt
+                  {t('whatToWatch.seeOnMovieHunt')}
                 </Link>
               </div>
             </div>
@@ -217,7 +220,7 @@ export default function QuelFilmRegarder() {
                   L&apos;incroyable histoire vraie derrière le jeu vidéo le plus populaire au monde. Un thriller haletant sur fond de Guerre froide avec Taron Egerton, entre espionnage et négociations impossibles en URSS.
                 </p>
                 <Link href="/films/tetris" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  👉 Voir la fiche sur MovieHunt
+                  {t('whatToWatch.seeOnMovieHunt')}
                 </Link>
               </div>
             </div>
@@ -255,7 +258,7 @@ export default function QuelFilmRegarder() {
                   Après 12 ans de prison, un perceur de coffres-forts légendaire revient à Londres pour récupérer son dû. Jude Law est explosif dans cette comédie noire britannique décalée et savoureuse.
                 </p>
                 <Link href="/films/dom-hemingway" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  👉 Voir la fiche sur MovieHunt
+                  {t('whatToWatch.seeOnMovieHunt')}
                 </Link>
               </div>
             </div>
@@ -293,7 +296,7 @@ export default function QuelFilmRegarder() {
                   Un consultant politique démocrate aide un colonel à la retraite dans une élection locale. Une satire mordante du système électoral américain avec un twist final brillant qui change tout.
                 </p>
                 <Link href="/films/irresistible" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  👉 Voir la fiche sur MovieHunt
+                  {t('whatToWatch.seeOnMovieHunt')}
                 </Link>
               </div>
             </div>
