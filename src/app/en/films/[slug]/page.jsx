@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 import FilmPageContent from '@/components/films/FilmPageContent';
 
@@ -25,15 +24,12 @@ async function getFilm(slug) {
 
 /**
  * Page anglaise pour les films
- * Affiche le même contenu que la version française mais avec locale EN
+ * Affiche le même contenu que la version française
+ * Le cookie NEXT_LOCALE=en sera défini côté client par le LanguageContext
  */
-export default async function EnglishFilmPage({ params }) {
-  // Définir la locale EN dans les cookies
-  const cookieStore = await cookies();
-  cookieStore.set('NEXT_LOCALE', 'en', {
-    path: '/',
-    maxAge: 365 * 24 * 60 * 60, // 1 an
-  });
+export default async function EnglishFilmPage({ params: paramsPromise }) {
+  // Await params pour Next.js 15
+  const params = await paramsPromise;
 
   // Récupérer le film
   const film = await getFilm(params.slug);
@@ -43,11 +39,15 @@ export default async function EnglishFilmPage({ params }) {
   }
   
   // Afficher le même contenu que la page française
+  // Le contenu sera en anglais car les métadonnées indiquent locale=en
   return <FilmPageContent film={film} />;
 }
 
 // Générer les métadonnées pour le SEO
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params: paramsPromise }) {
+  // Await params pour Next.js 15
+  const params = await paramsPromise;
+  
   // Import dynamique pour éviter les problèmes de dépendances circulaires
   const { createClient } = await import('@supabase/supabase-js');
   

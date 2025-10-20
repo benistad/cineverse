@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import LocaleDetector from "@/components/LocaleDetector";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
@@ -76,6 +77,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={`${poppins.variable} font-sans antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100`}>
+        <LocaleDetector />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
