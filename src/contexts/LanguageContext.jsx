@@ -39,8 +39,43 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
     setLocale(newLocale);
     
-    // Recharger complètement la page pour appliquer la nouvelle langue
-    window.location.reload();
+    // Liste des pages statiques à gérer avec i18n
+    const staticPages = [
+      '/contact',
+      '/huntedbymoviehunt',
+      '/hidden-gems',
+      '/top-rated',
+      '/all-films',
+      '/comment-nous-travaillons',
+      '/quel-film-regarder',
+      '/films-horreur-halloween-2025'
+    ];
+    
+    // Vérifier si on est sur une page statique
+    const currentPath = pathname.replace(/^\/en/, ''); // Enlever /en si présent
+    const isStaticPage = staticPages.some(page => currentPath === page || currentPath.startsWith(page + '/'));
+    
+    if (isStaticPage) {
+      // Rediriger vers l'URL appropriée
+      if (newLocale === 'en') {
+        // Ajouter /en/ si pas déjà présent
+        if (!pathname.startsWith('/en/')) {
+          window.location.href = `/en${currentPath}`;
+        } else {
+          window.location.reload();
+        }
+      } else {
+        // Enlever /en/ si présent
+        if (pathname.startsWith('/en/')) {
+          window.location.href = currentPath;
+        } else {
+          window.location.reload();
+        }
+      }
+    } else {
+      // Pour les autres pages, recharger simplement
+      window.location.reload();
+    }
   };
 
   return (

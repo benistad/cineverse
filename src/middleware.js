@@ -33,21 +33,56 @@ function getLocale(request) {
 
 export async function middleware(request) {
   const url = new URL(request.url);
+  const pathname = url.pathname;
+  
+  // Liste des pages statiques à gérer avec i18n
+  const staticPages = [
+    '/contact',
+    '/huntedbymoviehunt',
+    '/hidden-gems',
+    '/top-rated',
+    '/all-films',
+    '/comment-nous-travaillons',
+    '/quel-film-regarder',
+    '/films-horreur-halloween-2025'
+  ];
   
   // Gestion de la langue pour toutes les routes (sauf admin et API)
-  if (!url.pathname.startsWith('/admin') && !url.pathname.startsWith('/api') && !url.pathname.startsWith('/_next')) {
-    const locale = getLocale(request);
-    const response = NextResponse.next();
+  if (!pathname.startsWith('/admin') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
+    // Vérifier si l'URL commence par /en/
+    const pathnameHasLocale = pathname.startsWith('/en/');
     
-    // Définir le cookie de langue si nécessaire
-    if (!request.cookies.get('NEXT_LOCALE') || request.cookies.get('NEXT_LOCALE').value !== locale) {
-      response.cookies.set('NEXT_LOCALE', locale, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 365, // 1 an
-      });
+    if (pathnameHasLocale) {
+      // URL avec /en/ : extraire le chemin sans le préfixe de langue
+      const pathnameWithoutLocale = pathname.replace(/^\/en/, '') || '/';
+      
+      // Vérifier si c'est une page statique
+      const isStaticPage = staticPages.some(page => pathnameWithoutLocale === page || pathnameWithoutLocale.startsWith(page + '/'));
+      
+      if (isStaticPage) {
+        // Rewrite vers la page sans préfixe mais avec le cookie de langue
+        const response = NextResponse.rewrite(new URL(pathnameWithoutLocale, request.url));
+        response.cookies.set('NEXT_LOCALE', 'en', {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 365, // 1 an
+        });
+        return response;
+      }
+    } else {
+      // URL sans préfixe de langue
+      const locale = getLocale(request);
+      const response = NextResponse.next();
+      
+      // Définir le cookie de langue si nécessaire
+      if (!request.cookies.get('NEXT_LOCALE') || request.cookies.get('NEXT_LOCALE').value !== locale) {
+        response.cookies.set('NEXT_LOCALE', locale, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 365, // 1 an
+        });
+      }
+      
+      return response;
     }
-    
-    return response;
   }
   
   // Appliquer uniquement le middleware d'authentification pour les routes admin
