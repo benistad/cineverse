@@ -1,9 +1,31 @@
+import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
-import FilmPage from '@/app/films/[slug]/page';
+import { createClient } from '@supabase/supabase-js';
+import FilmPageContent from '@/components/films/FilmPageContent';
+
+// Fonction pour récupérer le film côté serveur
+async function getFilm(slug) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
+  const { data: film, error } = await supabase
+    .from('films')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !film) {
+    return null;
+  }
+
+  return film;
+}
 
 /**
  * Page anglaise pour les films
- * Affiche le même contenu que la page française mais avec locale EN
+ * Affiche le même contenu que la version française mais avec locale EN
  */
 export default async function EnglishFilmPage({ params }) {
   // Définir la locale EN dans les cookies
@@ -13,9 +35,15 @@ export default async function EnglishFilmPage({ params }) {
     maxAge: 365 * 24 * 60 * 60, // 1 an
   });
 
-  // Afficher la même page que la version française
-  // Le contenu sera en anglais grâce au cookie NEXT_LOCALE=en
-  return <FilmPage params={params} />;
+  // Récupérer le film
+  const film = await getFilm(params.slug);
+  
+  if (!film) {
+    notFound();
+  }
+  
+  // Afficher le même contenu que la page française
+  return <FilmPageContent film={film} />;
 }
 
 // Générer les métadonnées pour le SEO
