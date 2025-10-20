@@ -180,15 +180,15 @@ export default function FilmsHorreurHalloween2025() {
         
           <section className="mb-8">
             <p className="text-lg leading-relaxed">
-              <strong>Halloween</strong>, c&apos;est la nuit idéale pour frissonner devant un bon <strong>film d&apos;horreur</strong>. Mais plutôt que de revoir toujours les mêmes classiques, pourquoi ne pas plonger dans une sélection originale, mêlant expériences dérangeantes, thrillers psychologiques et découvertes marquantes ?
+              {t('halloween.introP1')}
             </p>
             
             <p className="text-lg leading-relaxed">
-              Sur <strong>MovieHunt.fr</strong>, nous prenons le temps de visionner chaque film, de les noter selon nos critères (réalisation, scénario, jeu des acteurs, photographie, bande-son et impact émotionnel) et de mettre en avant les véritables pépites grâce au badge <strong>HuntedByMovieHunt</strong>.
+              {t('halloween.introP2')}
             </p>
             
             <p className="text-lg leading-relaxed font-semibold">
-              Voici notre liste de <strong>films d&apos;horreur à voir pour Halloween 2025</strong>.
+              {t('halloween.introP3')}
             </p>
           </section>
           
@@ -258,43 +258,43 @@ export default function FilmsHorreurHalloween2025() {
           {/* Conclusion */}
           <section className="mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              🎃 Conclusion : quelle idée de film d&apos;horreur pour Halloween 2025 ?
+              🎃 {t('halloween.conclusionTitle')}
             </h2>
             
             <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-lg shadow-sm">
               <p className="text-lg leading-relaxed mb-4">
-                Cette année, notre sélection <strong>MovieHunt</strong> vous propose une palette variée :
+                {t('halloween.conclusionIntro')}
               </p>
               
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start">
                   <span className="mr-2 text-orange-600">•</span>
-                  <span><strong>L&apos;excellence dérangeante</strong> avec Funny Games US</span>
+                  <span>{t('halloween.conclusionItem1')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-orange-600">•</span>
-                  <span><strong>Le grand spectacle</strong> avec Destination Finale : Bloodlines</span>
+                  <span>{t('halloween.conclusionItem2')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-orange-600">•</span>
-                  <span><strong>Les révélations audacieuses</strong> comme Heretic</span>
+                  <span>{t('halloween.conclusionItem3')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-orange-600">•</span>
-                  <span><strong>Les cauchemars psychologiques</strong> tels que 1BR ou Triangle</span>
+                  <span>{t('halloween.conclusionItem4')}</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-orange-600">•</span>
-                  <span><strong>Et des expériences atypiques</strong> comme Vivarium ou Barbarian</span>
+                  <span>{t('halloween.conclusionItem5')}</span>
                 </li>
               </ul>
               
               <p className="text-lg leading-relaxed mb-4">
-                Autant d&apos;<strong>idées de films à voir pour Halloween</strong> qui transformeront votre soirée en expérience inoubliable.
+                {t('halloween.conclusionOutro1')}
               </p>
               
               <p className="text-lg leading-relaxed font-semibold">
-                Alors, préparez vos pop-corn, baissez les lumières… et laissez la peur vous envelopper.
+                {t('halloween.conclusionOutro2')}
               </p>
               
               <div className="mt-6 text-center">
@@ -302,7 +302,7 @@ export default function FilmsHorreurHalloween2025() {
                   href="/advanced-search?genres=Horreur" 
                   className="inline-flex items-center px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition-colors"
                 >
-                  <FiFilm className="mr-2" /> Découvrez tous nos films d&apos;horreur
+                  <FiFilm className="mr-2" /> {t('halloween.ctaButton')}
                 </Link>
               </div>
             </div>
@@ -314,16 +314,16 @@ export default function FilmsHorreurHalloween2025() {
           <section className="mb-8">
             <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
               <h2 className="text-2xl font-bold text-blue-900 mb-3">
-                🎬 Vous ne savez pas quel film regarder ce soir ?
+                🎬 {t('halloween.whatToWatchTitle')}
               </h2>
               <p className="text-gray-800 mb-4 leading-relaxed">
-                Au-delà de l&apos;horreur, découvrez notre sélection variée de <strong>pépites méconnues</strong> pour tous les goûts : comédies noires, westerns surprenants, thrillers fascinants et bien plus encore. Chaque film est noté, analysé et recommandé par MovieHunt.
+                {t('halloween.whatToWatchText')}
               </p>
               <Link 
                 href="/quel-film-regarder" 
                 className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors"
               >
-                🎬 Découvrez notre guide "Quel film regarder ce soir ?" →
+                🎬 {t('halloween.whatToWatchLink')}
               </Link>
             </div>
           </section>
@@ -333,7 +333,7 @@ export default function FilmsHorreurHalloween2025() {
           {/* FAQ */}
           <section className="mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
-              ❓ FAQ – Films d&apos;horreur pour Halloween 2025
+              ❓ {t('halloween.faqTitle')}
             </h2>
             
             <div className="space-y-6">
