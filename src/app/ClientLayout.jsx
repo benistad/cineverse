@@ -66,6 +66,15 @@ const Footer = dynamic(
   }
 );
 
+// BackToTop button pour améliorer la navigation mobile
+const BackToTop = dynamic(
+  () => import('@/components/ui/BackToTop'),
+  { 
+    ssr: false,
+    loading: () => null
+  }
+);
+
 // MobilePerformanceOptimizer chargé uniquement sur mobile
 const MobilePerformanceOptimizer = dynamic(
   () => import('@/components/optimization/MobilePerformanceOptimizer'),
@@ -160,6 +169,7 @@ export default function ClientLayout({ children }) {
             {children}
           </main>
           <Footer />
+          <BackToTop />
         </AuthProvider>
       </LanguageProvider>
       <SpeedInsights />
