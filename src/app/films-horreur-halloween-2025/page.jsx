@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { FiMoon, FiFilm, FiAward } from 'react-icons/fi';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function FilmsHorreurHalloween2025() {
+  const { t } = useTranslations();
+  
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
   const jsonLd = {
     "@context": "https://schema.org",
@@ -168,7 +171,7 @@ export default function FilmsHorreurHalloween2025() {
         <article className="prose prose-lg max-w-5xl mx-auto bg-white p-6 md:p-10 rounded-lg shadow-sm">
           <header className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
-              🎃 Films d&apos;horreur pour Halloween 2025 : notre sélection terrifiante sur MovieHunt
+              {t('halloween.title')}
             </h1>
             <div className="flex justify-center">
               <span className="inline-block w-32 h-1 rounded bg-orange-500 mb-4"></span>
@@ -240,7 +243,7 @@ export default function FilmsHorreurHalloween2025() {
                       href={`/films/${film.slug}`} 
                       className="inline-flex items-center text-orange-600 hover:text-orange-800 font-medium transition-colors"
                     >
-                      👉 Voir la fiche complète sur MovieHunt
+                      👉 {t('halloween.seeReview')}
                     </Link>
                   </div>
                 </div>

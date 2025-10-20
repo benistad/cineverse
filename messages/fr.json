@@ -116,8 +116,14 @@
     "requiredFields": "* Champs obligatoires"
   },
   "halloween": {
-    "title": "Films d'horreur pour Halloween 2025",
-    "subtitle": "Notre sélection des meilleurs films d'horreur à regarder pour Halloween",
+    "title": "🎃 Films d'horreur pour Halloween 2025",
+    "subtitle": "Notre sélection des 10 meilleurs films d'horreur à regarder pour Halloween",
+    "intro": "Vous cherchez des idées de films d'horreur pour Halloween 2025 ? Vous êtes au bon endroit. Chez MovieHunt, nous avons sélectionné pour vous 10 films terrifiants, allant de l'horreur psychologique à la terreur pure, en passant par des classiques cultes et des pépites récentes.",
+    "whyThisSelection": "Pourquoi cette sélection ?",
+    "whyText": "Chaque film a été visionné en version originale et noté selon nos critères stricts. Que vous cherchiez un film à regarder seul ou entre amis, vous trouverez de quoi satisfaire votre soif de frissons.",
+    "ourSelection": "Notre sélection de 10 films d'horreur pour Halloween 2025",
+    "seeReview": "Voir la critique sur MovieHunt",
+    "backHome": "← Retour à l'accueil",
     "metaTitle": "Films d'horreur pour Halloween 2025 | MovieHunt",
     "metaDescription": "Découvrez notre sélection des meilleurs films d'horreur à regarder pour Halloween 2025. Films terrifiants, thrillers psychologiques et classiques cultes."
   },
