@@ -6,8 +6,10 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function HiddenGemsFilms() {
+  const { t } = useTranslations();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,7 +52,7 @@ export default function HiddenGemsFilms() {
       
       <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
         <div className="flex items-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">Films méconnus à voir</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('hiddenGems.title')}</h1>
           {!loading && !error && films.length > 0 && (
             <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
               {films.length}
@@ -69,13 +71,16 @@ export default function HiddenGemsFilms() {
         </div>
       ) : error ? (
         <div className="bg-red-50 p-4 rounded-md">
-          <p className="text-red-500">Une erreur est survenue lors du chargement des films.</p>
+          <p className="text-red-500">{t('hiddenGems.error')}</p>
         </div>
       ) : films.length > 0 ? (
         <FilmGrid films={films} />
       ) : (
-        <div className="text-center py-10 bg-white rounded-lg shadow">
-          <p className="text-gray-500">Aucun film méconnu disponible pour le moment.</p>
+        <div>
+          <h1 className="text-4xl font-bold mb-4">{t('hiddenGems.title')}</h1>
+          <p className="text-xl text-gray-600">
+            {t('hiddenGems.subtitle')}
+          </p>
         </div>
       )}
     </div>

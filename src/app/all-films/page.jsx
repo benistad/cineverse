@@ -3,13 +3,16 @@
 import { useState, useEffect } from 'react';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
-import FilmIndexLinks from './FilmIndexLinks';
 import Link from 'next/link';
+import { FiArrowLeft } from 'react-icons/fi';
+import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function AllFilmsPage() {
+  const { t } = useTranslations();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalCount, setTotalCount] = useState(0);
+  const [error, setError] = useState(null);
 
   // Définir les métadonnées SEO
   useEffect(() => {
@@ -46,7 +49,7 @@ export default function AllFilmsPage() {
     <div className="container mx-auto px-6 py-12">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
         <div className="flex items-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">Tous les films</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('allFilms.title')}</h1>
           <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
             {totalCount}
           </span>

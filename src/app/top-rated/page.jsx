@@ -6,8 +6,10 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function TopRatedFilms() {
+  const { t } = useTranslations();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,7 +52,7 @@ export default function TopRatedFilms() {
       
       <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
         <div className="flex items-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">Films les mieux notés</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('topRated.title')}</h1>
           {!loading && !error && films.length > 0 && (
             <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
               {films.length}
