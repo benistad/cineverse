@@ -85,5 +85,98 @@
     "notFound": "Page not found",
     "backHome": "Back to home",
     "year": "Year"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "A question, a suggestion or just want to share your opinion about MovieHunt? Feel free to write to us, we'll be happy to hear from you!",
+    "information": "Information",
+    "email": "Email",
+    "response": "Response",
+    "responseTime": "We usually respond within 24-48h",
+    "commonTopics": "Common Topics",
+    "filmSuggestions": "Film suggestions",
+    "reportError": "Report an error",
+    "partnerships": "Partnerships",
+    "generalQuestions": "General questions",
+    "fullName": "Full name",
+    "emailAddress": "Email address",
+    "subject": "Subject",
+    "message": "Message",
+    "yourName": "Your name",
+    "yourEmail": "your@email.com",
+    "subjectPlaceholder": "What would you like to talk about?",
+    "messagePlaceholder": "Write your message here...",
+    "sending": "Sending...",
+    "send": "Send message",
+    "success": "Message sent!",
+    "successMessage": "Thank you for your message. We will respond as soon as possible.",
+    "error": "Error",
+    "errorMessage": "An error occurred while sending the message.",
+    "serverError": "Unable to contact the server. Please try again later.",
+    "requiredFields": "* Required fields"
+  },
+  "halloween": {
+    "title": "Horror Films for Halloween 2025",
+    "subtitle": "Our selection of the best horror films to watch this Halloween",
+    "metaTitle": "Horror Films for Halloween 2025 | MovieHunt",
+    "metaDescription": "Discover our selection of the best horror films to watch for Halloween 2025. Terrifying films, psychological thrillers and cult classics."
+  },
+  "hunted": {
+    "title": "Hunted by MovieHunt",
+    "subtitle": "Our favorite films, personally selected by our team",
+    "what": "What is Hunted by MovieHunt?",
+    "whatDescription": "Hunted by MovieHunt is our badge of excellence. It identifies films that particularly touched us, that we loved and that we want to share with you. These are our personal favorites, the films we would recommend to a friend.",
+    "criteria": "Selection Criteria",
+    "criteriaDescription": "A film receives the Hunted badge when:",
+    "criterion1": "It particularly moved or impressed our team",
+    "criterion2": "It offers a unique or memorable cinematic experience",
+    "criterion3": "It deserves more recognition or is underrated",
+    "criterion4": "We would recommend it without hesitation to our friends",
+    "notRating": "Not a Rating",
+    "notRatingDescription": "The Hunted badge is not a rating. A film can have a lower score but still receive this badge because it touched us in a special way. It's our personal and subjective selection.",
+    "discover": "Discover all Hunted films",
+    "metaTitle": "Hunted by MovieHunt - Our Favorite Films | MovieHunt",
+    "metaDescription": "Discover films that received the Hunted by MovieHunt badge, our personal selection of films that particularly touched us."
+  },
+  "howWeWork": {
+    "title": "How We Work",
+    "subtitle": "Our methodology for selecting and reviewing films",
+    "intro": "At MovieHunt, we are passionate about cinema and we want to share our discoveries with you. Here's how we work to offer you quality recommendations.",
+    "selection": "Film Selection",
+    "selectionDescription": "We watch a wide variety of films, from recent releases to classics, from blockbusters to independent films. Each film is carefully chosen for its potential interest.",
+    "review": "Review Process",
+    "reviewDescription": "After watching a film, we take the time to analyze it in depth. We evaluate the direction, screenplay, acting, cinematography, soundtrack and overall impact.",
+    "rating": "Rating System",
+    "ratingDescription": "Our ratings are on a scale of 1 to 10. They reflect our overall appreciation of the film, taking into account all aspects of the cinematic experience.",
+    "hunted": "The Hunted Badge",
+    "huntedDescription": "Some films receive our Hunted by MovieHunt badge. These are films that particularly touched us and that we want to highlight, regardless of their rating.",
+    "transparency": "Transparency",
+    "transparencyDescription": "We are independent and receive no compensation from studios or streaming platforms. Our opinions are honest and reflect our genuine appreciation.",
+    "metaTitle": "How We Work - Our Methodology | MovieHunt",
+    "metaDescription": "Discover how we select and review films at MovieHunt. Our methodology, rating system and selection criteria."
+  },
+  "whatToWatch": {
+    "title": "What Film to Watch?",
+    "subtitle": "Find your next film based on your mood and preferences",
+    "metaTitle": "What Film to Watch? - Personalized Recommendations | MovieHunt",
+    "metaDescription": "Not sure what film to watch? Discover our personalized recommendations based on your mood, preferences and what's available on streaming platforms."
+  },
+  "hiddenGems": {
+    "title": "Hidden Gems to Watch",
+    "subtitle": "Discover underrated films that deserve your attention",
+    "metaTitle": "Hidden Gems - Underrated Films | MovieHunt",
+    "metaDescription": "Discover our selection of hidden gems, underrated films that deserve more recognition. Quality cinema off the beaten path."
+  },
+  "topRated": {
+    "title": "Top Rated Films",
+    "subtitle": "Our highest rated films, the must-sees",
+    "metaTitle": "Top Rated Films - The Best | MovieHunt",
+    "metaDescription": "Discover our highest rated films, the must-sees of cinema. Our selection of the best films to watch absolutely."
+  },
+  "allFilms": {
+    "title": "All Films",
+    "subtitle": "Browse our complete film catalog",
+    "metaTitle": "All Films - Complete Catalog | MovieHunt",
+    "metaDescription": "Browse our complete film catalog. All our reviews, ratings and recommendations in one place."
   }
 }

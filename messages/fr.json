@@ -85,5 +85,98 @@
     "notFound": "Page non trouvée",
     "backHome": "Retour à l'accueil",
     "year": "Année"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Une question, une suggestion ou simplement envie de partager votre avis sur MovieHunt ? N'hésitez pas à nous écrire, nous serons ravis de vous lire !",
+    "information": "Informations",
+    "email": "Email",
+    "response": "Réponse",
+    "responseTime": "Nous répondons généralement sous 24-48h",
+    "commonTopics": "Sujets fréquents",
+    "filmSuggestions": "Suggestions de films",
+    "reportError": "Signaler une erreur",
+    "partnerships": "Partenariats",
+    "generalQuestions": "Questions générales",
+    "fullName": "Nom complet",
+    "emailAddress": "Adresse email",
+    "subject": "Sujet",
+    "message": "Message",
+    "yourName": "Votre nom",
+    "yourEmail": "votre@email.com",
+    "subjectPlaceholder": "De quoi souhaitez-vous parler ?",
+    "messagePlaceholder": "Écrivez votre message ici...",
+    "sending": "Envoi en cours...",
+    "send": "Envoyer le message",
+    "success": "Message envoyé !",
+    "successMessage": "Merci pour votre message. Nous vous répondrons dans les plus brefs délais.",
+    "error": "Erreur",
+    "errorMessage": "Une erreur est survenue lors de l'envoi du message.",
+    "serverError": "Impossible de contacter le serveur. Veuillez réessayer plus tard.",
+    "requiredFields": "* Champs obligatoires"
+  },
+  "halloween": {
+    "title": "Films d'horreur pour Halloween 2025",
+    "subtitle": "Notre sélection des meilleurs films d'horreur à regarder pour Halloween",
+    "metaTitle": "Films d'horreur pour Halloween 2025 | MovieHunt",
+    "metaDescription": "Découvrez notre sélection des meilleurs films d'horreur à regarder pour Halloween 2025. Films terrifiants, thrillers psychologiques et classiques cultes."
+  },
+  "hunted": {
+    "title": "Hunted by MovieHunt",
+    "subtitle": "Nos films coups de cœur, sélectionnés personnellement par notre équipe",
+    "what": "Qu'est-ce que Hunted by MovieHunt ?",
+    "whatDescription": "Hunted by MovieHunt est notre badge d'excellence. Il identifie les films qui nous ont particulièrement touchés, que nous avons adorés et que nous voulons partager avec vous. Ce sont nos coups de cœur personnels, les films que nous recommanderions à un ami.",
+    "criteria": "Critères de sélection",
+    "criteriaDescription": "Un film reçoit le badge Hunted lorsque :",
+    "criterion1": "Il a particulièrement ému ou impressionné notre équipe",
+    "criterion2": "Il offre une expérience cinématographique unique ou mémorable",
+    "criterion3": "Il mérite plus de reconnaissance ou est sous-estimé",
+    "criterion4": "Nous le recommanderions sans hésitation à nos proches",
+    "notRating": "Pas une note",
+    "notRatingDescription": "Le badge Hunted n'est pas une note. Un film peut avoir une note plus faible mais recevoir quand même ce badge car il nous a touchés d'une manière particulière. C'est notre sélection personnelle et subjective.",
+    "discover": "Découvrir tous les films Hunted",
+    "metaTitle": "Hunted by MovieHunt - Nos films coups de cœur | MovieHunt",
+    "metaDescription": "Découvrez les films qui ont reçu le badge Hunted by MovieHunt, notre sélection personnelle de films qui nous ont particulièrement touchés."
+  },
+  "howWeWork": {
+    "title": "Comment nous travaillons",
+    "subtitle": "Notre méthodologie pour sélectionner et critiquer les films",
+    "intro": "Chez MovieHunt, nous sommes passionnés de cinéma et nous voulons partager nos découvertes avec vous. Voici comment nous travaillons pour vous offrir des recommandations de qualité.",
+    "selection": "Sélection des films",
+    "selectionDescription": "Nous regardons une grande variété de films, des sorties récentes aux classiques, des blockbusters aux films indépendants. Chaque film est soigneusement choisi pour son intérêt potentiel.",
+    "review": "Processus de critique",
+    "reviewDescription": "Après avoir visionné un film, nous prenons le temps de l'analyser en profondeur. Nous évaluons la réalisation, le scénario, le jeu d'acteur, la photographie, la bande originale et l'impact global.",
+    "rating": "Système de notation",
+    "ratingDescription": "Nos notes sont sur une échelle de 1 à 10. Elles reflètent notre appréciation globale du film, en tenant compte de tous les aspects de l'expérience cinématographique.",
+    "hunted": "Le badge Hunted",
+    "huntedDescription": "Certains films reçoivent notre badge Hunted by MovieHunt. Ce sont des films qui nous ont particulièrement touchés et que nous voulons mettre en avant, indépendamment de leur note.",
+    "transparency": "Transparence",
+    "transparencyDescription": "Nous sommes indépendants et ne recevons aucune rémunération des studios ou des plateformes de streaming. Nos avis sont honnêtes et reflètent notre appréciation sincère.",
+    "metaTitle": "Comment nous travaillons - Notre méthodologie | MovieHunt",
+    "metaDescription": "Découvrez comment nous sélectionnons et critiquons les films chez MovieHunt. Notre méthodologie, système de notation et critères de sélection."
+  },
+  "whatToWatch": {
+    "title": "Quel film regarder ?",
+    "subtitle": "Trouvez votre prochain film selon votre humeur et vos préférences",
+    "metaTitle": "Quel film regarder ? - Recommandations personnalisées | MovieHunt",
+    "metaDescription": "Vous ne savez pas quel film regarder ? Découvrez nos recommandations personnalisées selon votre humeur, vos préférences et ce qui est disponible sur les plateformes de streaming."
+  },
+  "hiddenGems": {
+    "title": "Films méconnus à voir",
+    "subtitle": "Découvrez des films sous-estimés qui méritent votre attention",
+    "metaTitle": "Films méconnus - Perles rares | MovieHunt",
+    "metaDescription": "Découvrez notre sélection de films méconnus, des perles rares qui méritent plus de reconnaissance. Du cinéma de qualité hors des sentiers battus."
+  },
+  "topRated": {
+    "title": "Films les mieux notés",
+    "subtitle": "Nos films les mieux notés, les incontournables",
+    "metaTitle": "Films les mieux notés - Les meilleurs | MovieHunt",
+    "metaDescription": "Découvrez nos films les mieux notés, les incontournables du cinéma. Notre sélection des meilleurs films à voir absolument."
+  },
+  "allFilms": {
+    "title": "Tous les films",
+    "subtitle": "Parcourez notre catalogue complet de films",
+    "metaTitle": "Tous les films - Catalogue complet | MovieHunt",
+    "metaDescription": "Parcourez notre catalogue complet de films. Toutes nos critiques, notes et recommandations en un seul endroit."
   }
 }

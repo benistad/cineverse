@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function ContactPage() {
+  const { t } = useTranslations();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,11 +48,11 @@ export default function ContactPage() {
         }, 5000);
       } else {
         setStatus('error');
-        setErrorMessage(data.error || 'Une erreur est survenue lors de l\'envoi du message.');
+        setErrorMessage(data.error || t('contact.errorMessage'));
       }
     } catch (error) {
       setStatus('error');
-      setErrorMessage('Impossible de contacter le serveur. Veuillez réessayer plus tard.');
+      setErrorMessage(t('contact.serverError'));
     }
   };
 
@@ -60,11 +62,10 @@ export default function ContactPage() {
         {/* En-tête */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Contactez-nous
+            {t('contact.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Une question, une suggestion ou simplement envie de partager votre avis sur MovieHunt ? 
-            N'hésitez pas à nous écrire, nous serons ravis de vous lire !
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -72,7 +73,7 @@ export default function ContactPage() {
           {/* Informations de contact */}
           <div className="md:col-span-1">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
-              <h2 className="text-xl font-semibold mb-6 text-gray-900">Informations</h2>
+              <h2 className="text-xl font-semibold mb-6 text-gray-900">{t('contact.information')}</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start">
@@ -82,7 +83,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">Email</h3>
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('contact.email')}</h3>
                     <a 
                       href="mailto:contact@moviehunt.fr" 
                       className="text-sm text-blue-600 hover:text-blue-700"
@@ -99,20 +100,20 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div className="ml-4">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1">Réponse</h3>
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1">{t('contact.response')}</h3>
                     <p className="text-sm text-gray-600">
-                      Nous répondons généralement sous 24-48h
+                      {t('contact.responseTime')}
                     </p>
                   </div>
                 </div>
 
                 <div className="pt-6 border-t border-gray-200">
-                  <h3 className="text-sm font-semibold text-gray-900 mb-3">Sujets fréquents</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-3">{t('contact.commonTopics')}</h3>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li>• Suggestions de films</li>
-                    <li>• Signaler une erreur</li>
-                    <li>• Partenariats</li>
-                    <li>• Questions générales</li>
+                    <li>• {t('contact.filmSuggestions')}</li>
+                    <li>• {t('contact.reportError')}</li>
+                    <li>• {t('contact.partnerships')}</li>
+                    <li>• {t('contact.generalQuestions')}</li>
                   </ul>
                 </div>
               </div>
@@ -126,7 +127,7 @@ export default function ContactPage() {
                 {/* Nom */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nom complet *
+                    {t('contact.fullName')} *
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -140,7 +141,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Votre nom"
+                      placeholder={t('contact.yourName')}
                     />
                   </div>
                 </div>
@@ -148,7 +149,7 @@ export default function ContactPage() {
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Adresse email *
+                    {t('contact.emailAddress')} *
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -162,7 +163,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="votre@email.com"
+                      placeholder={t('contact.yourEmail')}
                     />
                   </div>
                 </div>
@@ -170,7 +171,7 @@ export default function ContactPage() {
                 {/* Sujet */}
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Sujet *
+                    {t('contact.subject')} *
                   </label>
                   <input
                     type="text"
@@ -180,14 +181,14 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="De quoi souhaitez-vous parler ?"
+                    placeholder={t('contact.subjectPlaceholder')}
                   />
                 </div>
 
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
+                    {t('contact.message')} *
                   </label>
                   <textarea
                     id="message"
@@ -197,7 +198,7 @@ export default function ContactPage() {
                     required
                     rows="6"
                     className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                    placeholder="Écrivez votre message ici..."
+                    placeholder={t('contact.messagePlaceholder')}
                   />
                 </div>
 
@@ -206,9 +207,9 @@ export default function ContactPage() {
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start">
                     <FiCheck className="h-5 w-5 text-green-600 mt-0.5 mr-3 flex-shrink-0" />
                     <div>
-                      <h3 className="text-sm font-semibold text-green-800 mb-1">Message envoyé !</h3>
+                      <h3 className="text-sm font-semibold text-green-800 mb-1">{t('contact.success')}</h3>
                       <p className="text-sm text-green-700">
-                        Merci pour votre message. Nous vous répondrons dans les plus brefs délais.
+                        {t('contact.successMessage')}
                       </p>
                     </div>
                   </div>
@@ -218,7 +219,7 @@ export default function ContactPage() {
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
                     <FiAlertCircle className="h-5 w-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
                     <div>
-                      <h3 className="text-sm font-semibold text-red-800 mb-1">Erreur</h3>
+                      <h3 className="text-sm font-semibold text-red-800 mb-1">{t('contact.error')}</h3>
                       <p className="text-sm text-red-700">{errorMessage}</p>
                     </div>
                   </div>
@@ -237,19 +238,19 @@ export default function ContactPage() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Envoi en cours...
+                        {t('contact.sending')}
                       </>
                     ) : (
                       <>
                         <FiSend className="mr-2" />
-                        Envoyer le message
+                        {t('contact.send')}
                       </>
                     )}
                   </button>
                 </div>
 
                 <p className="text-xs text-gray-500 text-center">
-                  * Champs obligatoires
+                  {t('contact.requiredFields')}
                 </p>
               </form>
             </div>
