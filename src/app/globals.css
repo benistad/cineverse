@@ -151,8 +151,10 @@ img {
     line-height: 1.4;
   }
   
-  /* Paragraphes lisibles */
-  p {
+  /* Paragraphes lisibles - Ne pas affecter les cartes de films */
+  article p,
+  section > p,
+  .prose p {
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 1rem;
@@ -167,7 +169,7 @@ img {
   }
   
   /* Boutons tactiles */
-  button, 
+  button:not(.film-card-link), 
   a.button,
   [role="button"] {
     min-height: 44px;
@@ -176,8 +178,9 @@ img {
     font-size: 1rem;
   }
   
-  /* Liens tactiles */
-  a {
+  /* Liens tactiles - UNIQUEMENT pour les liens de navigation, pas les cartes de films */
+  nav a,
+  .touch-target {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
@@ -287,11 +290,10 @@ html {
   }
 }
 
-/* Optimisation des images responsive */
-img {
+/* Optimisation des images responsive - Ne pas affecter les affiches de films */
+img:not([class*="poster"]):not([class*="film"]) {
   max-width: 100%;
   height: auto;
-  display: block;
 }
 
 /* Prévenir le layout shift */
