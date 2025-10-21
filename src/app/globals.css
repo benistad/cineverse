@@ -124,159 +124,16 @@ img {
 }
 
 /* ========================================
-   OPTIMISATIONS MOBILE
+   OPTIMISATIONS MOBILE MINIMALES
    ======================================== */
 
-/* Typographie mobile optimisée */
+/* Inputs et formulaires - Éviter le zoom automatique sur iOS */
 @media (max-width: 768px) {
-  /* Taille minimale de 16px pour éviter le zoom automatique sur iOS */
-  body {
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  
-  /* Titres responsive */
-  h1 {
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-    line-height: 1.2;
-  }
-  
-  h2 {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    line-height: 1.3;
-  }
-  
-  h3 {
-    font-size: clamp(1.25rem, 3vw, 1.5rem);
-    line-height: 1.4;
-  }
-  
-  /* Paragraphes lisibles - Ne pas affecter les cartes de films */
-  article p,
-  section > p,
-  .prose p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-  
-  /* Inputs et formulaires */
   input, 
   textarea, 
   select {
-    font-size: 16px !important; /* Éviter le zoom sur iOS */
-    min-height: 44px; /* Taille tactile minimum */
+    font-size: 16px !important;
   }
-  
-  /* Boutons tactiles */
-  button:not(.film-card-link), 
-  a.button,
-  [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-  }
-  
-  /* Liens tactiles - UNIQUEMENT pour les liens de navigation, pas les cartes de films */
-  nav a,
-  .touch-target {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  /* Espacement amélioré */
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  /* Marges réduites sur petits écrans */
-  @media (max-width: 375px) {
-    .container {
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-    }
-  }
-}
-
-/* Touch-friendly zones */
-.touch-target {
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Amélioration du contraste pour la lisibilité */
-.text-contrast {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Overlay sombre pour améliorer la lisibilité sur les images */
-.image-overlay {
-  position: relative;
-}
-
-.image-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-  pointer-events: none;
-}
-
-/* Optimisations de performance mobile */
-@media (max-width: 768px) {
-  /* Réduire les animations sur mobile pour économiser la batterie */
-  @media (prefers-reduced-motion: no-preference) {
-    * {
-      animation-duration: 0.3s !important;
-      transition-duration: 0.2s !important;
-    }
-  }
-  
-  /* Désactiver les animations si l'utilisateur préfère */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-}
-
-/* Lazy loading placeholder amélioré */
-.lazy-loading {
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0%,
-    #f8f8f8 50%,
-    #f0f0f0 100%
-  );
-  background-size: 200% 100%;
-  animation: loading 1.5s ease-in-out infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Amélioration du focus pour l'accessibilité */
-*:focus-visible {
-  outline: 2px solid #4F46E5;
-  outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* Scroll smooth sur les ancres */
@@ -287,49 +144,5 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-}
-
-/* Optimisation des images responsive - Ne pas affecter les affiches de films */
-img:not([class*="poster"]):not([class*="film"]) {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Prévenir le layout shift */
-.aspect-ratio-box {
-  position: relative;
-  width: 100%;
-  padding-bottom: 150%; /* Ratio 2:3 pour les affiches de films */
-}
-
-.aspect-ratio-box > * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Amélioration des carrousels sur mobile */
-@media (max-width: 768px) {
-  .carousel-container {
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-  }
-  
-  .carousel-item {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-}
-
-/* Safe area pour les notches (iPhone X+) */
-@supports (padding: max(0px)) {
-  body {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
   }
 }
