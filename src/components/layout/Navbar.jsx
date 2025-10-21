@@ -110,35 +110,35 @@ export default function Navbar() {
                 <FiChevronDown className="w-4 h-4 ml-1.5 transition-transform" style={{ transform: isDiscoverOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
               {isDiscoverOpen && (
-                <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
-                  <div className="py-1" role="menu" aria-orientation="vertical">
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
+                  <div className="py-2" role="menu" aria-orientation="vertical">
                     <Link 
                       href="/quel-film-regarder" 
-                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiHelpCircle className="w-4 h-4 mr-2" /> {t('nav.whatToWatch')}
+                      <FiHelpCircle className="w-4 h-4 mr-3" /> {t('nav.whatToWatch')}
                     </Link>
                     <Link 
                       href="/films-horreur-halloween-2025" 
-                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiMoon className="w-4 h-4 mr-2" /> {t('nav.halloween')}
+                      <FiMoon className="w-4 h-4 mr-3" /> {t('nav.halloween')}
                     </Link>
                     <Link 
                       href="/huntedbymoviehunt" 
-                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiAward className="w-4 h-4 mr-2" /> {t('nav.hunted')}
+                      <FiAward className="w-4 h-4 mr-3" /> {t('nav.hunted')}
                     </Link>
                     <Link 
                       href="/comment-nous-travaillons" 
-                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiInfo className="w-4 h-4 mr-2" /> {t('nav.howWeWork')}
+                      <FiInfo className="w-4 h-4 mr-3" /> {t('nav.howWeWork')}
                     </Link>
                   </div>
                 </div>
