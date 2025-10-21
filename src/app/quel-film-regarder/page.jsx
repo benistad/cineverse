@@ -367,15 +367,18 @@ export default function QuelFilmRegarder() {
               <p className="mb-4">
                 Chaque film sur MovieHunt.fr est noté sur 10 et accompagné d&apos;une recommandation claire pour vous aider à décider quoi voir ce soir. Tous les films de cette sélection sont notés et analysés dans notre <Link href="/all-films" className="text-indigo-600 hover:text-indigo-800 font-semibold">catalogue complet</Link>, avec le badge <Link href="/huntedbymoviehunt" className="text-indigo-600 hover:text-indigo-800 font-semibold">Hunted by MovieHunt</Link> pour les plus marquants.
               </p>
-              <ul className="list-none pl-0">
-                <li className="mb-2 flex items-start">
-                  <span className="mr-2">👉</span> <strong>Films à voir absolument</strong> : nous vous expliquons pourquoi ces films méritent votre temps.
+              <ul className="list-none pl-0 space-y-3">
+                <li className="flex items-start">
+                  <span className="mr-3 flex-shrink-0 text-xl">👉</span>
+                  <span><strong>Films à voir absolument</strong> : nous vous expliquons pourquoi ces films méritent votre temps.</span>
                 </li>
-                <li className="mb-2 flex items-start">
-                  <span className="mr-2">👉</span> <strong>Films à éviter</strong> : nous vous épargnons des déceptions en vous indiquant les films qui ne valent pas le coup.
+                <li className="flex items-start">
+                  <span className="mr-3 flex-shrink-0 text-xl">👉</span>
+                  <span><strong>Films à éviter</strong> : nous vous épargnons des déceptions en vous indiquant les films qui ne valent pas le coup.</span>
                 </li>
-                <li className="mb-2 flex items-start">
-                  <span className="mr-2">👉</span> <strong>Pépites méconnues</strong> : nous dénichons des films exceptionnels que vous auriez pu manquer.
+                <li className="flex items-start">
+                  <span className="mr-3 flex-shrink-0 text-xl">👉</span>
+                  <span><strong>Pépites méconnues</strong> : nous dénichons des films exceptionnels que vous auriez pu manquer.</span>
                 </li>
               </ul>
             </div>
