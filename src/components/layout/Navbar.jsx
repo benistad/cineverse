@@ -69,9 +69,9 @@ export default function Navbar() {
               href="https://www.moviehunt-blog.fr/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-red-600 text-white hover:bg-red-700 transition-colors duration-200 hidden md:flex items-center group text-lg font-medium px-5 py-3 rounded-full shadow-md hover:shadow-lg"
+              className="bg-red-600 text-white hover:bg-red-700 transition-colors duration-200 hidden md:flex items-center group text-base font-medium px-4 py-2.5 rounded-full shadow-md hover:shadow-lg"
             >
-              <FiBookOpen className="w-6 h-6 mr-2.5 group-hover:scale-110 transition-transform" />
+              <FiBookOpen className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.blog')}</span>
             </a>
             <div className="w-72 hidden md:block">
@@ -80,34 +80,34 @@ export default function Navbar() {
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex md:items-center md:space-x-7">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {/* Recherche Avancée */}
             <Link 
               href="/advanced-search" 
-              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-lg font-medium ${pathname === '/advanced-search' ? 'text-indigo-700' : ''}`}
+              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/advanced-search' ? 'text-indigo-700' : ''}`}
             >
-              <FiFilter className="w-6 h-6 mr-2.5 group-hover:scale-110 transition-transform" />
+              <FiFilter className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.advancedSearch')}</span>
             </Link>
             {/* Tous les films */}
             <Link 
               href="/all-films" 
-              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-lg font-medium ${pathname === '/all-films' ? 'text-indigo-700' : ''}`}
+              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/all-films' ? 'text-indigo-700' : ''}`}
             >
-              <FiFilm className="w-6 h-6 mr-2.5 group-hover:scale-110 transition-transform" />
+              <FiFilm className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.allFilms')}</span>
             </Link>
             {/* Découvrir dropdown */}
             <div className="relative" ref={discoverMenuRef}>
               <button
                 onClick={toggleDiscoverMenu}
-                className={`flex items-center text-gray-600 hover:text-indigo-700 transition-colors duration-200 text-lg font-medium group ${
+                className={`flex items-center text-gray-600 hover:text-indigo-700 transition-colors duration-200 text-base font-medium group ${
                   pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' ? 'text-indigo-700' : ''
                 }`}
               >
-                <FiCompass className="w-6 h-6 mr-2.5 group-hover:scale-110 transition-transform" />
+                <FiCompass className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 <span className="whitespace-nowrap">{t('nav.discover')}</span>
-                <FiChevronDown className="w-5 h-5 ml-2 transition-transform" style={{ transform: isDiscoverOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+                <FiChevronDown className="w-4 h-4 ml-1.5 transition-transform" style={{ transform: isDiscoverOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
               {isDiscoverOpen && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
@@ -151,16 +151,16 @@ export default function Navbar() {
               <>
                 <Link 
                   href="/admin/dashboard" 
-                  className={`text-gray-600 hover:text-indigo-700 transition-colors flex items-center text-lg font-medium ${pathname === '/admin/dashboard' ? 'text-indigo-700' : ''}`}
+                  className={`text-gray-600 hover:text-indigo-700 transition-colors flex items-center text-base font-medium ${pathname === '/admin/dashboard' ? 'text-indigo-700' : ''}`}
                 >
-                  <FiFilm className="w-6 h-6 mr-2.5" />
+                  <FiFilm className="w-5 h-5 mr-2" />
                   <span className="whitespace-nowrap">{t('nav.dashboard')}</span>
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-indigo-700 transition-colors flex items-center text-lg font-medium"
+                  className="text-gray-600 hover:text-indigo-700 transition-colors flex items-center text-base font-medium"
                 >
-                  <FiLogOut className="w-6 h-6 mr-2.5" />
+                  <FiLogOut className="w-5 h-5 mr-2" />
                   <span className="whitespace-nowrap">{t('nav.logout')}</span>
                 </button>
               </>
@@ -168,7 +168,7 @@ export default function Navbar() {
             {!loading && !user && isAdmin && (
               <Link 
                 href="/admin" 
-                className="px-5 py-2.5 rounded-md text-lg font-medium hover:bg-gray-700"
+                className="px-4 py-2 rounded-md text-base font-medium hover:bg-gray-700"
               >
                 {t('nav.login')}
               </Link>
