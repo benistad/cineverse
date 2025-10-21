@@ -77,9 +77,6 @@ export default function AllFilmsPage() {
           <p className="text-gray-500">Aucun film disponible pour le moment.</p>
         </div>
       )}
-      
-      {/* Index des films pour améliorer l'indexation SEO */}
-      {!loading && films.length > 0 && <FilmIndexLinks />}
     </div>
   );
 }
