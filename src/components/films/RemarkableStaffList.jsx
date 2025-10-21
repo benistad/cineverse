@@ -130,7 +130,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
             <img
               src={person.photo_url || '/images/placeholder.jpg'}
               alt={`Photo de ${person.nom || 'membre de l\'équipe'}${person.roles && person.roles.length > 0 ? ` - ${person.roles[0]}` : ''}`}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover object-top"
               loading="lazy"
               onError={(e) => {
                 // En cas d'erreur, essayer une taille plus petite

@@ -140,7 +140,7 @@ export default function SimilarFilms({ currentFilm }) {
                   '/images/placeholder.jpg'
                 }
                 alt={`Affiche du film ${film.title}`}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="lazy"
                 onError={(e) => {
                   // En cas d'erreur, essayer une taille plus petite

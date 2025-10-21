@@ -240,7 +240,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
               '/images/placeholder.jpg'
             }
             alt={`Affiche du film ${film.title}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
             loading={priority ? "eager" : "lazy"}
             width="500"
             height="750"

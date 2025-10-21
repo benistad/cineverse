@@ -207,10 +207,10 @@ export default function OptimizedFeaturedCarousel() {
                   fill
                   priority={index === 0} // Priorité haute pour la première image uniquement
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
-                  className="object-cover"
+                  className="object-cover object-center"
                   quality={index === 0 ? 90 : 80} // Qualité supérieure pour la première image (LCP)
                   loading={index === 0 ? "eager" : "lazy"} // Eager pour la première, lazy pour les autres
-                  style={{ objectFit: 'cover' }} // Éviter le CLS
+                  style={{ objectFit: 'cover', objectPosition: 'center' }} // Éviter le CLS et centrer
                 />
                 
                 {/* Overlay pour améliorer la lisibilité du texte */}

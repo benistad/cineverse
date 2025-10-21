@@ -163,9 +163,10 @@ export default function BasicCarousel() {
                 }
                 alt={`Image du film ${currentFilm.title}`}
                 fill
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 100vw"
                 priority
+                style={{ objectPosition: 'center' }}
               />
             </div>
           )}
