@@ -69,7 +69,7 @@ export default function Navbar() {
               href="https://www.moviehunt-blog.fr/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-indigo-700 transition-colors duration-200 hidden md:flex items-center group text-sm font-medium"
+              className="bg-red-600 text-white hover:bg-red-700 transition-colors duration-200 hidden md:flex items-center group text-sm font-medium px-4 py-2 rounded-full shadow-md hover:shadow-lg"
             >
               <FiBookOpen className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.blog')}</span>
@@ -210,7 +210,7 @@ export default function Navbar() {
               href="https://www.moviehunt-blog.fr/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700"
+              className="flex items-center px-4 py-2 rounded-full text-base font-medium bg-red-600 text-white hover:bg-red-700 mx-3 shadow-md"
               onClick={() => setIsOpen(false)}
             >
               <FiBookOpen className="w-5 h-5 mr-3" /> {t('nav.blog')}
