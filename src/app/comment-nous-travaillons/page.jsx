@@ -14,7 +14,7 @@ export default function CommentNousTravaillonsPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('howWeWork.title')}
           </h1>
-          <div className="w-24 h-1 bg-red-600 mx-auto mb-8"></div>
+          <div className="w-24 h-1 bg-indigo-600 mx-auto mb-8"></div>
         </header>
 
         {/* Contenu principal */}
@@ -29,7 +29,7 @@ export default function CommentNousTravaillonsPage() {
           {/* Films connus et méconnus */}
           <section>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 flex items-center">
-              <FiFilm className="mr-3 text-red-600" />
+              <FiFilm className="mr-3 text-indigo-600" />
               {t('howWeWork.knownAndUnknown')}
             </h2>
             <p className="text-gray-700 leading-relaxed mb-4">
@@ -43,7 +43,7 @@ export default function CommentNousTravaillonsPage() {
           {/* Critères de critique */}
           <section>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 flex items-center">
-              <FiAward className="mr-3 text-red-600" />
+              <FiAward className="mr-3 text-indigo-600" />
               {t('howWeWork.criteria')}
             </h2>
             <p className="text-gray-700 leading-relaxed mb-6">
@@ -52,7 +52,7 @@ export default function CommentNousTravaillonsPage() {
             
             <div className="space-y-4">
               <div className="flex items-start">
-                <FiFilm className="mr-3 mt-1 text-red-600 flex-shrink-0" size={20} />
+                <FiFilm className="mr-3 mt-1 text-indigo-600 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{t('howWeWork.direction')}</h3>
                   <p className="text-gray-700">{t('howWeWork.directionDescription')}</p>
@@ -60,7 +60,7 @@ export default function CommentNousTravaillonsPage() {
               </div>
 
               <div className="flex items-start">
-                <FiMusic className="mr-3 mt-1 text-red-600 flex-shrink-0" size={20} />
+                <FiMusic className="mr-3 mt-1 text-indigo-600 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{t('howWeWork.soundtrack')}</h3>
                   <p className="text-gray-700">{t('howWeWork.soundtrackDescription')}</p>
@@ -68,7 +68,7 @@ export default function CommentNousTravaillonsPage() {
               </div>
 
               <div className="flex items-start">
-                <FiEye className="mr-3 mt-1 text-red-600 flex-shrink-0" size={20} />
+                <FiEye className="mr-3 mt-1 text-indigo-600 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{t('howWeWork.acting')}</h3>
                   <p className="text-gray-700">{t('howWeWork.actingDescription')}</p>
@@ -76,7 +76,7 @@ export default function CommentNousTravaillonsPage() {
               </div>
 
               <div className="flex items-start">
-                <FiFeather className="mr-3 mt-1 text-red-600 flex-shrink-0" size={20} />
+                <FiFeather className="mr-3 mt-1 text-indigo-600 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{t('howWeWork.screenplay')}</h3>
                   <p className="text-gray-700">{t('howWeWork.screenplayDescription')}</p>
@@ -84,7 +84,7 @@ export default function CommentNousTravaillonsPage() {
               </div>
 
               <div className="flex items-start">
-                <FiCamera className="mr-3 mt-1 text-red-600 flex-shrink-0" size={20} />
+                <FiCamera className="mr-3 mt-1 text-indigo-600 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-1">{t('howWeWork.cinematography')}</h3>
                   <p className="text-gray-700">{t('howWeWork.cinematographyDescription')}</p>
@@ -98,7 +98,7 @@ export default function CommentNousTravaillonsPage() {
           </section>
 
           {/* Pourquoi la VO */}
-          <section className="bg-gray-50 p-6 rounded-lg border-l-4 border-red-600">
+          <section className="bg-gray-50 p-6 rounded-lg border-l-4 border-indigo-600">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
               {t('howWeWork.whyOV')}
             </h2>
@@ -124,10 +124,7 @@ export default function CommentNousTravaillonsPage() {
           <section className="text-center pt-6 border-t border-gray-200">
             <a
               href="/all-films"
-              className="inline-block px-8 py-3 text-white font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-              style={{ backgroundColor: '#DC2625' }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#B91C1C'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#DC2625'}
+              className="inline-block px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
             >
               {t('howWeWork.discoverList')}
             </a>
