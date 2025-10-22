@@ -23,10 +23,10 @@ export default function TranslationsPage() {
 
   const loadFilms = async () => {
     try {
-      // Récupérer tous les films
+      // Récupérer tous les films avec les champs nécessaires
       const { data: filmsData, error: filmsError } = await supabase
         .from('films')
-        .select('id, title, slug')
+        .select('id, title, slug, why_watch_content, not_liked_content, why_watch_enabled, not_liked_enabled')
         .order('title');
 
       if (filmsError) throw filmsError;
@@ -42,11 +42,17 @@ export default function TranslationsPage() {
         translationsData?.map(t => t.film_id) || []
       );
 
-      // Marquer les films qui ont une traduction
+      // Marquer les films qui ont une traduction et trier (non traduits en premier)
       const filmsWithStatus = filmsData.map(film => ({
         ...film,
         hasTranslation: translatedFilmIds.has(film.id)
-      }));
+      })).sort((a, b) => {
+        // Trier : films non traduits en premier
+        if (a.hasTranslation === b.hasTranslation) {
+          return a.title.localeCompare(b.title);
+        }
+        return a.hasTranslation ? 1 : -1;
+      });
 
       setFilms(filmsWithStatus);
     } catch (error) {
@@ -80,12 +86,12 @@ export default function TranslationsPage() {
           what_we_didnt_like: data.what_we_didnt_like || ''
         });
       } else {
-        // Pas de traduction, initialiser avec des champs vides
+        // Pas de traduction, pré-remplir avec les champs français du film
         setTranslation({
           title: '',
           synopsis: '',
-          why_watch_content: '',
-          what_we_didnt_like: ''
+          why_watch_content: film.why_watch_enabled ? (film.why_watch_content || '') : '',
+          what_we_didnt_like: film.not_liked_enabled ? (film.not_liked_content || '') : ''
         });
       }
     } catch (error) {
@@ -201,7 +207,19 @@ export default function TranslationsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Liste des films */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Films ({films.length})</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">Films ({films.length})</h2>
+            <div className="flex items-center space-x-4 text-sm">
+              <span className="flex items-center text-orange-600">
+                <FiAlertCircle className="mr-1" />
+                {films.filter(f => !f.hasTranslation).length} à traduire
+              </span>
+              <span className="flex items-center text-green-600">
+                <FiCheck className="mr-1" />
+                {films.filter(f => f.hasTranslation).length} traduits
+              </span>
+            </div>
+          </div>
           <div className="space-y-2 max-h-[600px] overflow-y-auto">
             {films.map(film => (
               <button
