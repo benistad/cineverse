@@ -48,14 +48,7 @@ const ScrollToTop = () => {
   return null;
 };
 
-// ClientComponents chargé après l'interactivité
-const ClientComponents = dynamic(
-  () => import('@/components/ClientComponents'),
-  { 
-    ssr: false,
-    loading: () => null
-  }
-);
+// ClientComponents supprimé - causait des problèmes de canonical tags hors du <head>
 
 // Footer chargé après l'interactivité (non critique)
 const Footer = dynamic(
@@ -175,7 +168,8 @@ export default function ClientLayout({ children }) {
       <SpeedInsights />
       <MobilePerformanceOptimizer />
       <JsonLdSchema />
-      <ClientComponents />
+      {/* ClientComponents supprimé car il injectait des canonical tags côté client (hors du <head>) */}
+      {/* Les canonical tags sont maintenant gérés via alternates.canonical dans les metadata */}
       {/* Suppression des composants d'optimisation avancés qui ralentissaient le rendu */}
       {/* <ImageOptimizer /> */}
       {/* <SpeedIndexOptimizer /> */}
