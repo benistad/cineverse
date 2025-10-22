@@ -1,4 +1,5 @@
 import { getAllFilmsForSitemap } from '@/lib/supabase/server';
+import { generateFilmSlug } from '@/lib/utils/slugify';
 
 /**
  * Génère un sitemap dynamique pour le site
@@ -66,12 +67,8 @@ export default async function sitemap() {
     
     // Générer les URLs pour chaque film en utilisant prioritairement les slugs
     const filmPages = films.map((film) => {
-      // S'assurer que chaque film a un slug valide
-      const slug = film.slug || (film.title ? film.title
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/--+/g, '-') : film.id);
+      // Générer un slug normalisé (sans accents)
+      const slug = generateFilmSlug(film);
       
       return {
         url: `${baseUrl}/films/${slug}`,

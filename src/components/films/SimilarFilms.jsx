@@ -8,6 +8,7 @@ import RatingIcon from '@/components/ui/RatingIcon';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useFilmTranslations } from '@/hooks/useFilmTranslations';
+import { generateFilmSlug } from '@/lib/utils/slugify';
 
 export default function SimilarFilms({ currentFilm }) {
   const [similarFilms, setSimilarFilms] = useState([]);
@@ -71,14 +72,8 @@ export default function SimilarFilms({ currentFilm }) {
         
         // Préparer les films similaires avec des URLs SEO-friendly
         const filmsWithSeoUrls = data.map(film => {
-          // Créer un slug à partir du titre
-          const slug = film.title
-            ? film.title
-                .toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/--+/g, '-')
-            : '';
+          // Générer un slug normalisé (sans accents)
+          const slug = generateFilmSlug(film);
           
           // Ajouter l'année si disponible
           const releaseYear = film.release_date 

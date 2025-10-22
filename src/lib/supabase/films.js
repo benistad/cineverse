@@ -2,6 +2,7 @@
 
 import { createBrowserClient } from '@supabase/ssr';
 import { withCache } from '@/lib/cache/supabaseCache';
+import { slugify } from '@/lib/utils/slugify';
 
 // Création du client Supabase côté client
 const getSupabaseClient = () => {
@@ -9,14 +10,6 @@ const getSupabaseClient = () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
   );
-};
-
-// Fonction utilitaire pour créer un slug à partir d'un titre
-const createSlug = (title) => {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s]/gi, '')
-    .replace(/\s+/g, '-');
 };
 
 /**
@@ -322,10 +315,10 @@ export async function saveFilm(film) {
       }
     });
     
-    // Générer un slug à partir du titre si non fourni
+    // Générer un slug normalisé (sans accents) à partir du titre
     const filmToSave = {
       ...cleanedFilm,
-      slug: cleanedFilm.slug || createSlug(cleanedFilm.title),
+      slug: slugify(cleanedFilm.title),
       date_ajout: cleanedFilm.date_ajout || new Date().toISOString(),
     };
     
