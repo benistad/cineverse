@@ -215,7 +215,7 @@ export default function FilmsHorreurHalloween2025() {
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-xl font-semibold">🎥 {film.title}</h3>
                       {film.hunted && (
-                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-800">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white">
                           <FiAward className="mr-1" /> Hunted
                         </span>
                       )}
