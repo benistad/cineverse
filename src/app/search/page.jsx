@@ -26,11 +26,21 @@ function SearchResults() {
       try {
         setLoading(true);
         
-        // Recherche dans le titre et le synopsis
-        const { data, error, count } = await supabase
+        // Fonction pour normaliser une chaîne (supprimer les accents)
+        const normalizeString = (str) => {
+          return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase();
+        };
+        
+        // Normaliser la requête de recherche
+        const normalizedQuery = normalizeString(query);
+        
+        // Récupérer tous les films (on pourrait optimiser avec une fonction PostgreSQL unaccent)
+        const { data, error } = await supabase
           .from('films')
-          .select('*', { count: 'exact' })
-          .or(`title.ilike.%${query}%,synopsis.ilike.%${query}%`)
+          .select('*')
           .order('date_ajout', { ascending: false });
 
         if (error) {
@@ -38,8 +48,17 @@ function SearchResults() {
           setFilms([]);
           setTotalCount(0);
         } else {
-          setFilms(data || []);
-          setTotalCount(count || 0);
+          // Filtrer côté client pour ignorer les accents
+          const filteredFilms = (data || []).filter(film => {
+            const normalizedTitle = normalizeString(film.title || '');
+            const normalizedSynopsis = normalizeString(film.synopsis || '');
+            
+            return normalizedTitle.includes(normalizedQuery) || 
+                   normalizedSynopsis.includes(normalizedQuery);
+          });
+          
+          setFilms(filteredFilms);
+          setTotalCount(filteredFilms.length);
         }
       } catch (error) {
         console.error('Erreur lors de la recherche:', error);
