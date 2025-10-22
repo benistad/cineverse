@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useId } from 'react';
 
 export default function SimpleRichTextEditor({ value, onChange, placeholder = 'Commencez à écrire...' }) {
   const [text, setText] = useState(value || '');
   const [previewMode, setPreviewMode] = useState(false);
+  const editorId = useId(); // ID unique pour chaque instance
   
   // Gérer les changements de texte
   const handleChange = (e) => {
@@ -17,7 +18,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
   
   // Insérer du texte formaté à la position du curseur
   const insertFormatting = (startTag, endTag) => {
-    const textarea = document.getElementById('rich-text-editor');
+    const textarea = document.getElementById(editorId);
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
@@ -43,7 +44,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
   const makeItalic = () => insertFormatting('<em>', '</em>');
   const makeUnderline = () => insertFormatting('<u>', '</u>');
   const addBulletList = () => {
-    const textarea = document.getElementById('rich-text-editor');
+    const textarea = document.getElementById(editorId);
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
@@ -188,7 +189,7 @@ export default function SimpleRichTextEditor({ value, onChange, placeholder = 'C
         />
       ) : (
         <textarea
-          id="rich-text-editor"
+          id={editorId}
           value={text}
           onChange={handleChange}
           placeholder={placeholder}
