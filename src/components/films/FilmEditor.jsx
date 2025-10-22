@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FiSave, FiX } from 'react-icons/fi';
+import { FiSave, FiX, FiImage } from 'react-icons/fi';
 import YouTube from 'react-youtube';
-import { getImageUrl, getTrailerKey } from '@/lib/tmdb/api';
+import { getImageUrl, getTrailerKey, getMoviePosters } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/films';
 import { useAuth } from '@/contexts/AuthContext';
 import RatingIcon from '@/components/ui/RatingIcon';
@@ -31,6 +31,10 @@ export default function FilmEditor({ movieDetails }) {
   const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
   const [hasBlogArticle, setHasBlogArticle] = useState(false);
   const [blogArticleUrl, setBlogArticleUrl] = useState('');
+  const [availablePosters, setAvailablePosters] = useState([]);
+  const [selectedPoster, setSelectedPoster] = useState(null);
+  const [showPosterSelector, setShowPosterSelector] = useState(false);
+  const [loadingPosters, setLoadingPosters] = useState(false);
 
   useEffect(() => {
     // Récupérer la clé de la bande-annonce
@@ -39,6 +43,28 @@ export default function FilmEditor({ movieDetails }) {
       setTrailerKey(key);
     }
   }, [movieDetails]);
+
+  // Charger les affiches disponibles depuis TMDB
+  useEffect(() => {
+    const loadPosters = async () => {
+      if (movieDetails?.id) {
+        setLoadingPosters(true);
+        try {
+          const posters = await getMoviePosters(movieDetails.id);
+          setAvailablePosters(posters);
+          // Sélectionner l'affiche par défaut (la première, qui est l'affiche principale)
+          if (posters.length > 0 && !selectedPoster) {
+            setSelectedPoster(posters[0].file_path);
+          }
+        } catch (error) {
+          console.error('Erreur lors du chargement des affiches:', error);
+        } finally {
+          setLoadingPosters(false);
+        }
+      }
+    };
+    loadPosters();
+  }, [movieDetails?.id]);
   
   // Identifier les personnes qui ont plusieurs rôles
   useEffect(() => {
@@ -238,7 +264,8 @@ export default function FilmEditor({ movieDetails }) {
           : 'film-sans-titre',
         synopsis: movieDetails.overview || '',
         // Enregistrer uniquement les URLs complètes pour assurer la compatibilité
-        poster_url: movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null,
+        // Utiliser l'affiche sélectionnée si disponible, sinon l'affiche par défaut
+        poster_url: selectedPoster ? getImageUrl(selectedPoster) : (movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null),
         backdrop_url: movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null,
         // S'assurer que carousel_image_url est inclus, utiliser backdrop_url par défaut si non défini
         carousel_image_url: selectedCarouselImage || (movieDetails.backdrop_path ? getImageUrl(movieDetails.backdrop_path, 'original') : null),
@@ -337,7 +364,7 @@ export default function FilmEditor({ movieDetails }) {
         <div className="md:col-span-1">
           <div className="relative h-96 w-full rounded-lg overflow-hidden shadow-md mb-4">
             <SafeImage
-              src={movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null}
+              src={selectedPoster ? getImageUrl(selectedPoster) : (movieDetails.poster_path ? getImageUrl(movieDetails.poster_path) : null)}
               alt={movieDetails.title || 'Poster du film'}
               fill
               sizes="(max-width: 768px) 100vw, 33vw"
@@ -345,6 +372,65 @@ export default function FilmEditor({ movieDetails }) {
               priority
             />
           </div>
+          
+          {/* Bouton pour choisir une autre affiche */}
+          <button
+            type="button"
+            onClick={() => setShowPosterSelector(!showPosterSelector)}
+            className="w-full mb-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"
+          >
+            <FiImage className="mr-2" />
+            {showPosterSelector ? 'Masquer les affiches' : 'Choisir une autre affiche'}
+          </button>
+          
+          {/* Sélecteur d'affiches */}
+          {showPosterSelector && (
+            <div className="mb-4 p-4 bg-gray-50 rounded-lg max-h-96 overflow-y-auto">
+              <h4 className="font-semibold mb-3">Affiches disponibles ({availablePosters.length})</h4>
+              {loadingPosters ? (
+                <div className="text-center py-4">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+                  <p className="text-sm text-gray-600 mt-2">Chargement...</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-2">
+                  {availablePosters.map((poster, index) => (
+                    <button
+                      key={poster.file_path}
+                      type="button"
+                      onClick={() => setSelectedPoster(poster.file_path)}
+                      className={`relative aspect-[2/3] rounded overflow-hidden border-2 transition-all ${
+                        selectedPoster === poster.file_path
+                          ? 'border-indigo-600 ring-2 ring-indigo-300'
+                          : 'border-gray-300 hover:border-indigo-400'
+                      }`}
+                      title={`Affiche ${index + 1} - ${poster.iso_639_1 || 'Langue inconnue'}`}
+                    >
+                      <SafeImage
+                        src={getImageUrl(poster.file_path, 'w185')}
+                        alt={`Affiche ${index + 1}`}
+                        fill
+                        sizes="100px"
+                        className="object-cover"
+                      />
+                      {selectedPoster === poster.file_path && (
+                        <div className="absolute inset-0 bg-indigo-600 bg-opacity-20 flex items-center justify-center">
+                          <div className="bg-white rounded-full p-1">
+                            <FiImage className="text-indigo-600" size={20} />
+                          </div>
+                        </div>
+                      )}
+                      {poster.iso_639_1 && (
+                        <div className="absolute top-1 right-1 bg-black bg-opacity-70 text-white text-xs px-1 rounded">
+                          {poster.iso_639_1.toUpperCase()}
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           
           {/* Notation */}
           <div className="bg-gray-100 p-4 rounded-lg">

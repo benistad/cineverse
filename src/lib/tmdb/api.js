@@ -287,3 +287,37 @@ export const getTrailerKey = (videos) => {
   
   return trailer ? trailer.key : null;
 };
+
+/**
+ * Récupère toutes les affiches (posters) disponibles pour un film
+ * @param {number} movieId - ID TMDB du film
+ * @returns {Promise<Array>} - Liste des affiches avec leurs chemins
+ */
+export const getMoviePosters = async (movieId) => {
+  try {
+    const response = await tmdbApi.get(`/movie/${movieId}/images`, {
+      params: {
+        include_image_language: 'fr,en,null'
+      }
+    });
+    
+    if (response.data && response.data.posters) {
+      // Trier les affiches : françaises en premier, puis anglaises, puis autres
+      const posters = response.data.posters.sort((a, b) => {
+        if (a.iso_639_1 === 'fr' && b.iso_639_1 !== 'fr') return -1;
+        if (a.iso_639_1 !== 'fr' && b.iso_639_1 === 'fr') return 1;
+        if (a.iso_639_1 === 'en' && b.iso_639_1 !== 'en' && b.iso_639_1 !== 'fr') return -1;
+        if (a.iso_639_1 !== 'en' && b.iso_639_1 === 'en') return 1;
+        // Trier par popularité (vote_average)
+        return (b.vote_average || 0) - (a.vote_average || 0);
+      });
+      
+      return posters;
+    }
+    
+    return [];
+  } catch (error) {
+    console.error(`Erreur lors de la récupération des affiches pour le film ${movieId}:`, error);
+    return [];
+  }
+};
