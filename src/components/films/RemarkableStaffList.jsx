@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import { getImageUrl } from '@/lib/tmdb/api';
 import { createBrowserClient } from '@supabase/ssr';
+import { useTranslations } from '@/hooks/useTranslations';
 
 export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
+  const { t } = useTranslations();
   const [staff, setStaff] = useState(initialStaff || []);
   const [groupedStaff, setGroupedStaff] = useState([]);
   const [loading, setLoading] = useState(!initialStaff);
@@ -116,7 +118,7 @@ export default function RemarkableStaffList({ filmId, staff: initialStaff }) {
   if (!groupedStaff || groupedStaff.length === 0) {
     return (
       <div className="text-center py-4">
-        <p className="text-gray-500">Aucun.</p>
+        <p className="text-gray-500">{t('film.none')}</p>
       </div>
     );
   }

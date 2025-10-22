@@ -4,6 +4,20 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { getStreamingProviders, WATCH_TYPES } from '@/lib/tmdb/streaming';
 import { optimizeLogoImage } from '@/lib/utils/imageOptimizer';
+import { useTranslations } from '@/hooks/useTranslations';
+
+// Mapping des codes pays vers les noms de pays
+const COUNTRY_NAMES = {
+  fr: { fr: 'France', en: 'France' },
+  us: { fr: 'États-Unis', en: 'United States' },
+  gb: { fr: 'Royaume-Uni', en: 'United Kingdom' },
+  ca: { fr: 'Canada', en: 'Canada' },
+  de: { fr: 'Allemagne', en: 'Germany' },
+  es: { fr: 'Espagne', en: 'Spain' },
+  it: { fr: 'Italie', en: 'Italy' },
+  be: { fr: 'Belgique', en: 'Belgium' },
+  ch: { fr: 'Suisse', en: 'Switzerland' }
+};
 
 // Fonction utilitaire pour obtenir le texte du type de disponibilité
 function getWatchTypeText(type) {
@@ -45,13 +59,13 @@ function ProviderItem({ provider }) {
 }
 
 // Composant pour afficher une section de fournisseurs
-function ProviderSection({ type, providers }) {
+function ProviderSection({ type, providers, t, locale, userCountry }) {
   if (!providers || !providers[type] || providers[type].length === 0) {
     // Si c'est la section FLATRATE (abonnement) qui est vide, on retourne un message spécifique
     if (type === WATCH_TYPES.FLATRATE) {
       return (
         <div className="mb-3">
-          <p className="text-gray-500 text-sm py-2">Ce film n'est actuellement disponible sur aucune plateforme de streaming par abonnement en France.</p>
+          <p className="text-gray-500 text-sm py-2">{t('film.noStreamingAvailable', { country: COUNTRY_NAMES[userCountry.toLowerCase()]?.[locale] || userCountry })}</p>
         </div>
       );
     }
@@ -78,10 +92,30 @@ function ProviderSection({ type, providers }) {
  * @param {number} props.year - Année de sortie du film (utilisé comme fallback si tmdbId n'est pas disponible)
  */
 export default function StreamingProviders({ tmdbId, title, year }) {
+  const { t, locale } = useTranslations();
   const [providers, setProviders] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userCountry, setUserCountry] = useState('FR');
   // Variable justWatchLink supprimée car plus utilisée
+
+  // Détecter le pays du visiteur
+  useEffect(() => {
+    async function detectCountry() {
+      try {
+        // Utiliser l'API de géolocalisation du navigateur ou une API externe
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        if (data.country_code) {
+          setUserCountry(data.country_code);
+        }
+      } catch (error) {
+        console.log('Could not detect country, defaulting to FR');
+        setUserCountry('FR');
+      }
+    }
+    detectCountry();
+  }, []);
 
   // Récupérer les plateformes de streaming au chargement du composant
   useEffect(() => {
@@ -98,7 +132,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
       
       try {
         
-        const data = await getStreamingProviders(tmdbId);
+        const data = await getStreamingProviders(tmdbId, userCountry);
         
         if (!isMounted) return;
         
@@ -139,14 +173,14 @@ export default function StreamingProviders({ tmdbId, title, year }) {
     );
   } else if (!providers || !Object.values(providers).some(arr => arr && arr.length > 0)) {
     content = (
-      <p className="text-gray-500 text-sm py-2">Ce film n'est actuellement disponible sur aucune plateforme de streaming en France.</p>
+      <p className="text-gray-500 text-sm py-2">{t('film.noStreamingAvailable', { country: COUNTRY_NAMES[userCountry.toLowerCase()]?.[locale] || userCountry })}</p>
     );
   } else {
     content = (
       <div>
-        <ProviderSection type={WATCH_TYPES.FLATRATE} providers={providers} />
-        <ProviderSection type={WATCH_TYPES.FREE} providers={providers} />
-        <ProviderSection type={WATCH_TYPES.ADS} providers={providers} />
+        <ProviderSection type={WATCH_TYPES.FLATRATE} providers={providers} t={t} locale={locale} userCountry={userCountry} />
+        <ProviderSection type={WATCH_TYPES.FREE} providers={providers} t={t} locale={locale} userCountry={userCountry} />
+        <ProviderSection type={WATCH_TYPES.ADS} providers={providers} t={t} locale={locale} userCountry={userCountry} />
         {/* Sections Location et Achat supprimées */}
         {/* Lien vers JustWatch supprimé */}
       </div>
@@ -155,7 +189,7 @@ export default function StreamingProviders({ tmdbId, title, year }) {
   
   return (
     <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-      <h3 className="text-lg font-semibold mb-3">Où regarder en France</h3>
+      <h3 className="text-lg font-semibold mb-3">{t('film.whereToWatchIn', { country: COUNTRY_NAMES[userCountry.toLowerCase()]?.[locale] || userCountry })}</h3>
       {content}
     </div>
   );

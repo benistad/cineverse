@@ -29,52 +29,54 @@ export const WATCH_TYPES = {
 };
 
 /**
- * Récupère les plateformes de streaming où un film est disponible en France
+ * Récupère les plateformes de streaming où un film est disponible
  * @param {number} movieId - ID TMDB du film
+ * @param {string} country - Code pays (FR, US, GB, etc.) - par défaut FR
  * @returns {Promise<Object|null>} - Informations sur les plateformes de streaming ou null si aucune
  */
-export const getStreamingProviders = async (movieId) => {
+export const getStreamingProviders = async (movieId, country = 'FR') => {
   try {
     if (!movieId) {
       console.log('getStreamingProviders: Aucun ID TMDB fourni');
       return null;
     }
     
-    console.log(`getStreamingProviders: Récupération des données pour le film ${movieId}`);
+    const countryCode = country.toUpperCase();
+    console.log(`getStreamingProviders: Récupération des données pour le film ${movieId} (${countryCode})`);
     const response = await tmdbApi.get(`/movie/${movieId}/watch/providers`);
     
     console.log(`getStreamingProviders: Réponse reçue:`, response.data);
     
-    // Vérifier si des informations sont disponibles pour la France
-    if (response.data && response.data.results && response.data.results.FR) {
-      console.log(`getStreamingProviders: Données pour la France trouvées:`, response.data.results.FR);
+    // Vérifier si des informations sont disponibles pour le pays
+    if (response.data && response.data.results && response.data.results[countryCode]) {
+      console.log(`getStreamingProviders: Données pour ${countryCode} trouvées:`, response.data.results[countryCode]);
       
       // Vérifier si au moins un type de disponibilité est présent
-      const frData = response.data.results.FR;
+      const countryData = response.data.results[countryCode];
       const hasProviders = [
-        frData.flatrate, frData.rent, frData.buy, frData.ads, frData.free
+        countryData.flatrate, countryData.rent, countryData.buy, countryData.ads, countryData.free
       ].some(arr => arr && arr.length > 0);
       
       if (!hasProviders) {
-        console.log(`getStreamingProviders: Aucune plateforme disponible pour la France`);
+        console.log(`getStreamingProviders: Aucune plateforme disponible pour ${countryCode}`);
         return null;
       }
       
       return {
-        link: frData.link, // Lien vers JustWatch
+        link: countryData.link, // Lien vers JustWatch
         providers: {
-          flatrate: frData.flatrate || [], // Abonnement/SVOD
-          rent: frData.rent || [],         // Location
-          buy: frData.buy || [],           // Achat
-          ads: frData.ads || [],           // Gratuit avec publicité
-          free: frData.free || []          // Gratuit sans publicité
+          flatrate: countryData.flatrate || [], // Abonnement/SVOD
+          rent: countryData.rent || [],         // Location
+          buy: countryData.buy || [],           // Achat
+          ads: countryData.ads || [],           // Gratuit avec publicité
+          free: countryData.free || []          // Gratuit sans publicité
         }
       };
     } else {
-      console.log(`getStreamingProviders: Aucune donnée pour la France`);
+      console.log(`getStreamingProviders: Aucune donnée pour ${countryCode}`);
     }
     
-    return null; // Aucune information disponible pour la France
+    return null; // Aucune information disponible pour le pays
   } catch (error) {
     console.error(`Erreur lors de la récupération des plateformes de streaming pour le film ${movieId}:`, error);
     return null;
