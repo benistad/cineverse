@@ -233,11 +233,11 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
           {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
           <img
-            src={film.poster_url || film.poster_path ? 
+            src={film.poster_url ? 
+              film.poster_url :
               (film.poster_path && film.poster_path.startsWith('/') ? 
                 `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
-                (film.poster_path || film.poster_url)) :
-              '/images/placeholder.jpg'
+                (film.poster_path || '/images/placeholder.jpg'))
             }
             alt={`Affiche du film ${film.title}`}
             className="w-full h-full object-cover object-top"

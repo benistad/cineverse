@@ -11,13 +11,13 @@ export default function FilmPoster({ film }) {
     }
   };
 
-  const posterSrc = film.poster_path ? 
-    (film.poster_path.startsWith('/') ? 
-      `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
-      film.poster_path) :
-  film.poster_url ? 
-    film.poster_url : 
-    '/images/placeholder.jpg';
+  const posterSrc = film.poster_url ? 
+    film.poster_url :
+    (film.poster_path ? 
+      (film.poster_path.startsWith('/') ? 
+        `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
+        film.poster_path) :
+      '/images/placeholder.jpg');
 
   return (
     <img
