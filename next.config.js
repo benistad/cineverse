@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Ne pas utiliser 'output: export' pour permettre le rendu côté serveur
+  
+  // Activer la compression (gzip/brotli)
+  compress: true,
+  
   images: {
     domains: ['image.tmdb.org', 'via.placeholder.com'],
     // Définir un cache plus long pour réduire les transformations et les écritures en cache
@@ -25,6 +29,16 @@ const nextConfig = {
       {
         // En-têtes de cache pour les ressources statiques
         source: '/:path*.(jpg|jpeg|png|webp|svg|gif|ico|css|js|woff|woff2|ttf|otf|eot)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // En-têtes pour les fichiers JavaScript et CSS Next.js
+        source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
