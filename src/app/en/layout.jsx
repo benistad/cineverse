@@ -20,14 +20,8 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  alternates: {
-    canonical: '/en',
-    languages: {
-      'fr': '/',
-      'en': '/en',
-      'x-default': '/'
-    }
-  },
+  // Pas d'alternates ici pour éviter les conflits avec les pages enfants
+  // Chaque page définit ses propres liens hreflang
 };
 
 export default function EnLayout({ children }) {
