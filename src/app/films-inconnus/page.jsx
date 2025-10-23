@@ -62,7 +62,7 @@ export default function HiddenGemsFilms() {
       <div className="mb-12">
         <div className="flex items-center mb-6">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-900">
-            <strong>Films inconnus</strong> à voir : découvrez les <strong>pépites</strong> cachées du cinéma
+            <strong>Films inconnus</strong> à voir : <span className="text-orange-600">découvrez les <strong>pépites</strong> cachées du cinéma</span>
           </h1>
           {!loading && !error && films.length > 0 && (
             <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold flex-shrink-0">

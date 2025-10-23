@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://www.moviehunt.fr/all-films</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/advanced-search</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/films-inconnus</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/films-index</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/huntedbymoviehunt</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
-<url><loc>https://www.moviehunt.fr/search</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/comment-nous-travaillons</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-<url><loc>https://www.moviehunt.fr/contact</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/quel-film-regarder</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-<url><loc>https://www.moviehunt.fr/films-horreur-halloween-2025</loc><lastmod>2025-10-23T13:01:14.139Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.moviehunt.fr/top-rated</loc><lastmod>2025-10-23T13:01:14.140Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+<url><loc>https://www.moviehunt.fr/all-films</loc><lastmod>2025-10-23T13:05:18.843Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/advanced-search</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/films-index</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/films-inconnus</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/huntedbymoviehunt</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/search</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/quel-film-regarder</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+<url><loc>https://www.moviehunt.fr/top-rated</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+<url><loc>https://www.moviehunt.fr</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>1</priority></url>
+<url><loc>https://www.moviehunt.fr/comment-nous-travaillons</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+<url><loc>https://www.moviehunt.fr/contact</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.moviehunt.fr/films-horreur-halloween-2025</loc><lastmod>2025-10-23T13:05:18.844Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
