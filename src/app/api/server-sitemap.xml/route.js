@@ -71,7 +71,7 @@ export async function GET() {
         priority: 0.9,
       },
       {
-        loc: `${baseUrl}/hidden-gems`,
+        loc: `${baseUrl}/films-inconnus`,
         lastmod: new Date().toISOString(),
         changefreq: 'daily',
         priority: 0.9,

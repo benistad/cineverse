@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 const staticPages = [
   '/contact',
   '/huntedbymoviehunt',
-  '/hidden-gems',
+  '/films-inconnus',
   '/top-rated',
   '/all-films',
   '/comment-nous-travaillons',

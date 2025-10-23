@@ -30,8 +30,8 @@ export default function TitleTag() {
       title = 'Quel film regarder ce soir ? Top 10 des films à voir absolument | MovieHunt';
     } else if (path === '/top-rated') {
       title = 'Films les mieux notés | MovieHunt';
-    } else if (path === '/hidden-gems') {
-      title = 'Films méconnus à voir | Perles rares du cinéma | MovieHunt';
+    } else if (path === '/films-inconnus') {
+      title = 'Films inconnus à voir | Perles rares du cinéma | MovieHunt';
     } else if (path.startsWith('/films/')) {
       // Pour les pages de films individuelles, on utilise un titre générique
       // Le titre exact sera remplacé par le script fetchFilmTitle ci-dessous

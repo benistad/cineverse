@@ -39,7 +39,7 @@ export async function middleware(request) {
   const staticPages = [
     '/contact',
     '/huntedbymoviehunt',
-    '/hidden-gems',
+    '/films-inconnus',
     '/top-rated',
     '/all-films',
     '/comment-nous-travaillons',

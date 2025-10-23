@@ -43,7 +43,7 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     const staticPages = [
       '/contact',
       '/huntedbymoviehunt',
-      '/hidden-gems',
+      '/films-inconnus',
       '/top-rated',
       '/all-films',
       '/comment-nous-travaillons',

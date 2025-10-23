@@ -623,13 +623,13 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
 }
 
 /**
- * Récupère les films marqués comme "Films méconnus à voir"
+ * Récupère les films marqués comme "Films inconnus à voir"
  * @param {number} limit - Nombre maximum de films à récupérer
  */
 export async function getHiddenGems(limit = 8) {
   try {
     const supabase = getSupabaseClient();
-    // Récupérer les films marqués comme "Films méconnus à voir"
+    // Récupérer les films marqués comme "Films inconnus à voir"
     const { data: films, error } = await supabase
       .from('films')
       .select('*')

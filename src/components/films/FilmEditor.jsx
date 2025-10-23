@@ -494,9 +494,9 @@ export default function FilmEditor({ movieDetails }) {
                   onChange={(e) => setIsHiddenGem(e.target.checked)}
                   className="form-checkbox h-5 w-5 text-blue-600"
                 />
-                <span className="ml-2">Marquer comme "Film méconnu à voir"</span>
+                <span className="ml-2">Marquer comme "Film inconnu à voir"</span>
               </label>
-              <p className="text-sm text-gray-500 mt-1 ml-7">Ce film apparaîtra dans la section "Films méconnus à voir" sur la page d'accueil.</p>
+              <p className="text-sm text-gray-500 mt-1 ml-7">Ce film apparaîtra dans la section "Films inconnus à voir" sur la page d'accueil.</p>
             </div>
             
             <div className="mb-4">

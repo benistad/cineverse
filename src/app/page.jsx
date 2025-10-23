@@ -297,7 +297,7 @@ export default function Home() {
             films={hiddenGems} 
             title={t('home.hiddenGems')} 
             visibleCount={4} 
-            showAllLink="/hidden-gems"
+            showAllLink="/films-inconnus"
             showAllText={t('home.viewAll')}
             totalCount={hiddenGemsCount}
           />
@@ -371,7 +371,7 @@ export default function Home() {
               </p>
               
               <p>
-                Notre mission est simple : vous aider à trouver <Link href="/quel-film-regarder" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">quel film regarder</Link>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <Link href="/hidden-gems" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">films méconnus</Link> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
+                Notre mission est simple : vous aider à trouver <Link href="/quel-film-regarder" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">quel film regarder</Link>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <Link href="/films-inconnus" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">films inconnus</Link> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
               </p>
               
               <p>
