@@ -9,7 +9,7 @@ export const metadata = {
     default: 'MovieHunt',
     template: '%s | MovieHunt'
   },
-  description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
+  description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
   keywords: ['films', 'cinéma', 'critiques', 'notes', 'recommandations', 'acteurs', 'réalisateurs'],
   authors: [{ name: 'MovieHunt' }],
   creator: 'MovieHunt',
@@ -43,7 +43,7 @@ export const metadata = {
     url: '/',
     siteName: 'MovieHunt',
     title: 'MovieHunt',
-    description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
+    description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
     images: [
       {
         url: 'https://www.moviehunt.fr/images/og-image.jpg',
@@ -56,7 +56,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'MovieHunt',
-    description: 'Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.',
+    description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
     images: ['https://www.moviehunt.fr/images/og-image.jpg'],
   },
   robots: {
