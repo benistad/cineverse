@@ -4,8 +4,8 @@ export const metadata = {
     default: 'MovieHunt: Movie Ideas - What Film to Watch?',
     template: '%s | MovieHunt'
   },
-  description: 'Movie Hunt is the site to know what film to watch and discover hidden gems. Film ratings, recommendations, remarkable cast, availability on French streaming platforms and more.',
-  keywords: ['movies', 'cinema', 'reviews', 'ratings', 'recommendations', 'hidden gems', 'streaming', 'French platforms', 'remarkable cast', 'favorites'],
+  description: 'Discover what film to watch: ratings, movie reviews and hidden gems. Remarkable staff and streaming availability in France.',
+  keywords: ['movies', 'cinema', 'reviews', 'ratings', 'recommendations', 'hidden gems', 'streaming', 'French platforms', 'remarkable staff', 'favorites'],
   authors: [{ name: 'MovieHunt' }],
   creator: 'MovieHunt',
   publisher: 'MovieHunt',
