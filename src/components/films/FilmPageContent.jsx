@@ -94,17 +94,40 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
               />
             )}
             
-            {/* Contenu traduit du film (synopsis, pourquoi regarder) */}
+            {/* Contenu traduit du film (synopsis) */}
             <FilmContent film={{
               id: film.id,
               synopsis: film.synopsis,
-              why_watch_enabled: film.why_watch_enabled,
-              why_watch_content: film.why_watch_content
+              why_watch_enabled: false, // Déplacé dans la section critique
+              why_watch_content: null
             }} />
             
-            {/* Section "Ce que nous n'avons pas aimé" */}
-            {film.not_liked_enabled && (
-              <NotLikedSection content={film.not_liked_content} />
+            {/* Section Critique (Pourquoi regarder + Ce que nous n'avons pas aimé) */}
+            {(film.why_watch_enabled || film.not_liked_enabled) && (
+              <section className="mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
+                  Critique de {film.title}
+                </h2>
+                
+                {/* Pourquoi regarder ce film */}
+                {film.why_watch_enabled && film.why_watch_content && (
+                  <div className="mb-4 bg-indigo-50 p-3 sm:p-4 rounded-lg border-l-4 border-indigo-600">
+                    <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 text-indigo-800">
+                      Pourquoi regarder ce film ?
+                    </h3>
+                    <div
+                      className="text-sm sm:text-base text-gray-700 whitespace-pre-wrap [&>p]:mb-2"
+                      dangerouslySetInnerHTML={{ __html: film.why_watch_content }}
+                      suppressHydrationWarning
+                    />
+                  </div>
+                )}
+                
+                {/* Ce que nous n'avons pas aimé */}
+                {film.not_liked_enabled && (
+                  <NotLikedSection content={film.not_liked_content} />
+                )}
+              </section>
             )}
             
             {/* Bande-annonce */}
