@@ -40,7 +40,7 @@ export default function FilmTitle({ title: initialTitle, filmId }) {
   }, [locale, filmId, initialTitle]);
 
   return (
-    <h1 className="text-3xl sm:text-4xl font-bold mb-2" itemProp="name">
+    <h1 className="text-3xl sm:text-4xl font-bold mb-2">
       {title}
     </h1>
   );

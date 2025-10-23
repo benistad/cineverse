@@ -156,8 +156,8 @@ export default function SimilarFilms({ currentFilm }) {
               </h3>
               <div className="flex items-center mt-1">
                 <RatingIcon rating={film.note_sur_10} size={16} />
-                <span className="ml-1 text-sm" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
-                  <span itemProp="ratingValue">{film.note_sur_10}</span>/10
+                <span className="ml-1 text-sm">
+                  {film.note_sur_10}/10
                 </span>
               </div>
             </div>

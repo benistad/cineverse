@@ -20,7 +20,7 @@ import NotLikedSection from '@/components/films/NotLikedSection';
  */
 export default function FilmPageContent({ film }) {
   return (
-    <article className="container mx-auto px-6 py-12 space-y-6" itemScope itemType="https://schema.org/Movie">
+    <article className="container mx-auto px-6 py-12 space-y-6">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           {/* Affiche du film */}
@@ -70,10 +70,9 @@ export default function FilmPageContent({ film }) {
             <div className="flex flex-wrap items-center gap-4 mb-4">
               <div className="flex items-center">
                 <span className="font-semibold mr-2">Note:</span>
-                <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
+                <span className="flex items-center">
                   <RatingIcon rating={film.note_sur_10} className="mr-2" />
-                  <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
-                  <meta itemProp="ratingCount" content="1" />
+                  <span>{film.note_sur_10}</span><span>/10</span>
                 </span>
               </div>
               {film.blog_article_url && (

@@ -42,12 +42,12 @@ export default function FilmHeader({ releaseDate, genres: initialGenres, filmId 
   return (
     <div className="flex flex-wrap items-center mb-4 text-gray-700">
       {releaseDate && (
-        <span className="mr-3" itemProp="datePublished">
+        <span className="mr-3">
           {new Date(releaseDate).getFullYear()}
         </span>
       )}
       {genres && (
-        <span itemProp="genre">
+        <span>
           {genres}
         </span>
       )}

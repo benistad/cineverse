@@ -8,8 +8,16 @@
 Google Search Console remontait 3 erreurs critiques sur les pages de films :
 
 1. **"Vous devez indiquer 'ratingCount' ou 'reviewCount'"** (42 pages)
-2. **"L'avis contient plusieurs notes cumulées"** (40 pages)
+2. **"L'avis contient plusieurs notes cumulées"** (40 pages) ⚠️ **CAUSE PRINCIPALE**
 3. **"La note se situe en dehors de la plage spécifiée ou par défaut"** (30 pages)
+
+### Cause racine découverte
+Après le premier déploiement, Google détectait toujours **"L'avis contient plusieurs notes cumulées"**. 
+La cause : **duplication du schema.org** - le même `AggregateRating` était présent à la fois dans :
+- Le **microdata HTML** (attributs `itemProp`, `itemScope`, `itemType`)
+- Le **JSON-LD** (script structuré)
+
+Google comptait donc 2 notes pour chaque film au lieu d'une seule.
 
 ### URLs affectées (exemples)
 - https://www.moviehunt.fr/films/marche-ou-creve
@@ -98,13 +106,37 @@ aggregateRating: {
 
 ## Fichiers modifiés
 
+### Phase 1 : Correction du JSON-LD
 1. **`src/components/seo/MovieSchema.jsx`**
    - Remplacement de `review` par `aggregateRating`
    - Ajout de `ratingCount: '1'`
    - Conversion de `ratingValue` en string
 
+### Phase 2 : Suppression du microdata HTML (pour éviter les doublons)
 2. **`src/components/films/FilmPageContent.jsx`**
-   - Ajout de `<meta itemProp="ratingCount" content="1" />`
+   - ❌ Suppression de tous les attributs `itemScope`, `itemType`, `itemProp`
+   - ❌ Suppression du microdata `AggregateRating`
+
+3. **`src/components/films/FilmContent.jsx`**
+   - ❌ Suppression de `itemProp="description"`
+
+4. **`src/components/films/FilmHeader.jsx`**
+   - ❌ Suppression de `itemProp="datePublished"`
+   - ❌ Suppression de `itemProp="genre"`
+
+5. **`src/components/films/FilmTitle.jsx`**
+   - ❌ Suppression de `itemProp="name"`
+
+6. **`src/components/films/FilmPoster.jsx`**
+   - ❌ Suppression de `itemProp="image"`
+
+7. **`src/components/films/SimilarFilms.jsx`**
+   - ❌ Suppression du microdata `AggregateRating` dans les cartes de films similaires
+
+### Résultat
+✅ **Une seule source de vérité** : le JSON-LD dans `MovieSchema.jsx`
+✅ **Plus de doublons** détectés par Google
+✅ **HTML plus propre** sans attributs microdata
 
 ## Validation
 
@@ -124,6 +156,11 @@ aggregateRating: {
 ## Notes importantes
 
 - `ratingCount: '1'` est correct car chaque film a UNE note MovieHunt
+- **Microdata vs JSON-LD** : Nous avons choisi le JSON-LD comme source unique car :
+  - Plus facile à maintenir (un seul fichier)
+  - Évite les doublons et conflits
+  - Recommandé par Google pour les données structurées complexes
+  - Séparation claire entre présentation (HTML) et données structurées (JSON-LD)
 - Si vous voulez ajouter des avis utilisateurs plus tard, il faudra :
   - Augmenter `ratingCount` avec le nombre total d'avis
   - Calculer une moyenne pour `ratingValue`

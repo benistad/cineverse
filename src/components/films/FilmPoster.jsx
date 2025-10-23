@@ -25,7 +25,6 @@ export default function FilmPoster({ film }) {
       alt={`Affiche du film ${film.title}`}
       className="absolute inset-0 w-full h-full object-contain object-top"
       loading="eager"
-      itemProp="image"
       onError={handleImageError}
     />
   );
