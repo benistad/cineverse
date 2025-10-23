@@ -272,10 +272,11 @@
     "metaDescription": "Vous ne savez pas quel film regarder ? Découvrez nos recommandations personnalisées selon votre humeur, vos préférences et ce qui est disponible sur les plateformes de streaming."
   },
   "hiddenGems": {
-    "title": "Films méconnus à voir",
+    "title": "Films inconnus à voir",
     "subtitle": "Découvrez des films sous-estimés qui méritent votre attention",
-    "metaTitle": "Films méconnus - Perles rares | MovieHunt",
-    "metaDescription": "Découvrez notre sélection de films méconnus, des perles rares qui méritent plus de reconnaissance. Du cinéma de qualité hors des sentiers battus."
+    "metaTitle": "Films inconnus - Perles rares | MovieHunt",
+    "metaDescription": "Découvrez notre sélection de films inconnus, des perles rares qui méritent plus de reconnaissance. Du cinéma de qualité hors des sentiers battus.",
+    "error": "Erreur lors du chargement des films inconnus"
   },
   "topRated": {
     "title": "Films les mieux notés",

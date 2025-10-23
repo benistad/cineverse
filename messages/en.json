@@ -272,10 +272,11 @@
     "metaDescription": "Not sure what film to watch? Discover our personalized recommendations based on your mood, preferences and what's available on streaming platforms."
   },
   "hiddenGems": {
-    "title": "Hidden Gems to Watch",
+    "title": "Unknown Films to Watch",
     "subtitle": "Discover underrated films that deserve your attention",
-    "metaTitle": "Hidden Gems - Underrated Films | MovieHunt",
-    "metaDescription": "Discover our selection of hidden gems, underrated films that deserve more recognition. Quality cinema off the beaten path."
+    "metaTitle": "Unknown Films - Underrated Films | MovieHunt",
+    "metaDescription": "Discover our selection of unknown films, underrated gems that deserve more recognition. Quality cinema off the beaten path.",
+    "error": "Error loading unknown films"
   },
   "topRated": {
     "title": "Top Rated Films",
