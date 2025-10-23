@@ -107,25 +107,27 @@ export default function OptimizedFilmCarousel({
   return (
     <div className="space-y-6">
       {/* Titre, compteur et boutons de navigation */}
-      <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-        <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 gap-3">
+        <div className="flex items-center space-x-4 w-full sm:w-auto">
           <div className="flex items-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-800">
               {title}
             </h2>
             {/* Compteur de films - n'affiche que si showCount est true */}
             {showCount && (
-              <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
+              <span className="ml-2 sm:ml-4 px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold">
                 {totalCount !== undefined ? totalCount : films.length}
               </span>
             )}
           </div>
-          
-          {/* Bouton "Voir tous les films" */}
+        </div>
+        
+        <div className="flex items-center justify-between w-full sm:w-auto gap-3">
+          {/* Bouton "Voir tous les films" - maintenant visible sur mobile */}
           {showAllLink && showAllText && (
             <a 
               href={showAllLink} 
-              className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group"
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group text-sm sm:text-base"
             >
               {showAllText}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
@@ -133,10 +135,9 @@ export default function OptimizedFilmCarousel({
               </svg>
             </a>
           )}
-        </div>
-        
-        {/* Boutons de navigation */}
-        <div className="flex space-x-2">
+          
+          {/* Boutons de navigation */}
+          <div className="flex space-x-2">
           <button 
             onClick={prevCard}
             className={`p-1 sm:p-2 rounded-full ${canGoLeft 
@@ -157,6 +158,7 @@ export default function OptimizedFilmCarousel({
           >
             <FiChevronRight size={16} className="sm:w-5 sm:h-5" />
           </button>
+          </div>
         </div>
       </div>
 

@@ -306,24 +306,22 @@ export default function Home() {
 
       {/* Tous les films avec pagination */}
       <section id="all-films-section">
-        <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-6">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('home.allFilms')}</h2>
-              <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
-                {totalFilmsCount}
-              </span>
-            </div>
-            <Link 
-              href="/all-films" 
-              className="hidden sm:inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group"
-            >
-              {t('home.viewAll')}
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </Link>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 pb-4 mb-6 gap-3">
+          <div className="flex items-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-800">{t('home.allFilms')}</h2>
+            <span className="ml-2 sm:ml-4 px-2 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-xs sm:text-sm font-semibold">
+              {totalFilmsCount}
+            </span>
           </div>
+          <Link 
+            href="/all-films" 
+            className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group text-sm sm:text-base"
+          >
+            {t('home.viewAll')}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </Link>
         </div>
         {loading ? (
           <div className="flex justify-center items-center h-64">
