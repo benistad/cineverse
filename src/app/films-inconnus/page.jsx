@@ -13,6 +13,7 @@ export default function HiddenGemsFilms() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortBy, setSortBy] = useState('date'); // 'date', 'rating', 'alphabetical'
 
   useEffect(() => {
     async function fetchHiddenGems() {
@@ -31,6 +32,19 @@ export default function HiddenGemsFilms() {
 
     fetchHiddenGems();
   }, []);
+
+  // Fonction de tri des films
+  const sortedFilms = [...films].sort((a, b) => {
+    switch (sortBy) {
+      case 'rating':
+        return (b.note_sur_10 || 0) - (a.note_sur_10 || 0);
+      case 'alphabetical':
+        return (a.title || '').localeCompare(b.title || '');
+      case 'date':
+      default:
+        return new Date(b.date_ajout || 0) - new Date(a.date_ajout || 0);
+    }
+  });
 
   // Préparer les chemins d'images critiques pour le préchargement
   const criticalImagePaths = [];
@@ -60,16 +74,9 @@ export default function HiddenGemsFilms() {
 
       {/* Section titre et description */}
       <div className="mb-12">
-        <div className="flex items-center mb-6">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-900">
-            <strong>Films inconnus</strong> à voir : <span className="text-orange-600">découvrez les <strong>pépites</strong> cachées du cinéma</span>
-          </h1>
-          {!loading && !error && films.length > 0 && (
-            <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold flex-shrink-0">
-              {films.length}
-            </span>
-          )}
-        </div>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-900 mb-6">
+          <strong>Films inconnus</strong> à voir : <span className="text-orange-600">découvrez les <strong>pépites</strong> cachées du cinéma</span>
+        </h1>
         
         <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-xl p-6 md:p-8 shadow-sm border border-indigo-100">
           <p className="text-base md:text-lg text-gray-700 leading-relaxed">
@@ -78,8 +85,35 @@ export default function HiddenGemsFilms() {
         </div>
       </div>
 
-      {/* Séparateur */}
-      <div className="border-b border-gray-200 mb-8"></div>
+      {/* Menu de tri et compteur */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-gray-200">
+        {/* Menu de tri */}
+        <div className="flex items-center gap-3">
+          <label htmlFor="sort-select" className="text-sm font-medium text-gray-700">
+            Trier par :
+          </label>
+          <select
+            id="sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors cursor-pointer"
+          >
+            <option value="date">Date d'ajout</option>
+            <option value="rating">Note</option>
+            <option value="alphabetical">Ordre alphabétique</option>
+          </select>
+        </div>
+
+        {/* Compteur de films */}
+        {!loading && !error && films.length > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-gray-700">Nombre de films :</span>
+            <span className="px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
+              {films.length}
+            </span>
+          </div>
+        )}
+      </div>
       
       {loading ? (
         <div className="flex justify-center items-center h-64">
@@ -89,8 +123,8 @@ export default function HiddenGemsFilms() {
         <div className="bg-red-50 p-4 rounded-md">
           <p className="text-red-500">{t('hiddenGems.error')}</p>
         </div>
-      ) : films.length > 0 ? (
-        <FilmGrid films={films} />
+      ) : sortedFilms.length > 0 ? (
+        <FilmGrid films={sortedFilms} />
       ) : (
         <div>
           <h1 className="text-4xl font-bold mb-4">{t('hiddenGems.title')}</h1>
