@@ -27,9 +27,6 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
   return (
     <article className="container mx-auto px-6 py-12 space-y-6">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* Titre du film - bandeau jaune pleine largeur */}
-        <FilmTitle title={film.title} filmId={film.id} isTranslated={isTranslated} />
-        
         <div className="md:flex">
           {/* Affiche du film */}
           <div className="md:w-1/3 lg:w-1/4">
@@ -41,8 +38,10 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
           </div>
           
           {/* Informations du film */}
-          <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
-            <div className="flex items-center gap-3 mb-2">
+          <div className="md:w-2/3 lg:w-3/4 px-4 md:px-6 pb-4 md:pb-6">
+            <FilmTitle title={film.title} filmId={film.id} isTranslated={isTranslated} />
+            
+            <div className="flex items-center gap-3 mb-2 mt-2">
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
                   <Link 
