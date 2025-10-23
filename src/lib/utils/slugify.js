@@ -1,6 +1,7 @@
 /**
  * Normalise une chaîne de caractères en slug URL-friendly
  * Remplace les caractères accentués par leurs équivalents non accentués
+ * Gère tous les accents : à, è, é, ù, etc.
  * 
  * @param {string} text - Texte à convertir en slug
  * @returns {string} - Slug normalisé
@@ -16,6 +17,17 @@ export function slugify(text) {
     .normalize('NFD')
     // Supprimer les diacritiques (accents)
     .replace(/[\u0300-\u036f]/g, '')
+    // Gestion explicite des caractères qui pourraient ne pas être normalisés
+    .replace(/[àáâãäå]/g, 'a')
+    .replace(/[èéêë]/g, 'e')
+    .replace(/[ìíîï]/g, 'i')
+    .replace(/[òóôõö]/g, 'o')
+    .replace(/[ùúûü]/g, 'u')
+    .replace(/[ýÿ]/g, 'y')
+    .replace(/ñ/g, 'n')
+    .replace(/ç/g, 'c')
+    .replace(/œ/g, 'oe')
+    .replace(/æ/g, 'ae')
     // Remplacer les espaces et underscores par des tirets
     .replace(/[\s_]+/g, '-')
     // Supprimer tous les caractères non alphanumériques sauf les tirets

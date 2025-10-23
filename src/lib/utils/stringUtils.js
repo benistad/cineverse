@@ -11,17 +11,28 @@
  * removeAccents('Procès') // 'Proces'
  * removeAccents('élève') // 'eleve'
  * removeAccents('café') // 'cafe'
+ * removeAccents('à la') // 'a la'
+ * removeAccents('où') // 'ou'
  */
 export function removeAccents(str) {
   if (!str) return '';
   
   return str
-    .normalize('NFD') // Décompose les caractères accentués
-    .replace(/[\u0300-\u036f]/g, '') // Supprime les diacritiques
+    .normalize('NFD') // Décompose les caractères accentués (é → e + ´, à → a + `, etc.)
+    .replace(/[\u0300-\u036f]/g, '') // Supprime tous les diacritiques (accents)
     .replace(/œ/g, 'oe') // Remplace œ par oe
     .replace(/Œ/g, 'OE') // Remplace Œ par OE
     .replace(/æ/g, 'ae') // Remplace æ par ae
-    .replace(/Æ/g, 'AE'); // Remplace Æ par AE
+    .replace(/Æ/g, 'AE') // Remplace Æ par AE
+    // Gestion explicite des caractères qui pourraient ne pas être normalisés
+    .replace(/[àáâãäå]/gi, 'a')
+    .replace(/[èéêë]/gi, 'e')
+    .replace(/[ìíîï]/gi, 'i')
+    .replace(/[òóôõö]/gi, 'o')
+    .replace(/[ùúûü]/gi, 'u')
+    .replace(/[ýÿ]/gi, 'y')
+    .replace(/ñ/gi, 'n')
+    .replace(/ç/gi, 'c');
 }
 
 /**

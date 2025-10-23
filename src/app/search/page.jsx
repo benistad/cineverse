@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase/client';
 import FilmGrid from '@/components/films/FilmGrid';
 import Link from 'next/link';
 import { FiSearch } from 'react-icons/fi';
+import { removeAccents } from '@/lib/utils/stringUtils';
 
 function SearchResults() {
   const searchParams = useSearchParams();
@@ -26,16 +27,8 @@ function SearchResults() {
       try {
         setLoading(true);
         
-        // Fonction pour normaliser une chaîne (supprimer les accents)
-        const normalizeString = (str) => {
-          return str
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase();
-        };
-        
-        // Normaliser la requête de recherche
-        const normalizedQuery = normalizeString(query);
+        // Normaliser la requête de recherche (utilise la fonction améliorée)
+        const normalizedQuery = removeAccents(query).toLowerCase();
         
         // Récupérer tous les films (on pourrait optimiser avec une fonction PostgreSQL unaccent)
         const { data, error } = await supabase
@@ -48,10 +41,10 @@ function SearchResults() {
           setFilms([]);
           setTotalCount(0);
         } else {
-          // Filtrer côté client pour ignorer les accents
+          // Filtrer côté client pour ignorer les accents (à, è, é, ù, etc.)
           const filteredFilms = (data || []).filter(film => {
-            const normalizedTitle = normalizeString(film.title || '');
-            const normalizedSynopsis = normalizeString(film.synopsis || '');
+            const normalizedTitle = removeAccents(film.title || '').toLowerCase();
+            const normalizedSynopsis = removeAccents(film.synopsis || '').toLowerCase();
             
             return normalizedTitle.includes(normalizedQuery) || 
                    normalizedSynopsis.includes(normalizedQuery);
