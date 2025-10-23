@@ -91,7 +91,7 @@ export async function generateMetadata({ params: paramsPromise }) {
     : 'https://www.moviehunt.fr/images/og-image.jpg';
   
   return {
-    title: `${title}${yearText} - Review and Rating | MovieHunt`,
+    title: `${title}${yearText} - Review & Rating`,
     description: `${rating}${synopsisShort} Discover our complete review, cast and where to watch ${title} streaming.`,
     alternates: {
       canonical: `https://www.moviehunt.fr/en/films/${params.slug}`,
