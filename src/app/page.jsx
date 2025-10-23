@@ -367,11 +367,11 @@ export default function Home() {
             <div className="space-y-6 text-gray-700 leading-relaxed">
               <p className="text-lg">
                 Bienvenue sur <strong className="text-indigo-800">MovieHunt.fr</strong>, le site de référence pour tous ceux qui recherchent une <strong>idée de film</strong> à regarder.
-                Nous explorons le cinéma sous toutes ses formes pour vous proposer des <strong>critiques de films</strong> sincères, des <strong>avis films</strong> détaillés et des <strong>recommandations</strong> qui éveillent la curiosité et la passion du 7ᵉ art.
+                Nous explorons le cinéma sous toutes ses formes pour vous proposer des <strong>critiques de films</strong> sincères, des <strong>avis films</strong> détaillés et des <Link href="/advanced-search?hunted=true" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">recommandations</Link> qui éveillent la curiosité et la passion du 7ᵉ art.
               </p>
               
               <p>
-                Notre mission est simple : vous aider à trouver <strong>quel film regarder</strong>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <strong>films méconnus</strong> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
+                Notre mission est simple : vous aider à trouver <Link href="/quel-film-regarder" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">quel film regarder</Link>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <Link href="/hidden-gems" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">films méconnus</Link> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
               </p>
               
               <p>
