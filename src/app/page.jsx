@@ -352,6 +352,43 @@ export default function Home() {
           </>
         )}
       </section>
+
+      {/* Section À propos de MovieHunt */}
+      <section className="py-16 mt-12">
+        <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-2xl shadow-lg p-8 md:p-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center mb-6">
+              <span className="text-4xl mr-3">🎬</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-indigo-900">
+                À propos de MovieHunt.fr
+              </h2>
+            </div>
+            
+            <div className="space-y-6 text-gray-700 leading-relaxed">
+              <p className="text-lg">
+                Bienvenue sur <strong className="text-indigo-800">MovieHunt.fr</strong>, le site de référence pour tous ceux qui recherchent une <strong>idée de film</strong> à regarder.
+                Nous explorons le cinéma sous toutes ses formes pour vous proposer des <strong>critiques de films</strong> sincères, des <strong>avis films</strong> détaillés et des <strong>recommandations</strong> qui éveillent la curiosité et la passion du 7ᵉ art.
+              </p>
+              
+              <p>
+                Notre mission est simple : vous aider à trouver <strong>quel film regarder</strong>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <strong>films méconnus</strong> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
+              </p>
+              
+              <p>
+                Chaque <strong>critique cinéma</strong> publiée sur MovieHunt.fr est le fruit d'une véritable passion pour le cinéma. Nous évaluons chaque œuvre selon cinq critères essentiels : le jeu d'acteur, la réalisation, la bande son, la photographie et le scénario. Cette approche nous permet de vous offrir une lecture honnête, nuancée et inspirante.
+              </p>
+              
+              <p>
+                Chez MovieHunt, nous travaillons avec rigueur, authenticité et curiosité. Nous privilégions la découverte, l'émotion et le partage — trois valeurs qui animent toutes nos <strong>idées de films</strong>.
+              </p>
+              
+              <p className="text-lg font-medium text-indigo-900 pt-4">
+                Explorez nos sélections, laissez-vous inspirer par nos recommandations et trouvez dès aujourd'hui le film parfait à voir sur MovieHunt.fr.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
