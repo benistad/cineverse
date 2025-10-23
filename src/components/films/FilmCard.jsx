@@ -229,7 +229,12 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       {/* Badge Hunted by MovieHunt - Supprimé d'ici et déplacé à côté du titre */}
       
       {/* Lien vers la page publique ou admin selon le contexte */}
-      <Link href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} className="flex flex-col h-full">
+      <Link 
+        href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} 
+        className="flex flex-col h-full"
+        title={`Voir la page de ${displayTitle}`}
+        aria-label={`Voir la page du film ${displayTitle}`}
+      >
         <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
           {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
           <img
