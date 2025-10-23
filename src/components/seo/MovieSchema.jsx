@@ -42,21 +42,12 @@ export default function MovieSchema({ film }) {
     countryOfOrigin: film.country_of_origin || 'FR',
     inLanguage: film.original_language || 'fr',
     duration: film.runtime ? `PT${film.runtime}M` : undefined, // Format ISO 8601 pour la durée
-    review: {
-      '@type': 'Review',
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: film.note_sur_10,
-        bestRating: '10',
-        worstRating: '0'
-      },
-      author: {
-        '@type': 'Organization',
-        name: 'MovieHunt',
-        url: baseUrl
-      },
-      datePublished: film.date_ajout,
-      reviewBody: film.why_watch_content || film.synopsis || `Film noté ${film.note_sur_10}/10 par MovieHunt.`
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: film.note_sur_10.toString(),
+      bestRating: '10',
+      worstRating: '0',
+      ratingCount: '1'
     }
   };
 

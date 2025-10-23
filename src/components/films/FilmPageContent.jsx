@@ -73,6 +73,7 @@ export default function FilmPageContent({ film }) {
                 <span className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
                   <RatingIcon rating={film.note_sur_10} className="mr-2" />
                   <span itemProp="ratingValue">{film.note_sur_10}</span><span itemProp="bestRating" content="10">/10</span>
+                  <meta itemProp="ratingCount" content="1" />
                 </span>
               </div>
               {film.blog_article_url && (
