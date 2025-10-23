@@ -28,6 +28,8 @@ export function slugify(text) {
     .replace(/ç/g, 'c')
     .replace(/œ/g, 'oe')
     .replace(/æ/g, 'ae')
+    // Supprimer les apostrophes (pas de tiret pour l'article)
+    .replace(/[''`]/g, '')
     // Remplacer les espaces et underscores par des tirets
     .replace(/[\s_]+/g, '-')
     // Supprimer tous les caractères non alphanumériques sauf les tirets

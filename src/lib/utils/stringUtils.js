@@ -20,10 +20,6 @@ export function removeAccents(str) {
   return str
     .normalize('NFD') // Décompose les caractères accentués (é → e + ´, à → a + `, etc.)
     .replace(/[\u0300-\u036f]/g, '') // Supprime tous les diacritiques (accents)
-    .replace(/œ/g, 'oe') // Remplace œ par oe
-    .replace(/Œ/g, 'OE') // Remplace Œ par OE
-    .replace(/æ/g, 'ae') // Remplace æ par ae
-    .replace(/Æ/g, 'AE') // Remplace Æ par AE
     // Gestion explicite des caractères qui pourraient ne pas être normalisés
     .replace(/[àáâãäå]/gi, 'a')
     .replace(/[èéêë]/gi, 'e')
@@ -32,7 +28,11 @@ export function removeAccents(str) {
     .replace(/[ùúûü]/gi, 'u')
     .replace(/[ýÿ]/gi, 'y')
     .replace(/ñ/gi, 'n')
-    .replace(/ç/gi, 'c');
+    .replace(/ç/gi, 'c')
+    .replace(/œ/g, 'oe') // Remplace œ par oe
+    .replace(/Œ/g, 'OE') // Remplace Œ par OE
+    .replace(/æ/g, 'ae') // Remplace æ par ae
+    .replace(/Æ/g, 'AE'); // Remplace Æ par AE
 }
 
 /**
@@ -42,7 +42,8 @@ export function removeAccents(str) {
  * 
  * @example
  * createSlug('Le Procès du siècle') // 'le-proces-du-siecle'
- * createSlug('L\'Été meurtrier') // 'l-ete-meurtrier'
+ * createSlug('L\'Été meurtrier') // 'lete-meurtrier'
+ * createSlug('À couteaux tirés') // 'a-couteaux-tires'
  */
 export function createSlug(str) {
   if (!str) return '';
@@ -50,6 +51,7 @@ export function createSlug(str) {
   return removeAccents(str)
     .toLowerCase()
     .trim()
+    .replace(/[''`]/g, '') // Supprimer les apostrophes
     .replace(/[^\w\s-]/g, '') // Supprime les caractères spéciaux sauf espaces et tirets
     .replace(/[\s_]+/g, '-') // Remplace espaces et underscores par des tirets
     .replace(/-+/g, '-') // Remplace plusieurs tirets par un seul
