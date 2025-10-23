@@ -95,7 +95,8 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Facebook"
+                aria-label="Suivez-nous sur Facebook"
+                title="Suivez-nous sur Facebook"
               >
                 <FaFacebook size={24} />
               </a>
@@ -104,7 +105,8 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Instagram"
+                aria-label="Suivez-nous sur Instagram"
+                title="Suivez-nous sur Instagram"
               >
                 <FaInstagram size={24} />
               </a>
@@ -113,7 +115,8 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Tumblr"
+                aria-label="Suivez-nous sur Tumblr"
+                title="Suivez-nous sur Tumblr"
               >
                 <FaTumblr size={24} />
               </a>
@@ -128,13 +131,26 @@ export default function Footer() {
             </p>
             <p className="text-gray-400 text-xs mt-1">
               {t('footer.tmdbDisclaimer')}
-              <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer" className="ml-1 hover:text-white">
+              <a 
+                href="https://www.themoviedb.org" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="ml-1 hover:text-white"
+                title="Visiter The Movie Database"
+                aria-label="Visiter The Movie Database"
+              >
                 The Movie Database
               </a>
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex items-center">
-            <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer">
+            <a 
+              href="https://www.themoviedb.org" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="Visiter The Movie Database"
+              aria-label="Visiter The Movie Database"
+            >
               <img 
                 src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" 
                 alt="TMDB Logo" 
