@@ -14,7 +14,7 @@ export function RemarkableStaffTitle({ filmTitle }) {
   const { t } = useTranslations();
   return (
     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
-      Équipe technique remarquable de {filmTitle || 'ce film'}
+      Staff remarquable de {filmTitle || 'ce film'}
     </h2>
   );
 }

@@ -47,8 +47,13 @@ export default function FilmTitle({ title: initialTitle, filmId, isTranslated = 
   }, [locale, filmId, initialTitle, isTranslated]);
 
   return (
-    <h1 className="text-3xl sm:text-4xl font-bold mb-2">
-      {title}
-    </h1>
+    <div className="inline-block mb-2">
+      <h1 
+        className="text-3xl sm:text-4xl font-bold px-4 py-2 rounded-lg"
+        style={{ backgroundColor: '#FEBE29', color: '#000000' }}
+      >
+        {title}
+      </h1>
+    </div>
   );
 }
