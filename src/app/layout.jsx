@@ -18,7 +18,7 @@ export const metadata = {
     default: 'MovieHunt : idées de films - Quel film regarder ?',
     template: '%s | MovieHunt'
   },
-  description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
+  description: 'Découvrez quel film regarder : notes, critiques de films et perles rares. Staff remarquable et disponibilité streaming en France.',
   keywords: ['films', 'cinéma', 'critiques', 'notes', 'recommandations', 'perles rares', 'streaming', 'plateformes françaises', 'casting remarquable', 'coup de cœur'],
   authors: [{ name: 'MovieHunt' }],
   creator: 'MovieHunt',
@@ -29,7 +29,7 @@ export const metadata = {
     url: 'https://www.moviehunt.fr',
     siteName: 'MovieHunt',
     title: 'MovieHunt - Trouvez votre prochain film coup de cœur',
-    description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
+    description: 'Découvrez quel film regarder : notes, critiques de films et perles rares. Staff remarquable et disponibilité streaming en France.',
     images: [
       {
         url: '/api/og-image',
@@ -45,7 +45,7 @@ export const metadata = {
     site: '@MovieHunt',
     creator: '@MovieHunt',
     title: 'MovieHunt - Trouvez votre prochain film coup de cœur',
-    description: 'Découvrez quel film regarder : notes, critiques et perles rares. Casting remarquable et disponibilité streaming en France.',
+    description: 'Découvrez quel film regarder : notes, critiques de films et perles rares. Staff remarquable et disponibilité streaming en France.',
     images: ['https://www.moviehunt.fr/api/og-image'],
   },
   robots: {
