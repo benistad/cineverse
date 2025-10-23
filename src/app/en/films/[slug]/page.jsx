@@ -100,8 +100,14 @@ export async function generateMetadata({ params: paramsPromise }) {
   const synopsis = translation?.synopsis || film.synopsis || '';
   const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : '';
   const yearText = releaseYear ? ` (${releaseYear})` : '';
-  const synopsisShort = synopsis ? synopsis.substring(0, 150) + '...' : '';
   const rating = film.note_sur_10 ? `Rating: ${film.note_sur_10}/10. ` : '';
+  
+  // Calculer la longueur maximale pour le synopsis (max 155 caractères total)
+  const suffixText = ' Complete review & streaming.';
+  const maxSynopsisLength = 155 - rating.length - suffixText.length;
+  const synopsisShort = synopsis 
+    ? synopsis.substring(0, Math.max(50, maxSynopsisLength)) + '...' 
+    : '';
   
   const imageUrl = film.poster_path 
     ? (film.poster_path.startsWith('/') 
@@ -111,7 +117,7 @@ export async function generateMetadata({ params: paramsPromise }) {
   
   return {
     title: `${title}${yearText} - Review & Rating`,
-    description: `${rating}${synopsisShort} Discover our complete review, cast and where to watch ${title} streaming.`,
+    description: `${rating}${synopsisShort}${suffixText}`,
     alternates: {
       canonical: `https://www.moviehunt.fr/en/films/${params.slug}`,
       languages: {

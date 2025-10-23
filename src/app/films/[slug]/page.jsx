@@ -84,18 +84,27 @@ export async function generateMetadata({ params }) {
   const synopsis = translation?.synopsis || film.synopsis || '';
   const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : '';
   const yearText = releaseYear ? ` (${releaseYear})` : '';
-  const synopsisShort = synopsis ? synopsis.substring(0, 150) + '...' : '';
   
   // Textes selon la locale
   const isEnglish = locale === 'en';
   const ratingLabel = isEnglish ? 'Rating' : 'Note';
   const rating = film.note_sur_10 ? `${ratingLabel}: ${film.note_sur_10}/10. ` : '';
+  
+  // Calculer la longueur maximale pour le synopsis (max 155 caractères total)
+  const suffixText = isEnglish 
+    ? ' Complete review & streaming.' 
+    : ' Critique complète & streaming.';
+  const maxSynopsisLength = 155 - rating.length - suffixText.length;
+  const synopsisShort = synopsis 
+    ? synopsis.substring(0, Math.max(50, maxSynopsisLength)) + '...' 
+    : '';
+  
   const metaTitle = isEnglish 
     ? `${title}${yearText} - Review and Rating | MovieHunt`
     : `${title}${yearText} - Critique et avis | MovieHunt`;
   const metaDescription = isEnglish
-    ? `${rating}${synopsisShort} Discover our complete review, cast and where to watch ${title} streaming.`
-    : `${rating}${synopsisShort} Découvrez notre critique complète, le casting et où regarder ${title} en streaming.`;
+    ? `${rating}${synopsisShort}${suffixText}`
+    : `${rating}${synopsisShort}${suffixText}`;
   
   const imageUrl = film.poster_path 
     ? (film.poster_path.startsWith('/') 
