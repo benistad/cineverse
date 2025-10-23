@@ -380,6 +380,10 @@ export default function Home() {
                 Chez MovieHunt, nous travaillons avec rigueur, authenticité et curiosité. Nous privilégions la découverte, l'émotion et le partage — trois valeurs qui animent toutes nos <strong>idées de films</strong>.
               </p>
               
+              <p>
+                Notre méthode ? Chaque film est visionné intégralement et évalué selon 5 critères précis. Nous refusons toute influence extérieure pour garantir des avis 100% indépendants. <Link href="/comment-nous-travaillons" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">Découvrez notre méthode de travail</Link> et notre engagement envers la qualité.
+              </p>
+              
               <p className="text-lg font-medium text-indigo-900 pt-4">
                 Explorez nos sélections, laissez-vous inspirer par nos recommandations et trouvez dès aujourd'hui le film parfait à voir sur MovieHunt.fr.
               </p>
