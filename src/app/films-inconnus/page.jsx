@@ -18,11 +18,11 @@ export default function HiddenGemsFilms() {
     async function fetchHiddenGems() {
       try {
         setLoading(true);
-        // Récupérer tous les films méconnus (sans limite)
-        const hiddenGems = await getHiddenGems(50); // Limite plus élevée pour avoir tous les films méconnus
+        // Récupérer tous les films inconnus (sans limite)
+        const hiddenGems = await getHiddenGems(50); // Limite plus élevée pour avoir tous les films inconnus
         setFilms(hiddenGems);
       } catch (err) {
-        console.error('Erreur lors de la récupération des films méconnus:', err);
+        console.error('Erreur lors de la récupération des films inconnus:', err);
         setError(err);
       } finally {
         setLoading(false);
@@ -35,9 +35,9 @@ export default function HiddenGemsFilms() {
   // Préparer les chemins d'images critiques pour le préchargement
   const criticalImagePaths = [];
   
-  // Ajouter les images des films méconnus s'ils sont disponibles
+  // Ajouter les images des films inconnus s'ils sont disponibles
   if (films.length > 0) {
-    // Ajouter les 3 premières images des films méconnus
+    // Ajouter les 3 premières images des films inconnus
     films.slice(0, 3).forEach(film => {
       if (film.poster_url) {
         criticalImagePaths.push(film.poster_url);

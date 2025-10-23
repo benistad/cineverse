@@ -38,7 +38,7 @@ export default function FilmsHorreurHalloween2025() {
       },
       {
         "@type": "Question",
-        "name": "Existe-t-il une liste de films d'horreur méconnus à découvrir ?",
+        "name": "Existe-t-il une liste de films d'horreur inconnus à découvrir ?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Oui ! Sur MovieHunt.fr, nous mettons en avant des films moins connus mais fascinants, comme Triangle, Vivarium ou encore Blood Star. Ces choix originaux sont parfaits pour surprendre vos invités le soir d'Halloween."

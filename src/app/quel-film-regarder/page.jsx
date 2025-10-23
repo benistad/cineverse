@@ -19,7 +19,7 @@ export default function QuelFilmRegarder() {
         "name": "Quel film regarder ce soir ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Découvrez notre sélection de pépites méconnues à voir ce soir : Greedy People (2024) pour une comédie noire surprenante, Old Henry (2021) pour un western avec un twist inattendu, Tetris (2023) pour une histoire vraie fascinante, Dom Hemingway (2013) pour une performance d'acteur mémorable, et Irresistible (2020) pour une comédie politique intelligente. Notre liste de films conseillés est mise à jour chaque semaine."
+          "text": "Découvrez notre sélection de pépites inconnues à voir ce soir : Greedy People (2024) pour une comédie noire surprenante, Old Henry (2021) pour un western avec un twist inattendu, Tetris (2023) pour une histoire vraie fascinante, Dom Hemingway (2013) pour une performance d'acteur mémorable, et Irresistible (2020) pour une comédie politique intelligente. Notre liste de films conseillés est mise à jour chaque semaine."
         }
       },
       {
@@ -27,15 +27,15 @@ export default function QuelFilmRegarder() {
         "name": "Comment trouver un bon film à regarder ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour trouver un bon film à regarder, consultez les recommandations de films personnalisées de MovieHunt qui propose des films triés sur le volet selon différentes catégories : films à voir ce soir, idées de films à voir pour une soirée en couple, recommandations de films par genre, ou encore des pépites méconnues notées et analysées par nos experts. Chaque film est accompagné d'une critique sincère et d'une note sur 10."
+          "text": "Pour trouver un bon film à regarder, consultez les recommandations de films personnalisées de MovieHunt qui propose des films triés sur le volet selon différentes catégories : films à voir ce soir, idées de films à voir pour une soirée en couple, recommandations de films par genre, ou encore des pépites inconnues notées et analysées par nos experts. Chaque film est accompagné d'une critique sincère et d'une note sur 10."
         }
       },
       {
         "@type": "Question",
-        "name": "Quels sont les meilleurs films méconnus à voir en 2025 ?",
+        "name": "Quels sont les meilleurs films inconnus à voir en 2025 ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour découvrir des pépites méconnues en 2025, nous recommandons Greedy People pour une comédie noire avec Joseph Gordon-Levitt, Old Henry pour un western surprenant avec Tim Blake Nelson, Tetris pour l'histoire vraie fascinante du jeu vidéo avec Taron Egerton, Dom Hemingway pour une performance explosive de Jude Law, et Irresistible pour une satire politique brillante. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
+          "text": "Pour découvrir des pépites inconnues en 2025, nous recommandons Greedy People pour une comédie noire avec Joseph Gordon-Levitt, Old Henry pour un western surprenant avec Tim Blake Nelson, Tetris pour l'histoire vraie fascinante du jeu vidéo avec Taron Egerton, Dom Hemingway pour une performance explosive de Jude Law, et Irresistible pour une satire politique brillante. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
         }
       },
       {
@@ -43,7 +43,7 @@ export default function QuelFilmRegarder() {
         "name": "Où trouver des idées de films à regarder ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "MovieHunt.fr est votre destination pour trouver des idées de films à regarder. Nous proposons une sélection de films à voir triée sur le volet, avec des recommandations personnalisées selon vos envies : films haletants, drames touchants, comédies rythmées, ou pépites méconnues. Chaque film est noté, analysé et accompagné d'une critique détaillée pour vous aider à décider quoi regarder ce soir."
+          "text": "MovieHunt.fr est votre destination pour trouver des idées de films à regarder. Nous proposons une sélection de films à voir triée sur le volet, avec des recommandations personnalisées selon vos envies : films haletants, drames touchants, comédies rythmées, ou pépites inconnues. Chaque film est noté, analysé et accompagné d'une critique détaillée pour vous aider à décider quoi regarder ce soir."
         }
       },
       {
@@ -51,7 +51,7 @@ export default function QuelFilmRegarder() {
         "name": "Comment MovieHunt choisit ses recommandations de films ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "MovieHunt sélectionne ses recommandations de films grâce à une équipe de passionnés de cinéma qui analyse chaque semaine les sorties et les pépites méconnues. Chaque film à regarder est noté sur 10 avec une critique sincère et personnelle, sans influence des studios ou distributeurs. Nous mettons en avant les films à voir absolument, signalons les films à éviter, et dénichons des pépites exceptionnelles que vous auriez pu manquer."
+          "text": "MovieHunt sélectionne ses recommandations de films grâce à une équipe de passionnés de cinéma qui analyse chaque semaine les sorties et les pépites inconnues. Chaque film à regarder est noté sur 10 avec une critique sincère et personnelle, sans influence des studios ou distributeurs. Nous mettons en avant les films à voir absolument, signalons les films à éviter, et dénichons des pépites exceptionnelles que vous auriez pu manquer."
         }
       }
     ]

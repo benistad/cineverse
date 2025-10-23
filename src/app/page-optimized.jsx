@@ -190,9 +190,9 @@ export default function Home() {
         ) : hiddenGems.length > 0 ? (
           <OptimizedFilmCarousel 
             films={hiddenGems} 
-            title="Films méconnus à voir" 
+            title="Films inconnus à voir" 
             visibleCount={4} 
-            showAllLink="/hidden-gems"
+            showAllLink="/films-inconnus"
             showAllText="Voir tous les films"
             totalCount={hiddenGemsCount}
           />

@@ -109,7 +109,7 @@ export async function getTopRatedFilms(limit = 8, minRating = 6) {
 }
 
 /**
- * Récupère les films méconnus à voir avec leur staff remarquable en une seule requête
+ * Récupère les films inconnus à voir avec leur staff remarquable en une seule requête
  * @param {number} limit - Nombre maximum de films à récupérer
  */
 export async function getHiddenGems(limit = 8) {
@@ -117,7 +117,7 @@ export async function getHiddenGems(limit = 8) {
     try {
       const supabase = getSupabaseClient();
       
-      // Récupérer les films méconnus
+      // Récupérer les films inconnus
       const { data: films, error } = await supabase
         .from('films')
         .select('*')
@@ -148,7 +148,7 @@ export async function getHiddenGems(limit = 8) {
 
       return filmsWithStaff;
     } catch (error) {
-      console.error('Erreur lors de la récupération des films méconnus:', error);
+      console.error('Erreur lors de la récupération des films inconnus:', error);
       return [];
     }
   });
@@ -177,7 +177,7 @@ export async function getTopRatedFilmsCount(minRating = 6) {
 }
 
 /**
- * Récupère le nombre total de films méconnus à voir
+ * Récupère le nombre total de films inconnus à voir
  */
 export async function getHiddenGemsCount() {
   return withCache('getHiddenGemsCount', {}, async () => {
@@ -191,7 +191,7 @@ export async function getHiddenGemsCount() {
       if (error) throw error;
       return count || 0;
     } catch (error) {
-      console.error('Erreur lors du comptage des films méconnus à voir:', error);
+      console.error('Erreur lors du comptage des films inconnus à voir:', error);
       return 0;
     }
   });
