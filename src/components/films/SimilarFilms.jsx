@@ -9,8 +9,9 @@ import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useFilmTranslations } from '@/hooks/useFilmTranslations';
 import { generateFilmSlug } from '@/lib/utils/slugify';
+import { SimilarFilmsTitle } from './FilmSectionTitles';
 
-export default function SimilarFilms({ currentFilm }) {
+export default function SimilarFilms({ currentFilm, filmTitle }) {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslations();
@@ -103,7 +104,7 @@ export default function SimilarFilms({ currentFilm }) {
   if (loading) {
     return (
       <div className="mt-8">
-        <h2 className="text-xl font-bold mb-4">{t('film.similarFilms')}</h2>
+        <SimilarFilmsTitle filmTitle={filmTitle} />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-gray-200 animate-pulse h-64 rounded-lg"></div>
@@ -117,7 +118,7 @@ export default function SimilarFilms({ currentFilm }) {
   
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold mb-4">{t('film.similarFilms')}</h2>
+      <SimilarFilmsTitle filmTitle={filmTitle} />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {similarFilms.map(film => (
           <Link 

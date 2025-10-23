@@ -97,16 +97,17 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
             {/* Contenu traduit du film (synopsis) */}
             <FilmContent film={{
               id: film.id,
+              title: film.title,
               synopsis: film.synopsis,
               why_watch_enabled: false, // Déplacé dans la section critique
               why_watch_content: null
             }} />
             
-            {/* Section Critique (Pourquoi regarder + Ce que nous n'avons pas aimé) */}
+            {/* Section Critique rapide (Pourquoi regarder + Ce que nous n'avons pas aimé) */}
             {(film.why_watch_enabled || film.not_liked_enabled) && (
               <section className="mb-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
-                  Critique de {film.title}
+                  Critique rapide de {film.title}
                 </h2>
                 
                 {/* Pourquoi regarder ce film */}
@@ -145,12 +146,12 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
 
       {/* Équipe technique remarquable */}
       <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
-        <RemarkableStaffTitle />
+        <RemarkableStaffTitle filmTitle={film.title} />
         <RemarkableStaffList filmId={film.id} />
       </section>
 
       {/* Films similaires */}
-      <SimilarFilms currentFilm={film} />
+      <SimilarFilms currentFilm={film} filmTitle={film.title} />
 
       {/* Schema.org JSON-LD */}
       <MovieSchema film={film} />

@@ -10,14 +10,22 @@ export function TrailerSectionTitle() {
   return <h2 className="text-lg sm:text-xl font-semibold mb-2">{t('film.trailer')}</h2>;
 }
 
-export function RemarkableStaffTitle() {
+export function RemarkableStaffTitle({ filmTitle }) {
   const { t } = useTranslations();
-  return <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">{t('film.remarkableStaff')}</h2>;
+  return (
+    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
+      Équipe technique remarquable de {filmTitle || 'ce film'}
+    </h2>
+  );
 }
 
-export function SimilarFilmsTitle() {
+export function SimilarFilmsTitle({ filmTitle }) {
   const { t } = useTranslations();
-  return <h2 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">{t('film.similarFilms')}</h2>;
+  return (
+    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
+      Films similaires à {filmTitle || 'ce film'}
+    </h2>
+  );
 }
 
 export function WhereToWatchTitle() {

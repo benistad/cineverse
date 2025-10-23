@@ -54,9 +54,9 @@ export default function FilmContent({ film: initialFilm }) {
   return (
     <>
       {/* Synopsis */}
-      <section className="mb-4">
-        <h2 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">
-          {t('film.synopsis')}
+      <section className="mb-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
+          Synopsis de {initialFilm?.title || 'ce film'}
         </h2>
         <p className="text-sm sm:text-base text-gray-700">
           {film?.synopsis || t('filmCard.noSynopsis')}
