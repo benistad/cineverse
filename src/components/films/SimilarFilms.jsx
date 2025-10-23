@@ -155,9 +155,9 @@ export default function SimilarFilms({ currentFilm, filmTitle }) {
               <h3 className="font-semibold text-sm md:text-base line-clamp-1">
                 {translations[film.id]?.title || film.title}
               </h3>
-              <div className="flex items-center mt-1">
-                <RatingIcon rating={film.note_sur_10} size={16} />
-                <span className="ml-1 text-sm">
+              <div className="flex items-center mt-2">
+                <RatingIcon rating={film.note_sur_10} size={24} />
+                <span className="ml-2 text-base font-semibold">
                   {film.note_sur_10}/10
                 </span>
               </div>
