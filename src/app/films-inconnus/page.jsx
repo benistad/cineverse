@@ -50,20 +50,36 @@ export default function HiddenGemsFilms() {
       {/* Préchargement des images critiques */}
       <PreloadCriticalImages imagePaths={criticalImagePaths} />
       
-      <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-8">
-        <div className="flex items-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-indigo-800">{t('hiddenGems.title')}</h1>
-          {!loading && !error && films.length > 0 && (
-            <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold">
-              {films.length}
-            </span>
-          )}
-        </div>
+      {/* En-tête avec bouton retour */}
+      <div className="flex items-center justify-end mb-6">
         <Link href="/" className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors group font-medium">
           <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" />
           Retour à l'accueil
         </Link>
       </div>
+
+      {/* Section titre et description */}
+      <div className="mb-12">
+        <div className="flex items-center mb-6">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-900">
+            <strong>Films inconnus</strong> à voir : découvrez les <strong>pépites</strong> cachées du cinéma
+          </h1>
+          {!loading && !error && films.length > 0 && (
+            <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-sm font-semibold flex-shrink-0">
+              {films.length}
+            </span>
+          )}
+        </div>
+        
+        <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-xl p-6 md:p-8 shadow-sm border border-indigo-100">
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+            Découvrez notre sélection de <strong className="text-indigo-800">films inconnus</strong> et de <strong className="text-indigo-800">pépites</strong> du cinéma trop souvent passées sous le radar. Chaque titre a été choisi pour sa qualité, son originalité et l'émotion qu'il procure. Ces <strong className="text-indigo-800">films inconnus à voir</strong> vous feront voyager hors des sentiers battus : drames intenses, thrillers surprenants, comédies décalées ou perles indépendantes. Si vous cherchez un <strong className="text-indigo-800">film inconnu à voir</strong> aujourd'hui, explorez cette liste unique de trésors méconnus qui méritent enfin d'être découverts par les vrais amateurs de cinéma.
+          </p>
+        </div>
+      </div>
+
+      {/* Séparateur */}
+      <div className="border-b border-gray-200 mb-8"></div>
       
       {loading ? (
         <div className="flex justify-center items-center h-64">
