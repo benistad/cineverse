@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
+import { FaFacebook, FaInstagram, FaTumblr } from 'react-icons/fa';
 import { useTranslations } from '@/hooks/useTranslations';
 
 export default function Footer() {
@@ -11,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white py-8 mt-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-lg font-semibold mb-4">MovieHunt</h3>
             <p className="text-gray-400 text-sm">
@@ -84,6 +85,39 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.followUs')}</h3>
+            <div className="flex gap-4">
+              <a 
+                href="https://www.facebook.com/profile.php?id=61575866357932&locale=fr_FR" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Facebook"
+              >
+                <FaFacebook size={24} />
+              </a>
+              <a 
+                href="https://www.instagram.com/moviehuntfr/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={24} />
+              </a>
+              <a 
+                href="https://www.tumblr.com/moviehuntfr" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Tumblr"
+              >
+                <FaTumblr size={24} />
+              </a>
+            </div>
           </div>
         </div>
         
