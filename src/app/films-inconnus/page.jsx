@@ -75,7 +75,7 @@ export default function HiddenGemsFilms() {
       {/* Section titre et description */}
       <div className="mb-12">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-indigo-900 mb-6">
-          <strong>Films inconnus</strong> à voir : <span className="text-orange-600">découvrez les <strong>pépites</strong> cachées du cinéma</span>
+          <strong>Films inconnus</strong> à voir : <span style={{ color: '#FEBE29' }}>découvrez les <strong>pépites</strong> cachées du cinéma</span>
         </h1>
         
         <div className="bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 rounded-xl p-6 md:p-8 shadow-sm border border-indigo-100">
