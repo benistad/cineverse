@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import FilmPageContent from '@/components/films/FilmPageContent';
 
-// Fonction pour récupérer le film côté serveur
-async function getFilm(slug) {
+// Fonction pour récupérer le film avec sa traduction anglaise côté serveur
+async function getFilmWithTranslation(slug) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -19,6 +19,25 @@ async function getFilm(slug) {
     return null;
   }
 
+  // Récupérer la traduction anglaise
+  const { data: translation } = await supabase
+    .from('film_translations')
+    .select('*')
+    .eq('film_id', film.id)
+    .eq('locale', 'en')
+    .single();
+
+  // Si une traduction existe, remplacer le titre et le synopsis
+  if (translation) {
+    return {
+      ...film,
+      title: translation.title || film.title,
+      synopsis: translation.synopsis || film.synopsis,
+      why_watch: translation.why_watch || film.why_watch,
+      originalTitle: film.title, // Garder le titre original pour référence
+    };
+  }
+
   return film;
 }
 
@@ -31,16 +50,16 @@ export default async function EnglishFilmPage({ params: paramsPromise }) {
   // Await params pour Next.js 15
   const params = await paramsPromise;
 
-  // Récupérer le film
-  const film = await getFilm(params.slug);
+  // Récupérer le film avec sa traduction anglaise
+  const film = await getFilmWithTranslation(params.slug);
   
   if (!film) {
     notFound();
   }
   
-  // Afficher le même contenu que la page française
-  // Le contenu sera en anglais car les métadonnées indiquent locale=en
-  return <FilmPageContent film={film} />;
+  // Afficher le contenu avec le titre et synopsis traduits
+  // Le H1 affichera maintenant le titre anglais côté serveur
+  return <FilmPageContent film={film} locale="en" />;
 }
 
 // Générer les métadonnées pour le SEO

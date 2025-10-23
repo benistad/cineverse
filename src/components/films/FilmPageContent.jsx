@@ -17,8 +17,13 @@ import NotLikedSection from '@/components/films/NotLikedSection';
 /**
  * Composant réutilisable pour afficher le contenu d'une page film
  * Utilisé par /films/[slug] et /en/films/[slug]
+ * @param {Object} film - Objet film (peut contenir une traduction)
+ * @param {string} locale - Locale de la page ('fr' ou 'en')
  */
-export default function FilmPageContent({ film }) {
+export default function FilmPageContent({ film, locale = 'fr' }) {
+  // Si locale='en', le titre est déjà traduit côté serveur
+  const isTranslated = locale === 'en';
+
   return (
     <article className="container mx-auto px-6 py-12 space-y-6">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -35,7 +40,7 @@ export default function FilmPageContent({ film }) {
           {/* Informations du film */}
           <div className="md:w-2/3 lg:w-3/4 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-2">
-              <FilmTitle title={film.title} filmId={film.id} />
+              <FilmTitle title={film.title} filmId={film.id} isTranslated={isTranslated} />
               {film.is_hunted_by_moviehunt && (
                 <div className="flex-shrink-0">
                   <Link 
