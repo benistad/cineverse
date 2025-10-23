@@ -2,7 +2,7 @@
  * Métadonnées optimisées pour la page "Films d'horreur pour Halloween 2025"
  */
 export const metadata = {
-  title: 'Films d\'horreur pour Halloween 2025 : Sélection terrifiante | MovieHunt',
+  title: 'Films d\'horreur pour Halloween 2025 : Sélection terrifiante',
   description: 'Découvrez notre sélection de films d\'horreur pour Halloween 2025 : Funny Games US (10/10), Heretic, Destination Finale Bloodlines, et bien d\'autres pépites horrifiques notées et analysées par MovieHunt.',
   keywords: 'films horreur halloween 2025, film halloween, idée film horreur, films terrifiants, sélection halloween, meilleurs films horreur, funny games, heretic, destination finale, films effrayants, film halloween 2025',
   openGraph: {
