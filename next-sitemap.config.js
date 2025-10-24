@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr',
-  generateRobotsTxt: true,
+  generateRobotsTxt: false, // Désactivé - on utilise le fichier statique dans public/
   robotsTxtOptions: {
     policies: [
       {
