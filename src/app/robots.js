@@ -9,8 +9,8 @@ export default function robots() {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        disallow: ['/admin/', '/api/'],
+        allow: ['/api/server-sitemap.xml'], // Autoriser le sitemap dynamique
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel'],
       },
       {
         // Règles spécifiques pour Googlebot-Mobile pour optimiser le référencement mobile
@@ -24,7 +24,10 @@ export default function robots() {
         allow: '/',
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/api/server-sitemap.xml`, // Sitemap dynamique avec tous les films
+    ],
     host: baseUrl,
   };
 }
