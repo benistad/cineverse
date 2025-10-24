@@ -180,3 +180,10 @@ Créer un dashboard pour surveiller :
 - Pages avec erreurs d'indexation
 - Évolution du crawl budget
 - Temps moyen d'indexation des nouveaux films
+
+## Statut du déploiement
+
+**24/10/2025 13:35** : Correction appliquée
+- robots.txt mis à jour pour autoriser /api/server-sitemap.xml
+- Déploiement en cours sur Vercel
+- Attendre 5-10 minutes pour que le robots.txt soit à jour en production
