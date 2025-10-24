@@ -6,7 +6,7 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/api/server-sitemap.xml'],
         disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel'],
       },
     ],
