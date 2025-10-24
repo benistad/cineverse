@@ -38,7 +38,7 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
           </div>
           
           {/* Informations du film */}
-          <div className="md:w-2/3 lg:w-3/4 px-4 md:px-6 pb-4 md:pb-6">
+          <div className="md:w-2/3 lg:w-3/4 px-4 md:px-6 pb-4 md:pb-6 pt-4 md:pt-0">
             <FilmTitle title={film.title} filmId={film.id} isTranslated={isTranslated} />
             
             <div className="flex items-center gap-3 mb-2 mt-2">
