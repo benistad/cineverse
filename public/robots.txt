@@ -11,4 +11,4 @@ Host: https://www.moviehunt.fr
 
 # Sitemaps
 Sitemap: https://www.moviehunt.fr/sitemap.xml
-Sitemap: https://www.moviehunt.fr/server-sitemap.xml
+Sitemap: https://www.moviehunt.fr/api/server-sitemap.xml

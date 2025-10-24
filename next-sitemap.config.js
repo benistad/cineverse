@@ -11,7 +11,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/server-sitemap.xml`,
+      `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/api/server-sitemap.xml`,
     ],
   },
   exclude: [
