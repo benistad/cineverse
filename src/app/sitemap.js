@@ -59,6 +59,12 @@ export default async function sitemap() {
       changeFrequency: 'yearly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/idees-films-pour-ados`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
   ];
   
   try {
