@@ -49,7 +49,8 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       '/comment-nous-travaillons',
       '/quel-film-regarder',
       '/films-horreur-halloween-2025',
-      '/idees-films-pour-ados'
+      '/idees-films-pour-ados',
+      '/teen-movie-ideas'
     ];
     
     // Mapping des URLs FR vers EN pour les pages avec URLs différentes
@@ -64,23 +65,28 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     if (isStaticPage) {
       // Rediriger vers l'URL appropriée
       if (newLocale === 'en') {
-        // Ajouter /en/ si pas déjà présent
+        // Passer en anglais
         if (!pathname.startsWith('/en/')) {
-          // Vérifier si on a un mapping spécifique
+          // On est sur une page FR, on passe en EN
           const mappedPath = urlMapping[currentPath] || currentPath;
+          console.log('🇬🇧 FR→EN:', { currentPath, mappedPath, target: `/en${mappedPath}` });
           window.location.href = `/en${mappedPath}`;
         } else {
+          // Déjà en anglais, recharger
           window.location.reload();
         }
       } else {
-        // Enlever /en/ si présent
+        // Passer en français
         if (pathname.startsWith('/en/')) {
+          // On est sur une page EN, on passe en FR
           // Trouver le mapping inverse si nécessaire
           const reverseMappedPath = Object.keys(urlMapping).find(
             key => urlMapping[key] === currentPath
           ) || currentPath;
+          console.log('🇫🇷 EN→FR:', { currentPath, reverseMappedPath, target: reverseMappedPath });
           window.location.href = reverseMappedPath;
         } else {
+          // Déjà en français, recharger
           window.location.reload();
         }
       }
