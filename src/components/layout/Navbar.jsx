@@ -9,6 +9,7 @@ import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDow
 import SearchBar from '@/components/search/SearchBar';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function Navbar() {
   const isAdmin = pathname?.startsWith('/admin');
   const { user, loading, signOut } = useAuth();
   const { t } = useTranslations();
+  const { locale } = useLanguage();
 
   const handleLogout = async () => {
     await signOut();
@@ -102,7 +104,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDiscoverMenu}
                 className={`flex items-center text-gray-600 hover:text-indigo-700 transition-colors duration-200 text-base font-medium group ${
-                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' ? 'text-indigo-700' : ''
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas' ? 'text-indigo-700' : ''
                 }`}
               >
                 <FiCompass className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -120,11 +122,11 @@ export default function Navbar() {
                       <FiHelpCircle className="w-4 h-4 mr-3" /> {t('nav.whatToWatch')}
                     </Link>
                     <Link 
-                      href="/idees-films-pour-ados" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href={locale === 'en' ? '/en/teen-movie-ideas' : '/idees-films-pour-ados'} 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas') ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
-                      <FiUsers className="w-4 h-4 mr-3" /> Films pour Ados
+                      <FiUsers className="w-4 h-4 mr-3" /> {t('nav.teenMovies')}
                     </Link>
                     <Link 
                       href="/films-horreur-halloween-2025" 
@@ -246,13 +248,13 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href="/idees-films-pour-ados" 
+              href={locale === 'en' ? '/en/teen-movie-ideas' : '/idees-films-pour-ados'} 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''
+                (pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas') ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <FiUsers className="w-5 h-5 mr-3" /> Films pour Ados
+              <FiUsers className="w-5 h-5 mr-3" /> {t('nav.teenMovies')}
             </Link>
             
             <Link 
