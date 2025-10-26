@@ -253,7 +253,7 @@ export default function TeenMovieIdeas() {
           </p>
           <div className="flex flex-wrap gap-4">
             <Link 
-              href="/en"
+              href="/all-films"
               className="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-lg hover:bg-indigo-50 transform hover:scale-105 transition-all duration-300"
             >
               Discover all our films
