@@ -48,8 +48,14 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       '/all-films',
       '/comment-nous-travaillons',
       '/quel-film-regarder',
-      '/films-horreur-halloween-2025'
+      '/films-horreur-halloween-2025',
+      '/idees-films-pour-ados'
     ];
+    
+    // Mapping des URLs FR vers EN pour les pages avec URLs différentes
+    const urlMapping = {
+      '/idees-films-pour-ados': '/teen-movie-ideas'
+    };
     
     // Vérifier si on est sur une page statique
     const currentPath = pathname.replace(/^\/en/, ''); // Enlever /en si présent
@@ -60,14 +66,20 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       if (newLocale === 'en') {
         // Ajouter /en/ si pas déjà présent
         if (!pathname.startsWith('/en/')) {
-          window.location.href = `/en${currentPath}`;
+          // Vérifier si on a un mapping spécifique
+          const mappedPath = urlMapping[currentPath] || currentPath;
+          window.location.href = `/en${mappedPath}`;
         } else {
           window.location.reload();
         }
       } else {
         // Enlever /en/ si présent
         if (pathname.startsWith('/en/')) {
-          window.location.href = currentPath;
+          // Trouver le mapping inverse si nécessaire
+          const reverseMappedPath = Object.keys(urlMapping).find(
+            key => urlMapping[key] === currentPath
+          ) || currentPath;
+          window.location.href = reverseMappedPath;
         } else {
           window.location.reload();
         }
