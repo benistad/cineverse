@@ -297,7 +297,7 @@ export default function Home() {
             films={hiddenGems} 
             title={t('home.hiddenGems')} 
             visibleCount={4} 
-            showAllLink="/films-inconnus"
+            showAllLink={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}
             showAllText={t('home.viewAll')}
             totalCount={hiddenGemsCount}
           />
