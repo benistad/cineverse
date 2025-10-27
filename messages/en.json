@@ -29,7 +29,16 @@
     "viewAll": "View All Films",
     "noFilms": "No films available at the moment.",
     "metaTitle": "MovieHunt: film ideas - What film to watch?",
-    "metaDescription": "Movie Hunt is the site to know what film to watch and discover hidden gems. Film ratings, recommendations, remarkable cast, availability on French streaming platforms and more."
+    "metaDescription": "Movie Hunt is the site to know what film to watch and discover hidden gems. Film ratings, recommendations, remarkable cast, availability on French streaming platforms and more.",
+    "about": {
+      "title": "About MovieHunt.fr",
+      "intro": "Welcome to <strong>MovieHunt.fr</strong>, the reference site for anyone looking for a <strong>film idea</strong> to watch. We explore cinema in all its forms to offer you sincere <strong>film reviews</strong>, detailed <strong>film opinions</strong> and <link1>recommendations</link1> that awaken curiosity and passion for the 7th art.",
+      "mission": "Our mission is simple: to help you find <link2>what film to watch</link2>, whether you're a fan of great classics, contemporary masterpieces or looking for <link3>hidden films</link3> to discover. Every <strong>film to watch</strong> that we highlight is carefully selected for its richness, originality or the emotion it provides.",
+      "criteria": "Every <strong>cinema review</strong> published on MovieHunt.fr is the result of a genuine passion for cinema. We evaluate each work according to five essential criteria: acting, directing, soundtrack, cinematography and screenplay. This approach allows us to offer you an honest, nuanced and inspiring reading.",
+      "values": "At MovieHunt, we work with rigor, authenticity and curiosity. We favor discovery, emotion and sharing — three values that drive all our <strong>film ideas</strong>.",
+      "method": "Our method? Each film is watched in its entirety and evaluated according to 5 precise criteria. We refuse any outside influence to guarantee 100% independent opinions. <link4>Discover our working method</link4> and our commitment to quality.",
+      "conclusion": "Explore our selections, let yourself be inspired by our recommendations and find the perfect film to watch today on MovieHunt.fr."
+    }
   },
   "film": {
     "rating": "Rating",

@@ -358,34 +358,42 @@ export default function Home() {
             <div className="flex items-center mb-6">
               <span className="text-4xl mr-3">🎬</span>
               <h2 className="text-3xl md:text-4xl font-bold text-indigo-900">
-                À propos de MovieHunt.fr
+                {t('home.about.title')}
               </h2>
             </div>
             
             <div className="space-y-6 text-gray-700 leading-relaxed">
-              <p className="text-lg">
-                Bienvenue sur <strong className="text-indigo-800">MovieHunt.fr</strong>, le site de référence pour tous ceux qui recherchent une <strong>idée de film</strong> à regarder.
-                Nous explorons le cinéma sous toutes ses formes pour vous proposer des <strong>critiques de films</strong> sincères, des <strong>avis films</strong> détaillés et des <Link href="/advanced-search?hunted=true" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">recommandations</Link> qui éveillent la curiosité et la passion du 7ᵉ art.
-              </p>
+              <p className="text-lg" dangerouslySetInnerHTML={{
+                __html: t('home.about.intro')
+                  .replace(/<strong>/g, '<strong class="text-indigo-800">')
+                  .replace(/<link1>/g, `<a href="/advanced-search?hunted=true" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<\/link1>/g, '</a>')
+              }} />
               
-              <p>
-                Notre mission est simple : vous aider à trouver <Link href="/quel-film-regarder" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">quel film regarder</Link>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <Link href="/films-inconnus" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">films inconnus</Link> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.
-              </p>
+              <p dangerouslySetInnerHTML={{
+                __html: t('home.about.mission')
+                  .replace(/<link2>/g, `<a href="/quel-film-regarder" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<\/link2>/g, '</a>')
+                  .replace(/<link3>/g, `<a href="${locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<\/link3>/g, '</a>')
+              }} />
               
-              <p>
-                Chaque <strong>critique cinéma</strong> publiée sur MovieHunt.fr est le fruit d'une véritable passion pour le cinéma. Nous évaluons chaque œuvre selon cinq critères essentiels : le jeu d'acteur, la réalisation, la bande son, la photographie et le scénario. Cette approche nous permet de vous offrir une lecture honnête, nuancée et inspirante.
-              </p>
+              <p dangerouslySetInnerHTML={{
+                __html: t('home.about.criteria')
+              }} />
               
-              <p>
-                Chez MovieHunt, nous travaillons avec rigueur, authenticité et curiosité. Nous privilégions la découverte, l'émotion et le partage — trois valeurs qui animent toutes nos <strong>idées de films</strong>.
-              </p>
+              <p dangerouslySetInnerHTML={{
+                __html: t('home.about.values')
+              }} />
               
-              <p>
-                Notre méthode ? Chaque film est visionné intégralement et évalué selon 5 critères précis. Nous refusons toute influence extérieure pour garantir des avis 100% indépendants. <Link href="/comment-nous-travaillons" className="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">Découvrez notre méthode de travail</Link> et notre engagement envers la qualité.
-              </p>
+              <p dangerouslySetInnerHTML={{
+                __html: t('home.about.method')
+                  .replace(/<link4>/g, `<a href="/comment-nous-travaillons" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<\/link4>/g, '</a>')
+              }} />
               
               <p className="text-lg font-medium text-indigo-900 pt-4">
-                Explorez nos sélections, laissez-vous inspirer par nos recommandations et trouvez dès aujourd'hui le film parfait à voir sur MovieHunt.fr.
+                {t('home.about.conclusion')}
               </p>
             </div>
           </div>

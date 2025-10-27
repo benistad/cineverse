@@ -29,7 +29,16 @@
     "viewAll": "Voir tous les films",
     "noFilms": "Aucun film disponible pour le moment.",
     "metaTitle": "MovieHunt : idées de films - Quel film regarder ?",
-    "metaDescription": "Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus."
+    "metaDescription": "Movie Hunt est le site pour savoir quel film regarder et découvrir des perles rares. Notes de films, recommandations, casting remarquable, disponibilité sur les plateformes de streaming françaises et encore plus.",
+    "about": {
+      "title": "À propos de MovieHunt.fr",
+      "intro": "Bienvenue sur <strong>MovieHunt.fr</strong>, le site de référence pour tous ceux qui recherchent une <strong>idée de film</strong> à regarder. Nous explorons le cinéma sous toutes ses formes pour vous proposer des <strong>critiques de films</strong> sincères, des <strong>avis films</strong> détaillés et des <link1>recommandations</link1> qui éveillent la curiosité et la passion du 7ᵉ art.",
+      "mission": "Notre mission est simple : vous aider à trouver <link2>quel film regarder</link2>, que vous soyez amateur de grands classiques, de chefs-d'œuvre contemporains ou en quête de <link3>films inconnus</link3> à découvrir. Chaque <strong>film à voir</strong> que nous mettons en avant est sélectionné avec soin pour sa richesse, son originalité ou l'émotion qu'il procure.",
+      "criteria": "Chaque <strong>critique cinéma</strong> publiée sur MovieHunt.fr est le fruit d'une véritable passion pour le cinéma. Nous évaluons chaque œuvre selon cinq critères essentiels : le jeu d'acteur, la réalisation, la bande son, la photographie et le scénario. Cette approche nous permet de vous offrir une lecture honnête, nuancée et inspirante.",
+      "values": "Chez MovieHunt, nous travaillons avec rigueur, authenticité et curiosité. Nous privilégions la découverte, l'émotion et le partage — trois valeurs qui animent toutes nos <strong>idées de films</strong>.",
+      "method": "Notre méthode ? Chaque film est visionné intégralement et évalué selon 5 critères précis. Nous refusons toute influence extérieure pour garantir des avis 100% indépendants. <link4>Découvrez notre méthode de travail</link4> et notre engagement envers la qualité.",
+      "conclusion": "Explorez nos sélections, laissez-vous inspirer par nos recommandations et trouvez dès aujourd'hui le film parfait à voir sur MovieHunt.fr."
+    }
   },
   "film": {
     "rating": "Note",
