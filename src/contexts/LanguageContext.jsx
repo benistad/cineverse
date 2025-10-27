@@ -6,9 +6,16 @@ import { useRouter, usePathname } from 'next/navigation';
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children, initialLocale = 'fr' }) {
-  // Initialiser avec le cookie si disponible
+  const pathname = usePathname();
+  
+  // Initialiser avec l'URL en priorité, puis le cookie
   const getInitialLocale = () => {
     if (typeof window !== 'undefined') {
+      // Détecter depuis l'URL en premier
+      const isEnglishPath = pathname?.startsWith('/en');
+      if (isEnglishPath) return 'en';
+      
+      // Sinon vérifier le cookie
       const cookieLocale = document.cookie
         .split('; ')
         .find(row => row.startsWith('NEXT_LOCALE='))
@@ -20,30 +27,20 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
 
   const [locale, setLocale] = useState(getInitialLocale);
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     // Détecter la langue depuis l'URL
     const isEnglishPath = pathname?.startsWith('/en');
     const detectedLocale = isEnglishPath ? 'en' : 'fr';
     
-    // Vérifier le cookie
-    const cookieLocale = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('NEXT_LOCALE='))
-      ?.split('=')[1];
-    
-    // Priorité : URL > Cookie > État actuel
-    const finalLocale = detectedLocale || cookieLocale || locale;
-    
-    if (finalLocale !== locale) {
-      setLocale(finalLocale);
+    // Si la langue détectée depuis l'URL est différente du locale actuel, mettre à jour
+    if (detectedLocale !== locale) {
+      console.log('🔄 Updating locale from URL:', { pathname, detectedLocale, currentLocale: locale });
+      setLocale(detectedLocale);
       // Mettre à jour le cookie pour correspondre à l'URL
-      if (detectedLocale) {
-        document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
-      }
+      document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
     }
-  }, [pathname]);
+  }, [pathname, locale]);
 
   const changeLocale = (newLocale) => {
     // Définir le cookie
