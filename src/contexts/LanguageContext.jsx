@@ -23,16 +23,27 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Vérifier à nouveau le cookie au montage
+    // Détecter la langue depuis l'URL
+    const isEnglishPath = pathname?.startsWith('/en');
+    const detectedLocale = isEnglishPath ? 'en' : 'fr';
+    
+    // Vérifier le cookie
     const cookieLocale = document.cookie
       .split('; ')
       .find(row => row.startsWith('NEXT_LOCALE='))
       ?.split('=')[1];
     
-    if (cookieLocale && cookieLocale !== locale) {
-      setLocale(cookieLocale);
+    // Priorité : URL > Cookie > État actuel
+    const finalLocale = detectedLocale || cookieLocale || locale;
+    
+    if (finalLocale !== locale) {
+      setLocale(finalLocale);
+      // Mettre à jour le cookie pour correspondre à l'URL
+      if (detectedLocale) {
+        document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
+      }
     }
-  }, []);
+  }, [pathname]);
 
   const changeLocale = (newLocale) => {
     // Définir le cookie
