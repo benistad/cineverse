@@ -7,9 +7,10 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children, initialLocale = 'fr' }) {
   const pathname = usePathname();
+  const router = useRouter();
   
-  // Initialiser avec l'URL en priorité, puis le cookie
-  const getInitialLocale = () => {
+  // Initialiser avec l'URL en priorité, puis le cookie - une seule fois
+  const [locale, setLocale] = useState(() => {
     if (typeof window !== 'undefined') {
       // Détecter depuis l'URL en premier
       const isEnglishPath = pathname?.startsWith('/en');
@@ -23,27 +24,14 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       return cookieLocale || initialLocale;
     }
     return initialLocale;
-  };
+  });
 
-  const [locale, setLocale] = useState(getInitialLocale);
-  const router = useRouter();
-
+  // Synchroniser le cookie avec le locale actuel au montage
   useEffect(() => {
-    // Détecter la langue depuis l'URL
-    const isEnglishPath = pathname?.startsWith('/en');
-    const detectedLocale = isEnglishPath ? 'en' : 'fr';
-    
-    // Utiliser setLocale avec une fonction pour éviter la dépendance sur locale
-    setLocale((currentLocale) => {
-      if (detectedLocale !== currentLocale) {
-        console.log('🔄 Updating locale from URL:', { pathname, detectedLocale, currentLocale });
-        // Mettre à jour le cookie pour correspondre à l'URL
-        document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
-        return detectedLocale;
-      }
-      return currentLocale;
-    });
-  }, [pathname]);
+    if (typeof window !== 'undefined') {
+      document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    }
+  }, []);
 
   const changeLocale = (newLocale) => {
     // Définir le cookie
