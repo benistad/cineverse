@@ -9,6 +9,10 @@ export const metadata = {
     description: 'Découvrez notre sélection de films inconnus qui méritent votre attention. Des perles rares du cinéma injustement ignorées mais qui valent le détour.',
   },
   alternates: {
-    canonical: '/films-inconnus',
+    canonical: 'https://www.moviehunt.fr/films-inconnus',
+    languages: {
+      'fr': 'https://www.moviehunt.fr/films-inconnus',
+      'en': 'https://www.moviehunt.fr/en/hidden-gems',
+    },
   },
 };

@@ -44,6 +44,7 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       '/contact',
       '/huntedbymoviehunt',
       '/films-inconnus',
+      '/hidden-gems',
       '/top-rated',
       '/all-films',
       '/comment-nous-travaillons',
@@ -55,7 +56,8 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     
     // Mapping des URLs FR vers EN pour les pages avec URLs différentes
     const urlMapping = {
-      '/idees-films-pour-ados': '/teen-movie-ideas'
+      '/idees-films-pour-ados': '/teen-movie-ideas',
+      '/films-inconnus': '/hidden-gems'
     };
     
     // Vérifier si on est sur une page statique
