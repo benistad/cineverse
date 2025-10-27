@@ -33,14 +33,17 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     const isEnglishPath = pathname?.startsWith('/en');
     const detectedLocale = isEnglishPath ? 'en' : 'fr';
     
-    // Si la langue détectée depuis l'URL est différente du locale actuel, mettre à jour
-    if (detectedLocale !== locale) {
-      console.log('🔄 Updating locale from URL:', { pathname, detectedLocale, currentLocale: locale });
-      setLocale(detectedLocale);
-      // Mettre à jour le cookie pour correspondre à l'URL
-      document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
-    }
-  }, [pathname, locale]);
+    // Utiliser setLocale avec une fonction pour éviter la dépendance sur locale
+    setLocale((currentLocale) => {
+      if (detectedLocale !== currentLocale) {
+        console.log('🔄 Updating locale from URL:', { pathname, detectedLocale, currentLocale });
+        // Mettre à jour le cookie pour correspondre à l'URL
+        document.cookie = `NEXT_LOCALE=${detectedLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
+        return detectedLocale;
+      }
+      return currentLocale;
+    });
+  }, [pathname]);
 
   const changeLocale = (newLocale) => {
     // Définir le cookie
