@@ -366,13 +366,13 @@ export default function Home() {
               <p className="text-lg" dangerouslySetInnerHTML={{
                 __html: t('home.about.intro')
                   .replace(/<strong>/g, '<strong class="text-indigo-800">')
-                  .replace(/<link1>/g, `<a href="/advanced-search?hunted=true" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link1>/g, `<a href="${locale === 'en' ? '/en/advanced-search?hunted=true' : '/advanced-search?hunted=true'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
                   .replace(/<\/link1>/g, '</a>')
               }} />
               
               <p dangerouslySetInnerHTML={{
                 __html: t('home.about.mission')
-                  .replace(/<link2>/g, `<a href="/quel-film-regarder" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link2>/g, `<a href="${locale === 'en' ? '/en/quel-film-regarder' : '/quel-film-regarder'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
                   .replace(/<\/link2>/g, '</a>')
                   .replace(/<link3>/g, `<a href="${locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
                   .replace(/<\/link3>/g, '</a>')
@@ -388,7 +388,7 @@ export default function Home() {
               
               <p dangerouslySetInnerHTML={{
                 __html: t('home.about.method')
-                  .replace(/<link4>/g, `<a href="/comment-nous-travaillons" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link4>/g, `<a href="${locale === 'en' ? '/en/comment-nous-travaillons' : '/comment-nous-travaillons'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
                   .replace(/<\/link4>/g, '</a>')
               }} />
               
