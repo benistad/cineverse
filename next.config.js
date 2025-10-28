@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+
+// Analyseur de bundle (activé avec ANALYZE=true npm run build)
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig = {
   // Ne pas utiliser 'output: export' pour permettre le rendu côté serveur
   
@@ -125,4 +131,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
