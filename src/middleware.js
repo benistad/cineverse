@@ -54,25 +54,17 @@ export async function middleware(request) {
   
   // Gestion de la langue pour toutes les routes (sauf admin et API)
   if (!pathname.startsWith('/admin') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
-    // Vérifier si l'URL commence par /en/
-    const pathnameHasLocale = pathname.startsWith('/en/');
-    
+    // Vérifier si l'URL est en anglais (/en ou /en/*)
+    const pathnameHasLocale = pathname === '/en' || pathname.startsWith('/en/');
+
     if (pathnameHasLocale) {
-      // URL avec /en/ : extraire le chemin sans le préfixe de langue
-      const pathnameWithoutLocale = pathname.replace(/^\/en/, '') || '/';
-      
-      // Vérifier si c'est une page statique
-      const isStaticPage = staticPages.some(page => pathnameWithoutLocale === page || pathnameWithoutLocale.startsWith(page + '/'));
-      
-      if (isStaticPage) {
-        // Rewrite vers la page sans préfixe mais avec le cookie de langue
-        const response = NextResponse.rewrite(new URL(pathnameWithoutLocale, request.url));
-        response.cookies.set('NEXT_LOCALE', 'en', {
-          path: '/',
-          maxAge: 60 * 60 * 24 * 365, // 1 an
-        });
-        return response;
-      }
+      // Ne pas réécrire les routes anglaises, laisser Next router servir /en/*
+      const response = NextResponse.next();
+      response.cookies.set('NEXT_LOCALE', 'en', {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365, // 1 an
+      });
+      return response;
     } else {
       // URL sans préfixe de langue
       const locale = getLocale(request);
