@@ -60,6 +60,12 @@ export default async function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/en/what-movie-to-watch`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/films-horreur-halloween-2025`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
@@ -114,13 +120,13 @@ export default async function sitemap() {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/en/comment-nous-travaillons`,
+      url: `${baseUrl}/en/how-we-work`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/en/quel-film-regarder`,
+      url: `${baseUrl}/en/what-movie-to-watch`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.9,

@@ -22,7 +22,9 @@ const staticPages = [
 const urlMapping = {
   '/films-inconnus': '/hidden-gems',
   '/idees-films-pour-ados': '/teen-movie-ideas',
-  '/films-horreur-halloween-2025': '/halloween-horror-movies-2025'
+  '/films-horreur-halloween-2025': '/halloween-horror-movies-2025',
+  '/quel-film-regarder': '/what-movie-to-watch',
+  '/comment-nous-travaillons': '/how-we-work'
 };
 
 export default function HreflangTags() {

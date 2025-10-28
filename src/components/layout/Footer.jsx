@@ -44,7 +44,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white flex items-center">
+                <Link href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} className="text-gray-400 hover:text-white flex items-center">
                   <FiHelpCircle className="mr-2" /> {t('footer.whatToWatch')}
                 </Link>
               </li>
@@ -70,12 +70,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white">
+                <Link href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} className="text-gray-400 hover:text-white">
                   {t('footer.recommendations')}
                 </Link>
               </li>
               <li>
-                <Link href="/comment-nous-travaillons" className="text-gray-400 hover:text-white flex items-center">
+                <Link href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} className="text-gray-400 hover:text-white flex items-center">
                   <FiInfo className="mr-2" /> {t('footer.howWeWork')}
                 </Link>
               </li>

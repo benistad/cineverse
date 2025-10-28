@@ -309,7 +309,7 @@ export default function FilmsHorreurHalloween2025() {
                 {t('halloween.whatToWatchText')}
               </p>
               <Link 
-                href="/quel-film-regarder" 
+                href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
                 className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors"
               >
                 🎬 {t('halloween.whatToWatchLink')}

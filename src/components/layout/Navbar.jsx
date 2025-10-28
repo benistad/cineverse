@@ -115,8 +115,8 @@ export default function Navbar() {
                 <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
                   <div className="py-2" role="menu" aria-orientation="vertical">
                     <Link 
-                      href={locale === 'en' ? '/en/quel-film-regarder' : '/quel-film-regarder'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/quel-film-regarder' || pathname === '/en/quel-film-regarder') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/quel-film-regarder' || pathname === '/en/what-movie-to-watch') ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiHelpCircle className="w-4 h-4 mr-3" /> {t('nav.whatToWatch')}
@@ -150,8 +150,8 @@ export default function Navbar() {
                       <FiAward className="w-4 h-4 mr-3" /> {t('nav.hunted')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/comment-nous-travaillons' : '/comment-nous-travaillons'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/comment-nous-travaillons' || pathname === '/en/comment-nous-travaillons') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/comment-nous-travaillons' || pathname === '/en/how-we-work') ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiInfo className="w-4 h-4 mr-3" /> {t('nav.howWeWork')}
@@ -245,9 +245,9 @@ export default function Navbar() {
             <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">{t('nav.discover')}</div>
             
             <Link 
-              href={locale === 'en' ? '/en/quel-film-regarder' : '/quel-film-regarder'} 
+              href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/quel-film-regarder' || pathname === '/en/quel-film-regarder') ? 'bg-indigo-50 text-indigo-700' : ''
+                (pathname === '/quel-film-regarder' || pathname === '/en/what-movie-to-watch') ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -295,9 +295,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/comment-nous-travaillons' : '/comment-nous-travaillons'} 
+              href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/comment-nous-travaillons' || pathname === '/en/comment-nous-travaillons') ? 'bg-indigo-50 text-indigo-700' : ''
+                (pathname === '/comment-nous-travaillons' || pathname === '/en/how-we-work') ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >

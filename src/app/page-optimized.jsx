@@ -130,7 +130,7 @@ export default function Home() {
         </div>
         <div className="mt-3 mb-2">
           <Link 
-            href="/quel-film-regarder" 
+            href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
             className="inline-flex items-center px-5 py-2 rounded-md text-white text-sm font-medium transition-all hover:bg-blue-700"
             style={{ backgroundColor: '#4A68D9' }}
           >

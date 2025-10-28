@@ -47,7 +47,9 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
       '/top-rated',
       '/all-films',
       '/comment-nous-travaillons',
+      '/how-we-work',
       '/quel-film-regarder',
+      '/what-movie-to-watch',
       '/films-horreur-halloween-2025',
       '/halloween-horror-movies-2025',
       '/idees-films-pour-ados',
@@ -58,7 +60,9 @@ export function LanguageProvider({ children, initialLocale = 'fr' }) {
     const urlMapping = {
       '/idees-films-pour-ados': '/teen-movie-ideas',
       '/films-inconnus': '/hidden-gems',
-      '/films-horreur-halloween-2025': '/halloween-horror-movies-2025'
+      '/films-horreur-halloween-2025': '/halloween-horror-movies-2025',
+      '/quel-film-regarder': '/what-movie-to-watch',
+      '/comment-nous-travaillons': '/how-we-work'
     };
     
     // Vérifier si on est sur une page statique
