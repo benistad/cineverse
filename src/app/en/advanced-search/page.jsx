@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import FilmCard from '@/components/films/FilmCard';
 import { FiFilter, FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
+import { getTMDBData } from '@/lib/tmdb/api';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -204,8 +205,30 @@ function AdvancedSearchEn() {
         });
       }
 
-      setFilms(filteredData);
-      setTotalCount(filteredData.length);
+      // Enrich films with TMDB data in English
+      const enrichedFilms = await Promise.all(
+        filteredData.map(async (film) => {
+          if (film.tmdb_id) {
+            try {
+              const tmdbData = await getTMDBData(film.tmdb_id, 'en-US');
+              if (tmdbData) {
+                return {
+                  ...film,
+                  title: tmdbData.title || tmdbData.original_title || film.title,
+                  synopsis: tmdbData.overview || film.synopsis,
+                  genres: tmdbData.genres ? tmdbData.genres.map(g => g.name).join(', ') : film.genres,
+                };
+              }
+            } catch (err) {
+              console.error(`Error enriching film ${film.id}:`, err);
+            }
+          }
+          return film;
+        })
+      );
+
+      setFilms(enrichedFilms);
+      setTotalCount(enrichedFilms.length);
     } catch (e) {
       console.error('Error while searching films:', e);
       setFilms([]);
