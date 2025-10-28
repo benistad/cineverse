@@ -7,9 +7,11 @@ import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function TopRatedFilms() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,8 +20,8 @@ export default function TopRatedFilms() {
     async function fetchTopRatedFilms() {
       try {
         setLoading(true);
-        // Récupérer tous les films les mieux notés (sans limite)
-        const topRated = await getTopRatedFilms(50); // Limite plus élevée pour avoir tous les films bien notés
+        // Récupérer tous les films les mieux notés avec la langue appropriée
+        const topRated = await getTopRatedFilms(50, 6, locale); // Passer le locale
         setFilms(topRated);
       } catch (err) {
         console.error('Erreur lors de la récupération des films les mieux notés:', err);
@@ -30,7 +32,7 @@ export default function TopRatedFilms() {
     }
 
     fetchTopRatedFilms();
-  }, []);
+  }, [locale]);
 
   // Préparer les chemins d'images critiques pour le préchargement
   const criticalImagePaths = [];

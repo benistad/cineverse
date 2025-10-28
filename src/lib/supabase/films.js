@@ -12,6 +12,42 @@ const getSupabaseClient = () => {
   );
 };
 
+const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZTFmYzFkODkzNTExZjgwYTBjNmI0YzRkZTE2MWM1MSIsIm5iZiI6MTc0NjUxNTA1NC4yODE5OTk4LCJzdWIiOiI2ODE5YjQ2ZTA5OWE2ZTNmZjk0NDNkN2YiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.Hj-9KXl-h5-7CtFhFSC6V4NJE__c1ozx5OnrETtCS9c';
+
+/**
+ * Enrichit un film avec les données TMDB en anglais si disponible
+ * @param {Object} film - Le film à enrichir
+ * @returns {Object} - Le film enrichi avec titre et synopsis en anglais
+ */
+async function enrichFilmWithTMDB(film) {
+  if (!film.tmdb_id) return film;
+
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${film.tmdb_id}?language=en-US`,
+      {
+        headers: {
+          'Authorization': `Bearer ${TMDB_API_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) return film;
+
+    const data = await response.json();
+    
+    return {
+      ...film,
+      title: data.original_title || data.title || film.title,
+      synopsis: data.overview || film.synopsis,
+    };
+  } catch (error) {
+    console.error(`Error fetching TMDB data for film ${film.id}:`, error);
+    return film;
+  }
+}
+
 /**
  * Récupère les films récemment notés avec leur staff remarquable
  * @param {number} limit - Nombre maximum de films à récupérer
@@ -61,8 +97,9 @@ export async function getRecentlyRatedFilms(limit = 8) {
  * Récupère les films les mieux notés avec leur staff remarquable
  * @param {number} limit - Nombre maximum de films à récupérer
  * @param {number} minRating - Note minimale stricte pour inclure un film (défaut: 6)
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  */
-export async function getTopRatedFilms(limit = 8, minRating = 6) {
+export async function getTopRatedFilms(limit = 8, minRating = 6, locale = 'fr') {
   try {
     const supabase = getSupabaseClient();
     // Récupérer les films avec une note strictement supérieure à minRating, triés par note (de la plus haute à la plus basse)
@@ -76,7 +113,7 @@ export async function getTopRatedFilms(limit = 8, minRating = 6) {
     if (error) throw error;
     if (!films) return [];
 
-    // Pour chaque film, récupérer son staff remarquable
+    // Pour chaque film, récupérer son staff remarquable et enrichir avec TMDB si en anglais
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
         const supabase = getSupabaseClient();
@@ -87,13 +124,19 @@ export async function getTopRatedFilms(limit = 8, minRating = 6) {
 
         if (staffError) {
           console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
-          return { ...film, remarkable_staff: [] };
         }
 
-        return {
+        let enrichedFilm = {
           ...film,
           remarkable_staff: staff || [],
         };
+
+        // Si la langue est anglaise, enrichir avec les données TMDB
+        if (locale === 'en') {
+          enrichedFilm = await enrichFilmWithTMDB(enrichedFilm);
+        }
+
+        return enrichedFilm;
       })
     );
 
