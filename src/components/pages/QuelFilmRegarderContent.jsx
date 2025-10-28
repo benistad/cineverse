@@ -127,6 +127,8 @@ export default function QuelFilmRegarder() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/qkmFPxiawqjGhxuC3HvN9sVuJbD.jpg" 
                       alt="Affiche du film Greedy People" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="eager"
                       onError={(e) => {
@@ -165,6 +167,8 @@ export default function QuelFilmRegarder() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/eE1SL0QoDsvAMqQly56IkRtlN1W.jpg" 
                       alt="Affiche du film Old Henry" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
@@ -203,6 +207,8 @@ export default function QuelFilmRegarder() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/obdw3SyT4TnCQIWHndOX7NQsdpj.jpg" 
                       alt="Affiche du film Tetris" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
@@ -241,6 +247,8 @@ export default function QuelFilmRegarder() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/QQqo4TybGj5WpJvqVdkpJdoqWk.jpg" 
                       alt="Affiche du film Dom Hemingway" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {
@@ -279,6 +287,8 @@ export default function QuelFilmRegarder() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/vhN1GXEQFnmypQ6tqJfZS5DuIJh.jpg" 
                       alt="Affiche du film Irresistible" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                       onError={(e) => {

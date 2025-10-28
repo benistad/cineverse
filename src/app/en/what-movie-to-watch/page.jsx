@@ -86,6 +86,8 @@ export default function WhatMovieToWatch() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/qkmFPxiawqjGhxuC3HvN9sVuJbD.jpg" 
                       alt="Greedy People movie poster" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="eager"
                     />
@@ -117,6 +119,8 @@ export default function WhatMovieToWatch() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/eE1SL0QoDsvAMqQly56IkRtlN1W.jpg" 
                       alt="Old Henry movie poster" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -148,6 +152,8 @@ export default function WhatMovieToWatch() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/4F2QwcIxJWyEOkNhpNFoMT5HDXT.jpg" 
                       alt="Tetris movie poster" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -179,6 +185,8 @@ export default function WhatMovieToWatch() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/6W6Kw3FLSfQqvYjvUlmQQGgCdNV.jpg" 
                       alt="Dom Hemingway movie poster" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -210,6 +218,8 @@ export default function WhatMovieToWatch() {
                     <img 
                       src="https://image.tmdb.org/t/p/w342/4P3RbsnULvZ3kfpounUEkJualSl.jpg" 
                       alt="Irresistible movie poster" 
+                      width="342"
+                      height="513"
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
                     />
