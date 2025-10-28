@@ -83,11 +83,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr" suppressHydrationWarning>
       <body className={`${poppins.variable} font-sans antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100`}>
-        <LocaleDetector />
-        <HreflangTags />
-        <CanonicalTag />
-        <HtmlLangAttribute />
-        <ClientLayout>{children}</ClientLayout>
+        <ClientLayout>
+          <LocaleDetector />
+          <HreflangTags />
+          <CanonicalTag />
+          <HtmlLangAttribute />
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );
