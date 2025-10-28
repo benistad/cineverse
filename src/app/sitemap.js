@@ -30,6 +30,12 @@ export default async function sitemap() {
       priority: 0.7,
     },
     {
+      url: `${baseUrl}/en/advanced-search`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/all-films`,
       lastModified: new Date(),
       changeFrequency: 'daily',
@@ -76,6 +82,48 @@ export default async function sitemap() {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/en/top-rated`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/all-films`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/en/huntedbymoviehunt`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/comment-nous-travaillons`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/en/quel-film-regarder`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/en/films-horreur-halloween-2025`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.9,
     },
   ];
   
