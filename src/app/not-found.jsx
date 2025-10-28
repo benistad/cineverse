@@ -1,7 +1,14 @@
-'use client';
-
 import Link from 'next/link';
 import { FiHome, FiSearch } from 'react-icons/fi';
+
+export const metadata = {
+  title: 'Page non trouvée | MovieHunt',
+  description: 'Désolé, la page que vous recherchez n\'existe pas ou a été déplacée.',
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function NotFound() {
   return (
@@ -31,12 +38,3 @@ export default function NotFound() {
     </div>
   );
 }
-
-export const metadata = {
-  title: 'Page non trouvée | MovieHunt',
-  description: 'Désolé, la page que vous recherchez n\'existe pas ou a été déplacée.',
-  robots: {
-    index: false,
-    follow: true,
-  },
-};
