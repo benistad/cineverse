@@ -90,3 +90,4 @@ L'application peut être facilement déployée sur Vercel :
 npm run build
 vercel deploy
 ```
+# Force rebuild Tue Oct 28 23:46:49 CET 2025
