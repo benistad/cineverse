@@ -16,6 +16,8 @@ export function useFilmTranslations(films) {
 
   useEffect(() => {
     async function loadTranslations() {
+      console.log('🌍 useFilmTranslations - locale:', locale, 'films count:', films?.length);
+      
       if (locale !== 'en' || !films || films.length === 0) {
         setTranslations({});
         return;
@@ -36,6 +38,8 @@ export function useFilmTranslations(films) {
           return;
         }
 
+        console.log('📡 Loading translations for', filmIds.length, 'films');
+
         // Charger toutes les traductions en une seule requête
         const { data, error } = await supabase
           .from('film_translations')
@@ -48,6 +52,8 @@ export function useFilmTranslations(films) {
           setTranslations({});
           return;
         }
+
+        console.log('✅ Loaded', data?.length || 0, 'translations');
 
         // Créer un map pour un accès rapide
         const translationsMap = {};
