@@ -63,7 +63,7 @@ export default function TopRatedFilms() {
         </div>
         <Link href="/" className="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors group font-medium">
           <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" />
-          Retour à l'accueil
+          {t('common.backToHome')}
         </Link>
       </div>
       
