@@ -279,7 +279,7 @@ export default function Home() {
             films={topRatedFilms} 
             title={t('home.topRated')} 
             visibleCount={4} 
-            showAllLink="/top-rated"
+            showAllLink={locale === 'en' ? '/en/top-rated' : '/top-rated'}
             showAllText={t('home.viewAll')}
             totalCount={topRatedFilmsCount}
           />
@@ -314,7 +314,7 @@ export default function Home() {
             </span>
           </div>
           <Link 
-            href="/all-films" 
+            href={locale === 'en' ? '/en/all-films' : '/all-films'} 
             className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group text-sm sm:text-base"
           >
             {t('home.viewAll')}
