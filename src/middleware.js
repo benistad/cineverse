@@ -35,23 +35,6 @@ export async function middleware(request) {
   const url = new URL(request.url);
   const pathname = url.pathname;
   
-  // Liste des pages statiques à gérer avec i18n
-  const staticPages = [
-    '/contact',
-    '/huntedbymoviehunt',
-    '/films-inconnus',
-    '/top-rated',
-    '/all-films',
-    '/comment-nous-travaillons',
-    '/how-we-work',
-    '/quel-film-regarder',
-    '/what-movie-to-watch',
-    '/films-horreur-halloween-2025',
-    '/halloween-horror-movies-2025',
-    '/idees-films-pour-ados',
-    '/teen-movie-ideas'
-  ];
-  
   // Gestion de la langue pour toutes les routes (sauf admin et API)
   if (!pathname.startsWith('/admin') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
     // Vérifier si l'URL est en anglais (/en ou /en/*)
