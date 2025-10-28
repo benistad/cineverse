@@ -27,19 +27,7 @@ function AdvancedSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
-  // Définir les métadonnées SEO
-  useEffect(() => {
-    document.title = 'Recherche avancée de films | MovieHunt';
-    
-    // Mettre à jour la meta description
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.name = 'description';
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.content = 'Recherchez des films par genre, note, année de sortie et découvrez les films Hunted by MovieHunt. Trouvez facilement le film parfait selon vos critères.';
-  }, []);
+  // SEO géré côté serveur via metadata dans layout.jsx (pas de mutation du head côté client)
   
   // État pour les filtres
   const [selectedGenres, setSelectedGenres] = useState([]);
