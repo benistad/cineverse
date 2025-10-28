@@ -76,6 +76,9 @@ export const metadata = {
   },
 };
 
+// Forcer le dynamic rendering pour toutes les pages par défaut
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="fr" suppressHydrationWarning>

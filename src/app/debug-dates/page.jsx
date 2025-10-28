@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase/client';
 
+// Forcer le dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function DebugDatesPage() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
