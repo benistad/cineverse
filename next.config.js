@@ -114,6 +114,13 @@ const nextConfig = {
       { source: '/films/mystre-venise', destination: '/films/mystere-a-venise', permanent: true },
       { source: '/films/pre-stu-un-hros-pas-comme-les-autres', destination: '/films/pere-stu-un-heros-pas-comme-les-autres', permanent: true },
       { source: '/films/wish-asha-et-la-bonne-toile', destination: '/films/wish-asha-et-la-bonne-etoile', permanent: true },
+      
+      // Redirections des anciennes URLs anglaises avec slugs français vers URLs anglaises correctes
+      { source: '/en/comment-nous-travaillons', destination: '/en/how-we-work', permanent: true },
+      { source: '/en/quel-film-regarder', destination: '/en/what-movie-to-watch', permanent: true },
+      { source: '/en/films-horreur-halloween-2025', destination: '/en/halloween-horror-movies-2025', permanent: true },
+      { source: '/en/films-inconnus', destination: '/en/hidden-gems', permanent: true },
+      { source: '/en/idees-films-pour-ados', destination: '/en/teen-movie-ideas', permanent: true },
     ];
   },
 };
