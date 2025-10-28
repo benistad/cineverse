@@ -17,8 +17,10 @@ import FilmGrid from '@/components/films/FilmGrid';
 import Pagination from '@/components/ui/Pagination';
 // CHANGEMENT: Utiliser le carrousel optimisé pour le LCP
 import OptimizedFeaturedCarousel from '@/components/home/OptimizedFeaturedCarousel';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Home() {
+  const { locale } = useLanguage();
   const [recentFilms, setRecentFilms] = useState([]);
   const [topRatedFilms, setTopRatedFilms] = useState([]);
   const [hiddenGems, setHiddenGems] = useState([]);

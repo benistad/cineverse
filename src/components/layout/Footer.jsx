@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
 import { FaFacebook, FaInstagram, FaTumblr } from 'react-icons/fa';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Footer() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (

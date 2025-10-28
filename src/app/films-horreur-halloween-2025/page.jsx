@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { FiMoon, FiFilm, FiAward } from 'react-icons/fi';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function FilmsHorreurHalloween2025() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
   const jsonLd = {
