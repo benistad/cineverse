@@ -76,7 +76,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
     return (
       <section className="mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
-          Bande-annonce de {film?.title || 'ce film'}
+          {t('film.trailerOf')} {film?.title || t('filmCard.noTitle')}
         </h2>
         <p className="text-gray-500 italic">Recherche d'une bande-annonce...</p>
       </section>
@@ -90,7 +90,7 @@ export default function FilmTrailer({ film, initialTrailerKey }) {
   return (
     <section className="mb-6">
       <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
-        Bande-annonce de {film?.title || 'ce film'}
+        {t('film.trailerOf')} {film?.title || t('filmCard.noTitle')}
       </h2>
       <div className="relative pb-[56.25%] h-0 overflow-hidden max-w-full rounded-lg shadow-md">
         <YouTube 
