@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import SafeImage from '@/components/ui/SafeImage';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function QuelFilmRegarder() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
   const jsonLd = {
