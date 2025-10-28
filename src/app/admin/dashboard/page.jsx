@@ -6,6 +6,9 @@ import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
 import { FiPlus, FiSearch, FiRefreshCw, FiDatabase, FiGlobe } from 'react-icons/fi';
 
+// Forcer le dynamic rendering pour éviter le pre-rendering
+export const dynamic = 'force-dynamic';
+
 export default function DashboardPage() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
