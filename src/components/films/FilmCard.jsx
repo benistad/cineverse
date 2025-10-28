@@ -9,6 +9,7 @@ import { FiEdit, FiInstagram } from 'react-icons/fi';
 import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Fonction utilitaire pour tronquer le texte
 const truncateText = (text, maxLength) => {
@@ -165,6 +166,7 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
 
 export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false, translation = null }) {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   
   // Utiliser le titre traduit si disponible
   const displayTitle = translation?.title || film.title;
@@ -230,7 +232,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link 
-        href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} 
+        href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : (locale === 'en' ? `/en/films/${film.slug || film.id}` : `/films/${film.slug || film.id}`)} 
         className="flex flex-col h-full"
         title={`Voir la page de ${displayTitle}`}
         aria-label={`Voir la page du film ${displayTitle}`}
