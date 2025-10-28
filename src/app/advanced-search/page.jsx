@@ -8,6 +8,9 @@ import { supabase } from '@/lib/supabase/client';
 import FilmCard from '@/components/films/FilmCard';
 import { FiFilter, FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
 
+// Forcer le dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // Liste des genres couramment utilisés dans les films
 const COMMON_GENRES = [
   'Action', 'Aventure', 'Animation', 'Comédie', 'Crime', 'Documentaire', 

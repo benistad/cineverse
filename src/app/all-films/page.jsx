@@ -9,6 +9,9 @@ import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+// Forcer le dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default function AllFilmsPage() {
   const { t } = useTranslations();
   const { locale } = useLanguage();
