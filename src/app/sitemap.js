@@ -66,6 +66,12 @@ export default async function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/en/halloween-horror-movies-2025`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/idees-films-pour-ados`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -115,12 +121,6 @@ export default async function sitemap() {
     },
     {
       url: `${baseUrl}/en/quel-film-regarder`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/en/films-horreur-halloween-2025`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.9,

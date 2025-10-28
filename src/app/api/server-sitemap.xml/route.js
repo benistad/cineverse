@@ -112,6 +112,12 @@ export async function GET() {
         changefreq: 'monthly',
         priority: 0.7,
       },
+      {
+        loc: `${baseUrl}/en/halloween-horror-movies-2025`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'monthly',
+        priority: 0.7,
+      },
     ];
 
     // Combiner toutes les entrées

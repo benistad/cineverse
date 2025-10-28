@@ -136,8 +136,8 @@ export default function Navbar() {
                       <FiUsers className="w-4 h-4 mr-3" /> {t('nav.teenMovies')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/films-horreur-halloween-2025' : '/films-horreur-halloween-2025'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/films-horreur-halloween-2025' || pathname === '/en/films-horreur-halloween-2025') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/films-horreur-halloween-2025' || pathname === '/en/halloween-horror-movies-2025') ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiMoon className="w-4 h-4 mr-3" /> {t('nav.halloween')}
@@ -275,9 +275,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/films-horreur-halloween-2025' : '/films-horreur-halloween-2025'} 
+              href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/films-horreur-halloween-2025' || pathname === '/en/films-horreur-halloween-2025') ? 'bg-indigo-50 text-indigo-700' : ''
+                (pathname === '/films-horreur-halloween-2025' || pathname === '/en/halloween-horror-movies-2025') ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >

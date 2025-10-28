@@ -21,7 +21,8 @@ const staticPages = [
 // Mapping des URLs françaises vers anglaises (si différentes)
 const urlMapping = {
   '/films-inconnus': '/hidden-gems',
-  '/idees-films-pour-ados': '/teen-movie-ideas'
+  '/idees-films-pour-ados': '/teen-movie-ideas',
+  '/films-horreur-halloween-2025': '/halloween-horror-movies-2025'
 };
 
 export default function HreflangTags() {

@@ -44,7 +44,10 @@ export async function middleware(request) {
     '/all-films',
     '/comment-nous-travaillons',
     '/quel-film-regarder',
-    '/films-horreur-halloween-2025'
+    '/films-horreur-halloween-2025',
+    '/halloween-horror-movies-2025',
+    '/idees-films-pour-ados',
+    '/teen-movie-ideas'
   ];
   
   // Gestion de la langue pour toutes les routes (sauf admin et API)

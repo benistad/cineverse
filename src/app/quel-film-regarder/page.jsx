@@ -100,7 +100,7 @@ export default function QuelFilmRegarder() {
               <p className="text-gray-800 mb-3">
                 {t('whatToWatch.halloweenText')}
               </p>
-              <Link href="/films-horreur-halloween-2025" className="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold">
+              <Link href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} className="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold">
                 {t('whatToWatch.halloweenLink')}
               </Link>
             </div>

@@ -119,6 +119,11 @@ useEffect(() => {
   {t('nav.myPage')}
 </Link>
 
+// ✅ BON - URLs différentes selon la langue
+<Link href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'}>
+  {t('nav.halloween')}
+</Link>
+
 // ❌ MAUVAIS - Lien statique
 <Link href="/my-page">Ma Page</Link>
 ```
@@ -305,10 +310,14 @@ href={`/films/${film.slug}`}
 
 2. **Liens vers pages statiques**
 ```javascript
-// ✅ BON
+// ✅ BON - URLs identiques
 href={locale === 'en' ? '/en/top-rated' : '/top-rated'}
-href={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}
 href={locale === 'en' ? '/en/all-films' : '/all-films'}
+
+// ✅ BON - URLs différentes (mapping requis)
+href={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}
+href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'}
+href={locale === 'en' ? '/en/teen-movie-ideas' : '/idees-films-pour-ados'}
 
 // ❌ MAUVAIS
 href="/top-rated"
