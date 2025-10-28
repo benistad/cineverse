@@ -1,9 +1,11 @@
 'use client';
 
-// Version anglaise - Import et utilisation du composant français
 import QuelFilmRegarder from '@/app/quel-film-regarder/page';
 
-// Forcer le dynamic rendering
+// Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
 
-export default QuelFilmRegarder;
+// English version - reuses French component with automatic translations
+export default function WhatMovieToWatch() {
+  return <QuelFilmRegarder />;
+}

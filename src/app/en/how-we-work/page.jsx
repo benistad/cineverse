@@ -1,9 +1,11 @@
 'use client';
 
-// Version anglaise - Import et utilisation du composant français
 import CommentNousTravaillons from '@/app/comment-nous-travaillons/page';
 
-// Forcer le dynamic rendering
+// Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
 
-export default CommentNousTravaillons;
+// English version - reuses French component with automatic translations
+export default function HowWeWork() {
+  return <CommentNousTravaillons />;
+}
