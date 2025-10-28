@@ -7,9 +7,11 @@ import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function HiddenGemsFilms() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,8 +21,8 @@ export default function HiddenGemsFilms() {
     async function fetchHiddenGems() {
       try {
         setLoading(true);
-        // Récupérer tous les films inconnus (sans limite)
-        const hiddenGems = await getHiddenGems(50); // Limite plus élevée pour avoir tous les films inconnus
+        // Récupérer tous les films inconnus avec la langue appropriée
+        const hiddenGems = await getHiddenGems(50, locale); // Passer le locale
         setFilms(hiddenGems);
       } catch (err) {
         console.error('Erreur lors de la récupération des films inconnus:', err);
@@ -31,7 +33,7 @@ export default function HiddenGemsFilms() {
     }
 
     fetchHiddenGems();
-  }, []);
+  }, [locale]);
 
   // Fonction de tri des films
   const sortedFilms = [...films].sort((a, b) => {

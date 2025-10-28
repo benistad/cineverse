@@ -149,8 +149,9 @@ export async function getTopRatedFilms(limit = 8, minRating = 6, locale = 'fr') 
 
 /**
  * Récupère tous les films avec leur staff remarquable
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  */
-export async function getAllFilms() {
+export async function getAllFilms(locale = 'fr') {
   try {
     const supabase = getSupabaseClient();
     // Récupérer tous les films, triés par date d'ajout (du plus récent au plus ancien)
@@ -162,7 +163,7 @@ export async function getAllFilms() {
     if (error) throw error;
     if (!films) return [];
 
-    // Pour chaque film, récupérer son staff remarquable
+    // Pour chaque film, récupérer son staff remarquable et enrichir avec TMDB si en anglais
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
         const supabase = getSupabaseClient();
@@ -173,13 +174,19 @@ export async function getAllFilms() {
 
         if (staffError) {
           console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
-          return { ...film, remarkable_staff: [] };
         }
 
-        return {
+        let enrichedFilm = {
           ...film,
           remarkable_staff: staff || [],
         };
+
+        // Si la langue est anglaise, enrichir avec les données TMDB
+        if (locale === 'en') {
+          enrichedFilm = await enrichFilmWithTMDB(enrichedFilm);
+        }
+
+        return enrichedFilm;
       })
     );
 
@@ -608,9 +615,10 @@ export async function deleteRemarkableStaff(id) {
  * Récupère les films paginés avec leur staff remarquable
  * @param {number} page - Numéro de la page (commence à 1)
  * @param {number} filmsPerPage - Nombre de films par page
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  * @returns {Object} - Objet contenant les films et le nombre total de films
  */
-export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
+export async function getPaginatedFilms(page = 1, filmsPerPage = 8, locale = 'fr') {
   try {
     const supabase = getSupabaseClient();
     
@@ -627,7 +635,7 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
     if (error) throw error;
     if (!films) return { films: [], totalCount: 0 };
 
-    // Pour chaque film, récupérer son staff remarquable
+    // Pour chaque film, récupérer son staff remarquable et enrichir avec TMDB si en anglais
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
         const supabase = getSupabaseClient();
@@ -638,13 +646,19 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
 
         if (staffError) {
           console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
-          return { ...film, remarkable_staff: [] };
         }
 
-        return {
+        let enrichedFilm = {
           ...film,
           remarkable_staff: staff || [],
         };
+
+        // Si la langue est anglaise, enrichir avec les données TMDB
+        if (locale === 'en') {
+          enrichedFilm = await enrichFilmWithTMDB(enrichedFilm);
+        }
+
+        return enrichedFilm;
       })
     );
 
@@ -668,8 +682,9 @@ export async function getPaginatedFilms(page = 1, filmsPerPage = 8) {
 /**
  * Récupère les films marqués comme "Films inconnus à voir"
  * @param {number} limit - Nombre maximum de films à récupérer
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  */
-export async function getHiddenGems(limit = 8) {
+export async function getHiddenGems(limit = 8, locale = 'fr') {
   try {
     const supabase = getSupabaseClient();
     // Récupérer les films marqués comme "Films inconnus à voir"
@@ -683,7 +698,7 @@ export async function getHiddenGems(limit = 8) {
     if (error) throw error;
     if (!films) return [];
 
-    // Pour chaque film, récupérer son staff remarquable
+    // Pour chaque film, récupérer son staff remarquable et enrichir avec TMDB si en anglais
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
         const supabase = getSupabaseClient();
@@ -694,19 +709,25 @@ export async function getHiddenGems(limit = 8) {
 
         if (staffError) {
           console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
-          return { ...film, remarkable_staff: [] };
         }
 
-        return {
+        let enrichedFilm = {
           ...film,
           remarkable_staff: staff || [],
         };
+
+        // Si la langue est anglaise, enrichir avec les données TMDB
+        if (locale === 'en') {
+          enrichedFilm = await enrichFilmWithTMDB(enrichedFilm);
+        }
+
+        return enrichedFilm;
       })
     );
 
     return filmsWithStaff;
   } catch (error) {
-    console.error('Erreur lors de la récupération des films inconnus:', error);
+    console.error('Erreur lors de la récupération des films inconnus à voir:', error);
     return [];
   }
 }

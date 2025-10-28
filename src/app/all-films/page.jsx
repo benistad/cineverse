@@ -7,9 +7,11 @@ import Link from 'next/link';
 import { FiArrowLeft } from 'react-icons/fi';
 import PreloadCriticalImages from '@/components/ui/PreloadCriticalImages';
 import { useTranslations } from '@/hooks/useTranslations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AllFilmsPage() {
   const { t } = useTranslations();
+  const { locale } = useLanguage();
   const [films, setFilms] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ export default function AllFilmsPage() {
     async function fetchAllFilms() {
       try {
         setLoading(true);
-        const films = await getAllFilms();
+        const films = await getAllFilms(locale);
         setFilms(films);
         setTotalCount(films.length);
       } catch (error) {
@@ -44,7 +46,7 @@ export default function AllFilmsPage() {
     }
 
     fetchAllFilms();
-  }, []);
+  }, [locale]);
 
   return (
     <div className="container mx-auto px-6 py-12">
