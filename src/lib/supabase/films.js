@@ -749,10 +749,11 @@ export async function getHiddenGems(limit = 8, locale = 'fr') {
  * @param {number} limit - Nombre maximum de films à récupérer
  * @param {number} minRating - Note minimale des films à récupérer
  * @param {number} timestamp - Timestamp pour forcer le rechargement des données
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  * @returns {Array} - Liste des films récupérés
  */
-export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = null) {
-  return withCache('getFeaturedFilms', { limit, minRating }, async () => {
+export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = null, locale = 'fr') {
+  return withCache('getFeaturedFilms', { limit, minRating, locale }, async () => {
     try {
       console.log(`Récupération des films en vedette (limit: ${limit}, minRating: ${minRating}, timestamp: ${timestamp || 'non spécifié'})...`);
       
@@ -773,16 +774,25 @@ export async function getFeaturedFilms(limit = 5, minRating = 6, timestamp = nul
       
       console.log(`${data ? data.length : 0} films en vedette récupérés`);
       
+      let films = data || [];
+
+      // Si la langue est anglaise, enrichir avec les données TMDB
+      if (locale === 'en' && films.length > 0) {
+        films = await Promise.all(
+          films.map(film => enrichFilmWithTMDB(film))
+        );
+      }
+      
       // Vérifier si les films ont des images de carrousel
-      if (data && data.length > 0) {
-        data.forEach(film => {
+      if (films.length > 0) {
+        films.forEach(film => {
           console.log(`Film: ${film.title}, ID: ${film.id}, carousel_image_url: ${film.carousel_image_url || 'non définie'}`);
         });
       } else {
         console.log('Aucun film récupéré');
       }
       
-      return data || [];
+      return films;
     } catch (error) {
       console.error('Erreur lors de la récupération des films bien notés:', error);
       return [];

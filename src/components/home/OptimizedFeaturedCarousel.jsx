@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getFeaturedFilms } from '@/lib/supabase/films';
 import RatingIcon from '@/components/ui/RatingIcon';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Import Swiper et ses modules
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -15,6 +16,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 
 export default function OptimizedFeaturedCarousel() {
+  const { locale } = useLanguage();
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -74,7 +76,7 @@ export default function OptimizedFeaturedCarousel() {
       // Vérifier le cache d'abord (si disponible)
       if (typeof window !== 'undefined') {
         const { clientCache } = await import('@/lib/cache/clientCache');
-        const cachedFilms = clientCache.get('featured_films');
+        const cachedFilms = clientCache.get(`featured_films_${locale}`);
         
         if (cachedFilms && cachedFilms.length > 0) {
           setFilms(cachedFilms);
@@ -84,7 +86,7 @@ export default function OptimizedFeaturedCarousel() {
       }
       
       // Sinon, charger depuis l'API
-      const topFilms = await getFeaturedFilms(5, 6);
+      const topFilms = await getFeaturedFilms(5, 6, null, locale);
       
       if (topFilms && topFilms.length > 0) {
         setFilms(topFilms);
@@ -92,7 +94,7 @@ export default function OptimizedFeaturedCarousel() {
         // Mettre en cache
         if (typeof window !== 'undefined') {
           const { clientCache } = await import('@/lib/cache/clientCache');
-          clientCache.set('featured_films', topFilms, 600000); // Cache 10 minutes
+          clientCache.set(`featured_films_${locale}`, topFilms, 600000); // Cache 10 minutes
         }
       } else {
         console.warn('Aucun film n\'a été récupéré pour le carrousel');
@@ -105,10 +107,10 @@ export default function OptimizedFeaturedCarousel() {
     }
   };
   
-  // Charger les films au chargement du composant
+  // Charger les films au chargement du composant et quand la langue change
   useEffect(() => {
     loadTopRatedFilms();
-  }, []);
+  }, [locale]);
 
   // Afficher un message de chargement pendant la récupération des films
   if (loading) {
