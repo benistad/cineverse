@@ -17,7 +17,7 @@ const TMDB_API_TOKEN = process.env.NEXT_PUBLIC_TMDB_API_TOKEN || 'eyJhbGciOiJIUz
 /**
  * Enrichit un film avec les données TMDB en anglais si disponible
  * @param {Object} film - Le film à enrichir
- * @returns {Object} - Le film enrichi avec titre et synopsis en anglais
+ * @returns {Object} - Le film enrichi avec titre, synopsis et genres en anglais
  */
 async function enrichFilmWithTMDB(film) {
   if (!film.tmdb_id) return film;
@@ -37,10 +37,14 @@ async function enrichFilmWithTMDB(film) {
 
     const data = await response.json();
     
+    // Convertir les genres TMDB en string (format: "Genre1, Genre2, Genre3")
+    const genresString = data.genres?.map(g => g.name).join(', ') || film.genres;
+    
     return {
       ...film,
       title: data.original_title || data.title || film.title,
       synopsis: data.overview || film.synopsis,
+      genres: genresString,
     };
   } catch (error) {
     console.error(`Error fetching TMDB data for film ${film.id}:`, error);
@@ -51,8 +55,9 @@ async function enrichFilmWithTMDB(film) {
 /**
  * Récupère les films récemment notés avec leur staff remarquable
  * @param {number} limit - Nombre maximum de films à récupérer
+ * @param {string} locale - Langue pour les données (défaut: 'fr')
  */
-export async function getRecentlyRatedFilms(limit = 8) {
+export async function getRecentlyRatedFilms(limit = 8, locale = 'fr') {
   try {
     const supabase = getSupabaseClient();
     // Récupérer les films récents, triés par date d'ajout (du plus récent au plus ancien)
@@ -65,7 +70,7 @@ export async function getRecentlyRatedFilms(limit = 8) {
     if (error) throw error;
     if (!films) return [];
 
-    // Pour chaque film, récupérer son staff remarquable
+    // Pour chaque film, récupérer son staff remarquable et enrichir avec TMDB si en anglais
     const filmsWithStaff = await Promise.all(
       films.map(async (film) => {
         const supabase = getSupabaseClient();
@@ -76,13 +81,19 @@ export async function getRecentlyRatedFilms(limit = 8) {
 
         if (staffError) {
           console.error(`Erreur lors de la récupération du staff pour le film ${film.id}:`, staffError);
-          return { ...film, remarkable_staff: [] };
         }
 
-        return {
+        let enrichedFilm = {
           ...film,
           remarkable_staff: staff || [],
         };
+
+        // Si la langue est anglaise, enrichir avec les données TMDB
+        if (locale === 'en') {
+          enrichedFilm = await enrichFilmWithTMDB(enrichedFilm);
+        }
+
+        return enrichedFilm;
       })
     );
 

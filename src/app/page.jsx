@@ -107,14 +107,14 @@ export default function Home() {
         setLoading(true);
         
         // Essayer de récupérer depuis le cache
-        const cachedRecent = clientCache.get('recent_films');
+        const cachedRecent = clientCache.get(`recent_films_${locale}`);
         if (cachedRecent) {
           setRecentFilms(cachedRecent);
           setLoading(false); // ✅ Page interactive immédiatement avec le cache
         } else {
-          const recent = await getRecentlyRatedFilms(8);
+          const recent = await getRecentlyRatedFilms(8, locale);
           setRecentFilms(recent);
-          clientCache.set('recent_films', recent, 300000); // Cache 5 minutes
+          clientCache.set(`recent_films_${locale}`, recent, 300000); // Cache 5 minutes
           setLoading(false); // ✅ Page interactive maintenant
         }
         
