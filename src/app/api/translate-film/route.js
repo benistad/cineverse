@@ -101,7 +101,7 @@ export async function POST(request) {
     // 1. Récupérer le film
     const { data: film, error: fetchError } = await supabase
       .from('films')
-      .select('id, tmdb_id, title, synopsis, why_watch_content')
+      .select('id, tmdb_id, title, synopsis, why_watch_content, not_liked_content')
       .eq('id', filmId)
       .single();
 
@@ -117,7 +117,8 @@ export async function POST(request) {
     const translations = {
       title: '',
       synopsis: '',
-      why_watch_content: ''
+      why_watch_content: '',
+      what_we_didnt_like: ''
     };
 
     let source = 'deepl';
@@ -145,6 +146,12 @@ export async function POST(request) {
     if (film.why_watch_content) {
       translations.why_watch_content = await translateWithDeepL(film.why_watch_content, 'why_watch');
       console.log(`  ⚡ DeepL: Translated why_watch_content (with glossary)`);
+    }
+    
+    // 5. Traduire "Ce que nous n'avons pas aimé" avec DeepL
+    if (film.not_liked_content) {
+      translations.what_we_didnt_like = await translateWithDeepL(film.not_liked_content, 'what_we_didnt_like');
+      console.log(`  ⚡ DeepL: Translated what_we_didnt_like (with glossary)`);
     }
 
     // 5. Sauvegarder les traductions

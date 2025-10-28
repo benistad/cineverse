@@ -121,8 +121,17 @@ export default function TranslationsPage() {
 
       const data = await response.json();
 
-      // Charger la traduction générée
-      await loadTranslation(selectedFilm);
+      // Recharger le film depuis la base pour avoir les données à jour
+      const { data: updatedFilm, error: filmError } = await supabase
+        .from('films')
+        .select('id, title, slug, why_watch_content, not_liked_content, why_watch_enabled, not_liked_enabled')
+        .eq('id', selectedFilm.id)
+        .single();
+
+      if (filmError) throw filmError;
+
+      // Charger la traduction générée avec le film à jour
+      await loadTranslation(updatedFilm);
 
       setMessage({ type: 'success', text: '✨ Traduction automatique réussie ! (TMDB + DeepL)' });
       
