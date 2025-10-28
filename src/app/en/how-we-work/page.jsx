@@ -1,2 +1,9 @@
-// Version anglaise - Réutilise le composant français
-export { default } from '@/app/comment-nous-travaillons/page';
+'use client';
+
+// Version anglaise - Import et utilisation du composant français
+import CommentNousTravaillons from '@/app/comment-nous-travaillons/page';
+
+// Forcer le dynamic rendering
+export const dynamic = 'force-dynamic';
+
+export default CommentNousTravaillons;
