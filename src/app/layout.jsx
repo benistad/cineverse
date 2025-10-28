@@ -3,6 +3,8 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import LocaleDetector from "@/components/LocaleDetector";
 import HreflangTags from "@/components/HreflangTags";
+import HtmlLangAttribute from "@/components/HtmlLangAttribute";
+import CanonicalTag from "@/components/CanonicalTag";
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
@@ -76,10 +78,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body className={`${poppins.variable} font-sans antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100`}>
         <LocaleDetector />
         <HreflangTags />
+        <CanonicalTag />
+        <HtmlLangAttribute />
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
