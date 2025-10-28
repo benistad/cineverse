@@ -164,12 +164,12 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
   );
 };
 
-export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false, translation = null }) {
+export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
   const { t } = useTranslations();
   const { locale } = useLanguage();
   
-  // Utiliser le titre traduit si disponible
-  const displayTitle = translation?.title || film.title;
+  // Le film est déjà enrichi avec TMDB, utiliser directement film.title
+  const displayTitle = film.title;
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
   const pathname = usePathname();
   const isAdmin = pathname?.includes('/admin');

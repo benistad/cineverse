@@ -1,11 +1,10 @@
 'use client';
 
 import FilmCard from './FilmCard';
-import { useFilmTranslations } from '@/hooks/useFilmTranslations';
 
 export default function FilmGrid({ films, showRating = true, showAdminControls = false }) {
-  // Charger les traductions pour tous les films en une seule requête
-  const { translations } = useFilmTranslations(films);
+  // Les films sont déjà enrichis avec TMDB dans les fonctions de récupération
+  // Plus besoin de useFilmTranslations qui chargeait depuis la DB
 
   // Vérifier si films est défini et est un tableau
   if (!films || !Array.isArray(films) || films.length === 0) {
@@ -24,7 +23,6 @@ export default function FilmGrid({ films, showRating = true, showAdminControls =
           film={film} 
           showRating={showRating} 
           showAdminControls={showAdminControls}
-          translation={translations[film.id]}
         />
       ))}
     </div>
