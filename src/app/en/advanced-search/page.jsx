@@ -205,35 +205,39 @@ function AdvancedSearchEn() {
         });
       }
 
-      // Enrich films with TMDB data in English
-      const enrichedFilms = await Promise.all(
-        filteredData.map(async (film) => {
-          if (film.tmdb_id) {
-            try {
-              const tmdbData = await getTMDBData(film.tmdb_id, 'en-US');
-              if (tmdbData) {
-                return {
-                  ...film,
-                  title: tmdbData.title || tmdbData.original_title || film.title,
-                  synopsis: tmdbData.overview || film.synopsis,
-                  genres: tmdbData.genres ? tmdbData.genres.map(g => g.name).join(', ') : film.genres,
-                };
-              }
-            } catch (err) {
-              console.error(`Error enriching film ${film.id}:`, err);
-            }
-          }
-          return film;
-        })
-      );
+      // Show films immediately (non-blocking UX)
+      setFilms(filteredData);
+      setTotalCount(filteredData.length);
+      setLoading(false);
 
-      setFilms(enrichedFilms);
-      setTotalCount(enrichedFilms.length);
+      // Enrich films with TMDB data in English (progressive, non-blocking)
+      filteredData.forEach(async (film, index) => {
+        if (film.tmdb_id) {
+          try {
+            const tmdbData = await getTMDBData(film.tmdb_id, 'en-US');
+            if (tmdbData) {
+              const enrichedFilm = {
+                ...film,
+                title: tmdbData.title || tmdbData.original_title || film.title,
+                synopsis: tmdbData.overview || film.synopsis,
+                genres: tmdbData.genres ? tmdbData.genres.map(g => g.name).join(', ') : film.genres,
+              };
+              // Update film progressively
+              setFilms(prev => {
+                const updated = [...prev];
+                updated[index] = enrichedFilm;
+                return updated;
+              });
+            }
+          } catch (err) {
+            console.error(`Error enriching film ${film.id}:`, err);
+          }
+        }
+      });
     } catch (e) {
       console.error('Error while searching films:', e);
       setFilms([]);
       setTotalCount(0);
-    } finally {
       setLoading(false);
     }
   };
