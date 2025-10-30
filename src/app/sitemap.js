@@ -18,6 +18,12 @@ export default async function sitemap() {
       priority: 1.0,
     },
     {
+      url: `${baseUrl}/en`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
       url: `${baseUrl}/search`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -131,6 +137,30 @@ export default async function sitemap() {
       changeFrequency: 'yearly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/top-rated`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/films-inconnus`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/comment-nous-travaillons`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.7,
+    },
   ];
   
   try {
@@ -138,16 +168,26 @@ export default async function sitemap() {
     const films = await getAllFilmsForSitemap();
     
     // Générer les URLs pour chaque film en utilisant prioritairement les slugs
-    const filmPages = films.map((film) => {
+    const filmPages = films.flatMap((film) => {
       // Générer un slug normalisé (sans accents)
       const slug = generateFilmSlug(film);
       
-      return {
-        url: `${baseUrl}/films/${slug}`,
-        lastModified: new Date(film.date_ajout),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      };
+      return [
+        // Version française
+        {
+          url: `${baseUrl}/films/${slug}`,
+          lastModified: new Date(film.date_ajout),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+        },
+        // Version anglaise
+        {
+          url: `${baseUrl}/en/films/${slug}`,
+          lastModified: new Date(film.date_ajout),
+          changeFrequency: 'weekly',
+          priority: 0.7,
+        }
+      ];
     });
     
     // Combiner les pages statiques et les pages de films

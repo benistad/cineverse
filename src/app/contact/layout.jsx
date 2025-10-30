@@ -13,8 +13,13 @@ export const metadata = {
     description: 'Contactez l\'équipe MovieHunt. Une question, une suggestion ou envie de partager votre avis ?',
   },
   alternates: {
-    canonical: '/contact',
+    canonical: 'https://www.moviehunt.fr/contact',
+    languages: {
+      fr: 'https://www.moviehunt.fr/contact',
+      en: 'https://www.moviehunt.fr/en/contact',
+    },
   },
+  robots: { index: true, follow: true },
 };
 
 export default function ContactLayout({ children }) {

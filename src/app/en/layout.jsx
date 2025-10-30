@@ -1,5 +1,7 @@
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
+
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'),
+  metadataBase: new URL(baseUrl),
   title: {
     default: 'MovieHunt: Movie Ideas - What Film to Watch?',
     template: '%s | MovieHunt'
@@ -20,8 +22,22 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  // Pas d'alternates ici pour éviter les conflits avec les pages enfants
-  // Chaque page définit ses propres liens hreflang
+  alternates: {
+    canonical: `${baseUrl}/en`,
+    languages: {
+      'fr': `${baseUrl}`,
+      'en': `${baseUrl}/en`,
+      'x-default': `${baseUrl}`
+    }
+  },
+  openGraph: {
+    title: 'MovieHunt: Movie Ideas - What Film to Watch?',
+    description: 'Discover what film to watch: ratings, movie reviews and hidden gems. Remarkable staff and streaming availability in France.',
+    url: `${baseUrl}/en`,
+    siteName: 'MovieHunt',
+    locale: 'en_US',
+    type: 'website',
+  }
 };
 
 export default function EnLayout({ children }) {
