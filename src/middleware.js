@@ -3,66 +3,57 @@ import { NextResponse } from 'next/server';
 // Middleware de cache désactivé pour résoudre les problèmes de performance
 // import { cacheMiddleware } from './middleware/cacheMiddleware';
 
-const locales = ['fr', 'en'];
-const defaultLocale = 'fr';
+// MULTILINGUAL DISABLED - Keep for future use
+// const locales = ['fr', 'en'];
+// const defaultLocale = 'fr';
 
-function getLocale(request) {
-  // 1. Vérifier le cookie
-  const localeCookie = request.cookies.get('NEXT_LOCALE');
-  if (localeCookie && locales.includes(localeCookie.value)) {
-    return localeCookie.value;
-  }
+// function getLocale(request) {
+//   // 1. Vérifier le cookie
+//   const localeCookie = request.cookies.get('NEXT_LOCALE');
+//   if (localeCookie && locales.includes(localeCookie.value)) {
+//     return localeCookie.value;
+//   }
 
-  // 2. Vérifier l'en-tête Accept-Language
-  const acceptLanguage = request.headers.get('accept-language');
-  if (acceptLanguage) {
-    const languages = acceptLanguage.split(',').map(lang => {
-      const [code] = lang.trim().split(';');
-      return code.split('-')[0];
-    });
+//   // 2. Vérifier l'en-tête Accept-Language
+//   const acceptLanguage = request.headers.get('accept-language');
+//   if (acceptLanguage) {
+//     const languages = acceptLanguage.split(',').map(lang => {
+//       const [code] = lang.trim().split(';');
+//       return code.split('-')[0];
+//     });
     
-    for (const lang of languages) {
-      if (locales.includes(lang)) {
-        return lang;
-      }
-    }
-  }
+//     for (const lang of languages) {
+//       if (locales.includes(lang)) {
+//         return lang;
+//       }
+//     }
+//   }
 
-  return defaultLocale;
-}
+//   return defaultLocale;
+// }
 
 export async function middleware(request) {
   const url = new URL(request.url);
   const pathname = url.pathname;
   
-  // Gestion de la langue pour toutes les routes (sauf admin et API)
+  // MULTILINGUAL DISABLED - Redirect /en/* to French version
   if (!pathname.startsWith('/admin') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
-    // Vérifier si l'URL est en anglais (/en ou /en/*)
+    // Rediriger toutes les URLs /en/* vers la version française
     const pathnameHasLocale = pathname === '/en' || pathname.startsWith('/en/');
 
     if (pathnameHasLocale) {
-      // Ne pas réécrire les routes anglaises, laisser Next router servir /en/*
-      const response = NextResponse.next();
-      response.cookies.set('NEXT_LOCALE', 'en', {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 365, // 1 an
-      });
-      return response;
-    } else {
-      // URL sans préfixe de langue
-      const locale = getLocale(request);
-      const response = NextResponse.next();
-      
-      // Définir le cookie de langue si nécessaire
-      if (!request.cookies.get('NEXT_LOCALE') || request.cookies.get('NEXT_LOCALE').value !== locale) {
-        response.cookies.set('NEXT_LOCALE', locale, {
-          path: '/',
-          maxAge: 60 * 60 * 24 * 365, // 1 an
-        });
-      }
-      
-      return response;
+      // Rediriger vers la version française
+      const frenchPath = pathname.replace(/^\/en/, '') || '/';
+      return NextResponse.redirect(new URL(frenchPath, request.url));
     }
+    
+    // Pour les autres URLs, forcer le cookie à 'fr'
+    const response = NextResponse.next();
+    response.cookies.set('NEXT_LOCALE', 'fr', {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365, // 1 an
+    });
+    return response;
   }
   
   // Appliquer uniquement le middleware d'authentification pour les routes admin

@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
 import { FaFacebook, FaInstagram, FaTumblr } from 'react-icons/fa';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useLanguage } from '@/contexts/LanguageContext';
+// MULTILINGUAL DISABLED
+// import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Footer() {
   const { t } = useTranslations();
-  const { locale } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -46,7 +46,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} className="text-gray-400 hover:text-white flex items-center">
+                <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white flex items-center">
                   <FiHelpCircle className="mr-2" /> {t('footer.whatToWatch')}
                 </Link>
               </li>
@@ -72,12 +72,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} className="text-gray-400 hover:text-white">
+                <Link href="/quel-film-regarder" className="text-gray-400 hover:text-white">
                   {t('footer.recommendations')}
                 </Link>
               </li>
               <li>
-                <Link href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} className="text-gray-400 hover:text-white flex items-center">
+                <Link href="/comment-nous-travaillons" className="text-gray-400 hover:text-white flex items-center">
                   <FiInfo className="mr-2" /> {t('footer.howWeWork')}
                 </Link>
               </li>

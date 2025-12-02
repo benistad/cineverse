@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useLanguage } from '@/contexts/LanguageContext';
+// MULTILINGUAL DISABLED
+// import { useLanguage } from '@/contexts/LanguageContext';
 import { applyTranslationsToFilms } from '@/lib/translation/client';
 import { 
   getPaginatedFilms
@@ -23,7 +24,8 @@ import { clientCache } from '@/lib/cache/clientCache';
 
 export default function Home() {
   const { t } = useTranslations();
-  const { locale } = useLanguage();
+  // MULTILINGUAL DISABLED - Force French
+  const locale = 'fr';
   
   // Définir les métadonnées SEO
   useEffect(() => {
@@ -51,31 +53,8 @@ export default function Home() {
   
   const filmsPerPage = 8;
 
-  // Appliquer les traductions quand la langue change
-  useEffect(() => {
-    async function applyTranslations() {
-      // Appliquer les traductions uniquement si on a des films et qu'on est en anglais
-      if (locale === 'en' && (recentFilms.length > 0 || topRatedFilms.length > 0 || hiddenGems.length > 0 || allFilms.length > 0)) {
-        console.log('🌍 Applying translations to films...');
-        
-        const [translatedRecent, translatedTopRated, translatedGems, translatedAll] = await Promise.all([
-          recentFilms.length > 0 ? applyTranslationsToFilms(recentFilms, locale) : [],
-          topRatedFilms.length > 0 ? applyTranslationsToFilms(topRatedFilms, locale) : [],
-          hiddenGems.length > 0 ? applyTranslationsToFilms(hiddenGems, locale) : [],
-          allFilms.length > 0 ? applyTranslationsToFilms(allFilms, locale) : []
-        ]);
-        
-        if (translatedRecent.length > 0) setRecentFilms(translatedRecent);
-        if (translatedTopRated.length > 0) setTopRatedFilms(translatedTopRated);
-        if (translatedGems.length > 0) setHiddenGems(translatedGems);
-        if (translatedAll.length > 0) setAllFilms(translatedAll);
-        
-        console.log('✅ Translations applied');
-      }
-    }
-    
-    applyTranslations();
-  }, [locale, recentFilms.length, topRatedFilms.length, hiddenGems.length, allFilms.length]); // Se déclenche quand la langue change ou quand les films sont chargés
+  // MULTILINGUAL DISABLED - Translation effect disabled
+  // useEffect(() => { ... }, [locale, ...]);
 
   // Fonction pour charger les films paginés
   const loadPaginatedFilms = async (page) => {
@@ -279,7 +258,7 @@ export default function Home() {
             films={topRatedFilms} 
             title={t('home.topRated')} 
             visibleCount={4} 
-            showAllLink={locale === 'en' ? '/en/top-rated' : '/top-rated'}
+            showAllLink="/top-rated"
             showAllText={t('home.viewAll')}
             totalCount={topRatedFilmsCount}
           />
@@ -297,7 +276,7 @@ export default function Home() {
             films={hiddenGems} 
             title={t('home.hiddenGems')} 
             visibleCount={4} 
-            showAllLink={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}
+            showAllLink="/films-inconnus"
             showAllText={t('home.viewAll')}
             totalCount={hiddenGemsCount}
           />
@@ -314,7 +293,7 @@ export default function Home() {
             </span>
           </div>
           <Link 
-            href={locale === 'en' ? '/en/all-films' : '/all-films'} 
+            href="/all-films" 
             className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium group text-sm sm:text-base"
           >
             {t('home.viewAll')}
@@ -366,15 +345,15 @@ export default function Home() {
               <p className="text-lg" dangerouslySetInnerHTML={{
                 __html: t('home.about.intro')
                   .replace(/<strong>/g, '<strong class="text-indigo-800">')
-                  .replace(/<link1>/g, `<a href="${locale === 'en' ? '/en/advanced-search?hunted=true' : '/advanced-search?hunted=true'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link1>/g, '<a href="/advanced-search?hunted=true" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">')
                   .replace(/<\/link1>/g, '</a>')
               }} />
               
               <p dangerouslySetInnerHTML={{
                 __html: t('home.about.mission')
-                  .replace(/<link2>/g, `<a href="${locale === 'en' ? '/en/quel-film-regarder' : '/quel-film-regarder'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link2>/g, '<a href="/quel-film-regarder" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">')
                   .replace(/<\/link2>/g, '</a>')
-                  .replace(/<link3>/g, `<a href="${locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link3>/g, '<a href="/films-inconnus" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">')
                   .replace(/<\/link3>/g, '</a>')
               }} />
               
@@ -388,7 +367,7 @@ export default function Home() {
               
               <p dangerouslySetInnerHTML={{
                 __html: t('home.about.method')
-                  .replace(/<link4>/g, `<a href="${locale === 'en' ? '/en/comment-nous-travaillons' : '/comment-nous-travaillons'}" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">`)
+                  .replace(/<link4>/g, '<a href="/comment-nous-travaillons" class="font-semibold text-indigo-700 hover:text-indigo-900 underline decoration-2 underline-offset-2">')
                   .replace(/<\/link4>/g, '</a>')
               }} />
               

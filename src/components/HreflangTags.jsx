@@ -1,5 +1,14 @@
 'use client';
 
+// MULTILINGUAL DISABLED - This component is disabled
+// Keep for future use when re-enabling multilingual support
+
+export default function HreflangTags() {
+  // Disabled - no hreflang tags needed for French-only site
+  return null;
+}
+
+/* ORIGINAL CODE - Keep for future use
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -27,7 +36,7 @@ const urlMapping = {
   '/comment-nous-travaillons': '/how-we-work'
 };
 
-export default function HreflangTags() {
+function HreflangTagsOriginal() {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -75,5 +84,6 @@ export default function HreflangTags() {
     }
   }, [pathname]);
 
-  return null; // Ce composant ne rend rien visuellement
+  return null;
 }
+*/

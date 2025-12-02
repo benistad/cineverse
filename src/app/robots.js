@@ -1,5 +1,5 @@
 /**
- * Génère un fichier robots.txt dynamique optimisé pour le référencement mobile
+ * Génère un fichier robots.txt dynamique optimisé pour l'indexation Google
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/robots
  */
 export default function robots() {
@@ -9,25 +9,29 @@ export default function robots() {
     rules: [
       {
         userAgent: '*',
-        allow: ['/api/server-sitemap.xml'], // Autoriser le sitemap dynamique
-        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel'],
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
       },
       {
-        // Règles spécifiques pour Googlebot-Mobile pour optimiser le référencement mobile
+        // Optimisation pour Googlebot
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
+      },
+      {
+        // Optimisation pour Googlebot Mobile
         userAgent: 'Googlebot-Mobile',
         allow: '/',
-        crawlDelay: 1, // Temps d'attente entre les requêtes pour ne pas surcharger le serveur
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
       },
       {
-        // Règles pour les autres robots mobiles
+        // Autoriser les images et vidéos pour les rich snippets
         userAgent: ['Googlebot-Image', 'Googlebot-Video'],
         allow: '/',
       },
     ],
-    sitemap: [
-      `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/api/server-sitemap.xml`, // Sitemap dynamique avec tous les films
-    ],
+    // Un seul sitemap - le principal généré par Next.js
+    sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   };
 }

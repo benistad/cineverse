@@ -23,7 +23,7 @@ export async function GET() {
     // URL de base du site
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
 
-    // Créer les entrées du sitemap pour chaque film
+    // MULTILINGUAL DISABLED - French only
     const filmEntries = films.map((film) => {
       // Utiliser le slug existant ou en créer un nouveau
       let slug = film.slug;
@@ -42,15 +42,16 @@ export async function GET() {
         slug = film.id;
       }
 
+      // Version française uniquement
       return {
         loc: `${baseUrl}/films/${encodeURIComponent(slug)}`,
         lastmod: new Date(film.date_ajout).toISOString(),
-        changefreq: 'weekly',
-        priority: 0.8,
+        changefreq: 'monthly',
+        priority: 0.7,
       };
     });
 
-    // Ajouter les pages principales
+    // MULTILINGUAL DISABLED - French pages only
     const mainPages = [
       {
         loc: `${baseUrl}`,
@@ -61,7 +62,7 @@ export async function GET() {
       {
         loc: `${baseUrl}/quel-film-regarder`,
         lastmod: new Date().toISOString(),
-        changefreq: 'weekly',
+        changefreq: 'monthly',
         priority: 0.9,
       },
       {
@@ -83,40 +84,52 @@ export async function GET() {
         priority: 0.8,
       },
       {
+        loc: `${baseUrl}/films-index`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'weekly',
+        priority: 0.8,
+      },
+      {
         loc: `${baseUrl}/huntedbymoviehunt`,
         lastmod: new Date().toISOString(),
         changefreq: 'weekly',
         priority: 0.8,
       },
       {
-        loc: `${baseUrl}/comment-nous-travaillons`,
+        loc: `${baseUrl}/idees-films-pour-ados`,
         lastmod: new Date().toISOString(),
         changefreq: 'monthly',
-        priority: 0.7,
+        priority: 0.9,
+      },
+      {
+        loc: `${baseUrl}/films-horreur-halloween-2025`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'yearly',
+        priority: 0.8,
+      },
+      {
+        loc: `${baseUrl}/comment-nous-travaillons`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'yearly',
+        priority: 0.6,
+      },
+      {
+        loc: `${baseUrl}/contact`,
+        lastmod: new Date().toISOString(),
+        changefreq: 'yearly',
+        priority: 0.5,
       },
       {
         loc: `${baseUrl}/advanced-search`,
         lastmod: new Date().toISOString(),
-        changefreq: 'weekly',
+        changefreq: 'monthly',
         priority: 0.7,
       },
       {
         loc: `${baseUrl}/search`,
         lastmod: new Date().toISOString(),
-        changefreq: 'weekly',
+        changefreq: 'monthly',
         priority: 0.6,
-      },
-      {
-        loc: `${baseUrl}/films-horreur-halloween-2025`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'monthly',
-        priority: 0.7,
-      },
-      {
-        loc: `${baseUrl}/en/halloween-horror-movies-2025`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'monthly',
-        priority: 0.7,
       },
     ];
 

@@ -53,13 +53,14 @@ export default function DashboardPage() {
           >
             <FiSearch /> Rechercher un film
           </Link>
-          <Link
+          {/* MULTILINGUAL DISABLED - Keep for future use */}
+          {/* <Link
             href="/admin/translations"
             className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
             title="Traduire les films en anglais"
           >
             <FiGlobe /> Traductions
-          </Link>
+          </Link> */}
           <Link
             href="/admin/update-films"
             className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"

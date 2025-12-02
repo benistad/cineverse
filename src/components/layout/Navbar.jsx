@@ -7,9 +7,10 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon, FiBookOpen, FiUsers, FiStar } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
-import LanguageSelector from '@/components/LanguageSelector';
+// MULTILINGUAL DISABLED - Keep for future use
+// import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useLanguage } from '@/contexts/LanguageContext';
+// import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,8 @@ export default function Navbar() {
   const isAdmin = pathname?.startsWith('/admin');
   const { user, loading, signOut } = useAuth();
   const { t } = useTranslations();
-  const { locale } = useLanguage();
+  // MULTILINGUAL DISABLED - Force French locale
+  const locale = 'fr';
 
   const handleLogout = async () => {
     await signOut();
@@ -85,16 +87,16 @@ export default function Navbar() {
           <div className="hidden md:flex md:items-center md:space-x-6">
             {/* Recherche Avancée */}
             <Link 
-              href={locale === 'en' ? '/en/advanced-search' : '/advanced-search'} 
-              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/advanced-search' || pathname === '/en/advanced-search' ? 'text-indigo-700' : ''}`}
+              href="/advanced-search" 
+              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/advanced-search' ? 'text-indigo-700' : ''}`}
             >
               <FiFilter className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.advancedSearch')}</span>
             </Link>
             {/* Tous les films */}
             <Link 
-              href={locale === 'en' ? '/en/all-films' : '/all-films'} 
-              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/all-films' || pathname === '/en/all-films' ? 'text-indigo-700' : ''}`}
+              href="/all-films" 
+              className={`text-gray-600 hover:text-indigo-700 transition-colors duration-200 flex items-center group text-base font-medium ${pathname === '/all-films' ? 'text-indigo-700' : ''}`}
             >
               <FiFilm className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
               <span className="whitespace-nowrap">{t('nav.allFilms')}</span>
@@ -104,7 +106,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDiscoverMenu}
                 className={`flex items-center text-gray-600 hover:text-indigo-700 transition-colors duration-200 text-base font-medium group ${
-                  pathname === '/quel-film-regarder' || pathname === '/en/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/en/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/en/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' || pathname === '/en/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas' || pathname === '/films-inconnus' || pathname === '/en/hidden-gems' ? 'text-indigo-700' : ''
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' || pathname === '/films-inconnus' ? 'text-indigo-700' : ''
                 }`}
               >
                 <FiCompass className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -115,43 +117,43 @@ export default function Navbar() {
                 <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
                   <div className="py-2" role="menu" aria-orientation="vertical">
                     <Link 
-                      href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/quel-film-regarder' || pathname === '/en/what-movie-to-watch') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/quel-film-regarder" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiHelpCircle className="w-4 h-4 mr-3" /> {t('nav.whatToWatch')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/films-inconnus' || pathname === '/en/hidden-gems') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/films-inconnus" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-inconnus' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiStar className="w-4 h-4 mr-3" /> {t('nav.hiddenGems')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/teen-movie-ideas' : '/idees-films-pour-ados'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/idees-films-pour-ados" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiUsers className="w-4 h-4 mr-3" /> {t('nav.teenMovies')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/films-horreur-halloween-2025' || pathname === '/en/halloween-horror-movies-2025') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/films-horreur-halloween-2025" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiMoon className="w-4 h-4 mr-3" /> {t('nav.halloween')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/huntedbymoviehunt' : '/huntedbymoviehunt'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/huntedbymoviehunt' || pathname === '/en/huntedbymoviehunt') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/huntedbymoviehunt" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiAward className="w-4 h-4 mr-3" /> {t('nav.hunted')}
                     </Link>
                     <Link 
-                      href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${(pathname === '/comment-nous-travaillons' || pathname === '/en/how-we-work') ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      href="/comment-nous-travaillons" 
+                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiInfo className="w-4 h-4 mr-3" /> {t('nav.howWeWork')}
@@ -160,8 +162,8 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            {/* Sélecteur de langue */}
-            <LanguageSelector />
+            {/* MULTILINGUAL DISABLED - Keep for future use */}
+            {/* <LanguageSelector /> */}
             {/* Admin/Dashboard/Déconnexion */}
             {!loading && user && (
               <>
@@ -232,9 +234,9 @@ export default function Navbar() {
               <FiBookOpen className="w-5 h-5 mr-3" /> {t('nav.blog')}
             </a>
             <Link 
-              href={locale === 'en' ? '/en/advanced-search' : '/advanced-search'} 
+              href="/advanced-search" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                pathname === '/search' || pathname === '/advanced-search' || pathname === '/en/advanced-search' ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/search' || pathname === '/advanced-search' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -245,9 +247,9 @@ export default function Navbar() {
             <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">{t('nav.discover')}</div>
             
             <Link 
-              href={locale === 'en' ? '/en/what-movie-to-watch' : '/quel-film-regarder'} 
+              href="/quel-film-regarder" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/quel-film-regarder' || pathname === '/en/what-movie-to-watch') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -255,9 +257,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/hidden-gems' : '/films-inconnus'} 
+              href="/films-inconnus" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/films-inconnus' || pathname === '/en/hidden-gems') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/films-inconnus' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -265,9 +267,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/teen-movie-ideas' : '/idees-films-pour-ados'} 
+              href="/idees-films-pour-ados" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/idees-films-pour-ados' || pathname === '/en/teen-movie-ideas') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -275,9 +277,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} 
+              href="/films-horreur-halloween-2025" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/films-horreur-halloween-2025' || pathname === '/en/halloween-horror-movies-2025') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -285,9 +287,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/huntedbymoviehunt' : '/huntedbymoviehunt'} 
+              href="/huntedbymoviehunt" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/huntedbymoviehunt' || pathname === '/en/huntedbymoviehunt') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -295,9 +297,9 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/how-we-work' : '/comment-nous-travaillons'} 
+              href="/comment-nous-travaillons" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/comment-nous-travaillons' || pathname === '/en/how-we-work') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -305,19 +307,19 @@ export default function Navbar() {
             </Link>
             
             <Link 
-              href={locale === 'en' ? '/en/all-films' : '/all-films'} 
+              href="/all-films" 
               className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                (pathname === '/all-films' || pathname === '/en/all-films') ? 'bg-indigo-50 text-indigo-700' : ''
+                pathname === '/all-films' ? 'bg-indigo-50 text-indigo-700' : ''
               }`}
               onClick={() => setIsOpen(false)}
             >
               <FiFilm className="w-5 h-5 mr-3" /> {t('nav.allFilms')}
             </Link>
             
-            {/* Sélecteur de langue mobile */}
-            <div className="px-3 py-2 mt-2 border-t border-gray-200">
+            {/* MULTILINGUAL DISABLED - Keep for future use */}
+            {/* <div className="px-3 py-2 mt-2 border-t border-gray-200">
               <LanguageSelector />
-            </div>
+            </div> */}
             
             {!loading && user && (
               <>
