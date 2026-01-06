@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// Cache RSS pendant 1 heure (ISR)
+export const revalidate = 3600;
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://moviehunt.fr';
 
 function escapeXml(unsafe) {
@@ -79,7 +82,7 @@ ${items}
       status: 200,
       headers: {
         'Content-Type': 'application/rss+xml; charset=UTF-8',
-        'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1200',
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
       },
     });
   } catch (err) {

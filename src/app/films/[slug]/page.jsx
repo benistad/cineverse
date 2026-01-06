@@ -1,50 +1,64 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import { cookies } from 'next/headers';
+import { unstable_cache } from 'next/cache';
 import FilmPageContent from '@/components/films/FilmPageContent';
 
-// Configuration pour le revalidation (ISR)
-export const revalidate = 3600; // Revalider toutes les heures
-export const dynamic = 'force-dynamic'; // Forcer le rendu dynamique
+// Configuration ISR - pages statiques régénérées toutes les heures
+export const revalidate = 3600;
 
-// Fonction pour récupérer le film côté serveur
-async function getFilm(slug) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-  
-  // Rechercher le film par son slug
-  const { data, error } = await supabase
-    .from('films')
-    .select('*')
-    .eq('slug', slug)
-    .single();
-  
-  let film = null;
-  
-  if (error || !data) {
-    // Si le slug n'existe pas, essayer de trouver le film par son titre
-    const normalizedSlug = slug.replace(/-/g, ' ').toLowerCase();
+// Fonction pour récupérer le film côté serveur avec cache
+const getFilm = unstable_cache(
+  async (slug) => {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
     
-    const { data: filmByTitle, error: titleError } = await supabase
+    // Rechercher le film par son slug
+    const { data, error } = await supabase
       .from('films')
       .select('*')
-      .ilike('title', `%${normalizedSlug}%`)
-      .order('date_ajout', { ascending: false })
-      .limit(1);
+      .eq('slug', slug)
+      .single();
     
-    if (titleError || !filmByTitle || filmByTitle.length === 0) {
-      return null;
+    let film = null;
+    
+    if (error || !data) {
+      // Si le slug n'existe pas, essayer de trouver le film par son titre
+      const normalizedSlug = slug.replace(/-/g, ' ').toLowerCase();
+      
+      const { data: filmByTitle, error: titleError } = await supabase
+        .from('films')
+        .select('*')
+        .ilike('title', `%${normalizedSlug}%`)
+        .order('date_ajout', { ascending: false })
+        .limit(1);
+      
+      if (titleError || !filmByTitle || filmByTitle.length === 0) {
+        return null;
+      }
+      
+      film = filmByTitle[0];
+    } else {
+      film = data;
     }
     
-    film = filmByTitle[0];
-  } else {
-    film = data;
-  }
-  
-  return film;
-}
+    // Récupérer le staff remarquable en même temps
+    if (film) {
+      const { data: staffData } = await supabase
+        .from('remarkable_staff')
+        .select('*')
+        .eq('film_id', film.id);
+      
+      film.remarkable_staff = staffData || [];
+    }
+    
+    return film;
+  },
+  ['film-by-slug'],
+  { revalidate: 3600, tags: ['films'] }
+);
 
 // Générer les métadonnées dynamiques
 export async function generateMetadata({ params }) {
@@ -154,6 +168,25 @@ export async function generateMetadata({ params }) {
       images: [imageUrl],
     },
   };
+}
+
+// Pré-générer les pages des films les plus populaires au build
+export async function generateStaticParams() {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+  
+  // Récupérer les slugs des films (limité aux 100 plus récents pour le build initial)
+  const { data: films } = await supabase
+    .from('films')
+    .select('slug')
+    .order('date_ajout', { ascending: false })
+    .limit(100);
+  
+  return (films || [])
+    .filter(film => film.slug)
+    .map(film => ({ slug: film.slug }));
 }
 
 export default async function FilmPage({ params }) {

@@ -10,19 +10,19 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/'],
       },
       {
         // Optimisation pour Googlebot
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/'],
       },
       {
         // Optimisation pour Googlebot Mobile
         userAgent: 'Googlebot-Mobile',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/', '/en/'],
+        disallow: ['/admin/', '/api/', '/debug-dates/', '/test-carousel/'],
       },
       {
         // Autoriser les images et vidéos pour les rich snippets

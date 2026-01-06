@@ -121,12 +121,21 @@ const nextConfig = {
       { source: '/films/pre-stu-un-hros-pas-comme-les-autres', destination: '/films/pere-stu-un-heros-pas-comme-les-autres', permanent: true },
       { source: '/films/wish-asha-et-la-bonne-toile', destination: '/films/wish-asha-et-la-bonne-etoile', permanent: true },
       
-      // Redirections des anciennes URLs anglaises avec slugs français vers URLs anglaises correctes
-      { source: '/en/comment-nous-travaillons', destination: '/en/how-we-work', permanent: true },
-      { source: '/en/quel-film-regarder', destination: '/en/what-movie-to-watch', permanent: true },
-      { source: '/en/films-horreur-halloween-2025', destination: '/en/halloween-horror-movies-2025', permanent: true },
-      { source: '/en/films-inconnus', destination: '/en/hidden-gems', permanent: true },
-      { source: '/en/idees-films-pour-ados', destination: '/en/teen-movie-ideas', permanent: true },
+      // Redirections 301 des pages anglaises vers les pages françaises (version EN désactivée)
+      { source: '/en', destination: '/', permanent: true },
+      { source: '/en/advanced-search', destination: '/advanced-search', permanent: true },
+      { source: '/en/all-films', destination: '/all-films', permanent: true },
+      { source: '/en/contact', destination: '/contact', permanent: true },
+      { source: '/en/films/:slug', destination: '/films/:slug', permanent: true },
+      { source: '/en/halloween-horror-movies-2025', destination: '/films-horreur-halloween-2025', permanent: true },
+      { source: '/en/hidden-gems', destination: '/films-inconnus', permanent: true },
+      { source: '/en/how-we-work', destination: '/comment-nous-travaillons', permanent: true },
+      { source: '/en/huntedbymoviehunt', destination: '/huntedbymoviehunt', permanent: true },
+      { source: '/en/teen-movie-ideas', destination: '/idees-films-pour-ados', permanent: true },
+      { source: '/en/top-rated', destination: '/top-rated', permanent: true },
+      { source: '/en/what-movie-to-watch', destination: '/quel-film-regarder', permanent: true },
+      // Catch-all pour toute autre page /en/ non listée
+      { source: '/en/:path*', destination: '/:path*', permanent: true },
     ];
   },
 };

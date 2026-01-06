@@ -148,7 +148,7 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
       {/* Équipe technique remarquable */}
       <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6">
         <RemarkableStaffTitle filmTitle={film.title} />
-        <RemarkableStaffList filmId={film.id} />
+        <RemarkableStaffList filmId={film.id} staff={film.remarkable_staff} />
       </section>
 
       {/* Films similaires */}

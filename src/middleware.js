@@ -114,9 +114,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    // Routes d'administration
+    // Routes d'administration uniquement
     '/admin/:path*',
-    // Routes publiques pour la gestion de la langue
-    '/((?!api|_next/static|_next/image|favicon.ico|images|.*\\..*).*)' 
   ],
 };
