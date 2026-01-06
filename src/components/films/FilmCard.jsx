@@ -28,6 +28,21 @@ const extractYear = (dateString) => {
   }
 };
 
+// Génère un alt text SEO-optimisé pour les cartes de films
+const generateCardAltText = (film) => {
+  const title = film.title || 'Film';
+  const year = extractYear(film.release_date);
+  const genre = film.genres ? film.genres.split(',')[0].trim() : null;
+  const rating = film.note_sur_10 ? `noté ${film.note_sur_10}/10` : null;
+  
+  let altParts = [`Affiche ${title}`];
+  if (year) altParts.push(`(${year})`);
+  if (genre) altParts.push(`- ${genre}`);
+  if (rating) altParts.push(`- ${rating}`);
+  
+  return altParts.join(' ');
+};
+
 // Fonction pour préparer le texte à partager sur Instagram
 const prepareInstagramCaption = (film) => {
   const year = film.release_date ? new Date(film.release_date).getFullYear() : '';
@@ -246,7 +261,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
                 `https://image.tmdb.org/t/p/w500${film.poster_path}` : 
                 (film.poster_path || '/images/placeholder.jpg'))
             }
-            alt={`Affiche du film ${film.title}`}
+            alt={generateCardAltText(film)}
             className="w-full h-full object-cover object-top"
             loading={priority ? "eager" : "lazy"}
             width="500"

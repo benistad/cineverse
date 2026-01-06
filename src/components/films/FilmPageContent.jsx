@@ -4,6 +4,7 @@ import RemarkableStaffList from '@/components/films/RemarkableStaffList';
 import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import FilmPoster from '@/components/films/FilmPoster';
 import FilmContent from '@/components/films/FilmContent';
 import BlogArticleLink from '@/components/films/BlogArticleLink';
@@ -23,9 +24,22 @@ import NotLikedSection from '@/components/films/NotLikedSection';
 export default function FilmPageContent({ film, locale = 'fr' }) {
   // Si locale='en', le titre est déjà traduit côté serveur
   const isTranslated = locale === 'en';
+  
+  // Extraire l'année et le genre pour les breadcrumbs
+  const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : null;
+  const mainGenre = film.genres ? film.genres.split(',')[0].trim() : null;
+  
+  // Fil d'Ariane
+  const breadcrumbItems = [
+    { name: 'Accueil', href: '/' },
+    { name: 'Films', href: '/all-films' },
+    { name: film.title }
+  ];
 
   return (
     <article className="container mx-auto px-6 py-12 space-y-6">
+      {/* Fil d'Ariane avec schema.org */}
+      <Breadcrumbs items={breadcrumbItems} />
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           {/* Affiche du film */}

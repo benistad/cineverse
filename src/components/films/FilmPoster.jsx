@@ -1,5 +1,26 @@
 'use client';
 
+/**
+ * Génère un alt text SEO-optimisé pour l'affiche du film
+ * @param {Object} film - Données du film
+ * @returns {string} Alt text descriptif (100-150 caractères)
+ */
+function generateAltText(film) {
+  const title = film.title || 'Film';
+  const year = film.release_date ? new Date(film.release_date).getFullYear() : null;
+  const genre = film.genres ? film.genres.split(',')[0].trim() : null;
+  const rating = film.note_sur_10 ? `noté ${film.note_sur_10}/10` : null;
+  
+  // Construire un alt text riche et descriptif
+  let altParts = [`Affiche du film ${title}`];
+  
+  if (year) altParts.push(`(${year})`);
+  if (genre) altParts.push(`- ${genre}`);
+  if (rating) altParts.push(`- ${rating} sur MovieHunt`);
+  
+  return altParts.join(' ');
+}
+
 export default function FilmPoster({ film }) {
   const handleImageError = (e) => {
     if (e.target.src.includes('/w500/')) {
@@ -22,7 +43,7 @@ export default function FilmPoster({ film }) {
   return (
     <img
       src={posterSrc}
-      alt={`Affiche du film ${film.title}`}
+      alt={generateAltText(film)}
       className="absolute inset-0 w-full h-full object-contain object-top"
       loading="eager"
       onError={handleImageError}
