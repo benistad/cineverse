@@ -34,27 +34,10 @@ import { NextResponse } from 'next/server';
 
 export async function middleware(request) {
   const url = new URL(request.url);
-  const pathname = url.pathname;
   
-  // MULTILINGUAL DISABLED - Redirect /en/* to French version
-  if (!pathname.startsWith('/admin') && !pathname.startsWith('/api') && !pathname.startsWith('/_next')) {
-    // Rediriger toutes les URLs /en/* vers la version française
-    const pathnameHasLocale = pathname === '/en' || pathname.startsWith('/en/');
-
-    if (pathnameHasLocale) {
-      // Rediriger vers la version française
-      const frenchPath = pathname.replace(/^\/en/, '') || '/';
-      return NextResponse.redirect(new URL(frenchPath, request.url));
-    }
-    
-    // Pour les autres URLs, forcer le cookie à 'fr'
-    const response = NextResponse.next();
-    response.cookies.set('NEXT_LOCALE', 'fr', {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 365, // 1 an
-    });
-    return response;
-  }
+  // IMPORTANT: Ne PAS exécuter de middleware sur les routes publiques
+  // pour permettre le SSG/ISR et une bonne indexation Google
+  // Le matcher ci-dessous limite déjà aux routes /admin/*
   
   // Appliquer uniquement le middleware d'authentification pour les routes admin
   if (url.pathname.startsWith('/admin')) {
@@ -108,13 +91,14 @@ export async function middleware(request) {
     return response;
   }
   
-  // Pour les autres routes, continuer normalement
+  // Ce code ne devrait jamais être atteint grâce au matcher
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    // Routes d'administration uniquement
+    // IMPORTANT: Limiter STRICTEMENT aux routes admin
+    // Ne PAS ajouter d'autres routes ici pour permettre SSG/ISR
     '/admin/:path*',
   ],
 };

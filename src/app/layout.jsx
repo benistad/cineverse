@@ -77,8 +77,8 @@ export const metadata = {
   },
 };
 
-// Forcer le dynamic rendering pour toutes les pages par défaut
-export const dynamic = 'force-dynamic';
+// SUPPRIMÉ: force-dynamic empêchait le SSG/ISR et l'indexation Google
+// Les pages définissent leur propre stratégie de rendu (revalidate pour ISR)
 
 export default function RootLayout({ children }) {
   return (
