@@ -20,6 +20,23 @@ export default async function sitemap() {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
 
+  // Pages par note
+  const ratings = ['notes-9-10', 'notes-8-10', 'notes-7-10', 'coups-de-coeur'];
+
+  // Pages genre + année (combinées)
+  const genreYearCombos = [];
+  const mainGenres = ['action', 'comedie', 'drame', 'horreur', 'thriller', 'science-fiction'];
+  const recentYears = [2025, 2024, 2023, 2022, 2021, 2020];
+  mainGenres.forEach(g => recentYears.forEach(y => genreYearCombos.push(`${g}-${y}`)));
+
+  // Pages ambiances/moods
+  const moods = ['soiree-couple', 'feel-good', 'frissons', 'action-intense', 'reflexion', 'rire', 'famille', 'suspense'];
+
+  // Pages Top X
+  const tops = ['10-films-action', '10-films-comedie', '10-films-horreur', '10-films-thriller', 
+    '10-films-drame', '10-films-science-fiction', '20-meilleurs-films', '50-meilleurs-films',
+    '10-films-animation', '10-films-romance'];
+
   // Pages statiques - MULTILINGUAL DISABLED (English pages commented out)
   const staticPages = [
     {
@@ -54,6 +71,65 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.8,
     })),
+    // Pages par note
+    {
+      url: `${baseUrl}/meilleurs-films/notes-9-10`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...ratings.map(rating => ({
+      url: `${baseUrl}/meilleurs-films/${rating}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
+    // Pages genre + année combinées
+    ...genreYearCombos.map(combo => ({
+      url: `${baseUrl}/films-genre-annee/${combo}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    })),
+    // Pages ambiances
+    {
+      url: `${baseUrl}/ambiances`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...moods.map(mood => ({
+      url: `${baseUrl}/ambiance/${mood}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    })),
+    // Pages classements/Top
+    {
+      url: `${baseUrl}/classements`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...tops.map(top => ({
+      url: `${baseUrl}/top/${top}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
+    // Pages réalisateurs et acteurs
+    {
+      url: `${baseUrl}/realisateurs`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/acteurs`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
     // {
     //   url: `${baseUrl}/en`,
     //   lastModified: new Date(),
