@@ -269,29 +269,29 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-700 line-clamp-1 transition-colors">{displayTitle || t('filmCard.noTitle')}</h3>
             {film.is_hunted_by_moviehunt && (
-              typeof Link !== 'undefined' ? (
-                <Link 
-                  href="/huntedbymoviehunt" 
-                  onClick={(e) => e.stopPropagation()} 
-                  className="flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
-                  title={t('filmCard.learnMoreHunted')}
-                >
-                  <Image 
-                    src="/images/badges/hunted-badge.png" 
-                    alt="Hunted by MovieHunt" 
-                    width={windowWidth < 640 ? 50 : 62} 
-                    height={windowWidth < 640 ? 50 : 62}
-                  />
-                </Link>
-              ) : (
+              <span 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = '/huntedbymoviehunt';
+                }} 
+                className="flex-shrink-0 cursor-pointer transition-transform hover:scale-110"
+                title={t('filmCard.learnMoreHunted')}
+                role="link"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    window.location.href = '/huntedbymoviehunt';
+                  }
+                }}
+              >
                 <Image 
                   src="/images/badges/hunted-badge.png" 
                   alt="Hunted by MovieHunt" 
                   width={windowWidth < 640 ? 50 : 62} 
                   height={windowWidth < 640 ? 50 : 62}
-                  className="flex-shrink-0"
                 />
-              )
+              </span>
             )}
           </div>
           <p className="text-sm text-gray-500 mb-2">

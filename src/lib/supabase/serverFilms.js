@@ -94,29 +94,31 @@ export const getFeaturedFilmsServer = unstable_cache(
     try {
       const supabase = getServerSupabase();
       
+      // Récupérer les films les mieux notés récemment ajoutés
       const { data: films, error } = await supabase
         .from('films')
         .select('*')
         .gt('note_sur_10', minRating)
-        .not('carousel_image_url', 'is', null)
         .order('date_ajout', { ascending: false })
-        .limit(limit);
+        .limit(limit * 2); // Récupérer plus pour filtrer
 
-      if (error) throw error;
-      
-      // Si pas assez de films avec carousel_image_url, compléter avec les mieux notés
-      if (!films || films.length < limit) {
-        const { data: topFilms } = await supabase
-          .from('films')
-          .select('*')
-          .gt('note_sur_10', minRating)
-          .order('note_sur_10', { ascending: false })
-          .limit(limit);
-        
-        return topFilms || [];
+      if (error) {
+        console.error('Erreur Supabase getFeaturedFilmsServer:', error.message);
+        throw error;
       }
       
-      return films;
+      if (!films || films.length === 0) {
+        return [];
+      }
+      
+      // Prioriser les films avec carousel_image_url
+      const filmsWithCarousel = films.filter(f => f.carousel_image_url);
+      const filmsWithoutCarousel = films.filter(f => !f.carousel_image_url);
+      
+      // Combiner : d'abord ceux avec image carrousel, puis les autres
+      const sortedFilms = [...filmsWithCarousel, ...filmsWithoutCarousel];
+      
+      return sortedFilms.slice(0, limit);
     } catch (error) {
       console.error('Erreur getFeaturedFilmsServer:', error);
       return [];
