@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
-import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon, FiBookOpen, FiUsers, FiStar } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogOut, FiHome, FiSearch, FiFilm, FiFilter, FiChevronDown, FiCompass, FiAward, FiHelpCircle, FiInfo, FiMoon, FiBookOpen, FiUsers, FiStar, FiGrid, FiCalendar, FiHeart, FiTrendingUp } from 'react-icons/fi';
 import SearchBar from '@/components/search/SearchBar';
 // MULTILINGUAL DISABLED - Keep for future use
 // import LanguageSelector from '@/components/LanguageSelector';
@@ -114,46 +114,79 @@ export default function Navbar() {
                 <FiChevronDown className="w-4 h-4 ml-1.5 transition-transform" style={{ transform: isDiscoverOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
               </button>
               {isDiscoverOpen && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-gray-200 z-50">
                   <div className="py-2" role="menu" aria-orientation="vertical">
+                    {/* Section Explorer */}
+                    <div className="px-4 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Explorer</div>
+                    <Link 
+                      href="/genres" 
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/genres' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiGrid className="w-4 h-4 mr-3" /> Par genre
+                    </Link>
+                    <Link 
+                      href="/annees" 
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/annees' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiCalendar className="w-4 h-4 mr-3" /> Par année
+                    </Link>
+                    <Link 
+                      href="/ambiances" 
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/ambiances' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiHeart className="w-4 h-4 mr-3" /> Par ambiance
+                    </Link>
+                    <Link 
+                      href="/classements" 
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/classements' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiTrendingUp className="w-4 h-4 mr-3" /> Classements
+                    </Link>
+                    
+                    {/* Séparateur */}
+                    <div className="border-t border-gray-100 my-2"></div>
+                    
+                    {/* Section Guides */}
+                    <div className="px-4 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Guides</div>
                     <Link 
                       href="/quel-film-regarder" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/quel-film-regarder' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiHelpCircle className="w-4 h-4 mr-3" /> {t('nav.whatToWatch')}
                     </Link>
                     <Link 
                       href="/films-inconnus" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-inconnus' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-inconnus' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiStar className="w-4 h-4 mr-3" /> {t('nav.hiddenGems')}
                     </Link>
                     <Link 
                       href="/idees-films-pour-ados" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/idees-films-pour-ados' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiUsers className="w-4 h-4 mr-3" /> {t('nav.teenMovies')}
                     </Link>
                     <Link 
-                      href="/films-horreur-halloween-2025" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''}`}
-                      onClick={() => setIsDiscoverOpen(false)}
-                    >
-                      <FiMoon className="w-4 h-4 mr-3" /> {t('nav.halloween')}
-                    </Link>
-                    <Link 
                       href="/huntedbymoviehunt" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/huntedbymoviehunt' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiAward className="w-4 h-4 mr-3" /> {t('nav.hunted')}
                     </Link>
+                    
+                    {/* Séparateur */}
+                    <div className="border-t border-gray-100 my-2"></div>
+                    
                     <Link 
                       href="/comment-nous-travaillons" 
-                      className={`block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-travaillons' ? 'bg-indigo-50 text-indigo-700' : ''}`}
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiInfo className="w-4 h-4 mr-3" /> {t('nav.howWeWork')}
@@ -243,8 +276,51 @@ export default function Navbar() {
               <FiFilter className="w-5 h-5 mr-3" /> {t('nav.advancedSearch')}
             </Link>
             
-            {/* Découvrir section dans le menu mobile */}
-            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">{t('nav.discover')}</div>
+            {/* Section Explorer dans le menu mobile */}
+            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">Explorer</div>
+            
+            <Link 
+              href="/genres" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/genres' ? 'bg-indigo-50 text-indigo-700' : ''
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiGrid className="w-5 h-5 mr-3" /> Par genre
+            </Link>
+            
+            <Link 
+              href="/annees" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/annees' ? 'bg-indigo-50 text-indigo-700' : ''
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiCalendar className="w-5 h-5 mr-3" /> Par année
+            </Link>
+            
+            <Link 
+              href="/ambiances" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/ambiances' ? 'bg-indigo-50 text-indigo-700' : ''
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiHeart className="w-5 h-5 mr-3" /> Par ambiance
+            </Link>
+            
+            <Link 
+              href="/classements" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/classements' ? 'bg-indigo-50 text-indigo-700' : ''
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiTrendingUp className="w-5 h-5 mr-3" /> Classements
+            </Link>
+            
+            {/* Section Guides dans le menu mobile */}
+            <div className="px-3 py-2 font-medium text-gray-500 text-sm uppercase tracking-wider mt-2 mb-1">Guides</div>
             
             <Link 
               href="/quel-film-regarder" 
@@ -274,16 +350,6 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <FiUsers className="w-5 h-5 mr-3" /> {t('nav.teenMovies')}
-            </Link>
-            
-            <Link 
-              href="/films-horreur-halloween-2025" 
-              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
-                pathname === '/films-horreur-halloween-2025' ? 'bg-indigo-50 text-indigo-700' : ''
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <FiMoon className="w-5 h-5 mr-3" /> {t('nav.halloween')}
             </Link>
             
             <Link 

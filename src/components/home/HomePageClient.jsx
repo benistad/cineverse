@@ -234,6 +234,51 @@ export default function HomePageClient({
           </div>
         </div>
       </section>
+
+      {/* Section Explorer - Liens PSEO */}
+      <section className="py-12 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-indigo-800 mb-8 text-center">
+            Explorez notre catalogue
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <a href="/genres" className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow text-center">
+              <span className="text-3xl mb-2 block">🎬</span>
+              <h3 className="font-semibold text-gray-800">Par genre</h3>
+              <p className="text-xs text-gray-500">Action, Comédie, Drame...</p>
+            </a>
+            <a href="/annees" className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow text-center">
+              <span className="text-3xl mb-2 block">📅</span>
+              <h3 className="font-semibold text-gray-800">Par année</h3>
+              <p className="text-xs text-gray-500">2025, 2024, 2023...</p>
+            </a>
+            <a href="/ambiances" className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow text-center">
+              <span className="text-3xl mb-2 block">💕</span>
+              <h3 className="font-semibold text-gray-800">Par ambiance</h3>
+              <p className="text-xs text-gray-500">Soirée couple, Feel-good...</p>
+            </a>
+            <a href="/classements" className="p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow text-center">
+              <span className="text-3xl mb-2 block">🏆</span>
+              <h3 className="font-semibold text-gray-800">Classements</h3>
+              <p className="text-xs text-gray-500">Top 10, Top 20...</p>
+            </a>
+          </div>
+
+          {/* Liens rapides genres populaires */}
+          <div className="flex flex-wrap justify-center gap-2">
+            <a href="/genre/action" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Action</a>
+            <a href="/genre/comedie" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Comédie</a>
+            <a href="/genre/drame" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Drame</a>
+            <a href="/genre/horreur" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Horreur</a>
+            <a href="/genre/thriller" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Thriller</a>
+            <a href="/genre/science-fiction" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Sci-Fi</a>
+            <a href="/annee/2025" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Films 2025</a>
+            <a href="/annee/2024" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Films 2024</a>
+            <a href="/top/20-meilleurs-films" className="px-3 py-1 bg-white rounded-full text-sm text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition-colors shadow-sm">Top 20</a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
