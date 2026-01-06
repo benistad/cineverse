@@ -9,6 +9,17 @@ export default async function sitemap() {
   // URL de base du site
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr';
   
+  // Genres pour le SEO programmatique
+  const genres = [
+    'action', 'aventure', 'animation', 'comedie', 'crime', 'documentaire',
+    'drame', 'famille', 'fantastique', 'histoire', 'horreur', 'musique',
+    'mystere', 'romance', 'science-fiction', 'thriller', 'guerre', 'western'
+  ];
+  
+  // Années récentes pour le SEO programmatique
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
+
   // Pages statiques - MULTILINGUAL DISABLED (English pages commented out)
   const staticPages = [
     {
@@ -17,6 +28,32 @@ export default async function sitemap() {
       changeFrequency: 'daily',
       priority: 1.0,
     },
+    // Pages de genres
+    {
+      url: `${baseUrl}/genres`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...genres.map(genre => ({
+      url: `${baseUrl}/genre/${genre}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
+    // Pages par année
+    {
+      url: `${baseUrl}/annees`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...years.map(year => ({
+      url: `${baseUrl}/annee/${year}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
     // {
     //   url: `${baseUrl}/en`,
     //   lastModified: new Date(),

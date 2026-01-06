@@ -5,6 +5,7 @@ import StreamingProviders from '@/components/films/StreamingProviders';
 import SimilarFilms from '@/components/films/SimilarFilms';
 import MovieSchema from '@/components/seo/MovieSchema';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { FilmInternalLinks } from '@/components/seo/InternalLinks';
 import FilmPoster from '@/components/films/FilmPoster';
 import FilmContent from '@/components/films/FilmContent';
 import BlogArticleLink from '@/components/films/BlogArticleLink';
@@ -167,6 +168,9 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
 
       {/* Films similaires */}
       <SimilarFilms currentFilm={film} filmTitle={film.title} />
+
+      {/* Maillage interne SEO */}
+      <FilmInternalLinks film={film} className="mt-6" />
 
       {/* Schema.org JSON-LD */}
       <MovieSchema film={film} />
