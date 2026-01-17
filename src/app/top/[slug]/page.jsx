@@ -137,7 +137,7 @@ export default async function TopPage({ params }) {
               {index + 1}
             </span>
             <img
-              src={film.poster_path ? `https://image.tmdb.org/t/p/w92${film.poster_path}` : '/images/placeholder.jpg'}
+              src={film.poster_url || '/images/placeholder.jpg'}
               alt={film.title}
               className="w-16 h-24 object-cover rounded"
             />
