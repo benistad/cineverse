@@ -167,6 +167,8 @@ export function generateFilmEmailTemplate(film) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Nouveau film sur MovieHunt : ${film.title}</title>
+  <!-- Google Fonts Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!--[if mso]>
   <noscript>
     <xml>
@@ -183,7 +185,7 @@ export function generateFilmEmailTemplate(film) {
     img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
     
     /* Base */
-    body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #ffffff; }
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #ffffff; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     
     /* Mobile */
     @media only screen and (max-width: 600px) {
@@ -201,7 +203,7 @@ export function generateFilmEmailTemplate(film) {
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #ffffff; color: #1a1a2e;">
+<body style="margin: 0; padding: 0; font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #ffffff; color: #1a1a2e;">
   
   <!-- Wrapper -->
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff;">
@@ -215,17 +217,7 @@ export function generateFilmEmailTemplate(film) {
           <tr>
             <td align="center" style="padding-bottom: 32px;">
               <a href="https://moviehunt.fr" style="text-decoration: none;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td valign="middle" style="padding-right: 10px;">
-                      <!-- Film reel icon SVG as image -->
-                      <img src="https://moviehunt.fr/images/logo-blue.png" alt="" width="36" height="36" style="width: 36px; height: 36px; display: block;" />
-                    </td>
-                    <td valign="middle">
-                      <span style="font-size: 26px; font-weight: 700; color: #6366f1; letter-spacing: -0.5px;">MovieHunt</span>
-                    </td>
-                  </tr>
-                </table>
+                <img src="https://moviehunt.fr/images/logo-mh.png" alt="MovieHunt" width="200" style="width: 200px; height: auto; display: block;" />
               </a>
             </td>
           </tr>
@@ -254,33 +246,38 @@ export function generateFilmEmailTemplate(film) {
             </td>
           </tr>
           
-          <!-- Genre & Year -->
-          ${(genres || releaseYear) ? `
-          <tr>
-            <td align="center" style="padding-bottom: 20px;">
-              <p class="meta-text" style="margin: 0; font-size: 15px; color: #6b7280;">
-                ${genres}${genres && releaseYear ? ' • ' : ''}${releaseYear}
-              </p>
-            </td>
-          </tr>
-          ` : ''}
-          
           <!-- Poster - 75% width responsive -->
           <tr>
-            <td align="center" style="padding-bottom: 28px;">
+            <td align="center" style="padding-bottom: 16px;">
               <a href="${filmUrl}" style="text-decoration: none;">
                 <img src="${posterUrl}" alt="${film.title}" class="poster" width="420" style="width: 75%; max-width: 420px; height: auto; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);" />
               </a>
             </td>
           </tr>
           
+          <!-- Genre & Year - Under poster -->
+          ${(genres || releaseYear) ? `
+          <tr>
+            <td align="center" style="padding-bottom: 24px;">
+              <p class="meta-text" style="margin: 0; font-size: 15px; color: #6b7280; font-family: 'Poppins', sans-serif;">
+                ${genres}${genres && releaseYear ? ' • ' : ''}${releaseYear}
+              </p>
+            </td>
+          </tr>
+          ` : ''}
+          
           <!-- Rating - Circle design like homepage carousel (RatingIcon) -->
           <tr>
             <td align="center" style="padding-bottom: 28px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; vertical-align: middle; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29;">
-                    <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px;">${rating}</span>
+                  <td valign="middle" style="padding-right: 12px;">
+                    <span style="font-size: 18px; font-weight: 600; color: #1a1a2e; font-family: 'Poppins', sans-serif;">Note :</span>
+                  </td>
+                  <td valign="middle">
+                    <div style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29; display: inline-block;">
+                      <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px; font-family: 'Poppins', sans-serif;">${rating}</span>
+                    </div>
                   </td>
                 </tr>
               </table>
