@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FiHome, FiFilm, FiSearch, FiAward, FiHelpCircle, FiList, FiInfo, FiMail } from 'react-icons/fi';
 import { FaFacebook, FaInstagram, FaTumblr } from 'react-icons/fa';
 import { useTranslations } from '@/hooks/useTranslations';
+import NewsletterForm from '@/components/newsletter/NewsletterForm';
 // MULTILINGUAL DISABLED
 // import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -90,7 +91,9 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t('footer.followUs')}</h3>
+            <NewsletterForm variant="compact" />
+            
+            <h3 className="text-lg font-semibold mt-6 mb-4">{t('footer.followUs')}</h3>
             <div className="flex gap-4">
               <a 
                 href="https://www.facebook.com/profile.php?id=61575866357932&locale=fr_FR" 

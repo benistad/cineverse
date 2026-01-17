@@ -333,6 +333,31 @@ export default function FilmEditor({ movieDetails }) {
         console.warn('Erreur lors de l\'invalidation du cache serveur:', revalidateError);
       }
       
+      // Envoyer la newsletter pour le nouveau film (uniquement pour les nouveaux films)
+      if (!existingFilmData) {
+        try {
+          const newsletterResponse = await fetch('/api/newsletter/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: savedFilm.title,
+              slug: savedFilm.slug,
+              synopsis: savedFilm.synopsis,
+              poster_url: savedFilm.poster_url,
+              note_sur_10: savedFilm.note_sur_10,
+            }),
+          });
+          const newsletterResult = await newsletterResponse.json();
+          if (newsletterResult.success) {
+            console.log('Newsletter envoyée avec succès');
+          } else if (newsletterResult.skipped) {
+            console.log('Newsletter non configurée, envoi ignoré');
+          }
+        } catch (newsletterError) {
+          console.warn('Erreur lors de l\'envoi de la newsletter:', newsletterError);
+        }
+      }
+      
       // Rediriger vers le dashboard après 2 secondes
       setTimeout(() => {
         router.push('/admin/dashboard');
