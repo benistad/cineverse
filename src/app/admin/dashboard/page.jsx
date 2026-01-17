@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllFilms } from '@/lib/supabase/films';
 import FilmGrid from '@/components/films/FilmGrid';
-import { FiPlus, FiSearch, FiRefreshCw, FiDatabase, FiGlobe } from 'react-icons/fi';
+import { FiPlus, FiSearch, FiRefreshCw, FiDatabase, FiGlobe, FiMail, FiLoader } from 'react-icons/fi';
 
 // Forcer le dynamic rendering pour éviter le pre-rendering
 export const dynamic = 'force-dynamic';
@@ -12,6 +12,30 @@ export const dynamic = 'force-dynamic';
 export default function DashboardPage() {
   const [films, setFilms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sendingTestEmail, setSendingTestEmail] = useState(false);
+  const [testEmailResult, setTestEmailResult] = useState(null);
+
+  const handleSendTestEmail = async () => {
+    setSendingTestEmail(true);
+    setTestEmailResult(null);
+    
+    try {
+      const response = await fetch('/api/newsletter/test', { method: 'POST' });
+      const data = await response.json();
+      
+      if (data.success) {
+        setTestEmailResult({ type: 'success', message: `✅ ${data.message} (${data.film})` });
+      } else {
+        setTestEmailResult({ type: 'error', message: `❌ ${data.error}` });
+      }
+    } catch (error) {
+      setTestEmailResult({ type: 'error', message: `❌ Erreur: ${error.message}` });
+    } finally {
+      setSendingTestEmail(false);
+      // Effacer le message après 5 secondes
+      setTimeout(() => setTestEmailResult(null), 5000);
+    }
+  };
 
   useEffect(() => {
     async function fetchFilms() {
@@ -73,7 +97,21 @@ export default function DashboardPage() {
           >
             <FiDatabase /> Migration BDD
           </Link>
+          <button
+            onClick={handleSendTestEmail}
+            disabled={sendingTestEmail}
+            className="flex items-center gap-2 bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Envoyer un email test à benoitdurand2@neuf.fr"
+          >
+            {sendingTestEmail ? <FiLoader className="animate-spin" /> : <FiMail />}
+            {sendingTestEmail ? 'Envoi...' : 'Test Newsletter'}
+          </button>
         </div>
+        {testEmailResult && (
+          <div className={`mt-4 p-3 rounded-md text-sm ${testEmailResult.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {testEmailResult.message}
+          </div>
+        )}
       </div>
 
       {films.length > 0 ? (
