@@ -6,6 +6,7 @@ import { FiSave, FiX, FiImage } from 'react-icons/fi';
 import YouTube from 'react-youtube';
 import { getImageUrl, getTrailerKey, getMoviePosters } from '@/lib/tmdb/api';
 import { saveFilm, saveRemarkableStaff, getFilmByTmdbId } from '@/lib/supabase/films';
+import { clearCache } from '@/lib/cache/supabaseCache';
 import { useAuth } from '@/contexts/AuthContext';
 import RatingIcon from '@/components/ui/RatingIcon';
 import SimpleRichTextEditor from '@/components/ui/SimpleRichTextEditor';
@@ -320,6 +321,17 @@ export default function FilmEditor({ movieDetails }) {
       }
 
       setSuccess(true);
+      
+      // Invalider le cache client
+      clearCache();
+      
+      // Invalider le cache serveur (ISR) pour que les nouveaux films apparaissent immédiatement
+      try {
+        await fetch('/api/revalidate', { method: 'POST' });
+        console.log('Cache serveur invalidé avec succès');
+      } catch (revalidateError) {
+        console.warn('Erreur lors de l\'invalidation du cache serveur:', revalidateError);
+      }
       
       // Rediriger vers le dashboard après 2 secondes
       setTimeout(() => {
