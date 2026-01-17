@@ -213,11 +213,20 @@ export function generateFilmEmailTemplate(film) {
         <!-- Content Container -->
         <table role="presentation" class="content" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px; width: 100%;">
           
-          <!-- Logo MovieHunt -->
+          <!-- Logo MovieHunt - Same as Navbar -->
           <tr>
             <td align="center" style="padding-bottom: 32px;">
               <a href="https://moviehunt.fr" style="text-decoration: none;">
-                <img src="https://moviehunt.fr/images/logo-mh.png" alt="MovieHunt" width="200" style="width: 200px; height: auto; display: block;" />
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td valign="middle" style="padding-right: 8px;">
+                      <img src="https://moviehunt.fr/images/logo-mh.png" alt="" width="32" height="32" style="width: 32px; height: 32px; display: block;" />
+                    </td>
+                    <td valign="middle">
+                      <span style="font-size: 24px; font-weight: 700; color: #4338ca; font-family: 'Poppins', sans-serif;">MovieHunt</span>
+                    </td>
+                  </tr>
+                </table>
               </a>
             </td>
           </tr>
@@ -273,18 +282,18 @@ export function generateFilmEmailTemplate(film) {
                     </table>
                     ` : ''}
                     
-                    <!-- Rating - Circle design like homepage carousel (RatingIcon) -->
+                    <!-- Rating - Same size as FilmCard (40px) -->
                     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                       <tr>
                         <td align="center" style="padding-bottom: 28px;">
                           <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                              <td valign="middle" style="padding-right: 12px;">
-                                <span style="font-size: 18px; font-weight: 600; color: #1a1a2e; font-family: 'Poppins', sans-serif;">Note :</span>
+                              <td valign="middle" style="padding-right: 10px;">
+                                <span style="font-size: 16px; font-weight: 600; color: #1a1a2e; font-family: 'Poppins', sans-serif;">Note :</span>
                               </td>
                               <td valign="middle">
-                                <div style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29; display: inline-block;">
-                                  <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px; font-family: 'Poppins', sans-serif;">${rating}</span>
+                                <div style="width: 40px; height: 40px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 2px solid #FEBE29; display: inline-block;">
+                                  <span style="font-size: 20px; font-weight: 700; color: #ffffff; line-height: 36px; font-family: 'Poppins', sans-serif;">${rating}</span>
                                 </div>
                               </td>
                             </tr>
