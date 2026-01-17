@@ -141,7 +141,17 @@ export function generateFilmEmailTemplate(film) {
     : film.synopsis || '';
 
   // Note sur 10
-  const rating = film.note_sur_10 || 0;
+  const rating = Math.round(film.note_sur_10 || 0);
+  
+  // Couleur indigo selon la note (comme RatingIcon.jsx)
+  const getRatingColor = (r) => {
+    if (r <= 3) return '#818CF8'; // indigo-400 (notes basses)
+    if (r <= 5) return '#6366F1'; // indigo-500 (notes moyennes-basses)
+    if (r <= 7) return '#4F46E5'; // indigo-600 (notes moyennes)
+    if (r <= 8) return '#4338CA'; // indigo-700 (bonnes notes)
+    return '#3730A3'; // indigo-800 (excellentes notes)
+  };
+  const ratingColor = getRatingColor(rating);
   
   // Extraire l'année de la date de sortie
   const releaseYear = film.release_date ? new Date(film.release_date).getFullYear() : '';
@@ -264,26 +274,13 @@ export function generateFilmEmailTemplate(film) {
             </td>
           </tr>
           
-          <!-- Rating - Circle design -->
+          <!-- Rating - Circle design like homepage carousel (RatingIcon) -->
           <tr>
             <td align="center" style="padding-bottom: 28px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                  <td valign="middle" style="padding-right: 12px;">
-                    <span style="font-size: 18px; font-weight: 600; color: #1a1a2e;">Note:</span>
-                  </td>
-                  <td valign="middle" style="padding-right: 12px;">
-                    <!-- Circle with number -->
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                      <tr>
-                        <td style="width: 48px; height: 48px; background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%); border-radius: 50%; text-align: center; vertical-align: middle;">
-                          <span style="font-size: 22px; font-weight: 700; color: #ffffff;">${rating}</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td valign="middle">
-                    <span style="font-size: 18px; font-weight: 500; color: #6b7280;">${rating}/10</span>
+                  <td style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; vertical-align: middle; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29;">
+                    <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px;">${rating}</span>
                   </td>
                 </tr>
               </table>
