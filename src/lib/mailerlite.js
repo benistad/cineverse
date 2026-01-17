@@ -231,92 +231,100 @@ export function generateFilmEmailTemplate(film) {
             </td>
           </tr>
           
-          <!-- Film Title - Yellow Banner -->
+          <!-- Content Card with Shadow -->
           <tr>
-            <td align="center" style="padding-bottom: 24px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <td>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); overflow: hidden;">
+                
+                <!-- Film Title - Yellow Banner -->
                 <tr>
-                  <td class="title-banner" style="background-color: #fbbf24; padding: 16px 24px; border-radius: 8px;">
-                    <h1 class="title" style="margin: 0; font-size: 28px; font-weight: 800; color: #1a1a2e; line-height: 1.2;">
+                  <td class="title-banner" style="background-color: #fbbf24; padding: 16px 24px;">
+                    <h1 class="title" style="margin: 0; font-size: 28px; font-weight: 800; color: #1a1a2e; line-height: 1.2; font-family: 'Poppins', sans-serif;">
                       ${film.title}
                     </h1>
                   </td>
                 </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Poster - 75% width responsive -->
-          <tr>
-            <td align="center" style="padding-bottom: 16px;">
-              <a href="${filmUrl}" style="text-decoration: none;">
-                <img src="${posterUrl}" alt="${film.title}" class="poster" width="420" style="width: 75%; max-width: 420px; height: auto; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);" />
-              </a>
-            </td>
-          </tr>
-          
-          <!-- Genre & Year - Under poster -->
-          ${(genres || releaseYear) ? `
-          <tr>
-            <td align="center" style="padding-bottom: 24px;">
-              <p class="meta-text" style="margin: 0; font-size: 15px; color: #6b7280; font-family: 'Poppins', sans-serif;">
-                ${genres}${genres && releaseYear ? ' • ' : ''}${releaseYear}
-              </p>
-            </td>
-          </tr>
-          ` : ''}
-          
-          <!-- Rating - Circle design like homepage carousel (RatingIcon) -->
-          <tr>
-            <td align="center" style="padding-bottom: 28px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                
+                <!-- Card Content -->
                 <tr>
-                  <td valign="middle" style="padding-right: 12px;">
-                    <span style="font-size: 18px; font-weight: 600; color: #1a1a2e; font-family: 'Poppins', sans-serif;">Note :</span>
-                  </td>
-                  <td valign="middle">
-                    <div style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29; display: inline-block;">
-                      <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px; font-family: 'Poppins', sans-serif;">${rating}</span>
-                    </div>
+                  <td style="padding: 24px;">
+                    
+                    <!-- Poster - 75% width responsive -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="padding-bottom: 16px;">
+                          <a href="${filmUrl}" style="text-decoration: none;">
+                            <img src="${posterUrl}" alt="${film.title}" class="poster" width="420" style="width: 75%; max-width: 420px; height: auto; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);" />
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Genre & Year - Under poster -->
+                    ${(genres || releaseYear) ? `
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="padding-bottom: 24px;">
+                          <p class="meta-text" style="margin: 0; font-size: 15px; color: #6b7280; font-family: 'Poppins', sans-serif;">
+                            ${genres}${genres && releaseYear ? ' • ' : ''}${releaseYear}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                    ` : ''}
+                    
+                    <!-- Rating - Circle design like homepage carousel (RatingIcon) -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="padding-bottom: 28px;">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td valign="middle" style="padding-right: 12px;">
+                                <span style="font-size: 18px; font-weight: 600; color: #1a1a2e; font-family: 'Poppins', sans-serif;">Note :</span>
+                              </td>
+                              <td valign="middle">
+                                <div style="width: 60px; height: 60px; background-color: ${ratingColor}; border-radius: 50%; text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); border: 3px solid #FEBE29; display: inline-block;">
+                                  <span style="font-size: 28px; font-weight: 700; color: #ffffff; line-height: 54px; font-family: 'Poppins', sans-serif;">${rating}</span>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Synopsis -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="left" style="padding-bottom: 24px;">
+                          <!-- Synopsis Title -->
+                          <h2 class="synopsis-title" style="margin: 0 0 12px 0; font-size: 24px; font-weight: 700; color: #1a1a2e; font-family: 'Poppins', sans-serif;">
+                            Synopsis de ${film.title}
+                          </h2>
+                          <!-- Divider line -->
+                          <div style="width: 100%; height: 3px; background: linear-gradient(90deg, #6366f1 0%, #818cf8 50%, transparent 100%); margin-bottom: 16px; border-radius: 2px;"></div>
+                          <!-- Synopsis text -->
+                          <p class="synopsis-text" style="margin: 0; font-size: 16px; line-height: 1.7; color: #374151; text-align: left; font-family: 'Poppins', sans-serif;">
+                            ${synopsis}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <!-- CTA Button -->
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="padding-top: 8px;">
+                          <a href="${filmUrl}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-decoration: none; padding: 16px 44px; font-size: 16px; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4); font-family: 'Poppins', sans-serif;">
+                            Voir la fiche complète →
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    
                   </td>
                 </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Synopsis -->
-          <tr>
-            <td align="left" style="padding-bottom: 32px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td class="synopsis-box" style="padding: 0;">
-                    <!-- Synopsis Title -->
-                    <h2 class="synopsis-title" style="margin: 0 0 12px 0; font-size: 24px; font-weight: 700; color: #1a1a2e;">
-                      Synopsis de ${film.title}
-                    </h2>
-                    <!-- Divider line -->
-                    <div style="width: 100%; height: 3px; background: linear-gradient(90deg, #6366f1 0%, #818cf8 50%, transparent 100%); margin-bottom: 16px; border-radius: 2px;"></div>
-                    <!-- Synopsis text -->
-                    <p class="synopsis-text" style="margin: 0; font-size: 16px; line-height: 1.7; color: #374151; text-align: left;">
-                      ${synopsis}
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- CTA Button -->
-          <tr>
-            <td align="center" style="padding-bottom: 48px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td>
-                    <a href="${filmUrl}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-decoration: none; padding: 16px 44px; font-size: 16px; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);">
-                      Voir la fiche complète →
-                    </a>
-                  </td>
-                </tr>
+                
               </table>
             </td>
           </tr>
