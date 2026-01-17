@@ -128,6 +128,7 @@ export async function sendCampaign({ subject, htmlContent, name }) {
 
 /**
  * Génère le template HTML pour un nouveau film
+ * Design responsive avec charte graphique MovieHunt
  * @param {Object} film - Données du film
  */
 export function generateFilmEmailTemplate(film) {
@@ -135,17 +136,12 @@ export function generateFilmEmailTemplate(film) {
   const posterUrl = film.poster_url || 'https://moviehunt.fr/images/placeholder-poster.jpg';
   
   // Tronquer le synopsis si trop long
-  const synopsis = film.synopsis?.length > 300 
-    ? film.synopsis.substring(0, 300) + '...' 
+  const synopsis = film.synopsis?.length > 280 
+    ? film.synopsis.substring(0, 280) + '...' 
     : film.synopsis || '';
 
-  // Générer les étoiles pour la note
+  // Note sur 10
   const rating = film.note_sur_10 || 0;
-  const fullStars = Math.floor(rating / 2);
-  const hasHalfStar = rating % 2 >= 1;
-  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-  
-  const starsHtml = '★'.repeat(fullStars) + (hasHalfStar ? '½' : '') + '☆'.repeat(emptyStars);
 
   return `
 <!DOCTYPE html>
@@ -153,86 +149,156 @@ export function generateFilmEmailTemplate(film) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Nouveau film sur MovieHunt : ${film.title}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    /* Reset */
+    body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+    
+    /* Base */
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #0a0a0a; }
+    
+    /* Mobile */
+    @media only screen and (max-width: 600px) {
+      .wrapper { width: 100% !important; padding: 20px 16px !important; }
+      .content { width: 100% !important; }
+      .poster { width: 180px !important; }
+      .title { font-size: 26px !important; line-height: 32px !important; }
+      .rating-box { padding: 12px 24px !important; }
+      .rating-number { font-size: 28px !important; }
+      .synopsis { padding: 16px 20px !important; font-size: 15px !important; }
+      .cta-button { padding: 16px 40px !important; font-size: 16px !important; }
+      .footer-text { font-size: 12px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0f0f0f; color: #ffffff;">
-  <table role="presentation" style="width: 100%; border-collapse: collapse;">
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #0a0a0a; color: #ffffff;">
+  
+  <!-- Wrapper -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #0a0a0a;">
     <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" style="width: 100%; max-width: 600px; border-collapse: collapse;">
+      <td align="center" class="wrapper" style="padding: 40px 20px;">
+        
+        <!-- Content Container -->
+        <table role="presentation" class="content" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px; width: 100%;">
           
-          <!-- Header -->
+          <!-- Logo -->
           <tr>
-            <td align="center" style="padding-bottom: 30px;">
-              <img src="https://moviehunt.fr/images/logo.png" alt="MovieHunt" style="height: 40px;" />
-            </td>
-          </tr>
-          
-          <!-- Titre -->
-          <tr>
-            <td align="center" style="padding-bottom: 10px;">
-              <h1 style="margin: 0; font-size: 14px; font-weight: normal; color: #888888; text-transform: uppercase; letter-spacing: 2px;">
-                Nouveau film noté
-              </h1>
-            </td>
-          </tr>
-          
-          <!-- Nom du film -->
-          <tr>
-            <td align="center" style="padding-bottom: 30px;">
-              <h2 style="margin: 0; font-size: 32px; font-weight: bold; color: #ffffff;">
-                ${film.title}
-              </h2>
-            </td>
-          </tr>
-          
-          <!-- Affiche -->
-          <tr>
-            <td align="center" style="padding-bottom: 30px;">
-              <a href="${filmUrl}" style="text-decoration: none;">
-                <img src="${posterUrl}" alt="${film.title}" style="width: 200px; height: auto; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5);" />
+            <td align="center" style="padding-bottom: 32px;">
+              <a href="https://moviehunt.fr" style="text-decoration: none;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); padding: 12px 24px; border-radius: 8px;">
+                      <span style="font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">🎬 MovieHunt</span>
+                    </td>
+                  </tr>
+                </table>
               </a>
             </td>
           </tr>
           
-          <!-- Note -->
+          <!-- Subtitle -->
           <tr>
-            <td align="center" style="padding-bottom: 20px;">
-              <div style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 30px; border-radius: 50px;">
-                <span style="font-size: 24px; color: #ffd700;">${starsHtml}</span>
-                <span style="font-size: 24px; font-weight: bold; color: #ffffff; margin-left: 10px;">${rating}/10</span>
-              </div>
+            <td align="center" style="padding-bottom: 8px;">
+              <p style="margin: 0; font-size: 13px; font-weight: 500; color: #8b5cf6; text-transform: uppercase; letter-spacing: 3px;">
+                Nouveau film noté
+              </p>
+            </td>
+          </tr>
+          
+          <!-- Film Title -->
+          <tr>
+            <td align="center" style="padding-bottom: 28px;">
+              <h1 class="title" style="margin: 0; font-size: 34px; font-weight: 700; color: #ffffff; line-height: 40px; letter-spacing: -0.5px;">
+                ${film.title}
+              </h1>
+            </td>
+          </tr>
+          
+          <!-- Poster -->
+          <tr>
+            <td align="center" style="padding-bottom: 24px;">
+              <a href="${filmUrl}" style="text-decoration: none;">
+                <img src="${posterUrl}" alt="${film.title}" class="poster" width="220" style="width: 220px; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);" />
+              </a>
+            </td>
+          </tr>
+          
+          <!-- Rating -->
+          <tr>
+            <td align="center" style="padding-bottom: 28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="rating-box" style="background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #4f46e5 100%); padding: 14px 32px; border-radius: 100px; box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);">
+                    <span class="rating-number" style="font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1px;">${rating}<span style="font-size: 18px; font-weight: 500; opacity: 0.8;">/10</span></span>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           
           <!-- Synopsis -->
           <tr>
-            <td style="padding: 20px 30px; background-color: #1a1a1a; border-radius: 12px;">
-              <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #cccccc; text-align: center;">
-                ${synopsis}
-              </p>
+            <td align="center" style="padding-bottom: 32px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="synopsis" style="background-color: #18181b; padding: 24px 28px; border-radius: 16px; border: 1px solid #27272a;">
+                    <p style="margin: 0; font-size: 16px; line-height: 1.7; color: #a1a1aa; text-align: center;">
+                      ${synopsis}
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           
           <!-- CTA Button -->
           <tr>
-            <td align="center" style="padding: 40px 0;">
-              <a href="${filmUrl}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; text-decoration: none; padding: 18px 50px; font-size: 18px; font-weight: bold; border-radius: 50px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
-                Voir la fiche complète →
-              </a>
+            <td align="center" style="padding-bottom: 48px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <a href="${filmUrl}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: #ffffff; text-decoration: none; padding: 18px 48px; font-size: 17px; font-weight: 600; border-radius: 100px; box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4); letter-spacing: 0.3px;">
+                      Découvrir ce film →
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Divider -->
+          <tr>
+            <td style="padding-bottom: 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="height: 1px; background: linear-gradient(90deg, transparent 0%, #27272a 50%, transparent 100%);"></td>
+                </tr>
+              </table>
             </td>
           </tr>
           
           <!-- Footer -->
           <tr>
-            <td align="center" style="padding-top: 40px; border-top: 1px solid #333333;">
-              <p style="margin: 0 0 10px 0; font-size: 14px; color: #666666;">
+            <td align="center">
+              <p class="footer-text" style="margin: 0 0 12px 0; font-size: 13px; color: #52525b; line-height: 1.5;">
                 Vous recevez cet email car vous êtes abonné à la newsletter MovieHunt.
               </p>
-              <p style="margin: 0; font-size: 14px;">
-                <a href="https://moviehunt.fr" style="color: #667eea; text-decoration: none;">Visiter MovieHunt</a>
-                &nbsp;•&nbsp;
-                <a href="{$unsubscribe}" style="color: #666666; text-decoration: none;">Se désabonner</a>
+              <p class="footer-text" style="margin: 0; font-size: 13px;">
+                <a href="https://moviehunt.fr" style="color: #8b5cf6; text-decoration: none; font-weight: 500;">Visiter MovieHunt</a>
+                <span style="color: #3f3f46; margin: 0 8px;">•</span>
+                <a href="{$unsubscribe}" style="color: #52525b; text-decoration: none;">Se désabonner</a>
               </p>
             </td>
           </tr>
@@ -241,6 +307,7 @@ export function generateFilmEmailTemplate(film) {
       </td>
     </tr>
   </table>
+  
 </body>
 </html>
 `;
