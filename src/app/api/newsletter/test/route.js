@@ -57,7 +57,7 @@ export async function POST() {
         emails: [{
           subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
           from_name: 'MovieHunt',
-          from: process.env.MAILERLITE_FROM_EMAIL || 'newsletter@moviehunt.fr',
+          from: process.env.MAILERLITE_FROM_EMAIL || 'contact@moviehunt.fr',
           content: htmlContent,
         }],
         // Envoyer uniquement à l'adresse de test
@@ -117,7 +117,7 @@ export async function POST() {
           emails: [{
             subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
             from_name: 'MovieHunt',
-            from: process.env.MAILERLITE_FROM_EMAIL || 'newsletter@moviehunt.fr',
+            from: process.env.MAILERLITE_FROM_EMAIL || 'contact@moviehunt.fr',
             content: htmlContent,
           }],
         }),

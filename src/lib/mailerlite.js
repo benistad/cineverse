@@ -106,7 +106,7 @@ export async function sendCampaign({ subject, htmlContent, name }) {
       emails: [{
         subject,
         from_name: 'MovieHunt',
-        from: process.env.MAILERLITE_FROM_EMAIL || 'newsletter@moviehunt.fr',
+        from: process.env.MAILERLITE_FROM_EMAIL || 'contact@moviehunt.fr',
         content: htmlContent,
       }],
     }),
