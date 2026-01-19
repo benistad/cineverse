@@ -100,22 +100,22 @@ export default function NewsletterForm({ variant = 'default' }) {
   // Variante par défaut (plus grande, pour une section dédiée)
   return (
     <div className="w-full max-w-xl mx-auto text-center">
-      <div className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border border-purple-500/20 rounded-2xl p-8">
-        <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="bg-white border-2 border-indigo-100 rounded-2xl p-8 shadow-lg shadow-indigo-100/50">
+        <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-300/50">
           <FiMail className="w-8 h-8 text-white" />
         </div>
         
-        <h2 className="text-2xl font-bold text-white mb-3">
+        <h2 className="text-2xl font-bold text-gray-900 mb-3">
           Ne ratez aucun film
         </h2>
-        <p className="text-gray-400 mb-6">
-          Inscrivez-vous à notre newsletter et recevez nos recommandations de films dès leur publication.
+        <p className="text-gray-600 mb-6">
+          Inscrivez-vous à notre newsletter et recevez un email à chaque nouveau film noté.
         </p>
 
         {status === 'success' ? (
-          <div className="flex items-center justify-center gap-3 text-green-400 bg-green-400/10 px-6 py-4 rounded-xl">
+          <div className="flex items-center justify-center gap-3 text-green-700 bg-green-50 border border-green-200 px-6 py-4 rounded-xl">
             <FiCheck className="w-6 h-6 flex-shrink-0" />
-            <span>{message}</span>
+            <span className="font-medium">{message}</span>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -125,7 +125,7 @@ export default function NewsletterForm({ variant = 'default' }) {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Prénom (optionnel)"
-                className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all"
                 disabled={status === 'loading'}
               />
               <input
@@ -134,14 +134,14 @@ export default function NewsletterForm({ variant = 'default' }) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Votre email *"
                 required
-                className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all"
                 disabled={status === 'loading'}
               />
             </div>
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mx-auto"
+              className="w-full px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-indigo-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-indigo-300/50 hover:shadow-xl hover:shadow-indigo-300/50"
             >
               {status === 'loading' ? (
                 <>
@@ -156,13 +156,13 @@ export default function NewsletterForm({ variant = 'default' }) {
               )}
             </button>
             {status === 'error' && (
-              <p className="text-red-400 text-sm mt-2">{message}</p>
+              <p className="text-red-600 text-sm mt-2">{message}</p>
             )}
           </form>
         )}
         
-        <p className="text-gray-500 text-xs mt-4">
-          Pas de spam, uniquement nos meilleures recommandations. Désabonnement en un clic.
+        <p className="text-gray-400 text-sm mt-5">
+          Pas de spam, uniquement les nouveaux films notés. Désabonnement en un clic.
         </p>
       </div>
     </div>
