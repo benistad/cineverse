@@ -48,7 +48,7 @@ export default function NewsletterBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 px-4 relative">
+    <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 px-4 relative sticky top-[72px] z-40">
       <div className="container mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           {/* Message */}
