@@ -71,7 +71,7 @@ export default function NewsletterBanner() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Votre email"
-                  className="pl-9 pr-3 py-2 rounded-lg text-sm text-gray-900 placeholder-gray-500 w-48 sm:w-56 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="pl-9 pr-3 py-2 rounded-lg text-sm text-gray-900 placeholder-gray-400 bg-white w-48 sm:w-56 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   disabled={status === 'loading'}
                 />
               </div>
