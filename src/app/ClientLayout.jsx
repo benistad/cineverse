@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import Navbar from "@/components/layout/Navbar";
+import NewsletterBanner from "@/components/newsletter/NewsletterBanner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Script from "next/script";
@@ -158,6 +159,7 @@ export default function ClientLayout({ children }) {
         <AuthProvider>
           <ScrollToTop />
           <Navbar />
+          <NewsletterBanner />
           <main className="container mx-auto px-4 py-8">
             {children}
           </main>
