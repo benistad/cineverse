@@ -148,6 +148,12 @@ export default async function sitemap() {
       changeFrequency: 'weekly',
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/newsletter`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
     // {
     //   url: `${baseUrl}/en/advanced-search`,
     //   lastModified: new Date(),

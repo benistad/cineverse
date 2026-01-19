@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { FiMail, FiX, FiCheck, FiLoader } from 'react-icons/fi';
+import Link from 'next/link';
+import { FiMail, FiX, FiCheck, FiLoader, FiInfo } from 'react-icons/fi';
 
 export default function NewsletterBanner() {
   const [email, setEmail] = useState('');
@@ -98,6 +99,15 @@ export default function NewsletterBanner() {
           {status === 'error' && (
             <span className="text-red-300 text-sm">{message}</span>
           )}
+
+          {/* Info link */}
+          <Link 
+            href="/newsletter" 
+            className="hidden sm:flex items-center gap-1 text-indigo-200 hover:text-white text-sm transition-colors"
+          >
+            <FiInfo className="w-4 h-4" />
+            En savoir plus
+          </Link>
         </div>
       </div>
 
