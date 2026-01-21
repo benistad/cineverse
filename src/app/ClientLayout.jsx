@@ -158,8 +158,10 @@ export default function ClientLayout({ children }) {
       <LanguageProvider>
         <AuthProvider>
           <ScrollToTop />
-          <Navbar />
-          <NewsletterBanner />
+          <div className="sticky top-0 z-50">
+            <Navbar />
+            <NewsletterBanner />
+          </div>
           <main className="container mx-auto px-4 py-8">
             {children}
           </main>
