@@ -101,8 +101,8 @@ export default function NewsletterForm({ variant = 'default' }) {
   return (
     <div className="w-full max-w-xl mx-auto text-center">
       <div className="bg-white border-2 border-indigo-100 rounded-2xl p-8 shadow-lg shadow-indigo-100/50">
-        <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-300/50">
-          <FiMail className="w-8 h-8 text-white" />
+        <div className="w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-yellow-300/50">
+          <FiMail className="w-8 h-8 text-indigo-900" />
         </div>
         
         <h2 className="text-2xl font-bold text-gray-900 mb-3">
@@ -141,7 +141,7 @@ export default function NewsletterForm({ variant = 'default' }) {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="w-full px-8 py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-indigo-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-indigo-300/50 hover:shadow-xl hover:shadow-indigo-300/50"
+              className="w-full px-8 py-4 bg-yellow-400 hover:bg-yellow-300 text-indigo-900 font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-yellow-300/50 hover:shadow-xl hover:shadow-yellow-300/50"
             >
               {status === 'loading' ? (
                 <>
