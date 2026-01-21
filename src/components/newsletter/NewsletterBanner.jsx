@@ -49,7 +49,7 @@ export default function NewsletterBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 px-4 relative sticky top-[72px] z-40">
+    <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 px-4 relative sticky top-[64px] z-40">
       <div className="container mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           {/* Message */}
@@ -103,10 +103,11 @@ export default function NewsletterBanner() {
           {/* Info link */}
           <Link 
             href="/newsletter" 
-            className="hidden sm:flex items-center gap-1 text-indigo-200 hover:text-white text-sm transition-colors"
+            className="flex items-center gap-1 text-indigo-200 hover:text-white text-sm transition-colors"
           >
             <FiInfo className="w-4 h-4" />
-            En savoir plus
+            <span className="hidden sm:inline">En savoir plus</span>
+            <span className="sm:hidden">?</span>
           </Link>
         </div>
       </div>

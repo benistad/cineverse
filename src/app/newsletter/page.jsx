@@ -92,7 +92,7 @@ export default async function NewsletterPage() {
           </p>
           <p className="text-gray-600 leading-relaxed mb-4">
             Peu importe la note attribuée au film, qu'elle soit excellente ou décevante, vous recevrez un email. 
-            Il ne s'agit pas d'une newsletter de recommandations, mais d'un moyen de <strong>suivre l'actualité du site</strong> 
+            Il ne s'agit pas d'une newsletter de recommandations, mais d'un moyen de <strong>suivre l'actualité du site</strong>{' '}
             sans avoir à venir vérifier régulièrement s'il a été mis à jour.
           </p>
           <p className="text-gray-600 leading-relaxed">
