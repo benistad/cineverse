@@ -96,17 +96,6 @@ export default function QuelFilmRegarder() {
               {t('whatToWatch.intro3')}
             </p>
             
-            {/* Section Halloween */}
-            <div className="bg-orange-50 border-l-4 border-orange-500 p-6 my-6 rounded-lg">
-              <h3 className="text-xl font-bold text-orange-900 mb-3">{t('whatToWatch.halloweenTitle')}</h3>
-              <p className="text-gray-800 mb-3">
-                {t('whatToWatch.halloweenText')}
-              </p>
-              <Link href={locale === 'en' ? '/en/halloween-horror-movies-2025' : '/films-horreur-halloween-2025'} className="inline-flex items-center text-orange-600 hover:text-orange-800 font-semibold">
-                {t('whatToWatch.halloweenLink')}
-              </Link>
-            </div>
-            
             <h2 className="text-2xl font-bold mt-6 mb-4">{t('whatToWatch.personalizedSelection')}</h2>
             
             <p className="text-lg mb-4">
