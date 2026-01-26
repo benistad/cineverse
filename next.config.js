@@ -134,8 +134,16 @@ const nextConfig = {
       { source: '/en/teen-movie-ideas', destination: '/idees-films-pour-ados', permanent: true },
       { source: '/en/top-rated', destination: '/top-rated', permanent: true },
       { source: '/en/what-movie-to-watch', destination: '/quel-film-regarder', permanent: true },
-      // Catch-all pour toute autre page /en/ non listée
-      { source: '/en/:path*', destination: '/:path*', permanent: true },
+
+      // Redirections 301 des anciens slugs EN (sans /en) vers les pages FR (évite des cibles 404)
+      { source: '/hidden-gems', destination: '/films-inconnus', permanent: true },
+      { source: '/how-we-work', destination: '/comment-nous-travaillons', permanent: true },
+      { source: '/teen-movie-ideas', destination: '/idees-films-pour-ados', permanent: true },
+      { source: '/what-movie-to-watch', destination: '/quel-film-regarder', permanent: true },
+      { source: '/halloween-horror-movies-2025', destination: '/films-horreur-halloween-2025', permanent: true },
+
+      // Catch-all pour toute autre page /en/ non listée : renvoyer vers l'accueil (cible toujours existante)
+      { source: '/en/:path*', destination: '/', permanent: true },
     ];
   },
 };
