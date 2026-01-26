@@ -6,14 +6,14 @@ import NewsletterForm from '@/components/newsletter/NewsletterForm';
 export const revalidate = 86400; // Revalidate every 24 hours
 
 export const metadata = {
-  title: 'Newsletter MovieHunt - Recevez les nouveaux films notés | MovieHunt',
+  title: 'Newsletter - Nouveaux films notés',
   description: 'Inscrivez-vous à la newsletter MovieHunt pour recevoir un email à chaque nouveau film noté. Suivez l\'actualité du site et découvrez de nouveaux films à voir.',
   keywords: ['newsletter', 'films', 'nouveautés', 'actualité cinéma', 'MovieHunt'],
   alternates: {
     canonical: 'https://www.moviehunt.fr/newsletter',
   },
   openGraph: {
-    title: 'Newsletter MovieHunt - Recevez les nouveaux films notés',
+    title: 'Newsletter - Nouveaux films notés',
     description: 'Inscrivez-vous pour recevoir un email à chaque nouveau film noté sur MovieHunt.',
     url: 'https://www.moviehunt.fr/newsletter',
     type: 'website',

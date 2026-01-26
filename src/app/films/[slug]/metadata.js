@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
     
     if (!film) {
       return {
-        title: 'Film non trouvé | MovieHunt',
+        title: 'Film non trouvé',
         description: 'Le film que vous recherchez n\'a pas été trouvé sur MovieHunt.',
         robots: {
           index: false,
@@ -91,8 +91,8 @@ export async function generateMetadata({ params }) {
       ? posterUrl
       : `${baseUrl}/images/og-image.jpg`;
     
-    // Titre optimisé pour le SEO
-    const seoTitle = `${film.title}${releaseYear ? ` (${releaseYear})` : ''} - Critique et Note ${film.note_sur_10}/10 | MovieHunt`;
+    // Titre optimisé pour le SEO (ne pas ajouter "| MovieHunt" ici : déjà ajouté via title.template global)
+    const seoTitle = `${film.title}${releaseYear ? ` (${releaseYear})` : ''} - Critique et avis`;
     
     // Construire les données Open Graph pour les réseaux sociaux
     const openGraphData = {
@@ -158,7 +158,7 @@ export async function generateMetadata({ params }) {
     
     // Métadonnées par défaut en cas d'erreur, en incluant le slug pour éviter les titres dupliqués
     return {
-      title: `Erreur de chargement (${slug}) | MovieHunt`,
+      title: `Erreur de chargement (${slug})`,
       description: 'Une erreur est survenue lors du chargement des informations de ce film. Veuillez réessayer ultérieurement.',
       alternates: {
         canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moviehunt.fr'}/films/${slug}`,
