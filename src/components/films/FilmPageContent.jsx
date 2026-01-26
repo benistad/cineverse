@@ -123,7 +123,7 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
             {(film.why_watch_enabled || film.not_liked_enabled) && (
               <section className="mb-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-indigo-600">
-                  {locale === 'en' ? `Quick Review & Rating of ${film.title}` : `Critique rapide de ${film.title}`}
+                  {locale === 'en' ? `Review & opinions on ${film.title}` : `Critique et avis sur ${film.title}`}
                 </h2>
                 
                 {/* Pourquoi regarder ce film */}
