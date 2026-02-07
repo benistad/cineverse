@@ -1,10 +1,6 @@
-'use client';
-
-import Script from 'next/script';
-
 /**
  * Composant pour générer le balisage structuré JSON-LD pour un film
- * Version améliorée avec des données structurées plus complètes pour un meilleur SEO
+ * Rendu côté serveur pour que Googlebot voie le JSON-LD dans le HTML initial
  * @param {Object} props - Les propriétés du composant
  * @param {Object} props.film - Les données du film
  */
@@ -164,11 +160,9 @@ export default function MovieSchema({ film }) {
   const cleanSchema = JSON.parse(JSON.stringify(movieSchema));
 
   return (
-    <Script
-      id="movie-jsonld"
+    <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(cleanSchema) }}
-      strategy="afterInteractive"
     />
   );
 }

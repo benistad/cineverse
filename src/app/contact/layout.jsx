@@ -14,10 +14,6 @@ export const metadata = {
   },
   alternates: {
     canonical: 'https://www.moviehunt.fr/contact',
-    languages: {
-      fr: 'https://www.moviehunt.fr/contact',
-      en: 'https://www.moviehunt.fr/en/contact',
-    },
   },
   robots: { index: true, follow: true },
 };

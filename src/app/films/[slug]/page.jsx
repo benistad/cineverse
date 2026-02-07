@@ -81,7 +81,7 @@ export async function generateMetadata({ params }) {
     ? synopsis.substring(0, Math.max(50, maxSynopsisLength)) + '...' 
     : '';
   
-  const metaTitle = `${title}${yearText} - Critique et avis | MovieHunt`;
+  const metaTitle = `${title}${yearText} - Critique et avis`;
   const metaDescription = `${rating}${synopsisShort}${suffixText}`;
   
   const imageUrl = film.poster_path 
@@ -97,14 +97,9 @@ export async function generateMetadata({ params }) {
     description: metaDescription,
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        'fr': `https://www.moviehunt.fr/films/${params.slug}`,
-        'en': `https://www.moviehunt.fr/en/films/${params.slug}`,
-        'x-default': `https://www.moviehunt.fr/films/${params.slug}`
-      }
     },
     openGraph: {
-      title: `${title}${yearText} | MovieHunt`,
+      title: `${title}${yearText} - Critique et avis`,
       description: `${rating}${synopsisShort}`,
       type: 'video.movie',
       siteName: 'MovieHunt',
@@ -123,7 +118,7 @@ export async function generateMetadata({ params }) {
       card: 'summary_large_image',
       site: '@MovieHunt',
       creator: '@MovieHunt',
-      title: `${film.title}${yearText} | MovieHunt`,
+      title: `${film.title}${yearText} - Critique et avis`,
       description: `${rating}${synopsis}`,
       images: [imageUrl],
     },
