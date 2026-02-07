@@ -51,33 +51,30 @@ export async function sendNewFilmNewsletter(film, emails) {
   const htmlContent = generateFilmEmailTemplate(film);
   const subject = `🎬 Nouveau film noté : ${film.title}`;
 
-  // Resend supporte l'envoi en batch (jusqu'à 100 emails par appel)
-  const BATCH_SIZE = 50;
+  // Envoi séquentiel avec délai (plan gratuit Resend = 2 emails/sec)
   let totalSent = 0;
   const errors = [];
 
-  for (let i = 0; i < emails.length; i += BATCH_SIZE) {
-    const batch = emails.slice(i, i + BATCH_SIZE);
-    
-    // Envoyer un email individuel à chaque abonné (pour le lien de désinscription personnalisé)
-    const promises = batch.map(async (email) => {
-      try {
-        const unsubscribeUrl = `https://www.moviehunt.fr/api/newsletter/unsubscribe?email=${encodeURIComponent(email)}`;
-        const personalizedHtml = htmlContent.replace('{{unsubscribe_url}}', unsubscribeUrl);
-        
-        await sendEmail({
-          to: email,
-          subject,
-          html: personalizedHtml,
-        });
-        totalSent++;
-      } catch (err) {
-        console.error(`Erreur envoi à ${email}:`, err.message);
-        errors.push({ email, error: err.message });
+  for (const email of emails) {
+    try {
+      const unsubscribeUrl = `https://www.moviehunt.fr/api/newsletter/unsubscribe?email=${encodeURIComponent(email)}`;
+      const personalizedHtml = htmlContent.replace('{{unsubscribe_url}}', unsubscribeUrl);
+      
+      await sendEmail({
+        to: email,
+        subject,
+        html: personalizedHtml,
+      });
+      totalSent++;
+      
+      // Attendre 600ms entre chaque envoi pour respecter la limite de 2/sec
+      if (emails.indexOf(email) < emails.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 600));
       }
-    });
-
-    await Promise.all(promises);
+    } catch (err) {
+      console.error(`Erreur envoi à ${email}:`, err.message);
+      errors.push({ email, error: err.message });
+    }
   }
 
   console.log(`Newsletter envoyée: ${totalSent}/${emails.length} emails`);
