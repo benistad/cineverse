@@ -121,8 +121,9 @@ export default function FeaturedCarouselClient({ initialFilms }) {
           pagination={false}
           className="rounded-lg overflow-hidden"
         >
-          {initialFilms.map((film) => {
-            const imageUrl = getOptimalImageUrl(film, 'w1280');
+          {initialFilms.map((film, index) => {
+            const isFirst = index === 0;
+            const imageUrl = getOptimalImageUrl(film, isFirst ? 'w1280' : 'w780');
             
             return (
               <SwiperSlide key={film.id}>
@@ -131,12 +132,13 @@ export default function FeaturedCarouselClient({ initialFilms }) {
                     src={imageUrl}
                     alt={`Image du film ${film.title}`}
                     fill
-                    priority={false}
+                    priority={isFirst}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
                     className="object-cover object-center"
-                    quality={80}
-                    loading="lazy"
+                    quality={isFirst ? 80 : 70}
+                    {...(!isFirst && { loading: 'lazy' })}
                     style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    fetchPriority={isFirst ? 'high' : 'low'}
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-5" />

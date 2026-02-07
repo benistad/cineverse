@@ -3,7 +3,7 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 
 const poppins = Poppins({
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '600', '700'],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-poppins",
@@ -78,6 +78,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://image.tmdb.org" />
+        <link rel="dns-prefetch" href="https://image.tmdb.org" />
+      </head>
       <body className={`${poppins.variable} font-sans antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100`} suppressHydrationWarning>
         <ClientLayout>
           {children}

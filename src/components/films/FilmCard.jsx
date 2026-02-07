@@ -309,7 +309,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       
       {/* Lien vers la page publique ou admin selon le contexte */}
       <Link 
-        href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : (locale === 'en' ? `/en/films/${film.slug || film.id}` : `/films/${film.slug || film.id}`)} 
+        href={isAdmin && showAdminControls ? `/admin/edit-rated/${film.id}` : `/films/${film.slug || film.id}`} 
         className="flex flex-col h-full"
         title={`Voir la page de ${displayTitle}`}
         aria-label={`Voir la page du film ${displayTitle}`}

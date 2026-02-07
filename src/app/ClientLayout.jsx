@@ -125,7 +125,7 @@ export default function ClientLayout({ children }) {
       {/* Microsoft Clarity Analytics */}
       <Script
         id="microsoft-clarity"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             (function(c,l,a,r,i,t,y){
