@@ -66,14 +66,14 @@ export async function generateMetadata({ params }) {
   const genre = GENRES[params.slug];
   
   if (!genre) {
-    return { title: 'Genre non trouvé | MovieHunt' };
+    return { title: 'Genre non trouvé' };
   }
 
   const films = await getFilmsByGenre(genre.name);
   const count = films.length;
 
   return {
-    title: `Films ${genre.name} : ${count} films à voir | MovieHunt`,
+    title: `Films ${genre.name} : ${count} films à voir`,
     description: `${genre.description} Découvrez notre sélection de ${count} films ${genre.name.toLowerCase()} avec notes et critiques détaillées.`,
     keywords: [`films ${genre.name.toLowerCase()}`, `meilleurs films ${genre.name.toLowerCase()}`, `${genre.name.toLowerCase()} à voir`, 'recommandation film'],
     alternates: {

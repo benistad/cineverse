@@ -88,12 +88,12 @@ export async function generateMetadata({ params }) {
   const directors = await getPopularDirectors();
   const director = directors.find(d => d.slug === params.slug);
   
-  if (!director) return { title: 'Réalisateur non trouvé | MovieHunt' };
+  if (!director) return { title: 'Réalisateur non trouvé' };
 
   const { films } = await getFilmsByDirector(director.name);
 
   return {
-    title: `Films de ${director.name} : ${films.length} films | MovieHunt`,
+    title: `Films de ${director.name} : ${films.length} films`,
     description: `Découvrez tous les films de ${director.name} avec notes et critiques. Filmographie complète du réalisateur.`,
     keywords: [`films ${director.name}`, `filmographie ${director.name}`, 'réalisateur'],
     alternates: { canonical: `https://www.moviehunt.fr/realisateur/${params.slug}` },

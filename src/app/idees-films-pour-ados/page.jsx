@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const metadata = {
-  title: 'Idées de Films pour Ados : 10 Films Incontournables à Découvrir | MovieHunt',
+  title: 'Idées de Films pour Ados : 10 Films Incontournables à Découvrir',
   description: 'Découvrez notre sélection d\'idées de films pour ados : films d\'action, comédies, drames et thrillers parfaits pour les adolescents. Guide complet avec recommandations et où les regarder.',
   keywords: 'idée de film pour ado, film pour adolescent, film ado, que regarder ado, film jeune, recommandation film ado, meilleur film pour ado, film à voir ado',
   openGraph: {
@@ -14,10 +14,6 @@ export const metadata = {
   },
   alternates: {
     canonical: 'https://www.moviehunt.fr/idees-films-pour-ados',
-    languages: {
-      'fr': 'https://www.moviehunt.fr/idees-films-pour-ados',
-      'en': 'https://www.moviehunt.fr/en/teen-movie-ideas',
-    },
   },
 };
 

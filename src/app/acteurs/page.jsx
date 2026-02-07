@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Acteurs et actrices de films | MovieHunt',
+  title: 'Acteurs et actrices de films',
   description: 'Découvrez les acteurs et actrices avec leurs filmographies. Leonardo DiCaprio, Margot Robbie, et plus.',
   alternates: { canonical: 'https://www.moviehunt.fr/acteurs' },
 };

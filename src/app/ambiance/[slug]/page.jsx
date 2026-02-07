@@ -100,12 +100,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const mood = MOODS[params.slug];
-  if (!mood) return { title: 'Page non trouvée | MovieHunt' };
+  if (!mood) return { title: 'Page non trouvée' };
 
   const films = await getFilmsByMood(mood.genres, mood.minRating);
 
   return {
-    title: `${mood.title} : ${films.length} films | MovieHunt`,
+    title: `${mood.title} : ${films.length} films`,
     description: `${mood.description} ${films.length} films sélectionnés par MovieHunt.`,
     keywords: [mood.title.toLowerCase(), 'film ce soir', 'idée film', 'quel film regarder'],
     alternates: { canonical: `https://www.moviehunt.fr/ambiance/${params.slug}` },

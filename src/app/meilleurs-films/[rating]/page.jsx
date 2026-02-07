@@ -43,12 +43,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const config = RATING_CONFIGS[params.rating];
-  if (!config) return { title: 'Page non trouvée | MovieHunt' };
+  if (!config) return { title: 'Page non trouvée' };
 
   const films = await getFilmsByRating(config.min, config.max);
 
   return {
-    title: `${config.title} : ${films.length} films notés ${config.min}+ | MovieHunt`,
+    title: `${config.title} : ${films.length} films notés ${config.min}+`,
     description: `${config.description}. Découvrez ${films.length} films exceptionnels sélectionnés par MovieHunt.`,
     keywords: ['meilleurs films', `films note ${config.min}`, 'films à voir', 'top films'],
     alternates: { canonical: `https://www.moviehunt.fr/meilleurs-films/${params.rating}` },

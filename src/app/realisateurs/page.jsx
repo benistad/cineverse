@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Réalisateurs de films | MovieHunt',
+  title: 'Réalisateurs de films',
   description: 'Découvrez les réalisateurs de films avec leurs filmographies complètes. Christopher Nolan, Denis Villeneuve, et plus.',
   alternates: { canonical: 'https://www.moviehunt.fr/realisateurs' },
 };

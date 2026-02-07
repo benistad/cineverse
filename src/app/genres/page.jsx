@@ -8,7 +8,7 @@ export const revalidate = 3600;
 
 // Metadata statique
 export const metadata = {
-  title: 'Tous les genres de films | MovieHunt',
+  title: 'Tous les genres de films',
   description: 'Explorez tous les genres de films : Action, Comédie, Drame, Horreur, Science-Fiction, Thriller et plus. Trouvez le film parfait selon vos envies.',
   keywords: ['genres films', 'catégories films', 'films par genre', 'action', 'comédie', 'drame', 'horreur', 'thriller'],
   alternates: {

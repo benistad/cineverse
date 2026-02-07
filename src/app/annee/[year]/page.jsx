@@ -53,14 +53,14 @@ export async function generateMetadata({ params }) {
   const year = parseInt(params.year);
   
   if (!VALID_YEARS.includes(year)) {
-    return { title: 'Année non trouvée | MovieHunt' };
+    return { title: 'Année non trouvée' };
   }
 
   const films = await getFilmsByYear(year);
   const count = films.length;
 
   return {
-    title: `Films ${year} : ${count} films à voir | MovieHunt`,
+    title: `Films ${year} : ${count} films à voir`,
     description: `Découvrez les meilleurs films de ${year} avec notes et critiques détaillées. ${count} films sélectionnés par MovieHunt.`,
     keywords: [`films ${year}`, `meilleurs films ${year}`, `sorties ${year}`, 'cinéma'],
     alternates: {

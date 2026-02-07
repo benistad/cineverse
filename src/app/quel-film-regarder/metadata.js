@@ -2,7 +2,7 @@
  * Métadonnées optimisées pour la page "Quel film regarder ?"
  */
 export const metadata = {
-  title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies | MovieHunt',
+  title: 'Quel film regarder ce soir ? Sélection de pépites à voir selon vos envies',
   description: 'Vous cherchez quel film regarder ce soir ? Découvrez notre sélection de pépites inconnues, notées et recommandées par MovieHunt. Films à voir selon votre humeur, vos envies ou vos émotions du moment.',
   keywords: 'quel film regarder, film à voir ce soir, idée film, trouver un bon film, recommandations de films, liste de films conseillés, film à regarder, quoi regarder ce soir, meilleur film à voir, pépites inconnues',
   openGraph: {

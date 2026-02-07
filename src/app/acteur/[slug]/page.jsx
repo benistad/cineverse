@@ -82,12 +82,12 @@ export async function generateMetadata({ params }) {
   const actors = await getPopularActors();
   const actor = actors.find(a => a.slug === params.slug);
   
-  if (!actor) return { title: 'Acteur non trouvé | MovieHunt' };
+  if (!actor) return { title: 'Acteur non trouvé' };
 
   const films = await getFilmsByActor(actor.name);
 
   return {
-    title: `Films avec ${actor.name} : ${films.length} films | MovieHunt`,
+    title: `Films avec ${actor.name} : ${films.length} films`,
     description: `Découvrez tous les films avec ${actor.name}. Filmographie complète avec notes et critiques.`,
     keywords: [`films ${actor.name}`, `filmographie ${actor.name}`, 'acteur', 'actrice'],
     alternates: { canonical: `https://www.moviehunt.fr/acteur/${params.slug}` },

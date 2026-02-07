@@ -61,13 +61,13 @@ function parseSlug(slug) {
 
 export async function generateMetadata({ params }) {
   const parsed = parseSlug(params.slug);
-  if (!parsed) return { title: 'Page non trouvée | MovieHunt' };
+  if (!parsed) return { title: 'Page non trouvée' };
 
   const { genreName, year } = parsed;
   const films = await getFilmsByGenreAndYear(genreName, year);
 
   return {
-    title: `Films ${genreName} ${year} : ${films.length} films à voir | MovieHunt`,
+    title: `Films ${genreName} ${year} : ${films.length} films à voir`,
     description: `Découvrez les meilleurs films ${genreName.toLowerCase()} de ${year}. ${films.length} films sélectionnés avec notes et critiques.`,
     keywords: [`films ${genreName.toLowerCase()} ${year}`, `meilleurs ${genreName.toLowerCase()} ${year}`],
     alternates: { canonical: `https://www.moviehunt.fr/films-genre-annee/${params.slug}` },

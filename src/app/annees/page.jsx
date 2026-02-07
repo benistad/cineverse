@@ -8,7 +8,7 @@ export const revalidate = 3600;
 
 // Metadata statique
 export const metadata = {
-  title: 'Films par année de sortie | MovieHunt',
+  title: 'Films par année de sortie',
   description: 'Explorez les films par année de sortie : 2025, 2024, 2023 et plus. Trouvez les meilleurs films de chaque année avec notes et critiques.',
   keywords: ['films par année', 'sorties cinéma', 'films 2025', 'films 2024', 'nouveautés cinéma'],
   alternates: {

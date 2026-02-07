@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Classements des meilleurs films | MovieHunt',
+  title: 'Classements des meilleurs films',
   description: 'Découvrez nos classements : Top 10, Top 20, Top 50 des meilleurs films par genre. Action, Comédie, Horreur, Thriller...',
   alternates: { canonical: 'https://www.moviehunt.fr/classements' },
 };

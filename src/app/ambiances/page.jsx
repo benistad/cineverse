@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs';
 export const revalidate = 3600;
 
 export const metadata = {
-  title: 'Films par ambiance et humeur | MovieHunt',
+  title: 'Films par ambiance et humeur',
   description: 'Trouvez le film parfait selon votre humeur : soirée couple, feel-good, frissons, action, réflexion...',
   alternates: { canonical: 'https://www.moviehunt.fr/ambiances' },
 };

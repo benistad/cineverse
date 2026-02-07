@@ -51,12 +51,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const config = TOP_CONFIGS[params.slug];
-  if (!config) return { title: 'Page non trouvée | MovieHunt' };
+  if (!config) return { title: 'Page non trouvée' };
 
   const genreText = config.genre ? ` ${config.genre.toLowerCase()}` : '';
 
   return {
-    title: `${config.title} - Les meilleurs films${genreText} | MovieHunt`,
+    title: `${config.title} - Les meilleurs films${genreText}`,
     description: `Découvrez notre ${config.title.toLowerCase()} avec notes et critiques détaillées. Sélection des meilleurs films${genreText} par MovieHunt.`,
     keywords: [config.title.toLowerCase(), `meilleurs films${genreText}`, 'top films', 'classement'],
     alternates: { canonical: `https://www.moviehunt.fr/top/${params.slug}` },
