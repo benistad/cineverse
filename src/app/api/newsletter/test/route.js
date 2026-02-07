@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { generateFilmEmailTemplate } from '@/lib/mailerlite';
+import { generateFilmEmailTemplate, sendEmail } from '@/lib/resend';
 
-const MAILERLITE_API_KEY = process.env.MAILERLITE_API_KEY;
-const MAILERLITE_API_URL = 'https://connect.mailerlite.com/api';
 const TEST_EMAIL = 'benoitdurand2@neuf.fr';
 
 const supabase = createClient(
@@ -17,11 +15,10 @@ const supabase = createClient(
  */
 export async function POST() {
   try {
-    // Vérifier que la clé API MailerLite est configurée
-    if (!MAILERLITE_API_KEY) {
+    if (!process.env.RESEND_API_KEY) {
       return NextResponse.json({
         success: false,
-        error: 'MAILERLITE_API_KEY non configurée',
+        error: 'RESEND_API_KEY non configurée',
       }, { status: 500 });
     }
 
@@ -42,126 +39,14 @@ export async function POST() {
 
     // Générer le template HTML
     const htmlContent = generateFilmEmailTemplate(film);
+    const unsubscribeUrl = `https://www.moviehunt.fr/api/newsletter/unsubscribe?email=${encodeURIComponent(TEST_EMAIL)}`;
+    const personalizedHtml = htmlContent.replace('{{unsubscribe_url}}', unsubscribeUrl);
 
-    // Envoyer l'email de test via l'API MailerLite
-    const response = await fetch(`${MAILERLITE_API_URL}/campaigns`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-      },
-      body: JSON.stringify({
-        name: `[TEST] ${film.title} - ${new Date().toISOString()}`,
-        type: 'regular',
-        emails: [{
-          subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
-          from_name: 'MovieHunt',
-          from: process.env.MAILERLITE_FROM_EMAIL || 'contact@moviehunt.fr',
-          content: htmlContent,
-        }],
-        // Envoyer uniquement à l'adresse de test
-        filter: {
-          operand: 'and',
-          conditions: [{
-            field: 'email',
-            type: 'string',
-            operator: 'exactly',
-            value: TEST_EMAIL,
-          }],
-        },
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Erreur MailerLite:', errorData);
-      
-      // Si le filtre ne fonctionne pas, essayer d'envoyer directement via l'API subscribers
-      // Envoyer un email transactionnel à la place
-      const transactionalResponse = await fetch(`${MAILERLITE_API_URL}/subscribers/${encodeURIComponent(TEST_EMAIL)}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-          'Accept': 'application/json',
-        },
-      });
-
-      // Si l'abonné n'existe pas, le créer
-      if (!transactionalResponse.ok) {
-        await fetch(`${MAILERLITE_API_URL}/subscribers`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-          },
-          body: JSON.stringify({
-            email: TEST_EMAIL,
-            fields: { name: 'Test Admin' },
-            status: 'active',
-          }),
-        });
-      }
-
-      // Créer et envoyer la campagne
-      const campaignResponse = await fetch(`${MAILERLITE_API_URL}/campaigns`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-        },
-        body: JSON.stringify({
-          name: `[TEST] ${film.title} - ${new Date().toISOString()}`,
-          type: 'regular',
-          emails: [{
-            subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
-            from_name: 'MovieHunt',
-            from: process.env.MAILERLITE_FROM_EMAIL || 'contact@moviehunt.fr',
-            content: htmlContent,
-          }],
-        }),
-      });
-
-      if (!campaignResponse.ok) {
-        const campaignError = await campaignResponse.json();
-        throw new Error(campaignError.message || 'Erreur création campagne');
-      }
-
-      const campaign = await campaignResponse.json();
-
-      // Programmer l'envoi immédiat
-      await fetch(`${MAILERLITE_API_URL}/campaigns/${campaign.data.id}/schedule`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-        },
-        body: JSON.stringify({
-          delivery: 'instant',
-        }),
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: `Email de test envoyé à ${TEST_EMAIL}`,
-        film: film.title,
-        note: `Note: L'email sera envoyé à tous les abonnés. Vérifiez que ${TEST_EMAIL} est le seul abonné pour un vrai test isolé.`,
-      });
-    }
-
-    const campaign = await response.json();
-
-    // Programmer l'envoi immédiat
-    await fetch(`${MAILERLITE_API_URL}/campaigns/${campaign.data.id}/schedule`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${MAILERLITE_API_KEY}`,
-      },
-      body: JSON.stringify({
-        delivery: 'instant',
-      }),
+    // Envoyer l'email de test via Resend
+    await sendEmail({
+      to: TEST_EMAIL,
+      subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
+      html: personalizedHtml,
     });
 
     console.log(`Email de test envoyé à ${TEST_EMAIL} pour le film: ${film.title}`);
@@ -170,7 +55,6 @@ export async function POST() {
       success: true,
       message: `Email de test envoyé à ${TEST_EMAIL}`,
       film: film.title,
-      campaignId: campaign.data?.id,
     });
 
   } catch (error) {

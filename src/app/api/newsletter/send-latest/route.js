@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { sendNewFilmNewsletter } from '@/lib/mailerlite';
+import { sendNewFilmNewsletter } from '@/lib/resend';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -25,11 +25,11 @@ export async function POST(request) {
       );
     }
 
-    // Vérifier que la clé API MailerLite est configurée
-    if (!process.env.MAILERLITE_API_KEY) {
+    // Vérifier que la clé API Resend est configurée
+    if (!process.env.RESEND_API_KEY) {
       return NextResponse.json({
         success: false,
-        error: 'MAILERLITE_API_KEY non configurée',
+        error: 'RESEND_API_KEY non configurée',
       }, { status: 500 });
     }
 
@@ -48,20 +48,43 @@ export async function POST(request) {
       }, { status: 404 });
     }
 
-    // Envoyer la newsletter à tous les abonnés
-    const result = await sendNewFilmNewsletter(film);
+    // Récupérer les abonnés confirmés
+    const { data: subscribers, error: subError } = await supabase
+      .from('newsletter_subscribers')
+      .select('email')
+      .eq('is_confirmed', true)
+      .is('unsubscribed_at', null);
 
-    console.log(`Newsletter envoyée pour le film: ${film.title}`);
+    if (subError) {
+      return NextResponse.json({
+        success: false,
+        error: 'Erreur récupération abonnés',
+      }, { status: 500 });
+    }
+
+    const emails = (subscribers || []).map(s => s.email);
+
+    if (emails.length === 0) {
+      return NextResponse.json({
+        success: false,
+        error: 'Aucun abonné confirmé trouvé',
+      });
+    }
+
+    // Envoyer la newsletter à tous les abonnés via Resend
+    const result = await sendNewFilmNewsletter(film, emails);
+
+    console.log(`Newsletter envoyée pour "${film.title}": ${result.sent}/${result.total}`);
 
     return NextResponse.json({
       success: true,
-      message: `Newsletter envoyée pour "${film.title}"`,
+      message: `Newsletter envoyée pour "${film.title}" à ${result.sent} abonné(s)`,
       film: {
         title: film.title,
         slug: film.slug,
         note: film.note_sur_10,
       },
-      campaignId: result?.data?.id,
+      sent: result.sent,
     });
 
   } catch (error) {
