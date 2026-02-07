@@ -65,7 +65,7 @@ export async function generateMetadata({ params }) {
   
   if (!film) {
     return {
-      title: 'Film non trouvé | MovieHunt',
+      title: 'Film non trouvé',
     };
   }
 
