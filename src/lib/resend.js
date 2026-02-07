@@ -67,9 +67,9 @@ export async function sendNewFilmNewsletter(film, emails) {
       });
       totalSent++;
       
-      // Attendre 600ms entre chaque envoi pour respecter la limite de 2/sec
+      // Attendre 1s entre chaque envoi pour respecter la limite de 2/sec
       if (emails.indexOf(email) < emails.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 600));
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     } catch (err) {
       console.error(`Erreur envoi à ${email}:`, err.message);
