@@ -43,18 +43,19 @@ export async function POST() {
     const personalizedHtml = htmlContent.replace('{{unsubscribe_url}}', unsubscribeUrl);
 
     // Envoyer l'email de test via Resend
-    await sendEmail({
+    const result = await sendEmail({
       to: TEST_EMAIL,
       subject: `[TEST] 🎬 Nouveau film noté : ${film.title}`,
       html: personalizedHtml,
     });
 
-    console.log(`Email de test envoyé à ${TEST_EMAIL} pour le film: ${film.title}`);
+    console.log(`Email de test envoyé à ${TEST_EMAIL} pour le film: ${film.title}`, JSON.stringify(result));
 
     return NextResponse.json({
       success: true,
       message: `Email de test envoyé à ${TEST_EMAIL}`,
       film: film.title,
+      emailId: result?.id,
     });
 
   } catch (error) {
