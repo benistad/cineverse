@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { generateFilmEmailTemplate, sendEmail } from '@/lib/resend';
 
-const TEST_EMAIL = 'benoitdurand2@neuf.fr';
+const TEST_EMAIL = 'benoitdurand2@gmail.com';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
