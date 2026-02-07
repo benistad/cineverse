@@ -28,6 +28,7 @@ export default function FilmEditor({ movieDetails }) {
   const [notLikedContent, setNotLikedContent] = useState('');
   const [isHiddenGem, setIsHiddenGem] = useState(false);
   const [isHuntedByMovieHunt, setIsHuntedByMovieHunt] = useState(false);
+  const [sendNewsletter, setSendNewsletter] = useState(false);
   const [existingFilmData, setExistingFilmData] = useState(null);
   const [selectedCarouselImage, setSelectedCarouselImage] = useState(null);
   const [hasBlogArticle, setHasBlogArticle] = useState(false);
@@ -333,8 +334,8 @@ export default function FilmEditor({ movieDetails }) {
         console.warn('Erreur lors de l\'invalidation du cache serveur:', revalidateError);
       }
       
-      // Envoyer la newsletter pour le nouveau film (uniquement pour les nouveaux films)
-      if (!existingFilmData) {
+      // Envoyer la newsletter si la checkbox est cochée
+      if (sendNewsletter) {
         try {
           const newsletterResponse = await fetch('/api/newsletter/send', {
             method: 'POST',
@@ -547,6 +548,19 @@ export default function FilmEditor({ movieDetails }) {
                 <span className="ml-2">Hunted by MovieHunt</span>
               </label>
               <p className="text-sm text-gray-500 mt-1 ml-7">Un badge "Hunted" sera affiché sur l'affiche du film.</p>
+            </div>
+            
+            <div className="mb-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={sendNewsletter}
+                  onChange={(e) => setSendNewsletter(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-purple-600"
+                />
+                <span className="ml-2 font-medium text-purple-700">📧 Envoyer la newsletter</span>
+              </label>
+              <p className="text-sm text-gray-500 mt-1 ml-7">Une newsletter sera envoyée à tous les abonnés pour annoncer ce film.</p>
             </div>
             
             <div className="mb-4">
