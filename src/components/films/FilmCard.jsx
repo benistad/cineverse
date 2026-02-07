@@ -196,7 +196,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
     e.preventDefault();
     e.stopPropagation();
     
-    if (sendingNewsletter || newsletterSent) return;
+    if (sendingNewsletter) return;
     
     setSendingNewsletter(true);
     try {
@@ -277,13 +277,13 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
           {film.note_sur_10 && (
             <button
               onClick={handleSendNewsletter}
-              disabled={sendingNewsletter || newsletterSent}
+              disabled={sendingNewsletter}
               className={`absolute top-2 left-22 z-10 rounded-full p-2 flex items-center justify-center transition-colors ${
                 newsletterSent 
-                  ? 'bg-green-600 cursor-default' 
+                  ? 'bg-green-600 hover:bg-green-700' 
                   : 'bg-orange-500 hover:bg-orange-600'
               } text-white disabled:opacity-70`}
-              title={newsletterSent ? 'Newsletter envoyée' : 'Envoyer la newsletter'}
+              title={newsletterSent ? 'Renvoyer la newsletter' : 'Envoyer la newsletter'}
               style={{ left: '5.5rem' }}
             >
               {sendingNewsletter ? (
