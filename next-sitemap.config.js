@@ -64,52 +64,19 @@ module.exports = {
       };
     }
     
-    // Pages de films individuelles (FR)
+    // Pages de films individuelles
     if (path.startsWith('/films/')) {
       return {
         loc: path,
         changefreq: 'weekly',
         priority: 0.8,
         lastmod: new Date().toISOString(),
-        alternateRefs: [
-          {
-            href: `https://www.moviehunt.fr${path}`,
-            hreflang: 'fr',
-          },
-          {
-            href: `https://www.moviehunt.fr/en${path}`,
-            hreflang: 'en',
-          },
-          {
-            href: `https://www.moviehunt.fr${path}`,
-            hreflang: 'x-default',
-          },
-        ],
       };
     }
     
-    // Pages de films individuelles (EN)
-    if (path.startsWith('/en/films/')) {
-      return {
-        loc: path,
-        changefreq: 'weekly',
-        priority: 0.8,
-        lastmod: new Date().toISOString(),
-        alternateRefs: [
-          {
-            href: `https://www.moviehunt.fr${path.replace('/en', '')}`,
-            hreflang: 'fr',
-          },
-          {
-            href: `https://www.moviehunt.fr${path}`,
-            hreflang: 'en',
-          },
-          {
-            href: `https://www.moviehunt.fr${path.replace('/en', '')}`,
-            hreflang: 'x-default',
-          },
-        ],
-      };
+    // Exclure les pages /en (version anglaise désactivée)
+    if (path.startsWith('/en/')) {
+      return null;
     }
     
     // Configuration par défaut pour les autres pages

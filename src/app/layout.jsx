@@ -69,11 +69,6 @@ export const metadata = {
   },
   alternates: {
     canonical: '/',
-    languages: {
-      'fr': '/',
-      'en': '/en',
-      'x-default': '/'
-    }
   },
 };
 
