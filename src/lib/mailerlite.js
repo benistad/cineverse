@@ -27,8 +27,9 @@ async function mailerliteRequest(endpoint, options = {}) {
   const data = await response.json();
 
   if (!response.ok) {
-    console.error('Erreur MailerLite:', data);
-    throw new Error(data.message || 'Erreur API MailerLite');
+    console.error('Erreur MailerLite:', JSON.stringify(data, null, 2));
+    const errorMessage = data.message || data.error?.message || JSON.stringify(data.errors || data);
+    throw new Error(`MailerLite: ${errorMessage}`);
   }
 
   return data;

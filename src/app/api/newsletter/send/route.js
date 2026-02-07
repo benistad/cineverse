@@ -71,9 +71,9 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error('Erreur envoi newsletter:', error);
+    console.error('Erreur envoi newsletter:', error.message);
     return NextResponse.json(
-      { error: 'Erreur lors de l\'envoi de la newsletter', details: error.message },
+      { error: error.message || 'Erreur lors de l\'envoi de la newsletter' },
       { status: 500 }
     );
   }
