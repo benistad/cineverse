@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 import { sendNewFilmNewsletter } from '@/lib/mailerlite';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 /**
  * POST /api/newsletter/send
- * Envoie la newsletter pour un nouveau film
- * Appelé après la publication d'un film
+ * Envoie la newsletter pour un film
+ * Appelé depuis l'admin (checkbox ou bouton)
  */
 export async function POST(request) {
   try {
@@ -42,6 +48,21 @@ export async function POST(request) {
     const result = await sendNewFilmNewsletter(film);
 
     console.log(`Newsletter envoyée pour le film: ${film.title}`);
+
+    // Marquer le film comme "newsletter envoyée" dans la base de données
+    if (film.id) {
+      const { error: updateError } = await supabase
+        .from('films')
+        .update({ 
+          newsletter_sent: true, 
+          newsletter_sent_at: new Date().toISOString() 
+        })
+        .eq('id', film.id);
+      
+      if (updateError) {
+        console.warn('Erreur lors de la mise à jour du statut newsletter:', updateError);
+      }
+    }
 
     return NextResponse.json({
       success: true,

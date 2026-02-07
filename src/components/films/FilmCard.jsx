@@ -5,7 +5,7 @@ import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiEdit, FiInstagram } from 'react-icons/fi';
+import { FiEdit, FiInstagram, FiMail, FiCheck, FiLoader } from 'react-icons/fi';
 import Image from 'next/image';
 import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
 import { useTranslations } from '@/hooks/useTranslations';
@@ -179,15 +179,54 @@ const InstagramShareModal = ({ isOpen, onClose, data }) => {
   );
 };
 
-export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false }) {
+export default function FilmCard({ film, showRating = true, showAdminControls = false, priority = false, onNewsletterSent }) {
   const { t } = useTranslations();
   const { locale } = useLanguage();
   
   // Le film est déjà enrichi avec TMDB, utiliser directement film.title
   const displayTitle = film.title;
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
+  const [sendingNewsletter, setSendingNewsletter] = useState(false);
+  const [newsletterSent, setNewsletterSent] = useState(film.newsletter_sent || false);
   const pathname = usePathname();
   const isAdmin = pathname?.includes('/admin');
+
+  // Fonction pour envoyer la newsletter
+  const handleSendNewsletter = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (sendingNewsletter || newsletterSent) return;
+    
+    setSendingNewsletter(true);
+    try {
+      const response = await fetch('/api/newsletter/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: film.id,
+          title: film.title,
+          slug: film.slug,
+          synopsis: film.synopsis,
+          poster_url: film.poster_url,
+          note_sur_10: film.note_sur_10,
+          genres: film.genres,
+          release_date: film.release_date,
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setNewsletterSent(true);
+        if (onNewsletterSent) onNewsletterSent(film.id);
+      } else {
+        alert(`Erreur: ${result.error || result.message}`);
+      }
+    } catch (error) {
+      alert(`Erreur: ${error.message}`);
+    } finally {
+      setSendingNewsletter(false);
+    }
+  };
   
   useEffect(() => {
     // Ajouter l'écouteur pour le redimensionnement de la fenêtre
@@ -232,6 +271,29 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
             >
               <FiInstagram />
             </Link>
+          )}
+          
+          {/* Bouton Newsletter - Vert si envoyée, Orange sinon */}
+          {film.note_sur_10 && (
+            <button
+              onClick={handleSendNewsletter}
+              disabled={sendingNewsletter || newsletterSent}
+              className={`absolute top-2 left-22 z-10 rounded-full p-2 flex items-center justify-center transition-colors ${
+                newsletterSent 
+                  ? 'bg-green-600 cursor-default' 
+                  : 'bg-orange-500 hover:bg-orange-600'
+              } text-white disabled:opacity-70`}
+              title={newsletterSent ? 'Newsletter envoyée' : 'Envoyer la newsletter'}
+              style={{ left: '5.5rem' }}
+            >
+              {sendingNewsletter ? (
+                <FiLoader className="animate-spin" />
+              ) : newsletterSent ? (
+                <FiCheck />
+              ) : (
+                <FiMail />
+              )}
+            </button>
           )}
         </>
       )}
