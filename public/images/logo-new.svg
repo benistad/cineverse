@@ -1,18 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-  <!-- Cercle extérieur -->
-  <circle cx="250" cy="250" r="240" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  
-  <!-- Cercle central -->
-  <circle cx="250" cy="250" r="60" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  
-  <!-- Six cercles disposés autour du cercle central -->
-  <circle cx="250" cy="130" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  <circle cx="354" cy="175" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  <circle cx="354" cy="325" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  <circle cx="250" cy="370" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  <circle cx="146" cy="325" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  <circle cx="146" cy="175" r="40" fill="none" stroke="#e6e6e6" stroke-width="2" />
-  
-  <!-- Cercle pointillé extérieur -->
-  <circle cx="250" cy="250" r="220" fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="4,4" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 750" width="750" height="750">
+  <path d="M 35,375 A 336,336 0 1,0 707,375 A 336,336 0 1,0 35,375 Z M 290.0,175.0 A 81,81 0 1,0 452.0,175.0 A 81,81 0 1,0 290.0,175.0 Z M 116.79491924311225,275.0 A 81,81 0 1,0 278.79491924311225,275.0 A 81,81 0 1,0 116.79491924311225,275.0 Z M 116.79491924311228,475.0 A 81,81 0 1,0 278.7949192431123,475.0 A 81,81 0 1,0 116.79491924311228,475.0 Z M 289.99999999999994,575.0 A 81,81 0 1,0 451.99999999999994,575.0 A 81,81 0 1,0 289.99999999999994,575.0 Z M 463.2050807568877,475.0000000000001 A 81,81 0 1,0 625.2050807568877,475.0000000000001 A 81,81 0 1,0 463.2050807568877,475.0000000000001 Z M 463.2050807568877,275.0 A 81,81 0 1,0 625.2050807568877,275.0 A 81,81 0 1,0 463.2050807568877,275.0 Z M 306,375 A 65,65 0 1,0 436,375 A 65,65 0 1,0 306,375 Z M 286.5,375 A 84.5,84.5 0 1,0 455.5,375 A 84.5,84.5 0 1,0 286.5,375 Z M 291.5,375 A 79.5,79.5 0 1,0 450.5,375 A 79.5,79.5 0 1,0 291.5,375 Z M 633.4,198.0 A 316.5,316.5 0 0,0 479.2,77.6 L 477.5,82.3 A 311.5,311.5 0 0,1 629.2,200.8 Z M 316.0,63.3 A 316.5,316.5 0 1,0 613.5,578.4 L 609.6,575.2 A 311.5,311.5 0 1,1 316.9,68.2 Z" fill="#5145ED" fill-rule="evenodd"/>
 </svg>

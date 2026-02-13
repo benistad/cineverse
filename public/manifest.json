@@ -19,14 +19,14 @@
       "short_name": "Top Films",
       "description": "Découvrez les films les mieux notés",
       "url": "/top-rated",
-      "icons": [{ "src": "/images/logo-mh.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/images/logo-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Films méconnus à voir",
       "short_name": "Perles rares",
       "description": "Découvrez des perles rares du cinéma",
       "url": "/hidden-gems",
-      "icons": [{ "src": "/images/logo-mh.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/images/logo-192.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": [
@@ -47,19 +47,19 @@
   ],
   "icons": [
     {
-      "src": "/images/logo-mh.png",
+      "src": "/images/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/logo-mh.png",
+      "src": "/images/logo-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/logo-mh.png",
+      "src": "/images/logo-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
