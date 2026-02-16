@@ -97,7 +97,7 @@ export default function QuelFilmRegarderEnFamille() {
               Sur le <strong>blog MovieHunt</strong>, retrouvez l'analyse détaillée de ces 11 films avec :
             </p>
             <ul className="text-gray-700 mb-4 space-y-2">
-              <li>🎬 <strong>11 films pour toute la famille</strong> : RRR, Jungle Cruise, Free Guy, Dans l'ombre de Mary, Jusqu'au bout du rêve, Le Fondateur, Newsies, Hunt for the Wilderpeople, Captain Fantastic, October Sky, Seabiscuit</li>
+              <li>🎬 <strong>11 films pour toute la famille</strong> : aventure, comédie, drame, films musicaux et histoires inspirantes</li>
               <li>👨‍👩‍👧‍👦 Des recommandations selon l'âge des enfants</li>
               <li>📺 Les plateformes de streaming où les regarder</li>
               <li>💡 Des conseils pour choisir le bon film pour votre soirée</li>
@@ -126,7 +126,7 @@ export default function QuelFilmRegarderEnFamille() {
       {/* Pourquoi cette sélection */}
       <section className="mb-12">
         <h2 className="text-3xl font-bold text-indigo-900 mb-6 border-b-4 border-indigo-600 pb-3">
-          Pourquoi ces films pour une soirée en famille ?
+          Pourquoi cette sélection de films en famille ?
         </h2>
         
         <div className="grid md:grid-cols-2 gap-6">
@@ -136,7 +136,7 @@ export default function QuelFilmRegarderEnFamille() {
               Pour tous les âges
             </h3>
             <p className="text-gray-700">
-              De <strong>Jungle Cruise</strong> pour les plus jeunes à <strong>Captain Fantastic</strong> pour les familles avec ados, 
+              Des films d'aventure pour les plus jeunes aux drames profonds pour les familles avec ados, 
               chaque film a été choisi pour sa capacité à captiver différentes générations. Des histoires universelles 
               qui parlent de courage, de rêves et de famille.
             </p>
@@ -148,9 +148,9 @@ export default function QuelFilmRegarderEnFamille() {
               Qualité garantie
             </h3>
             <p className="text-gray-700">
-              De <strong>RRR</strong> à <strong>Seabiscuit</strong>, en passant par <strong>Free Guy</strong> 
-              et <strong>October Sky</strong>, chaque film offre un divertissement de qualité avec des valeurs positives. 
-              Pas de violence gratuite, mais de vraies émotions et des messages inspirants.
+              Des blockbusters spectaculaires aux pépites méconnues, chaque film offre un divertissement 
+              de qualité avec des valeurs positives. Pas de violence gratuite, mais de vraies émotions 
+              et des messages inspirants.
             </p>
           </div>
 
@@ -160,10 +160,9 @@ export default function QuelFilmRegarderEnFamille() {
               Diversité des genres
             </h3>
             <p className="text-gray-700">
-              Que vous cherchiez de l'<strong>action spectaculaire</strong> (RRR), de l'<strong>aventure</strong> 
-              (Jungle Cruise), de la <strong>comédie</strong> (Free Guy), du <strong>drame inspirant</strong> 
-              (October Sky, Seabiscuit) ou de la <strong>nostalgie</strong> (Dans l'ombre de Mary), 
-              cette sélection a tout ce qu'il faut.
+              Que vous cherchiez de l'<strong>action spectaculaire</strong>, de l'<strong>aventure</strong>, 
+              de la <strong>comédie</strong>, du <strong>drame inspirant</strong>, des <strong>films musicaux</strong> 
+              ou de la <strong>nostalgie</strong>, cette sélection a tout ce qu'il faut.
             </p>
           </div>
 
@@ -174,256 +173,64 @@ export default function QuelFilmRegarderEnFamille() {
             </h3>
             <p className="text-gray-700">
               Ces films ne sont pas de simples divertissements : ils créent des moments de partage et ouvrent 
-              des discussions sur des thèmes importants comme la persévérance (<strong>October Sky</strong>), 
-              la créativité (<strong>Dans l'ombre de Mary</strong>) ou la solidarité (<strong>Newsies</strong>).
+              des discussions sur des thèmes importants comme la persévérance, la créativité, la solidarité 
+              et le courage de suivre ses rêves.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Les 11 films */}
+      {/* Note importante */}
       <section className="mb-12">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-6 border-b-4 border-indigo-600 pb-3">
-          Les 11 films à regarder en famille
-        </h2>
-        
-        <div className="space-y-6">
-          {/* Film 1 - RRR */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-red-500">
-            <h3 className="text-2xl font-bold text-red-900 mb-3">
-              1. 🔥 Roudram Ranam Rudhiram (RRR)
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Action épique, Aventure | <strong>Durée :</strong> 3h07
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Si vous cherchez une <strong>idée de film en famille spectaculaire</strong>, RRR est fait pour vous. 
-              Ce blockbuster indien est une explosion d'action, de danse et d'émotion. L'histoire de deux révolutionnaires 
-              légendaires captivera les adolescents et les adultes avec ses scènes d'action à couper le souffle. 
-              <em>Attention : certaines scènes peuvent être intenses pour les plus jeunes (recommandé 12+).</em>
-            </p>
-          </div>
-
-          {/* Film 2 - Jungle Cruise */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-green-500">
-            <h3 className="text-2xl font-bold text-green-900 mb-3">
-              2. 🚢 Jungle Cruise
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Aventure, Comédie | <strong>Durée :</strong> 2h07
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Vous ne savez pas <strong>quel film regarder en famille</strong> un dimanche après-midi ? Jungle Cruise 
-              est la réponse idéale. Dwayne Johnson et Emily Blunt forment un duo hilarant dans cette aventure inspirée 
-              de l'attraction Disney. Humour, mystère et paysages exotiques : tous les ingrédients d'un bon moment en famille.
-            </p>
-          </div>
-
-          {/* Film 3 - Free Guy */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-blue-500">
-            <h3 className="text-2xl font-bold text-blue-900 mb-3">
-              3. 🎮 Free Guy
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Comédie, Science-Fiction | <strong>Durée :</strong> 1h55
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Voici une <strong>idée de film en famille</strong> qui parlera particulièrement aux gamers ! Ryan Reynolds 
-              incarne Guy, un personnage de jeu vidéo qui découvre qu'il n'est pas réel. Free Guy mélange action, humour 
-              et réflexion sur l'identité. Les références aux jeux vidéo raviront les ados tandis que le message positif 
-              touchera les parents.
-            </p>
-          </div>
-
-          {/* Film 4 - Dans l'ombre de Mary */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-pink-500">
-            <h3 className="text-2xl font-bold text-pink-900 mb-3">
-              4. 🎭 Dans l'ombre de Mary (Saving Mr. Banks)
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Biographie | <strong>Durée :</strong> 2h05
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Pour ceux qui se demandent <strong>quel film regarder en famille</strong> avec une touche de nostalgie, 
-              ce film raconte les coulisses de la création de Mary Poppins. Tom Hanks incarne Walt Disney dans cette 
-              histoire touchante sur la créativité et les souvenirs d'enfance. Un film qui plaira aux fans de Disney 
-              de toutes les générations.
-            </p>
-          </div>
-
-          {/* Film 5 - Jusqu'au bout du rêve */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-amber-500">
-            <h3 className="text-2xl font-bold text-amber-900 mb-3">
-              5. ⚾ Jusqu'au bout du rêve (Field of Dreams)
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Fantastique | <strong>Durée :</strong> 1h47
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Cette <strong>idée de film en famille</strong> est un classique américain. Kevin Costner joue un fermier 
-              qui entend une voix lui demandant de construire un terrain de baseball. Jusqu'au bout du rêve parle de foi, 
-              de famille et de seconde chance. Un film parfait pour ouvrir une discussion avec vos enfants sur l'importance 
-              de suivre ses rêves.
-            </p>
-          </div>
-
-          {/* Film 6 - Le Fondateur */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-yellow-500">
-            <h3 className="text-2xl font-bold text-yellow-900 mb-3">
-              6. 🍔 Le Fondateur (The Founder)
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Biographie | <strong>Durée :</strong> 1h55
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Vous cherchez <strong>quel film regarder en famille</strong> qui soit aussi éducatif ? Le Fondateur raconte 
-              l'histoire fascinante de Ray Kroc et la création de McDonald's. Michael Keaton livre une performance captivante. 
-              Ce film est idéal pour les familles qui aiment les histoires d'entrepreneuriat et les débats sur l'éthique 
-              des affaires.
-            </p>
-          </div>
-
-          {/* Film 7 - Newsies */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-indigo-500">
-            <h3 className="text-2xl font-bold text-indigo-900 mb-3">
-              7. 📰 Newsies
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Comédie musicale, Drame | <strong>Durée :</strong> 2h01
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Une <strong>idée de film en famille</strong> musicale et entraînante ! Ce film Disney de 1992 suit des jeunes 
-              vendeurs de journaux qui se rebellent contre l'injustice à New York. Newsies combine chorégraphies énergiques, 
-              chansons mémorables et un message fort sur la solidarité. Les enfants adoreront les numéros musicaux.
-            </p>
-          </div>
-
-          {/* Film 8 - Hunt for the Wilderpeople */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-teal-500">
-            <h3 className="text-2xl font-bold text-teal-900 mb-3">
-              8. 🌲 Hunt for the Wilderpeople
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Comédie, Aventure | <strong>Durée :</strong> 1h41
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Si vous ne savez pas <strong>quel film regarder en famille</strong> et que vous aimez l'humour décalé, 
-              ce film néo-zélandais est une pépite. Un jeune garçon et son oncle adoptif bourru se retrouvent en cavale 
-              dans la nature sauvage. Hunt for the Wilderpeople est drôle, touchant et visuellement magnifique. 
-              Une vraie découverte !
-            </p>
-          </div>
-
-          {/* Film 9 - Captain Fantastic */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-purple-500">
-            <h3 className="text-2xl font-bold text-purple-900 mb-3">
-              9. 🏕️ Captain Fantastic
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Comédie | <strong>Durée :</strong> 1h58
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Cette <strong>idée de film en famille</strong> est plus profonde et suscitera des discussions. Viggo Mortensen 
-              joue un père qui élève ses six enfants dans la forêt, loin de la société moderne. Captain Fantastic questionne 
-              l'éducation, les valeurs et ce que signifie vraiment préparer ses enfants à la vie. Recommandé pour les familles 
-              avec des adolescents.
-            </p>
-          </div>
-
-          {/* Film 10 - October Sky */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-orange-500">
-            <h3 className="text-2xl font-bold text-orange-900 mb-3">
-              10. 🚀 October Sky
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Biographie | <strong>Durée :</strong> 1h48
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Vous cherchez <strong>quel film regarder en famille</strong> pour inspirer vos enfants ? October Sky est basé 
-              sur l'histoire vraie d'Homer Hickam, un fils de mineur qui rêve de construire des fusées. Ce film montre que 
-              la passion et la persévérance peuvent mener loin, même quand tout semble contre vous. Parfait pour motiver 
-              les jeunes rêveurs.
-            </p>
-          </div>
-
-          {/* Film 11 - Seabiscuit */}
-          <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-l-4 border-emerald-500">
-            <h3 className="text-2xl font-bold text-emerald-900 mb-3">
-              11. 🐴 Seabiscuit
-            </h3>
-            <p className="text-gray-700 mb-3">
-              <strong>Genre :</strong> Drame, Sport | <strong>Durée :</strong> 2h20
-            </p>
-            <p className="text-gray-700 leading-relaxed">
-              Pour terminer cette liste d'<strong>idées de films en famille</strong>, voici l'histoire vraie de Seabiscuit, 
-              un cheval de course improbable devenu champion durant la Grande Dépression. Ce film parle de résilience, 
-              d'espoir et de secondes chances. Seabiscuit touchera toutes les générations et rappelle que les outsiders 
-              peuvent accomplir de grandes choses.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Conseils pour choisir */}
-      <section className="mb-12">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-6 border-b-4 border-indigo-600 pb-3">
-          Comment choisir le bon film pour votre soirée en famille ?
-        </h2>
-        
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-lg">
-          <p className="text-lg text-gray-800 mb-6">
-            Maintenant que vous avez plusieurs <strong>idées de films en famille</strong>, voici quelques conseils 
-            pour faire le bon choix :
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-8 border-l-4 border-amber-500 shadow-lg">
+          <h2 className="text-2xl font-bold text-amber-900 mb-4 flex items-center">
+            <span className="text-3xl mr-3">ℹ️</span>
+            À propos de cette sélection
+          </h2>
+          <p className="text-gray-800 leading-relaxed mb-4">
+            <strong>Important :</strong> MovieHunt se concentre habituellement sur des films d'auteur 
+            et des pépites méconnues. Cette sélection spéciale pour familles mélange donc des classiques 
+            grand public et des films plus confidentiels.
           </p>
-          
-          <div className="space-y-4">
-            <div className="flex items-start">
-              <span className="text-3xl mr-4">👶</span>
-              <div>
-                <h3 className="font-bold text-indigo-900 mb-2">Tenez compte de l'âge</h3>
-                <p className="text-gray-700">
-                  Certains films comme <strong>RRR</strong> ou <strong>Captain Fantastic</strong> conviennent mieux 
-                  aux familles avec des adolescents, tandis que <strong>Jungle Cruise</strong> et <strong>Newsies</strong> 
-                  sont parfaits pour les plus jeunes.
-                </p>
-              </div>
-            </div>
+          <p className="text-gray-800 leading-relaxed mb-4">
+            Résultat : <strong className="text-amber-800">tous ces films ne sont pas forcément présents 
+            sur MovieHunt.fr</strong>, car certains sont des blockbusters que nous ne couvrons pas systématiquement 
+            dans nos critiques habituelles. Mais ils méritent tous d'être découverts !
+          </p>
+          <p className="text-gray-800 leading-relaxed">
+            Cette liste reste une <strong className="text-amber-800">recommandation sérieuse de l'équipe MovieHunt</strong>, 
+            pensée pour offrir aux familles un voyage cinématographique riche et varié. Des films qui créent 
+            des moments de partage et des souvenirs inoubliables.
+          </p>
+        </div>
+      </section>
 
-            <div className="flex items-start">
-              <span className="text-3xl mr-4">🎭</span>
-              <div>
-                <h3 className="font-bold text-indigo-900 mb-2">Variez les genres</h3>
-                <p className="text-gray-700">
-                  Alternez entre action (<strong>RRR</strong>), comédie (<strong>Free Guy</strong>, 
-                  <strong>Hunt for the Wilderpeople</strong>) et drame (<strong>October Sky</strong>, 
-                  <strong>Seabiscuit</strong>) pour satisfaire tout le monde.
-                </p>
-              </div>
+      {/* Genres couverts */}
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold text-indigo-900 mb-6 border-b-4 border-indigo-600 pb-3">
+          Genres de films en famille couverts
+        </h2>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { emoji: '💥', genre: 'Action', desc: 'Films d\'action spectaculaires' },
+            { emoji: '😂', genre: 'Comédie', desc: 'Comédies pour toute la famille' },
+            { emoji: '🎭', genre: 'Drame', desc: 'Drames touchants et profonds' },
+            { emoji: '🎵', genre: 'Musical', desc: 'Comédies musicales entraînantes' },
+            { emoji: '🚀', genre: 'Science-Fiction', desc: 'SF et mondes futuristes' },
+            { emoji: '🌟', genre: 'Aventure', desc: 'Grandes aventures épiques' },
+            { emoji: '🏆', genre: 'Biographie', desc: 'Histoires vraies inspirantes' },
+            { emoji: '❤️', genre: 'Feel-Good', desc: 'Films réconfortants' },
+          ].map((item, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-lg p-4 shadow-md hover:shadow-xl transition-shadow border-t-2 border-indigo-200 text-center"
+            >
+              <div className="text-4xl mb-2">{item.emoji}</div>
+              <h3 className="font-bold text-indigo-900 mb-1">{item.genre}</h3>
+              <p className="text-sm text-gray-600">{item.desc}</p>
             </div>
-
-            <div className="flex items-start">
-              <span className="text-3xl mr-4">💬</span>
-              <div>
-                <h3 className="font-bold text-indigo-900 mb-2">Préparez des discussions</h3>
-                <p className="text-gray-700">
-                  Beaucoup de ces films abordent des thèmes profonds qui peuvent enrichir vos échanges : 
-                  l'entrepreneuriat (<strong>Le Fondateur</strong>), la persévérance (<strong>October Sky</strong>), 
-                  l'éducation (<strong>Captain Fantastic</strong>).
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <span className="text-3xl mr-4">🍿</span>
-              <div>
-                <h3 className="font-bold text-indigo-900 mb-2">Créez l'ambiance</h3>
-                <p className="text-gray-700">
-                  Préparez du pop-corn, installez des coussins, éteignez les lumières. Une bonne soirée cinéma 
-                  en famille, c'est aussi une question d'ambiance !
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
