@@ -1,15 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { optimizePosterImage } from '@/lib/utils/imageOptimizer';
-import SafeImage from '@/components/ui/SafeImage';
-import { useTranslations } from '@/hooks/useTranslations';
-import { useLanguage } from '@/contexts/LanguageContext';
+import QuelFilmRegarderNov2025 from './QuelFilmRegarderNov2025';
+import QuelFilmRegarderJan2026 from './QuelFilmRegarderJan2026';
 
 export default function QuelFilmRegarder() {
-  const { t } = useTranslations();
-  const { locale } = useLanguage();
+  const [activeTab, setActiveTab] = useState('jan2026');
   
   // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
   const jsonLd = {
@@ -70,7 +67,7 @@ export default function QuelFilmRegarder() {
       <div className="container mx-auto px-6 py-12">
         <article className="prose prose-lg max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm">
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-indigo-800" id="quel-film-regarder">{t('whatToWatch.title')}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4 text-indigo-800" id="quel-film-regarder">🎬 Quel film regarder ce soir ?</h1>
             <div className="flex justify-center">
               <span className="inline-block w-32 h-1 rounded bg-gradient-to-r from-indigo-600 to-purple-600 mb-4"></span>
             </div>
@@ -79,229 +76,38 @@ export default function QuelFilmRegarder() {
           {/* Bloc de mise à jour */}
           <div className="bg-indigo-50 border-l-4 border-indigo-600 p-4 mb-6 rounded">
             <p className="text-sm text-indigo-800 font-medium">
-              <strong>{t('whatToWatch.lastUpdate')}</strong>
+              🆕 <strong>Dernière mise à jour : janvier 2026</strong> — De nouveaux films ajoutés chaque mois !
             </p>
           </div>
 
+          {/* Onglets de sélection de version */}
           <div className="mb-8">
-            <p className="text-lg">
-              {t('whatToWatch.intro1')}
-            </p>
-            
-            <p className="text-lg">
-              {t('whatToWatch.intro2')}
-            </p>
-            
-            <p className="text-lg">
-              {t('whatToWatch.intro3')}
-            </p>
-            
-            <h2 className="text-2xl font-bold mt-6 mb-4">{t('whatToWatch.personalizedSelection')}</h2>
-            
-            <p className="text-lg mb-4">
-              {t('whatToWatch.selectionIntro')}
-            </p>
+            <div className="flex border-b border-gray-300">
+              <button
+                onClick={() => setActiveTab('jan2026')}
+                className={`px-6 py-3 font-semibold transition-colors ${
+                  activeTab === 'jan2026'
+                    ? 'border-b-2 border-indigo-600 text-indigo-600'
+                    : 'text-gray-600 hover:text-indigo-600'
+                }`}
+              >
+                Janvier 2026
+              </button>
+              <button
+                onClick={() => setActiveTab('nov2025')}
+                className={`px-6 py-3 font-semibold transition-colors ${
+                  activeTab === 'nov2025'
+                    ? 'border-b-2 border-indigo-600 text-indigo-600'
+                    : 'text-gray-600 hover:text-indigo-600'
+                }`}
+              >
+                Novembre 2025
+              </button>
+            </div>
           </div>
-          
-          <hr className="my-8 border-gray-300" />
-          
-          {/* Recommandation 1 */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold">⚖️ Pour un drame historique captivant :</h2>
-            
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/nuremberg">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <img 
-                      src="https://image.tmdb.org/t/p/w342/6iYLH0TjqCyEkCYadpLUMHr9S8J.jpg" 
-                      alt="Affiche du film Nuremberg" 
-                      width="342"
-                      height="513"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="eager"
-                      onError={(e) => {
-                        if (e.target.src.includes('/w342/')) {
-                          e.target.src = e.target.src.replace('/w342/', '/w185/');
-                        } else {
-                          e.target.src = '/images/placeholder.jpg';
-                        }
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-              <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Nuremberg (2025)</h3>
-                <p className="my-3">
-                  Le procès historique des criminels nazis vu à travers les yeux d'un psychiatre chargé d'évaluer Hermann Göring. Un duel psychologique fascinant entre le médecin et le pervers narcissique qu'était le Reichsmarschall.
-                </p>
-                <Link href="/films/nuremberg" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  {t('whatToWatch.seeOnMovieHunt')}
-                </Link>
-              </div>
-            </div>
-          </section>
-          
-          <hr className="my-8 border-gray-300" />
-          
-          {/* Recommandation 2 */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold">👽 Pour une comédie SF délirante :</h2>
-            
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/bugonia">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <img 
-                      src="https://image.tmdb.org/t/p/w342/btKcDyCzPZO06OpySaAOcMFQKyA.jpg" 
-                      alt="Affiche du film Bugonia" 
-                      width="342"
-                      height="513"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        if (e.target.src.includes('/w342/')) {
-                          e.target.src = e.target.src.replace('/w342/', '/w185/');
-                        } else {
-                          e.target.src = '/images/placeholder.jpg';
-                        }
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-              <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Bugonia (2025)</h3>
-                <p className="my-3">
-                  Deux complotistes kidnappent une PDG qu'ils croient être une extraterrestre venue détruire la Terre. Une comédie SF complètement barrée avec Emma Stone, entre absurde et satire sociale.
-                </p>
-                <Link href="/films/bugonia" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  {t('whatToWatch.seeOnMovieHunt')}
-                </Link>
-              </div>
-            </div>
-          </section>
-          
-          <hr className="my-8 border-gray-300" />
-          
-          {/* Recommandation 3 */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold">🔥 Pour un drame touchant :</h2>
-            
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/rebuilding">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <img 
-                      src="https://image.tmdb.org/t/p/w342/b6cV7mSg93sDFX4NKVbVjJUXdUF.jpg" 
-                      alt="Affiche du film Rebuilding" 
-                      width="342"
-                      height="513"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        if (e.target.src.includes('/w342/')) {
-                          e.target.src = e.target.src.replace('/w342/', '/w185/');
-                        } else {
-                          e.target.src = '/images/placeholder.jpg';
-                        }
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-              <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Rebuilding (2025)</h3>
-                <p className="my-3">
-                  Après avoir tout perdu dans les incendies de l'Ouest américain, un homme tente de reconstruire sa vie dans un camp de fortune. Un drame intimiste sur la résilience et l'espoir de renouer avec sa famille.
-                </p>
-                <Link href="/films/rebuilding" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  {t('whatToWatch.seeOnMovieHunt')}
-                </Link>
-              </div>
-            </div>
-          </section>
-          
-          <hr className="my-8 border-gray-300" />
-          
-          {/* Recommandation 4 */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold">😱 Pour un thriller horrifique glaçant :</h2>
-            
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/longlegs">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <img 
-                      src="https://image.tmdb.org/t/p/w342/ncTqrUeLNZee3WtKSX5lJBZDkUf.jpg" 
-                      alt="Affiche du film Longlegs" 
-                      width="342"
-                      height="513"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        if (e.target.src.includes('/w342/')) {
-                          e.target.src = e.target.src.replace('/w342/', '/w185/');
-                        } else {
-                          e.target.src = '/images/placeholder.jpg';
-                        }
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-              <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Longlegs (2024)</h3>
-                <p className="my-3">
-                  Une agent du FBI traque un tueur en série insaisissable aux frontières de l'occulte. Nicolas Cage livre une performance terrifiante dans ce thriller horrifique à l'atmosphère oppressante.
-                </p>
-                <Link href="/films/longlegs" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  {t('whatToWatch.seeOnMovieHunt')}
-                </Link>
-              </div>
-            </div>
-          </section>
-          
-          <hr className="my-8 border-gray-300" />
-          
-          {/* Recommandation 5 */}
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold">🔫 Pour un thriller haletant :</h2>
-            
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4 flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/4 flex-shrink-0">
-                <Link href="/films/last-stop-yuma-county">
-                  <div className="relative w-full aspect-[2/3] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-                    <img 
-                      src="https://image.tmdb.org/t/p/w342/hleK8EXJxuRdPlhbmfI8n7n2K1B.jpg" 
-                      alt="Affiche du film Last Stop Yuma County" 
-                      width="342"
-                      height="513"
-                      className="absolute inset-0 w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        if (e.target.src.includes('/w342/')) {
-                          e.target.src = e.target.src.replace('/w342/', '/w185/');
-                        } else {
-                          e.target.src = '/images/placeholder.jpg';
-                        }
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-              <div className="md:w-3/4">
-                <h3 className="text-xl font-semibold">🎥 Last Stop : Yuma County (2024)</h3>
-                <p className="my-3">
-                  Dans un diner perdu en Arizona, des clients attendent l'arrivée d'essence quand deux braqueurs en cavale débarquent. Un huis clos tendu et maîtrisé qui monte crescendo jusqu'à un final explosif.
-                </p>
-                <Link href="/films/last-stop-yuma-county" className="inline-flex items-center text-indigo-600 hover:text-indigo-800">
-                  {t('whatToWatch.seeOnMovieHunt')}
-                </Link>
-              </div>
-            </div>
-          </section>
+
+          {/* Contenu dynamique selon l'onglet actif */}
+          {activeTab === 'jan2026' ? <QuelFilmRegarderJan2026 /> : <QuelFilmRegarderNov2025 />}
           
           <hr className="my-8 border-gray-300" />
           
