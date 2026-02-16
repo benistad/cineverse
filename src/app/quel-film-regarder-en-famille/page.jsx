@@ -61,6 +61,14 @@ export default function QuelFilmRegarderEnFamille() {
             className="w-full h-auto"
             sizes="(max-width: 768px) 100vw, 1200px"
           />
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 drop-shadow-lg">
+              Quel Film Regarder en Famille ?
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 drop-shadow-md">
+              11 films incontournables pour tous les âges
+            </p>
+          </div>
         </div>
       </header>
 
