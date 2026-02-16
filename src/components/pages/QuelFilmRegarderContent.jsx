@@ -8,7 +8,7 @@ import QuelFilmRegarderJan2026 from './QuelFilmRegarderJan2026';
 export default function QuelFilmRegarder() {
   const [activeTab, setActiveTab] = useState('jan2026');
   
-  // Schéma JSON-LD pour les moteurs de recherche - format FAQ pour un meilleur positionnement
+  // Schéma JSON-LD enrichi pour les moteurs de recherche
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -18,39 +18,79 @@ export default function QuelFilmRegarder() {
         "name": "Quel film regarder ce soir ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Découvrez notre sélection de pépites inconnues à voir ce soir : Greedy People (2024) pour une comédie noire surprenante, Old Henry (2021) pour un western avec un twist inattendu, Tetris (2023) pour une histoire vraie fascinante, Dom Hemingway (2013) pour une performance d'acteur mémorable, et Irresistible (2020) pour une comédie politique intelligente. Notre liste de films conseillés est mise à jour chaque semaine."
+          "text": "Si vous cherchez quel film regarder ce soir, MovieHunt propose des idées de films pour tous les goûts : Nuremberg (2025) pour un drame historique captivant, Bugonia (2025) pour une comédie SF délirante, Longlegs (2024) pour un thriller horrifique, ou Last Stop Yuma County (2024) pour un huis clos haletant. Notre sélection est mise à jour chaque mois avec de nouvelles recommandations."
         }
       },
       {
         "@type": "Question",
-        "name": "Comment trouver un bon film à regarder ?",
+        "name": "Comment trouver des idées de films à regarder ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour trouver un bon film à regarder, consultez les recommandations de films personnalisées de MovieHunt qui propose des films triés sur le volet selon différentes catégories : films à voir ce soir, idées de films à voir pour une soirée en couple, recommandations de films par genre, ou encore des pépites inconnues notées et analysées par nos experts. Chaque film est accompagné d'une critique sincère et d'une note sur 10."
+          "text": "Pour trouver des idées de films à regarder, consultez MovieHunt qui propose des recommandations personnalisées selon vos envies : thrillers, drames, comédies, westerns, films d'horreur. Chaque film à regarder ce soir est noté sur 10 avec une critique sincère pour vous aider à choisir."
         }
       },
       {
         "@type": "Question",
-        "name": "Quels sont les meilleurs films inconnus à voir en 2025 ?",
+        "name": "Quels sont les meilleurs films à voir en 2026 ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pour découvrir des pépites inconnues en 2025, nous recommandons Greedy People pour une comédie noire avec Joseph Gordon-Levitt, Old Henry pour un western surprenant avec Tim Blake Nelson, Tetris pour l'histoire vraie fascinante du jeu vidéo avec Taron Egerton, Dom Hemingway pour une performance explosive de Jude Law, et Irresistible pour une satire politique brillante. Consultez notre guide complet pour plus d'idées de films à regarder selon votre humeur."
+          "text": "Les meilleurs films à voir en 2026 incluent Nuremberg pour un drame historique puissant, Bugonia avec Emma Stone pour une comédie SF originale, Rebuilding pour un drame intimiste touchant, et Longlegs avec Nicolas Cage pour un thriller horrifique glaçant. Consultez notre guide complet pour plus d'idées de films selon votre humeur."
         }
       },
       {
         "@type": "Question",
-        "name": "Où trouver des idées de films à regarder ?",
+        "name": "Où trouver des recommandations de films personnalisées ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "MovieHunt.fr est votre destination pour trouver des idées de films à regarder. Nous proposons une sélection de films à voir triée sur le volet, avec des recommandations personnalisées selon vos envies : films haletants, drames touchants, comédies rythmées, ou pépites inconnues. Chaque film est noté, analysé et accompagné d'une critique détaillée pour vous aider à décider quoi regarder ce soir."
+          "text": "MovieHunt.fr est votre destination pour des recommandations de films personnalisées. Nous proposons une sélection de films à voir triée sur le volet, avec des idées de films pour tous les goûts : films haletants, drames touchants, comédies rythmées. Chaque film est noté, analysé et accompagné d'une critique détaillée."
         }
       },
       {
         "@type": "Question",
-        "name": "Comment MovieHunt choisit ses recommandations de films ?",
+        "name": "Quoi regarder ce soir selon mon humeur ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "MovieHunt sélectionne ses recommandations de films grâce à une équipe de passionnés de cinéma qui analyse chaque semaine les sorties et les pépites inconnues. Chaque film à regarder est noté sur 10 avec une critique sincère et personnelle, sans influence des studios ou distributeurs. Nous mettons en avant les films à voir absolument, signalons les films à éviter, et dénichons des pépites exceptionnelles que vous auriez pu manquer."
+          "text": "Selon votre humeur, MovieHunt vous propose : un drame historique (Nuremberg), une comédie SF (Bugonia), un thriller horrifique (Longlegs), un western (Old Henry), ou un film d'action (Last Stop Yuma County). Utilisez notre tableau de suggestions pour trouver le film parfait selon vos envies du moment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment MovieHunt sélectionne ses films ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MovieHunt sélectionne ses films grâce à une équipe de passionnés de cinéma qui analyse chaque mois les sorties et les pépites méconnues. Chaque film à regarder est noté sur 10 avec une critique sincère, sans influence des studios. Nous mettons en avant les films à voir absolument et dénichons des pépites exceptionnelles."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelle est la différence entre les versions mensuelles ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Chaque mois, MovieHunt met à jour sa sélection de films à regarder avec 5 nouvelles recommandations. Les anciennes sélections restent accessibles via les onglets pour retrouver les idées de films des mois précédents. Cela vous permet d'avoir toujours des suggestions fraîches tout en gardant l'historique."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Puis-je trouver des films pour une soirée en couple ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, MovieHunt propose des idées de films pour une soirée en couple : drames romantiques, thrillers captivants, comédies légères. Consultez notre sélection mensuelle et notre tableau de suggestions par humeur pour trouver le film parfait pour votre soirée à deux."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Y a-t-il des films méconnus à découvrir ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolument ! MovieHunt se spécialise dans la découverte de pépites méconnues. Parmi nos recommandations : Old Henry (western surprenant), Dom Hemingway (comédie noire britannique), Tetris (thriller historique), et bien d'autres films exceptionnels que vous auriez pu manquer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Les recommandations sont-elles mises à jour régulièrement ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, MovieHunt met à jour ses recommandations de films chaque mois avec 5 nouvelles idées de films à regarder. Vous pouvez consulter les sélections précédentes via les onglets mensuels. Ajoutez la page à vos favoris pour ne jamais manquer nos nouvelles suggestions."
         }
       }
     ]
@@ -73,10 +113,23 @@ export default function QuelFilmRegarder() {
             </div>
           </header>
         
+          {/* Introduction SEO-optimisée */}
+          <div className="mb-8 text-gray-700">
+            <p className="text-lg leading-relaxed mb-4">
+              <strong>Vous cherchez quel film regarder ce soir ?</strong> Cette question revient chaque fois que vous vous installez devant votre écran. Entre les milliers de films disponibles sur les plateformes de streaming et au cinéma, trouver <strong>des idées de films</strong> qui correspondent vraiment à vos envies peut vite devenir un casse-tête.
+            </p>
+            <p className="text-lg leading-relaxed mb-4">
+              C'est exactement pour ça que MovieHunt existe. Notre mission : vous proposer des <strong>recommandations de films</strong> triées sur le volet, pour que vous ne perdiez plus de temps à scroller sans fin. Que vous cherchiez un <strong>film à regarder ce soir</strong> en solo, en couple, ou entre amis, vous trouverez ici des suggestions personnalisées et sincères.
+            </p>
+            <p className="text-lg leading-relaxed">
+              Chaque mois, nous mettons à jour notre sélection avec 5 nouvelles <strong>idées de films à voir absolument</strong>. Drames captivants, thrillers haletants, comédies surprenantes, westerns revisités... Il y en a pour tous les goûts. Et si vous ne savez toujours pas <strong>quoi regarder ce soir</strong>, consultez notre tableau de suggestions par humeur plus bas dans la page.
+            </p>
+          </div>
+
           {/* Bloc de mise à jour */}
           <div className="bg-indigo-50 border-l-4 border-indigo-600 p-4 mb-6 rounded">
             <p className="text-sm text-indigo-800 font-medium">
-              🆕 <strong>Dernière mise à jour : janvier 2026</strong> — De nouveaux films ajoutés chaque mois !
+              🆕 <strong>Dernière mise à jour : janvier 2026</strong> — 5 nouveaux films ajoutés ce mois-ci !
             </p>
           </div>
 
@@ -106,14 +159,19 @@ export default function QuelFilmRegarder() {
             </div>
           </div>
 
-          {/* Contenu dynamique selon l'onglet actif */}
-          {activeTab === 'jan2026' ? <QuelFilmRegarderJan2026 /> : <QuelFilmRegarderNov2025 />}
+          {/* Contenu des deux onglets (rendu SSR pour SEO) */}
+          <div className={activeTab === 'jan2026' ? '' : 'hidden'}>
+            <QuelFilmRegarderJan2026 />
+          </div>
+          <div className={activeTab === 'nov2025' ? '' : 'hidden'}>
+            <QuelFilmRegarderNov2025 />
+          </div>
           
           <hr className="my-8 border-gray-300" />
           
           {/* Autres suggestions */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">🎞️ Vous ne savez toujours pas quel film regarder ?</h2>
+            <h2 className="text-2xl font-bold">🎞️ Idées de films à regarder selon votre humeur</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
               <h3 className="text-xl font-semibold mb-4">Voici d&apos;autres suggestions selon votre humeur :</h3>
@@ -163,9 +221,48 @@ export default function QuelFilmRegarder() {
             </div>
           </section>
           
+          {/* FAQ Section - Visible pour SEO */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-bold">❓ Questions fréquentes : Quel film regarder ce soir ?</h2>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm mt-4 space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Comment trouver des idées de films à regarder ?</h3>
+                <p className="text-gray-700">Pour trouver des <strong>idées de films à regarder</strong>, consultez notre sélection mensuelle mise à jour avec 5 nouvelles recommandations. Utilisez les onglets pour accéder aux sélections précédentes ou consultez notre tableau de suggestions par humeur.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Quel film regarder ce soir selon mon humeur ?</h3>
+                <p className="text-gray-700">Si vous cherchez <strong>quel film regarder ce soir</strong>, nous proposons des films pour chaque humeur : drames historiques (Nuremberg), comédies SF (Bugonia), thrillers horrifiques (Longlegs), westerns (Old Henry), ou huis clos tendus (Last Stop Yuma County).</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Où trouver des films à regarder en couple ?</h3>
+                <p className="text-gray-700">MovieHunt propose des <strong>idées de films</strong> parfaits pour une soirée en couple : drames touchants, thrillers captivants, comédies légères. Consultez notre sélection mensuelle pour trouver le <strong>film à regarder ce soir</strong> qui plaira à vous deux.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Quoi regarder ce soir si je veux découvrir des pépites ?</h3>
+                <p className="text-gray-700">Si vous vous demandez <strong>quoi regarder ce soir</strong> et que vous voulez sortir des sentiers battus, découvrez nos pépites méconnues : Old Henry (western surprenant), Dom Hemingway (comédie noire), Tetris (thriller historique), ou Greedy People (comédie noire).</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Les recommandations sont-elles mises à jour régulièrement ?</h3>
+                <p className="text-gray-700">Oui, nous mettons à jour nos <strong>recommandations de films</strong> chaque mois avec 5 nouvelles <strong>idées de films à voir</strong>. Les sélections précédentes restent accessibles via les onglets mensuels. Ajoutez cette page à vos favoris pour ne jamais manquer nos nouvelles suggestions.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-800 mb-2">Comment sont sélectionnés les films recommandés ?</h3>
+                <p className="text-gray-700">Chaque <strong>film à regarder</strong> est sélectionné par notre équipe de passionnés de cinéma. Nous analysons les sorties, dénichons des pépites méconnues, et notons chaque film sur 10 avec une critique sincère, sans influence des studios.</p>
+              </div>
+            </div>
+          </section>
+          
+          <hr className="my-8 border-gray-300" />
+          
           {/* Comment nous choisissons nos films */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold">📽️ Comment nous choisissons nos films</h2>
+            <h2 className="text-2xl font-bold">📽️ Comment MovieHunt sélectionne vos idées de films</h2>
             
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm mt-4">
               <p className="mb-4">

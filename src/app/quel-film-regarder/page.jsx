@@ -2,15 +2,15 @@ import QuelFilmRegarderContent from '@/components/pages/QuelFilmRegarderContent'
 
 // Metadata SSR pour le SEO
 export const metadata = {
-  title: 'Quel film regarder ce soir ? Idées et recommandations 2025',
-  description: 'Découvrez quel film regarder ce soir avec notre sélection de pépites inconnues, films à voir absolument et recommandations personnalisées. Guide mis à jour chaque semaine.',
-  keywords: ['quel film regarder', 'idée film', 'film à voir', 'recommandation film', 'pépite cinéma', 'film ce soir'],
+  title: 'Quel Film Regarder Ce Soir ? 100+ Idées de Films (2026)',
+  description: 'Vous cherchez quel film regarder ce soir ? Découvrez nos idées de films à voir absolument : thrillers, drames, comédies. Recommandations personnalisées mises à jour chaque mois.',
+  keywords: ['quel film regarder', 'quel film regarder ce soir', 'idée de film', 'idées de films', 'film à regarder ce soir', 'film à voir', 'recommandation film', 'quoi regarder ce soir'],
   alternates: {
     canonical: 'https://www.moviehunt.fr/quel-film-regarder',
   },
   openGraph: {
-    title: 'Quel film regarder ce soir ? Idées et recommandations 2025',
-    description: 'Découvrez quel film regarder ce soir avec notre sélection de pépites inconnues et recommandations personnalisées.',
+    title: 'Quel Film Regarder Ce Soir ? 100+ Idées de Films (2026)',
+    description: 'Vous cherchez quel film regarder ce soir ? Découvrez nos idées de films à voir : thrillers, drames, comédies. Recommandations personnalisées.',
     type: 'article',
     url: 'https://www.moviehunt.fr/quel-film-regarder',
     siteName: 'MovieHunt',
@@ -20,14 +20,14 @@ export const metadata = {
         url: 'https://www.moviehunt.fr/images/og-quel-film-regarder.jpg',
         width: 1200,
         height: 630,
-        alt: 'Quel film regarder ce soir ? Guide MovieHunt 2025',
+        alt: 'Quel film regarder ce soir ? Guide MovieHunt 2026',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quel film regarder ce soir ? Idées et recommandations',
-    description: 'Découvrez notre sélection de films à voir absolument et pépites inconnues.',
+    title: 'Quel Film Regarder Ce Soir ? Idées de Films',
+    description: 'Idées de films à regarder ce soir : thrillers, drames, comédies. Recommandations personnalisées.',
   },
 };
 
