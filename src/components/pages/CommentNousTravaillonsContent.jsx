@@ -95,6 +95,19 @@ export default function CommentNousTravaillonsPage() {
             <p className="text-gray-700 leading-relaxed mt-6">
               {t('howWeWork.criteriaConclusion')}
             </p>
+            
+            <div className="mt-6 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+              <p className="text-gray-800">
+                💡 <strong>Vous voulez comprendre nos notes ?</strong> Découvrez{' '}
+                <a 
+                  href="/comment-nous-notons-les-films" 
+                  className="text-indigo-700 hover:text-indigo-900 font-semibold underline"
+                >
+                  notre système de notation détaillé
+                </a>
+                {' '}et pourquoi un 4/10 n'est pas une mauvaise note chez MovieHunt.
+              </p>
+            </div>
           </section>
 
           {/* Pourquoi la VO */}

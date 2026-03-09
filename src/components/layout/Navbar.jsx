@@ -106,7 +106,7 @@ export default function Navbar() {
               <button
                 onClick={toggleDiscoverMenu}
                 className={`flex items-center text-gray-600 hover:text-indigo-700 transition-colors duration-200 text-base font-medium group ${
-                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' || pathname === '/quel-film-regarder-en-famille' || pathname === '/films-inconnus' ? 'text-indigo-700' : ''
+                  pathname === '/quel-film-regarder' || pathname === '/huntedbymoviehunt' || pathname === '/comment-nous-travaillons' || pathname === '/comment-nous-notons-les-films' || pathname === '/films-horreur-halloween-2025' || pathname === '/idees-films-pour-ados' || pathname === '/quel-film-regarder-en-famille' || pathname === '/films-inconnus' ? 'text-indigo-700' : ''
                 }`}
               >
                 <FiCompass className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
@@ -197,6 +197,13 @@ export default function Navbar() {
                       onClick={() => setIsDiscoverOpen(false)}
                     >
                       <FiInfo className="w-4 h-4 mr-3" /> {t('nav.howWeWork')}
+                    </Link>
+                    <Link 
+                      href="/comment-nous-notons-les-films" 
+                      className={`block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center transition-colors ${pathname === '/comment-nous-notons-les-films' ? 'bg-indigo-50 text-indigo-700' : ''}`}
+                      onClick={() => setIsDiscoverOpen(false)}
+                    >
+                      <FiAward className="w-4 h-4 mr-3" /> {t('nav.ratingSystem')}
                     </Link>
                   </div>
                 </div>
@@ -387,6 +394,16 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <FiInfo className="w-5 h-5 mr-3" /> {t('nav.howWeWork')}
+            </Link>
+            
+            <Link 
+              href="/comment-nous-notons-les-films" 
+              className={`flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 ${
+                pathname === '/comment-nous-notons-les-films' ? 'bg-indigo-50 text-indigo-700' : ''
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <FiAward className="w-5 h-5 mr-3" /> {t('nav.ratingSystem')}
             </Link>
             
             <Link 
