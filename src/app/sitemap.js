@@ -203,6 +203,12 @@ export default async function sitemap() {
     //   priority: 0.9,
     // },
     {
+      url: `${baseUrl}/comment-nous-notons-les-films`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/idees-films-pour-ados`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

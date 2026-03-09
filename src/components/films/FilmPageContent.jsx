@@ -89,12 +89,19 @@ export default function FilmPageContent({ film, locale = 'fr' }) {
             />
             
             <div className="flex flex-wrap items-center gap-4 mb-4">
-              <div className="flex items-center">
-                <span className="font-semibold mr-2">Note:</span>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold">Note:</span>
                 <span className="flex items-center">
                   <RatingIcon rating={film.note_sur_10} className="mr-2" />
                   <span>{film.note_sur_10}</span><span>/10</span>
                 </span>
+                <Link
+                  href="/comment-nous-notons-les-films"
+                  title="Comprendre notre système de notation"
+                  className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-gray-300 text-gray-400 hover:border-indigo-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors text-xs font-semibold flex-shrink-0"
+                >
+                  ?
+                </Link>
               </div>
               {film.blog_article_url && (
                 <BlogArticleLink url={film.blog_article_url} />
