@@ -24,12 +24,16 @@ CREATE INDEX IF NOT EXISTS idx_newsletter_subscribers_confirmed ON newsletter_su
 
 -- Trigger pour mettre à jour updated_at
 CREATE OR REPLACE FUNCTION update_newsletter_subscribers_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
   NEW.updated_at = NOW();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 DROP TRIGGER IF EXISTS trigger_newsletter_subscribers_updated_at ON newsletter_subscribers;
 CREATE TRIGGER trigger_newsletter_subscribers_updated_at
