@@ -208,12 +208,12 @@ export default async function sitemap() {
       changeFrequency: 'yearly',
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/trouver-un-film`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
+    // {
+    //   url: `${baseUrl}/trouver-un-film`,
+    //   lastModified: new Date(),
+    //   changeFrequency: 'weekly',
+    //   priority: 0.9,
+    // },
     {
       url: `${baseUrl}/idees-films-pour-ados`,
       lastModified: new Date(),
