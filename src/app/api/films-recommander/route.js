@@ -1,11 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
-
 // Mapping genres → moods
 const MOOD_GENRE_MAP = {
   feelgood: ['Comédie', 'Animation', 'Famille', 'Musique', 'Aventure', 'Romance', 'Fantastique'],
@@ -30,21 +25,35 @@ function getFilmMoods(genres) {
   return Array.from(moods);
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Missing Supabase env vars');
+      return NextResponse.json({ error: 'Configuration error' }, { status: 500 });
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     const { data: films, error } = await supabase
       .from('films')
-      .select('id, title, slug, synopsis, genres, note_sur_10, runtime, poster_url, release_date')
+      .select('id, title, slug, synopsis, genres, note_sur_10, poster_url, release_date')
       .order('note_sur_10', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error:', error.message, error.details, error.hint);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 
     const enrichedFilms = (films || []).map(film => ({
       title: film.title,
       slug: film.slug,
       description: film.synopsis ? film.synopsis.substring(0, 120) + (film.synopsis.length > 120 ? '...' : '') : '',
       rating: film.note_sur_10,
-      duration: film.runtime || null,
       moods: getFilmMoods(film.genres),
       genres: film.genres,
       poster_url: film.poster_url,
@@ -57,7 +66,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error('Error fetching films for recommander:', error);
-    return NextResponse.json([], { status: 500 });
+    console.error('Error fetching films for recommander:', error.message || error);
+    return NextResponse.json({ error: error.message || 'Internal server error' }, { status: 500 });
   }
 }

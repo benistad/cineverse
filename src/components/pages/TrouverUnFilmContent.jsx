@@ -42,9 +42,15 @@ export default function TrouverUnFilmContent() {
       try {
         const res = await fetch('/api/films-recommander');
         const data = await res.json();
-        setFilms(data);
+        if (Array.isArray(data)) {
+          setFilms(data);
+        } else {
+          console.error('API returned non-array:', data);
+          setFilms([]);
+        }
       } catch (error) {
         console.error('Erreur chargement films:', error);
+        setFilms([]);
       } finally {
         setLoading(false);
       }
