@@ -24,20 +24,6 @@ export const metadata = {
   },
 };
 
-// Extraire l'URL de l'image hero pour le preload LCP
-function getHeroImageUrl(film) {
-  if (!film) return null;
-  const fields = ['carousel_image_url', 'backdrop_url', 'backdrop_path', 'poster_url', 'poster_path'];
-  for (const field of fields) {
-    const val = film[field];
-    if (val && val.startsWith('/')) {
-      return `https://image.tmdb.org/t/p/w780${val}`;
-    }
-    if (val && val.startsWith('http')) return val;
-  }
-  return null;
-}
-
 export default async function Home() {
   // Pré-charger toutes les données côté serveur en parallèle
   const [
@@ -56,29 +42,14 @@ export default async function Home() {
     getPaginatedFilmsServer(1, 8)
   ]);
 
-  // Preload de l'image hero (LCP) pour accélérer le rendu
-  const heroImageUrl = featuredFilms?.[0] ? getHeroImageUrl(featuredFilms[0]) : null;
-
   return (
-    <>
-      {heroImageUrl && (
-        <link
-          rel="preload"
-          as="image"
-          href={heroImageUrl}
-          imageSrcSet={`${heroImageUrl} 780w, ${heroImageUrl.replace('/w780/', '/w1280/')} 1280w`}
-          imageSizes="(max-width: 768px) 780px, 1280px"
-          fetchPriority="high"
-        />
-      )}
-      <HomePageClient
-        initialRecentFilms={recentFilms}
-        initialTopRatedFilms={topRatedFilms}
-        initialHiddenGems={hiddenGems}
-        initialFeaturedFilms={featuredFilms}
-        initialPaginatedFilms={paginatedFilms}
-        initialCounts={counts}
-      />
-    </>
+    <HomePageClient
+      initialRecentFilms={recentFilms}
+      initialTopRatedFilms={topRatedFilms}
+      initialHiddenGems={hiddenGems}
+      initialFeaturedFilms={featuredFilms}
+      initialPaginatedFilms={paginatedFilms}
+      initialCounts={counts}
+    />
   );
 }

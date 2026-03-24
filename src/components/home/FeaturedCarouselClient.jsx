@@ -108,34 +108,21 @@ export default function FeaturedCarouselClient({ initialFilms }) {
         >
           {initialFilms.map((film, index) => {
             const isFirst = index === 0;
-            const tmdbPath = getTmdbPath(film);
             
             return (
               <SwiperSlide key={film.id}>
                 <div className="relative h-[320px] sm:h-[370px] md:h-[570px] bg-gray-800">
-                  {isFirst && tmdbPath && tmdbPath.startsWith('/') ? (
-                    // LCP slide: native img avec srcSet pour charger directement depuis TMDB CDN
-                    <img
-                      src={`https://image.tmdb.org/t/p/w780${tmdbPath}`}
-                      srcSet={`https://image.tmdb.org/t/p/w780${tmdbPath} 780w, https://image.tmdb.org/t/p/w1280${tmdbPath} 1280w`}
-                      sizes="(max-width: 768px) 780px, 1280px"
-                      alt={`Image du film ${film.title}`}
-                      className="absolute inset-0 w-full h-full object-cover object-center"
-                      fetchpriority="high"
-                      decoding="async"
-                    />
-                  ) : (
-                    <Image
-                      src={getOptimalImageUrl(film, 'w780')}
-                      alt={`Image du film ${film.title}`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
-                      className="object-cover object-center"
-                      quality={70}
-                      loading="lazy"
-                      style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    />
-                  )}
+                  <Image
+                    src={getOptimalImageUrl(film, 'w780')}
+                    alt={`Image du film ${film.title}`}
+                    fill
+                    priority={isFirst}
+                    sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1280px"
+                    className="object-cover object-center"
+                    quality={isFirst ? 75 : 65}
+                    {...(!isFirst && { loading: 'lazy' })}
+                    fetchPriority={isFirst ? 'high' : 'low'}
+                  />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-5" />
                   
