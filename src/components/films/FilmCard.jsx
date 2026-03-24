@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SafeImage from '@/components/ui/SafeImage';
 import RatingIcon from '@/components/ui/RatingIcon';
 import Link from 'next/link';
@@ -185,7 +185,6 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
   
   // Le film est déjà enrichi avec TMDB, utiliser directement film.title
   const displayTitle = film.title;
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
   const [sendingNewsletter, setSendingNewsletter] = useState(false);
   const [newsletterSent, setNewsletterSent] = useState(film.newsletter_sent || false);
   const pathname = usePathname();
@@ -228,19 +227,6 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
     }
   };
   
-  useEffect(() => {
-    // Ajouter l'écouteur pour le redimensionnement de la fenêtre
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    // Nettoyer les écouteurs d'événements
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
   
   // Vérifier si le film existe
   if (!film) {
@@ -301,7 +287,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
       {/* Affichage de la note */}
       {showRating && film.note_sur_10 !== undefined && (
         <div className="absolute top-2 right-2 z-10">
-          <RatingIcon rating={film.note_sur_10} size={windowWidth < 640 ? 32 : 40} />
+          <RatingIcon rating={film.note_sur_10} className="w-8 h-8 sm:w-10 sm:h-10" size={40} />
         </div>
       )}
       
@@ -314,7 +300,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
         title={`Voir la page de ${displayTitle}`}
         aria-label={`Voir la page du film ${displayTitle}`}
       >
-        <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0">
+        <div className="relative h-48 sm:h-56 md:h-64 w-full flex-shrink-0 bg-gray-100">
           {/* Utiliser une balise img standard au lieu de Next/Image pour éviter les problèmes de quota */}
           <img
             src={film.poster_url ? 
@@ -324,11 +310,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
                 (film.poster_path || '/images/placeholder.jpg'))
             }
             alt={generateCardAltText(film)}
-            className="w-full h-full object-cover object-top"
+            className="absolute inset-0 w-full h-full object-cover object-top"
             loading={priority ? "eager" : "lazy"}
-            width="500"
-            height="750"
-            style={{ aspectRatio: '2/3' }}
             onError={(e) => {
               // En cas d'erreur, essayer une taille plus petite
               if (e.target.src.includes('/w500/')) {
@@ -365,8 +348,9 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
                 <Image 
                   src="/images/badges/hunted-badge.png" 
                   alt="Hunted by MovieHunt" 
-                  width={windowWidth < 640 ? 50 : 62} 
-                  height={windowWidth < 640 ? 50 : 62}
+                  width={62} 
+                  height={62}
+                  className="w-[50px] h-[50px] sm:w-[62px] sm:h-[62px]"
                 />
               </span>
             )}
@@ -376,7 +360,8 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
             {film.genres && <span> • {film.genres.split(',')[0]}</span>}
           </p>
           <p className="text-sm text-gray-700 line-clamp-2">
-            {truncateText(film.synopsis || t('filmCard.noSynopsis'), windowWidth < 640 ? 80 : 120)}
+            <span className="sm:hidden">{truncateText(film.synopsis || t('filmCard.noSynopsis'), 80)}</span>
+            <span className="hidden sm:inline">{truncateText(film.synopsis || t('filmCard.noSynopsis'), 120)}</span>
           </p>
         </div>
       </Link>

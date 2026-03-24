@@ -19,8 +19,8 @@ export default function OptimizedFilmCarousel({
 }) {
   // État pour suivre l'index actuel
   const [currentIndex, setCurrentIndex] = useState(0);
-  // État pour stocker le nombre de cartes visibles
-  const [visibleCards, setVisibleCards] = useState(1);
+  // État pour stocker le nombre de cartes visibles (initialisé à visibleCount pour éviter CLS)
+  const [visibleCards, setVisibleCards] = useState(visibleCount);
   // Référence au conteneur pour le swipe
   const containerRef = useRef(null);
   

@@ -86,7 +86,7 @@ export default function FeaturedCarouselClient({ initialFilms }) {
 
   return (
     <div className="carousel-container">
-      <div className="relative">
+      <div className="relative min-h-[320px] sm:min-h-[370px] md:min-h-[570px]">
         <button 
           onClick={goToPrevSlide}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
