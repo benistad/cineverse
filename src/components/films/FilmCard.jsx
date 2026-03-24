@@ -350,7 +350,7 @@ export default function FilmCard({ film, showRating = true, showAdminControls = 
                   alt="Hunted by MovieHunt" 
                   width={62} 
                   height={62}
-                  className="w-[50px] h-[50px] sm:w-[62px] sm:h-[62px]"
+                  className="w-[50px] sm:w-[62px] h-auto"
                 />
               </span>
             )}
