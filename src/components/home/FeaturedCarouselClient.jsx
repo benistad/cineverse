@@ -17,49 +17,34 @@ import 'swiper/css/effect-fade';
 export default function FeaturedCarouselClient({ initialFilms }) {
   const swiperRef = useRef(null);
 
+  // Extraire le path TMDB brut (sans taille) pour construire des srcSet
+  const getTmdbPath = (film) => {
+    if (!film) return null;
+    const fields = ['carousel_image_url', 'backdrop_url', 'backdrop_path', 'poster_url', 'poster_path'];
+    for (const field of fields) {
+      const val = film[field];
+      if (val && val.startsWith('/')) return val;
+      if (val && val.startsWith('http') && val.includes('image.tmdb.org')) {
+        // Extraire le path depuis l'URL complète
+        const match = val.match(/\/t\/p\/\w+(\/.*)/); 
+        if (match) return match[1];
+        return val; // URL complète externe, pas TMDB path
+      }
+    }
+    return null;
+  };
+
   const getOptimalImageUrl = (film, size = 'w1280') => {
     if (!film) return null;
-    
-    if (film.carousel_image_url) {
-      if (film.carousel_image_url.startsWith('http')) {
-        return film.carousel_image_url;
-      } else if (film.carousel_image_url.startsWith('/')) {
-        return `https://image.tmdb.org/t/p/${size}${film.carousel_image_url}`;
-      }
+    const path = getTmdbPath(film);
+    if (path && path.startsWith('/')) {
+      return `https://image.tmdb.org/t/p/${size}${path}`;
     }
-    
-    if (film.backdrop_url) {
-      if (film.backdrop_url.startsWith('http')) {
-        return film.backdrop_url;
-      } else if (film.backdrop_url.startsWith('/')) {
-        return `https://image.tmdb.org/t/p/${size}${film.backdrop_url}`;
-      }
+    // Fallback: URL complète directe
+    const fields = ['carousel_image_url', 'backdrop_url', 'backdrop_path', 'poster_url', 'poster_path'];
+    for (const field of fields) {
+      if (film[field] && film[field].startsWith('http')) return film[field];
     }
-    
-    if (film.backdrop_path) {
-      if (film.backdrop_path.startsWith('http')) {
-        return film.backdrop_path;
-      } else if (film.backdrop_path.startsWith('/')) {
-        return `https://image.tmdb.org/t/p/${size}${film.backdrop_path}`;
-      }
-    }
-    
-    if (film.poster_url) {
-      if (film.poster_url.startsWith('http')) {
-        return film.poster_url;
-      } else if (film.poster_url.startsWith('/')) {
-        return `https://image.tmdb.org/t/p/w500${film.poster_url}`;
-      }
-    }
-    
-    if (film.poster_path) {
-      if (film.poster_path.startsWith('http')) {
-        return film.poster_path;
-      } else if (film.poster_path.startsWith('/')) {
-        return `https://image.tmdb.org/t/p/w500${film.poster_path}`;
-      }
-    }
-    
     return '/images/placeholder.jpg';
   };
 
@@ -123,23 +108,34 @@ export default function FeaturedCarouselClient({ initialFilms }) {
         >
           {initialFilms.map((film, index) => {
             const isFirst = index === 0;
-            const imageUrl = getOptimalImageUrl(film, isFirst ? 'w1280' : 'w780');
+            const tmdbPath = getTmdbPath(film);
             
             return (
               <SwiperSlide key={film.id}>
                 <div className="relative h-[320px] sm:h-[370px] md:h-[570px] bg-gray-800">
-                  <Image
-                    src={imageUrl}
-                    alt={`Image du film ${film.title}`}
-                    fill
-                    priority={isFirst}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
-                    className="object-cover object-center"
-                    quality={isFirst ? 80 : 70}
-                    {...(!isFirst && { loading: 'lazy' })}
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                    fetchPriority={isFirst ? 'high' : 'low'}
-                  />
+                  {isFirst && tmdbPath && tmdbPath.startsWith('/') ? (
+                    // LCP slide: native img avec srcSet pour charger directement depuis TMDB CDN
+                    <img
+                      src={`https://image.tmdb.org/t/p/w780${tmdbPath}`}
+                      srcSet={`https://image.tmdb.org/t/p/w780${tmdbPath} 780w, https://image.tmdb.org/t/p/w1280${tmdbPath} 1280w`}
+                      sizes="(max-width: 768px) 780px, 1280px"
+                      alt={`Image du film ${film.title}`}
+                      className="absolute inset-0 w-full h-full object-cover object-center"
+                      fetchpriority="high"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Image
+                      src={getOptimalImageUrl(film, 'w780')}
+                      alt={`Image du film ${film.title}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1280px"
+                      className="object-cover object-center"
+                      quality={70}
+                      loading="lazy"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
+                  )}
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-5" />
                   
